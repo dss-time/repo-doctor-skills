@@ -1,0 +1,42 @@
+{
+  "name": "repo-doctor",
+  "version": "0.1.0",
+  "description": "A universal Codex plugin for safely understanding, reviewing, diagnosing, and changing software repositories.",
+  "author": {
+    "name": "dss-time"
+  },
+  "homepage": "https://github.com/dss-time/repo-doctor-codex-plugin",
+  "repository": "https://github.com/dss-time/repo-doctor-codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "skills",
+    "repo-analysis",
+    "code-review",
+    "refactoring",
+    "change-impact",
+    "testing",
+    "security",
+    "developer-tools"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Repo Doctor",
+    "shortDescription": "Understand, review, diagnose, and safely change software repositories.",
+    "longDescription": "Repo Doctor helps developers safely understand unfamiliar repositories, diagnose project health, review code with clear priorities, and analyze change impact before modifying code.",
+    "developerName": "dss-time",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/dss-time/repo-doctor-codex-plugin",
+    "defaultPrompt": [
+      "Use Repo Doctor to understand this repository before making changes.",
+      "Use Repo Doctor to run a project health check without modifying code.",
+      "Use Repo Doctor to review my current changes with P0/P1/P2/P3 priorities.",
+      "Use Repo Doctor to analyze the impact of changing a specific file or module before editing."
+    ],
+    "brandColor": "#10A37F"
+  }
+}
