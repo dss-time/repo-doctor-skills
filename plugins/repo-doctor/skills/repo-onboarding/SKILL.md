@@ -1,5 +1,5 @@
 ---
-name: repo-onboarding
+name: repo-onboarding(理解项目)
 description: Use this skill when the user wants to understand an unfamiliar repository, project structure, architecture, tech stack, entry points, build commands, test commands, core modules, configuration, deployment flow, or where to start reading before making changes. Do not use this skill for direct code modification.
 ---
 
