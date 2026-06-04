@@ -1,6 +1,6 @@
 {
   "name": "repo-doctor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A universal Codex plugin for safely understanding, reviewing, diagnosing, and changing software repositories.",
   "author": {
     "name": "dss-time"
@@ -17,7 +17,11 @@
     "change-impact",
     "testing",
     "security",
-    "developer-tools"
+    "developer-tools",
+    "safe-fix",
+    "fix-implementation",
+    "build-fix",
+    "safe-change"
   ],
   "skills": "./skills/",
   "interface": {
@@ -35,7 +39,9 @@
       "Use Repo Doctor to understand this repository before making changes.",
       "Use Repo Doctor to run a project health check without modifying code.",
       "Use Repo Doctor to review my current changes with P0/P1/P2/P3 priorities.",
-      "Use Repo Doctor to analyze the impact of changing a specific file or module before editing."
+      "Use Repo Doctor to analyze the impact of changing a specific file or module before editing.",
+      "Use Repo Doctor to safely fix the highest-priority issue from a previous project health check.",
+      "Use Repo Doctor to implement the smallest safe P0/P1 fix and validate the result."
     ],
     "brandColor": "#10A37F"
   }
