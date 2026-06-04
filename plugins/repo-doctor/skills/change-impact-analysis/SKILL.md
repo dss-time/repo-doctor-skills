@@ -1,5 +1,5 @@
 ---
-name: change-impact-analysis
+name: change-impact-analysis（改代码看影响）
 description: Use this skill when the user wants to modify, refactor, rename, delete, move, or redesign a file, function, module, package export, component, API, database model, configuration file, or shared utility and wants to understand the impact before editing. Trigger for questions like what will this change affect, is it safe to delete, can I rename this, how should I refactor this safely, or what tests are needed before changing it.
 ---
 
