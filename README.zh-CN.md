@@ -1,3 +1,5 @@
+[English](./README.md) | **简体中文**
+
 # Repo Doctor Skills
 
 Repo Doctor Skills 是一个双语、跨平台的 AI Skills 工程化框架，用于仓库诊断、代码审查、文档审查和安全 Agent 工作流。

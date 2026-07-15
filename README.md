@@ -1,3 +1,7 @@
+**English** | [简体中文](./README.zh-CN.md)
+
+> 🇨🇳 中文用户：请查看 [中文项目说明](./README.zh-CN.md)、[中文快速开始](./docs/QUICK_START.zh-CN.md) 和 [中文用户操作手册](./docs/USER_MANUAL.zh-CN.md)。
+
 # Repo Doctor Skills
 
 A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, document review, and safe agent workflows.
