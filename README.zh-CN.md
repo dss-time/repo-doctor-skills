@@ -82,14 +82,17 @@ node scripts/build-skills.mjs --target kimi-zh-CN
 plugins/repo-doctor/
 ```
 
-这个生成的兼容分发由 `packs/engineering/repo-doctor/` 同步而来，包含原来的 5 个 Skill 和 16 个边界明确的工作流及专项审查 Skill，共 21 个：
+这个生成的兼容分发由 `packs/engineering/repo-doctor/` 同步而来，共包含 25 个边界明确的工作流与专项工程 Skill：
 
+- `repo-doctor-router`
 - `repo-onboarding`
+- `requirements-clarification`
+- `requirements-to-spec`
+- `spec-to-work-items`
 - `project-health-check`
 - `safe-code-review`
 - `change-impact-analysis`
 - `safe-fix-implementation`
-- `requirements-to-spec`
 - `bug-root-cause-analysis`
 - `safe-change-plan`
 - `test-gap-analysis`
@@ -105,6 +108,7 @@ plugins/repo-doctor/
 - `performance-regression-analysis`
 - `architecture-decision-record`
 - `configuration-audit`
+- `session-handoff`
 
 安装和 marketplace 配置见 [docs/LEGACY_CODEX_PLUGIN.zh-CN.md](docs/LEGACY_CODEX_PLUGIN.zh-CN.md)。
 
@@ -165,7 +169,7 @@ npm run build
 
 | 前缀 | 插件 | 当前数量 | 用途 |
 |---|---|---:|---|
-| `rd-*` | Repo Doctor | 21 | 软件工程诊断、分析、计划、安全修改和验证。 |
+| `rd-*` | Repo Doctor | 25 | 软件工程路由、澄清、诊断、计划、安全修改、验证和会话交接。 |
 | `pt-*` | Productivity Toolkit | 8 | 报告、研究、表格清洗、PDF/Word 审查、会议和演示生产力。 |
 | `sm-*` | Skill Maintainer | 2 | Skill 工程化创建和只读质量审计。 |
 
@@ -180,7 +184,7 @@ Document Data Doctor 的 3 个 Basic Skill 会参与 canonical Pack 和全部 7 
 | `adapters/` | 各平台适配说明。 | 只有适配行为变化时修改。 |
 | `dist/` | 构建流水线生成的跨平台产物和 ChatGPT 上传包。 | 永远不要直接修改。 |
 
-当前 canonical 清单为 4 个 active Pack、34 个 active Skill，另有 1 个 template Pack 和其中的 1 个 template Skill。3 个插件分发共含 31 个 Skill；构建会生成 31 个对应 ChatGPT ZIP 和 7 个常规跨平台目标。校验器从 manifest 自动发现 Pack 和 Skill 集合，不依赖这些文档数字。
+当前 canonical 清单为 4 个 active Pack、38 个 active Skill，另有 1 个 template Pack 和其中的 1 个 template Skill。3 个插件分发共含 35 个 Skill；构建会生成 35 个对应 ChatGPT ZIP 和 7 个常规跨平台目标。校验器从 manifest 自动发现 Pack 和 Skill 集合，不依赖这些文档数字。
 
 ## 支持平台
 
@@ -310,7 +314,7 @@ npm run build
 
 ## 候选版本状态
 
-当前 checkout 正在准备 **0.2.0 Release Candidate**；仓库中的改动本身不代表已经创建 tag 或正式发布。项目发布版本、组件版本和成熟度状态是彼此独立的层次。4 个 active Pack 和 34 个 active Skill 在本候选版本中都标记为 `beta`：它们已经通过仓库验证，可以用于真实任务，但仍缺少足够的广泛公开使用和 Live-model 路由证据。Beta 不等于不可用，未来的 `stable` 也不等于绝对无 Bug。
+当前 checkout 正在准备 **0.2.0 Release Candidate**；仓库中的改动本身不代表已经创建 tag 或正式发布。项目发布版本、组件版本和成熟度状态是彼此独立的层次。4 个 active Pack 和 38 个 active Skill 在本候选版本中都标记为 `beta`：它们已经通过仓库验证，可以用于真实任务，但仍缺少足够的广泛公开使用和 Live-model 路由证据。Beta 不等于不可用，未来的 `stable` 也不等于绝对无 Bug。
 
 Live-model 路由准确率仍为 **UNKNOWN**。组件版本基线和历史 `v0.0.1` tag 标签例外见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)，候选变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 

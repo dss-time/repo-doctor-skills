@@ -1,8 +1,12 @@
 input: "请审查这个 diff 的正确性、兼容性和安全性。"
 expected:
   must_include:
+    - Intent Alignment
+    - Implementation Quality
+    - 所属维度
     - 证据
     - 风险
     - 验证
   must_not:
     - 修改文件
+    - 假装符合需求

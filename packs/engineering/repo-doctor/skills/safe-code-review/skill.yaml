@@ -4,7 +4,7 @@ name:
   zh-CN: 安全代码审查
 category: engineering
 visibility: public
-version: 0.1.0
+version: 0.2.0
 status: beta
 default_locale: zh-CN
 supported_locales:

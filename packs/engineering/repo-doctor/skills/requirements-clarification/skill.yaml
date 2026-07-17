@@ -1,0 +1,46 @@
+id: repo.requirements-clarification
+name:
+  en: Requirements Clarification
+  zh-CN: Requirements Clarification（需求决策澄清）
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales:
+  - en
+  - zh-CN
+description:
+  en: Resolve the material product, behavior, compatibility, data, permission, security, migration, and acceptance decisions that remain open before specification or implementation. Use when a request contains consequential ambiguity; inspect repository evidence before asking one focused question at a time, then produce a clarification summary for requirements-to-spec. Do not use for an already clear small change, write the final specification, edit long-term documentation, or implement code.
+  zh-CN: 在规格化或实施前，关闭仍未确定且会实质影响产品、行为、兼容性、数据、权限、安全、迁移和验收的决策。用于存在关键歧义的需求；先检查仓库证据，再一次聚焦一个问题，最终生成交给 requirements-to-spec 的澄清摘要。已清楚的小改动不使用，也不生成最终规格、不修改长期文档或实施代码。
+triggers:
+  en:
+    - clarify the unresolved requirements decisions
+    - identify questions before writing the specification
+    - close the important product and compatibility choices
+    - requirements clarification
+  zh-CN:
+    - 澄清尚未解决的需求决策
+    - 写规格前找出关键问题
+    - 关闭重要产品和兼容性选择
+    - 需求决策澄清
+tool_requirements:
+  filesystem: read
+  git: optional
+  shell: none
+  web: none
+permissions:
+  read_files: true
+  write_files: false
+  run_shell_commands: false
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: read_only
+output_schema:
+  type: requirements_clarification_summary
+localization:
+  en:
+    status: complete
+  zh-CN:
+    status: complete

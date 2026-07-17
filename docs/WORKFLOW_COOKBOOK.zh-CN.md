@@ -55,8 +55,9 @@
 
 | 真实任务 | 推荐起点 | 写入前的主要闸门 |
 |---|---|---|
+| 不知道该用哪个 Repo Doctor 工作流 | **repo-doctor-router** | Router 只推荐，不执行下一 Skill |
 | 第一次接触仓库 | **repo-onboarding** | 通常不写入 |
-| 从模糊需求走到发布门禁 | **requirements-to-spec** | 规格、影响和计划确认 |
+| 从模糊需求走到发布门禁 | **requirements-clarification** | 先关闭关键决策，再确认规格、切片、影响和计划 |
 | 定位并修复运行时 Bug | **bug-root-cause-analysis** | 根因和最小修复范围确认 |
 | 排查 CI 失败 | **ci-failure-diagnosis** | 首个真实错误和修复分支确认 |
 | API、数据库、安全等高风险变更 | **change-impact-analysis** | 专项证据和原子计划确认 |
@@ -97,11 +98,13 @@
 ## 2. 从模糊需求走到发布门禁
 
 **适合：** 用户提出了一个还不完整的功能需求，希望最终安全落地。  
-**流程：** **requirements-to-spec [R]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **safe-fix-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → 可选 **[GATE] safe-test-implementation [W]** → 可选 **documentation-sync [W]** → **release-readiness-check [A/GATE]**。
+**流程：** **requirements-clarification [R]** → **requirements-to-spec [R]** → 可选 **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **safe-fix-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → 可选 **[GATE] safe-test-implementation [W]** → 可选 **documentation-sync [W]** → **release-readiness-check [A/GATE]**。
 
 | 阶段 | 为什么这样排 | 关键边界 |
 |---|---|---|
+| 决策澄清 | **requirements-clarification** 读取仓库证据，只关闭会实质影响行为、兼容、安全、数据、迁移或验收的选择。 | 一次只问一个关键决策，在规格或代码前停止。 |
 | 规格化 | **requirements-to-spec** 先把目标、范围、约束和验收标准说清楚。 | 不生成具体代码方案，不写文件。 |
+| 交付切片 | 大规格使用 **spec-to-work-items** 创建垂直、可独立验证的工作项，标明依赖、冲突、测试和并行组。 | 不创建外部 Issue，也不替代代码级 `safe-change-plan`。 |
 | 影响分析 | **change-impact-analysis** 用仓库证据识别受影响模块、接口、测试和风险。 | 不实施变更。 |
 | 实施计划 | **safe-change-plan** 将已确认输入拆成原子步骤、验证和回滚。 | 需求仍模糊或影响未知时应停止并退回前一步。 |
 | 实现 | **safe-fix-implementation** 只实施一个已确认问题或范围明确的修复。 | 写代码和运行命令前必须确认计划与文件范围。 |
@@ -609,6 +612,14 @@ Word 基础与增强：
 ```
 
 **最终闸门：** validate、test、build 通过和质量审计给出可发布建议，仍不等于发布授权。版本修改、提交、push、marketplace 发布或对外分发必须作为新的、明确的用户请求。
+
+## 11. 安全路由或交接工作
+
+用户知道任务但不知道 Skill 时，使用 **repo-doctor-router [R]**。它返回已核验的下一 Skill、最短安全工作流、替代方案、必要输入和停止条件，但不执行推荐。上下文过长或负责人切换时使用 **session-handoff [R]**；交接只引用已有产物，区分事实与推断，清理敏感值，记录真实命令和结果，并给出可复制启动指令，不声称下一会话会自动读取。
+
+## 未来路线图（本轮未实现）
+
+未来可评估超大型项目决策地图、经明确授权的 Issue Tracker adapter、后台研究协调和可视化架构报告。本项目当前不实现自动创建 Issue、commit、push、发布、合并、Release 或冲突解决。投资、股票、估值和交易 Skill 继续处于 Repo Doctor 工程范围之外。
 
 ## 通用失败处理
 

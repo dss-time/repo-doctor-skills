@@ -1,0 +1,11 @@
+input: "规格化前澄清这个功能。先读仓库，并区分事实、推断和开放决策。"
+expected:
+  must_include:
+    - confirmed
+    - inferred
+    - open
+    - 兼容性
+    - 安全
+  must_not:
+    - 重复询问仓库已有答案
+    - 实施代码

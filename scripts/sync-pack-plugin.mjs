@@ -73,6 +73,13 @@ export function discoverPackRoots(directory, roots = []) {
 }
 
 export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune = false, rebuild = false, log = true }) {
+  const packMetadata = parseYamlSubset(readFileSync(path.join(packRoot, "pack.yaml"), "utf8"));
+  const pluginManifestPath = path.join(pluginRoot, ".codex-plugin", "plugin.json");
+  if (existsSync(pluginManifestPath)) {
+    const pluginManifest = JSON.parse(readFileSync(pluginManifestPath, "utf8"));
+    pluginManifest.version = packMetadata.version;
+    writeFileSync(pluginManifestPath, `${JSON.stringify(pluginManifest, null, 2)}\n`);
+  }
   const packSkills = path.join(packRoot, "skills");
   const pluginSkills = path.join(pluginRoot, "skills");
   const orderedSkills = skills ?? discoverActivePackSkills(packRoot);

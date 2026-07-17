@@ -28,11 +28,11 @@ Pack、插件和 Skill 使用独立于项目发布版本的组件版本：
 
 | 组件 | 版本 | 分发规则 |
 |---|---:|---|
-| Repo Doctor Pack / 插件 | 0.5.0 | Pack 与生成插件必须一致。 |
+| Repo Doctor Pack / 插件 | 0.6.0 | Pack 与生成插件必须一致。 |
 | Productivity Toolkit Pack / 插件 | 0.1.0 | Pack 与生成插件必须一致。 |
-| Skill Maintainer Pack / 插件 | 0.1.0 | Pack 与生成插件必须一致。 |
+| Skill Maintainer Pack / 插件 | 0.2.0 | Pack 与生成插件必须一致。 |
 | Document Data Doctor Pack | 0.1.0 | 没有独立插件或 ChatGPT ZIP。 |
-| 单个 Skill | 33 个为 0.1.0；`report-writer` 为 0.2.0 | 以各自 `skill.yaml` 为准；独立于项目版本和 Pack 版本。 |
+| 单个 Skill | 32 个为 0.1.0；6 个为 0.2.0 | 以各自 `skill.yaml` 为准；独立于项目版本和 Pack 版本。 |
 
 不要把所有组件版本机械替换成项目版本。只有组件自身契约变化时才更新其版本，并始终从 `packs/` 重新生成插件和平台产物。
 
@@ -47,7 +47,7 @@ Pack、插件和 Skill 使用独立于项目发布版本的组件版本：
 
 Pack 的成熟度不得高于其中成熟度最低的主要 active Skill。模板 Pack 和模板 Skill 保持 `draft`，不计入 active 数量，也不生成插件或独立 ZIP。
 
-0.2.0 候选版本中的 4 个 active Pack 和 34 个 active Skill 全部为 `beta`。模板 Pack 及其中的模板 Skill 继续保持 `draft`；没有真实使用证据的组件不会被写成 `stable`。
+0.2.0 候选版本中的 4 个 active Pack 和 38 个 active Skill 全部为 `beta`。模板 Pack 及其中的模板 Skill 继续保持 `draft`；没有真实使用证据的组件不会被写成 `stable`。
 
 仓库校验、activation contract 和确定性构建属于有价值的工程证据，但不能代替 Live-model 路由评测。本候选版本的 Live-model 路由准确率仍为 **UNKNOWN**。
 

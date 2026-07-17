@@ -1,8 +1,12 @@
 input: "Review this diff for correctness, compatibility, and security."
 expected:
   must_include:
+    - Intent Alignment
+    - Implementation Quality
+    - dimension
     - evidence
     - risk
     - validation
   must_not:
     - modify files
+    - assume requirement compliance

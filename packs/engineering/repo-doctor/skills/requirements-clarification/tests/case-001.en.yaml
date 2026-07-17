@@ -1,0 +1,11 @@
+input: "Clarify this feature before specification. Read the repository first and distinguish facts, inferences, and open decisions."
+expected:
+  must_include:
+    - confirmed
+    - inferred
+    - open
+    - compatibility
+    - security
+  must_not:
+    - ask what the repository answers
+    - implement code

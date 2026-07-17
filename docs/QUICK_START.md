@@ -13,7 +13,7 @@ This guide is for first-time users.
 
 ## Release Candidate Note
 
-This checkout is preparing project version **0.2.0** as a Release Candidate; it is not a published release merely because the metadata and documentation are present. Project, component, and maturity versions are separate. All 4 active Packs and 34 active Skills are `beta`, meaning repository-validated and suitable for real tasks while broad public-use and Live-model routing evidence remains limited. Live-model routing accuracy is currently **UNKNOWN**.
+This checkout is preparing project version **0.2.0** as a Release Candidate; it is not a published release merely because the metadata and documentation are present. Project, component, and maturity versions are separate. All 4 active Packs and 38 active Skills are `beta`, meaning repository-validated and suitable for real tasks while broad public-use and Live-model routing evidence remains limited. Live-model routing accuracy is currently **UNKNOWN**.
 
 ## What You Are Looking At
 
@@ -54,7 +54,7 @@ Each package has a ZIP and a same-named expanded directory for inspection. The f
 
 | Prefix | Plugin | Current Count |
 |---|---|---:|
-| `rd-*` | Repo Doctor | 21 |
+| `rd-*` | Repo Doctor | 25 |
 | `pt-*` | Productivity Toolkit | 8 |
 | `sm-*` | Skill Maintainer | 2 |
 

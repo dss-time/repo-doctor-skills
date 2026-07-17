@@ -1,8 +1,10 @@
-# Output Format
+# Output Contract
 
-1. Overall conclusion
-2. Findings table: priority, location, evidence, problem, risk, suggested fix, validation
-3. File-level review
-4. Security and stability risks
-5. Test suggestions
-6. Final recommendation
+1. Overall conclusion and review scope
+2. Intent evidence and Intent Alignment result, explicitly `insufficient evidence` when applicable
+3. Implementation Quality result
+4. Deduplicated findings: priority, dimension, location, evidence, problem, impact, recommendation, validation
+5. Missing behavior, unauthorized scope, compatibility, boundary, and failure-path review
+6. Correctness, security, data integrity, concurrency, performance, maintainability, module boundaries, duplication, tests, observability, and rollback review
+7. Commands or tests actually run, evidence gaps, and residual risks
+8. Final bounded recommendation

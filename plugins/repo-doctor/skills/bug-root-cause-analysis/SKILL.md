@@ -77,36 +77,48 @@ Before running `npm test`, a repository script, or a language-specific test comm
 
 Record every executed diagnostic with its exact command, working directory, exit status, and relevant result. Redact sensitive values. Never claim `Reproduced` or a passing test when the corresponding command did not run successfully.
 
+### Repeatable feedback mechanism
+
+- Establish a repeatable feedback mechanism before assigning high confidence to a root cause. It may be an existing test, static check, log query, minimum script in an isolated temporary location, non-production interface request, or precise user action sequence.
+- Record the mechanism, inputs, environment, expected symptom, observed result, and repeatability limits. Keep symptom reproduction separate from causal confirmation.
+- When commands cannot run, provide the smallest user-runnable reproduction and evidence-collection steps. Mark their result `Unverified` until output is returned.
+- For every hypothesis, record supporting evidence, a concrete falsification method or contradictory observation, confidence, and remaining unknowns.
+- Without a reliable feedback mechanism, a causal conclusion may be only `Inferred` or `Unverified`; never label it a confirmed high-confidence root cause.
+- A repair direction must remove the causal mechanism, not merely suppress the visible symptom. Always propose a regression test or repeatable regression check.
+
 ## Workflow
 
 1. Record the symptom, user impact, affected scope, environment, version, inputs, state, and reproduction conditions.
 2. Inspect repository instructions, command definitions, existing tests, configuration, and current workspace state before selecting a command.
 3. Apply the safe diagnostic and test-command gates; record skipped commands as `Blocked` or `Unverified` with the reason.
-4. Reproduce when safely possible. If not reproduced, state why and distinguish observed facts from reported symptoms.
-5. Start from the first trustworthy error or invariant violation. Treat later failures as possible cascades until proven otherwise.
-6. Trace `input/state -> execution path -> failure point -> user-visible symptom` using file locations, logs, stack frames, configuration, tests, or minimum experiments.
-7. Compare working and failing paths, versions, inputs, or environments when evidence permits.
-8. Classify the confirmed root cause, primary hypothesis, alternative hypotheses, and unknowns separately, and try to falsify the primary hypothesis.
-9. State the smallest repair direction and regression tests needed without editing files.
-10. Assign confidence and list the exact evidence needed to raise it.
+4. Select and record a repeatable feedback mechanism. If none can run, provide minimum user-runnable steps and cap the conclusion at `Inferred` or `Unverified`.
+5. Reproduce the symptom when safely possible. If not reproduced, state why; symptom reproduction alone is not root-cause confirmation.
+6. Start from the first trustworthy error or invariant violation. Treat later failures as possible cascades until proven otherwise.
+7. Trace `input/state -> execution path -> failure point -> user-visible symptom` using file locations, logs, stack frames, configuration, tests, or minimum experiments.
+8. Compare working and failing paths, versions, inputs, or environments when evidence permits.
+9. For primary and alternative hypotheses, record support, falsification method, contradictory evidence, confidence, and unknowns. Run the safest discriminator available.
+10. Confirm the root cause only when the feedback mechanism and causal evidence distinguish it from plausible alternatives.
+11. State the smallest causal repair direction and regression test or check without editing files. Reject symptom-only workarounds as root-cause fixes.
+12. Assign confidence and list the exact evidence needed to raise it.
 
 # Output Contract
 
-1. Problem summary
-2. Environment and exact reproduction conditions
+1. Problem summary and reported symptom
+2. Environment, exact reproduction conditions, and repeatable feedback mechanism or user-runnable fallback
 3. Executed diagnostic commands, working directories, and exit status
 4. Command results, including commands that failed, were not run, or were blocked
 5. Evidence table with source, observation, and `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` status
-6. Execution path and causal chain
-7. Root cause, labeled confirmed or hypothesized
-8. Alternative hypotheses and falsification status
-9. Impact scope
-10. Minimum repair direction without implementation
-11. Regression test recommendations without creating tests
-12. Confidence and evidence needed next
-13. Unverified and blocked items with reasons
+6. Symptom reproduction result, kept separate from root-cause confirmation
+7. Execution path and causal chain
+8. Hypothesis table with support, falsification method, contradictory evidence, confidence, and unknowns
+9. Root cause, labeled confirmed, inferred, or unverified
+10. Impact scope
+11. Minimum causal repair direction without implementation; identify symptom-only workarounds
+12. Regression test or repeatable regression-check recommendation without creating tests
+13. Confidence cap and evidence needed next
+14. Unverified and blocked items with reasons
 
-Never claim a confirmed root cause without direct supporting evidence. Never claim `Reproduced` or a passing test unless the corresponding command actually ran successfully under the reported conditions.
+Without a reliable feedback mechanism, the root-cause status must remain `Inferred` or `Unverified`. Never claim `Reproduced` or a passing test unless the corresponding command actually ran successfully under the reported conditions.
 
 ---
 
@@ -180,33 +192,45 @@ Never claim a confirmed root cause without direct supporting evidence. Never cla
 
 记录每条已执行诊断的准确命令、工作目录、退出状态和相关结果，并对敏感值脱敏。对应命令未成功运行时，不得声称 `Reproduced` 或测试通过。
 
+### 可重复反馈方式
+
+- 在给出高置信根因前先建立可重复反馈方式，可以是现有测试、静态检查、日志查询、隔离临时目录中的最小脚本、非生产接口请求或准确的用户操作步骤。
+- 记录反馈方式、输入、环境、预期现象、观察结果和重复性限制；严格区分“现象复现”和“因果确认”。
+- 无法运行命令时，给出用户可运行的最小复现与证据收集步骤；用户未返回结果前保持 `Unverified`。
+- 每个假设都记录支持证据、具体反证方法或矛盾观察、置信度和剩余未知。
+- 没有可靠反馈方式时，因果结论最高只能是 `Inferred` 或 `Unverified`，不得标成已确认的高置信根因。
+- 修复方向必须消除因果机制，而不是只隐藏表面症状；始终给出回归测试或可重复回归验证建议。
+
 ## 工作流程
 
 1. 记录症状、用户影响、影响范围、环境、版本、输入、状态和复现条件。
 2. 选择命令前，检查仓库指令、命令定义、现有测试、配置和当前工作区状态。
 3. 应用安全诊断与测试命令门禁；跳过的命令按原因标记为 `Blocked` 或 `Unverified`。
-4. 在安全可行时复现；无法复现时说明原因，并区分观察事实和用户报告。
-5. 从第一个可信错误或不变量破坏开始；后续错误在证实前视为可能的级联结果。
-6. 使用文件位置、日志、堆栈、配置、测试或最小实验建立“输入/状态 → 执行路径 → 失效点 → 用户可见症状”链条。
-7. 有证据时比较正常与异常路径、版本、输入或环境。
-8. 分别记录已证实根因、主要假设、替代假设和未知项，并尝试证伪主要假设。
-9. 给出最小修复方向和回归测试建议，但不修改文件。
-10. 标注置信度，并列出提高置信度所需的确切证据。
+4. 选择并记录可重复反馈方式；无法执行时给出最小用户操作步骤，并把结论上限设为 `Inferred` 或 `Unverified`。
+5. 在安全可行时复现现象；无法复现时说明原因。现象复现本身不等于根因确认。
+6. 从第一个可信错误或不变量破坏开始；后续错误在证实前视为可能的级联结果。
+7. 使用文件位置、日志、堆栈、配置、测试或最小实验建立“输入/状态 → 执行路径 → 失效点 → 用户可见症状”链条。
+8. 有证据时比较正常与异常路径、版本、输入或环境。
+9. 对主要和替代假设记录支持证据、反证方式、矛盾证据、置信度和未知项，并运行最安全的区分实验。
+10. 只有反馈方式和因果证据能够排除合理替代解释时，才确认根因。
+11. 给出消除因果机制的最小修复方向，以及回归测试或检查，但不修改文件；症状绕过不得写成根因修复。
+12. 标注置信度，并列出提高置信度所需的确切证据。
 
 # 输出契约
 
-1. 问题摘要
-2. 环境与准确复现条件
+1. 问题摘要与用户报告现象
+2. 环境、准确复现条件、可重复反馈方式或用户可运行的替代步骤
 3. 已执行的诊断命令、工作目录和退出状态
 4. 命令结果，包括失败、未运行或被阻止的命令
 5. 证据表，包含来源、观察结果和 `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` 状态
-6. 执行路径与因果链
-7. 根因，标明已证实或假设
-8. 替代假设与证伪情况
-9. 影响范围
-10. 不实施修改的最小修复方向
-11. 不创建测试的回归测试建议
-12. 置信度与下一步所需证据
-13. 未验证和阻塞项及其原因
+6. 现象复现结果，与根因确认分开
+7. 执行路径与因果链
+8. 假设表，包含支持证据、反证方法、矛盾证据、置信度和未知项
+9. 根因，标明已确认、推断或未验证
+10. 影响范围
+11. 不实施修改的最小因果修复方向，并标识只绕过症状的方案
+12. 不创建测试的回归测试或可重复回归检查建议
+13. 置信度上限与下一步所需证据
+14. 未验证和阻塞项及其原因
 
-没有直接证据时，不得声称根因已确认。对应命令未在所报告条件下成功运行时，不得声称 `Reproduced` 或测试通过。
+没有可靠反馈方式时，根因状态必须保持 `Inferred` 或 `Unverified`。对应命令未在所报告条件下成功运行时，不得声称 `Reproduced` 或测试通过。

@@ -68,15 +68,26 @@ Before running `npm test`, a repository script, or a language-specific test comm
 
 Record every executed diagnostic with its exact command, working directory, exit status, and relevant result. Redact sensitive values. Never claim `Reproduced` or a passing test when the corresponding command did not run successfully.
 
+### Repeatable feedback mechanism
+
+- Establish a repeatable feedback mechanism before assigning high confidence to a root cause. It may be an existing test, static check, log query, minimum script in an isolated temporary location, non-production interface request, or precise user action sequence.
+- Record the mechanism, inputs, environment, expected symptom, observed result, and repeatability limits. Keep symptom reproduction separate from causal confirmation.
+- When commands cannot run, provide the smallest user-runnable reproduction and evidence-collection steps. Mark their result `Unverified` until output is returned.
+- For every hypothesis, record supporting evidence, a concrete falsification method or contradictory observation, confidence, and remaining unknowns.
+- Without a reliable feedback mechanism, a causal conclusion may be only `Inferred` or `Unverified`; never label it a confirmed high-confidence root cause.
+- A repair direction must remove the causal mechanism, not merely suppress the visible symptom. Always propose a regression test or repeatable regression check.
+
 ## Workflow
 
 1. Record the symptom, user impact, affected scope, environment, version, inputs, state, and reproduction conditions.
 2. Inspect repository instructions, command definitions, existing tests, configuration, and current workspace state before selecting a command.
 3. Apply the safe diagnostic and test-command gates; record skipped commands as `Blocked` or `Unverified` with the reason.
-4. Reproduce when safely possible. If not reproduced, state why and distinguish observed facts from reported symptoms.
-5. Start from the first trustworthy error or invariant violation. Treat later failures as possible cascades until proven otherwise.
-6. Trace `input/state -> execution path -> failure point -> user-visible symptom` using file locations, logs, stack frames, configuration, tests, or minimum experiments.
-7. Compare working and failing paths, versions, inputs, or environments when evidence permits.
-8. Classify the confirmed root cause, primary hypothesis, alternative hypotheses, and unknowns separately, and try to falsify the primary hypothesis.
-9. State the smallest repair direction and regression tests needed without editing files.
-10. Assign confidence and list the exact evidence needed to raise it.
+4. Select and record a repeatable feedback mechanism. If none can run, provide minimum user-runnable steps and cap the conclusion at `Inferred` or `Unverified`.
+5. Reproduce the symptom when safely possible. If not reproduced, state why; symptom reproduction alone is not root-cause confirmation.
+6. Start from the first trustworthy error or invariant violation. Treat later failures as possible cascades until proven otherwise.
+7. Trace `input/state -> execution path -> failure point -> user-visible symptom` using file locations, logs, stack frames, configuration, tests, or minimum experiments.
+8. Compare working and failing paths, versions, inputs, or environments when evidence permits.
+9. For primary and alternative hypotheses, record support, falsification method, contradictory evidence, confidence, and unknowns. Run the safest discriminator available.
+10. Confirm the root cause only when the feedback mechanism and causal evidence distinguish it from plausible alternatives.
+11. State the smallest causal repair direction and regression test or check without editing files. Reject symptom-only workarounds as root-cause fixes.
+12. Assign confidence and list the exact evidence needed to raise it.

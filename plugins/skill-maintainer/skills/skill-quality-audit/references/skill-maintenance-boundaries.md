@@ -31,4 +31,22 @@ Use evidence-backed model review for:
 
 ## Public boundary
 
+## Repo Doctor Skill Quality Model
+
+Treat this section as the shared authority for authoring and audit. Evaluate:
+
+- whether explicit user invocation and automatic model activation select the Skill for distinct realistic intents rather than a synonym pile;
+- whether every workflow phase has an inspectable completion condition and whether the instructions can terminate prematurely;
+- whether main instructions contain only rules required by every branch, with branch-specific detail loaded progressively;
+- whether one rule has multiple authoritative sources, or an instruction is unreachable, ineffective, duplicated, stale, or expands scope without a boundary;
+- whether failure and exit conditions are explicit;
+- whether English and Chinese preserve the same behavior, permissions, risk, and stop conditions;
+- whether metadata, output contracts, examples, tests, and generated output agree;
+- whether router references resolve to active Skills and reject missing or deprecated Skills; and
+- whether a new Skill overlaps an existing owner instead of defining a distinct task state, input, output, permission boundary, and failure condition.
+
+Record evidence for each judgment. Deterministic checks may prove references, files, schemas, and generated parity; semantic activation, premature completion, ineffective instructions, and responsibility overlap still require model judgment.
+
+## Public boundary
+
 Do not publish organization-specific procedures, customer material, credentials, private paths, non-public data access, or restricted investment and trading logic. If a request requires those details, keep the public interface generic and route private implementation to a separate private distribution.

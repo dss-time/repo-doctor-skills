@@ -36,9 +36,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.5.0",
-      activeSkillCount: 21,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.5.0" }),
+      version: "0.6.0",
+      activeSkillCount: 25,
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.6.0" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
@@ -50,9 +50,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.skill-maintainer",
       path: "engineering/skill-maintainer",
-      version: "0.1.0",
+      version: "0.2.0",
       activeSkillCount: 2,
-      plugin: Object.freeze({ name: "skill-maintainer", version: "0.1.0" }),
+      plugin: Object.freeze({ name: "skill-maintainer", version: "0.2.0" }),
     }),
     Object.freeze({
       id: "office.document-data-doctor",
@@ -65,6 +65,11 @@ export const releaseContract = Object.freeze({
   skillVersionFloor: "0.1.0",
   skillVersionFloorOverrides: Object.freeze({
     "productivity.report-writer": "0.2.0",
+    "repo.bug-root-cause-analysis": "0.2.0",
+    "repo.safe-code-review": "0.2.0",
+    "repo.safe-test-implementation": "0.2.0",
+    "maintainer.skill-authoring": "0.2.0",
+    "maintainer.skill-quality-audit": "0.2.0",
   }),
   template: Object.freeze({
     path: "_template",

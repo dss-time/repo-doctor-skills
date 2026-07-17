@@ -89,7 +89,7 @@ function runRcaContractMutation({ fixtureRoot, file, search, replacement, expect
 }
 
 const canonicalSkills = discoverActivePackSkills(canonicalPack);
-expect(canonicalSkills.length === 21, `Repo Doctor pack should expose 21 active skills, received ${canonicalSkills.length}`);
+expect(canonicalSkills.length === 25, `Repo Doctor pack should expose 25 active skills, received ${canonicalSkills.length}`);
 for (const slug of originalSkills) expect(canonicalSkills.includes(slug), `Repo Doctor pack must include original skill ${slug}`);
 const canonicalRca = parseYamlSubset(readFileSync(path.join(canonicalPack, "skills", rcaSlug, "skill.yaml"), "utf8"));
 expect(canonicalRca.tool_requirements?.filesystem === "read", "RCA must keep filesystem access read-only");
@@ -111,7 +111,7 @@ try {
   expect(JSON.stringify(firstOrder) === JSON.stringify(canonicalSkills), "sync order must match pack.yaml order");
   expect(
     JSON.stringify(sortedDirectoryNames(pluginSkills)) === JSON.stringify([...canonicalSkills].sort(compareNames)),
-    "generated plugin must contain exactly the 21 canonical Repo Doctor skills",
+    "generated plugin must contain exactly the 25 canonical Repo Doctor skills",
   );
 
   for (const slug of originalSkills) {
@@ -250,4 +250,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Repo Doctor sync tests passed for 21 skills, RCA permission/safety and equivalent-risk contracts, original-Skill coverage, drift detection, pruning, and idempotence.");
+console.log("Repo Doctor sync tests passed for 25 skills, RCA permission/safety and equivalent-risk contracts, original-Skill coverage, drift detection, pruning, and idempotence.");

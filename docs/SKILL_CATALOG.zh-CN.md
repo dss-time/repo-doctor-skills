@@ -2,7 +2,7 @@
 
 > 此文件由 `scripts/generate-skill-catalog.mjs` 基于 `packs/`、activation contracts 和插件 UI 元数据确定性生成。请勿手工编辑；运行 `node scripts/generate-skill-catalog.mjs` 更新。
 
-本目录对应项目 Release Candidate `0.2.0`，收录 4 个 active Pack 中的 34 个 active Skill。当前其中 31 个配置了插件兼容产物和独立 ChatGPT ZIP，3 个仅进入常规跨平台构建产物。相邻 Skill 来自 245 条 activation contract 以及 canonical description 中明确提到的 Skill。
+本目录对应项目 Release Candidate `0.2.0`，收录 4 个 active Pack 中的 38 个 active Skill。当前其中 35 个配置了插件兼容产物和独立 ChatGPT ZIP，3 个仅进入常规跨平台构建产物。相邻 Skill 来自 269 条 activation contract 以及 canonical description 中明确提到的 Skill。
 
 这里的 **beta** 表示已经可以公开使用并通过当前仓库的 contract、构建和文档验证，但仍需要真实环境反馈；它不等于在线模型路由已经验证。Live-model 路由准确率仍为 **UNKNOWN**。`stable` 也只表示成熟度更高，不代表绝对无 Bug。
 
@@ -21,10 +21,23 @@
 
 - **Pack ID：** `engineering.repo-doctor`
 - **Canonical：** `packs/engineering/repo-doctor/pack.yaml`
-- **Active Skill：** 21
-- **Pack 版本 / 状态：** `0.5.0` / `beta`
+- **Active Skill：** 25
+- **Pack 版本 / 状态：** `0.6.0` / `beta`
 - **Canonical Pack 说明：** 用于理解、审查、诊断和安全修改软件仓库的公开安全技能包。
-- **实际 active 清单：** `repo-onboarding`、`requirements-to-spec`、`bug-root-cause-analysis`、`project-health-check`、`safe-code-review`、`change-impact-analysis`、`safe-change-plan`、`test-gap-analysis`、`safe-test-implementation`、`ci-failure-diagnosis`、`documentation-sync`、`release-readiness-check`、`dependency-upgrade-analysis`、`api-contract-review`、`database-migration-review`、`dead-code-verification`、`security-focused-review`、`performance-regression-analysis`、`architecture-decision-record`、`configuration-audit`、`safe-fix-implementation`
+- **实际 active 清单：** `repo-doctor-router`、`repo-onboarding`、`requirements-clarification`、`requirements-to-spec`、`spec-to-work-items`、`bug-root-cause-analysis`、`project-health-check`、`safe-code-review`、`change-impact-analysis`、`safe-change-plan`、`test-gap-analysis`、`safe-test-implementation`、`ci-failure-diagnosis`、`documentation-sync`、`release-readiness-check`、`dependency-upgrade-analysis`、`api-contract-review`、`database-migration-review`、`dead-code-verification`、`security-focused-review`、`performance-regression-analysis`、`architecture-decision-record`、`configuration-audit`、`session-handoff`、`safe-fix-implementation`
+
+### `repo-doctor-router` — Repo Doctor Router（Repo Doctor Router（工作流路由））
+
+- **Canonical 元数据：** `packs/engineering/repo-doctor/skills/repo-doctor-router/skill.yaml`
+- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `read_only`
+- **调用标识：** `repo-doctor-router`
+- **Canonical 用途与边界：** 对当前仓库任务分类，并推荐一个现有 Repo Doctor Skill 或有序工作流，但不执行被推荐能力。用于初次进入陌生仓库、不知道选择哪个 Skill，或需要在澄清、规格、计划、实施、测试、审查、诊断、发布检查与会话交接之间选择安全下一步；普通问答不涉及仓库工作流决策时不要触发。
+- **适合使用的例子：** 我不知道该选哪个 Repo Doctor Skill，请先路由当前工程任务但不要执行推荐。
+- **不应使用的例子：** 请直接把这个已确认的小型生产 Bug 修好并运行测试。 → 应转给 `safe-fix-implementation`
+- **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
+- **工具需求：** filesystem=read, git=none, shell=none, web=none
+- **分发：** 插件：`repo-doctor` v0.6.0 / Repo Doctor Router（Repo Doctor Router（工作流路由））；ChatGPT ZIP：`dist/chatgpt-skills/rd-repo-doctor-router.zip` / RD · Repo Doctor Router（Repo Doctor Router（工作流路由））（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **Activation contract 相邻 Skill：** `project-health-check`、`safe-fix-implementation`
 
 ### `repo-onboarding` — Repo Onboarding（仓库理解）
 
@@ -36,8 +49,21 @@
 - **不应使用的例子：** 全面检查这个项目的架构、测试、安全和维护性问题，按优先级报告。 → 应转给 `project-health-check`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Repo Onboarding（理解新项目）；ChatGPT ZIP：`dist/chatgpt-skills/rd-repo-onboarding.zip` / RD · Repo Onboarding（理解新项目）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Repo Onboarding（理解新项目）；ChatGPT ZIP：`dist/chatgpt-skills/rd-repo-onboarding.zip` / RD · Repo Onboarding（理解新项目）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `requirements-to-spec`、`project-health-check`、`safe-code-review`、`safe-fix-implementation`
+
+### `requirements-clarification` — Requirements Clarification（Requirements Clarification（需求决策澄清））
+
+- **Canonical 元数据：** `packs/engineering/repo-doctor/skills/requirements-clarification/skill.yaml`
+- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `read_only`
+- **调用标识：** `requirements-clarification`
+- **Canonical 用途与边界：** 在规格化或实施前，关闭仍未确定且会实质影响产品、行为、兼容性、数据、权限、安全、迁移和验收的决策。用于存在关键歧义的需求；先检查仓库证据，再一次聚焦一个问题，最终生成交给 requirements-to-spec 的澄清摘要。已清楚的小改动不使用，也不生成最终规格、不修改长期文档或实施代码。
+- **适合使用的例子：** 写规格前先读取仓库，逐个关闭会改变权限、数据边界和兼容性的需求决策。
+- **不应使用的例子：** 所有关键决策已经闭合，请把它们整理成可实施、可测试的完整规格。 → 应转给 `requirements-to-spec`
+- **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
+- **工具需求：** filesystem=read, git=optional, shell=none, web=none
+- **分发：** 插件：`repo-doctor` v0.6.0 / Requirements Clarification（Requirements Clarification（需求决策澄清））；ChatGPT ZIP：`dist/chatgpt-skills/rd-requirements-clarification.zip` / RD · Requirements Clarification（Requirements Clarification（需求决策澄清））（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **Activation contract 相邻 Skill：** `requirements-to-spec`、`safe-fix-implementation`
 
 ### `requirements-to-spec` — Requirements to Spec（需求澄清与规格化）
 
@@ -49,20 +75,33 @@
 - **不应使用的例子：** 规格已经完整，请分析重命名这个公共 API 会影响什么。 → 应转给 `change-impact-analysis`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Requirements to Spec（需求澄清与规格化）；ChatGPT ZIP：`dist/chatgpt-skills/rd-requirements-to-spec.zip` / RD · Requirements to Spec（需求澄清与规格化）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Requirements to Spec（需求澄清与规格化）；ChatGPT ZIP：`dist/chatgpt-skills/rd-requirements-to-spec.zip` / RD · Requirements to Spec（需求澄清与规格化）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `change-impact-analysis`、`safe-change-plan`、`safe-fix-implementation`
+
+### `spec-to-work-items` — Spec to Work Items（Spec to Work Items（规格拆分工作项））
+
+- **Canonical 元数据：** `packs/engineering/repo-doctor/skills/spec-to-work-items/skill.yaml`
+- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `advisory`
+- **调用标识：** `spec-to-work-items`
+- **Canonical 用途与边界：** 将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；默认输出本地 Markdown 计划，不创建外部 Issue。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。
+- **适合使用的例子：** 把这个已批准的大规格按可交付行为拆成可独立验证、标明依赖和并行机会的工作项。
+- **不应使用的例子：** 需求仍有会改变兼容性的开放决策，请先逐项澄清。 → 应转给 `requirements-clarification`
+- **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
+- **工具需求：** filesystem=read, git=optional, shell=none, web=none
+- **分发：** 插件：`repo-doctor` v0.6.0 / Spec to Work Items（Spec to Work Items（规格拆分工作项））；ChatGPT ZIP：`dist/chatgpt-skills/rd-spec-to-work-items.zip` / RD · Spec to Work Items（Spec to Work Items（规格拆分工作项））（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **Activation contract 相邻 Skill：** `requirements-clarification`、`safe-change-plan`、`safe-fix-implementation`
 
 ### `bug-root-cause-analysis` — Bug Root Cause Analysis（Bug 根因分析）
 
 - **Canonical 元数据：** `packs/engineering/repo-doctor/skills/bug-root-cause-analysis/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `tool_execution`
+- **版本 / 状态 / 风险：** `0.2.0` / `beta` / `tool_execution`
 - **调用标识：** `bug-root-cause-analysis`
 - **Canonical 用途与边界：** 针对具体运行时 Bug，从第一个可信错误出发，结合代码、日志、配置、现有测试和最小实验复现并建立有证据的因果链。用于非 CI 的症状到根因分析；不要吸收 CI 流水线失败、普通代码审查、项目体检、新增或修改测试请求或直接修复请求。
 - **适合使用的例子：** 这个接口只在空 tags 时返回 500，请复现并定位根因，不要修。
 - **不应使用的例子：** 请审查当前 PR 是否存在正确性和安全问题。 → 应转给 `safe-code-review`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=是；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Bug Root Cause Analysis（Bug 根因分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-bug-root-cause-analysis.zip` / RD · Bug Root Cause Analysis（Bug 根因分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Bug Root Cause Analysis（Bug 根因分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-bug-root-cause-analysis.zip` / RD · Bug Root Cause Analysis（Bug 根因分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`safe-code-review`、`safe-test-implementation`、`dependency-upgrade-analysis`、`database-migration-review`、`safe-fix-implementation`
 
 ### `project-health-check` — Project Health Check（项目体检）
@@ -75,20 +114,20 @@
 - **不应使用的例子：** 我刚接手这个项目，只想理解目录、入口和怎么运行，不要检查项目问题。 → 应转给 `repo-onboarding`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Project Health Check（项目健康检查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-project-health-check.zip` / RD · Project Health Check（项目健康检查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Project Health Check（项目健康检查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-project-health-check.zip` / RD · Project Health Check（项目健康检查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `repo-onboarding`、`safe-code-review`、`test-gap-analysis`、`release-readiness-check`、`security-focused-review`、`safe-fix-implementation`
 
 ### `safe-code-review` — Safe Code Review（安全代码审查）
 
 - **Canonical 元数据：** `packs/engineering/repo-doctor/skills/safe-code-review/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `read_only`
+- **版本 / 状态 / 风险：** `0.2.0` / `beta` / `read_only`
 - **调用标识：** `safe-code-review`
 - **Canonical 用途与边界：** 广泛审查代码改动或 PR 的正确性、兼容性、安全性、可维护性和测试。用户要求单一安全、性能回归或 API 契约专项时分别使用对应专项 Skill；本 Skill 不实施修复。
 - **适合使用的例子：** 审查当前 Git Diff，找出 Bug 和设计问题
 - **不应使用的例子：** 对整个仓库做架构、依赖、测试、安全和维护性健康体检，不限于当前 diff。 → 应转给 `project-health-check`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Safe Code Review（安全审查代码）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-code-review.zip` / RD · Safe Code Review（安全审查代码）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Safe Code Review（安全审查代码）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-code-review.zip` / RD · Safe Code Review（安全审查代码）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`api-contract-review`、`security-focused-review`、`performance-regression-analysis`、`safe-fix-implementation`
 
 ### `change-impact-analysis` — Change Impact Analysis（变更影响分析）
@@ -101,7 +140,7 @@
 - **不应使用的例子：** 影响分析已经确认，请把变更拆成原子、可验证、可回滚的实施步骤，但不要执行。 → 应转给 `safe-change-plan`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Change Impact Analysis（改代码看影响）；ChatGPT ZIP：`dist/chatgpt-skills/rd-change-impact-analysis.zip` / RD · Change Impact Analysis（改代码看影响）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Change Impact Analysis（改代码看影响）；ChatGPT ZIP：`dist/chatgpt-skills/rd-change-impact-analysis.zip` / RD · Change Impact Analysis（改代码看影响）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `requirements-to-spec`、`safe-change-plan`、`dependency-upgrade-analysis`、`api-contract-review`、`database-migration-review`、`dead-code-verification`、`safe-fix-implementation`
 
 ### `safe-change-plan` — Safe Change Plan（安全变更计划）
@@ -114,7 +153,7 @@
 - **不应使用的例子：** 我想重命名共享模块，但还不知道调用方和兼容性影响。 → 应转给 `change-impact-analysis`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Safe Change Plan（安全变更计划）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-change-plan.zip` / RD · Safe Change Plan（安全变更计划）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Safe Change Plan（安全变更计划）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-change-plan.zip` / RD · Safe Change Plan（安全变更计划）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `requirements-to-spec`、`bug-root-cause-analysis`、`change-impact-analysis`、`architecture-decision-record`、`safe-fix-implementation`
 
 ### `test-gap-analysis` — Test Gap Analysis（测试缺口分析）
@@ -127,20 +166,20 @@
 - **不应使用的例子：** 对整个仓库做健康检查，包括架构、安全、依赖和测试风险。 → 应转给 `project-health-check`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Test Gap Analysis（测试缺口分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-test-gap-analysis.zip` / RD · Test Gap Analysis（测试缺口分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Test Gap Analysis（测试缺口分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-test-gap-analysis.zip` / RD · Test Gap Analysis（测试缺口分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`safe-code-review`、`safe-test-implementation`、`safe-fix-implementation`
 
 ### `safe-test-implementation` — Safe Test Implementation（安全补充测试）
 
 - **Canonical 元数据：** `packs/engineering/repo-doctor/skills/safe-test-implementation/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `safe_edit`
+- **版本 / 状态 / 风险：** `0.2.0` / `beta` / `safe_edit`
 - **调用标识：** `safe-test-implementation`
 - **Canonical 用途与边界：** 根据测试缺口分析、已确认行为或已验证修复，遵循仓库真实框架和约定最小化补充高价值测试。用于修改测试、fixture 和必要测试辅助代码；不用于通用 Bug 修复、生产代码重构或只为覆盖率添加断言，必须改生产代码时除非用户明确扩大范围否则停止。
 - **适合使用的例子：** 根据测试缺口报告实施最高价值的回归测试，只修改测试和 fixture。
 - **不应使用的例子：** 分析这个 diff 还缺哪些单元、集成和端到端测试，不要写测试。 → 应转给 `test-gap-analysis`
 - **声明权限：** 读取文件=是；写入文件=是；运行 shell=是；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=write, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Safe Test Implementation（安全补充测试）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-test-implementation.zip` / RD · Safe Test Implementation（安全补充测试）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Safe Test Implementation（安全补充测试）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-test-implementation.zip` / RD · Safe Test Implementation（安全补充测试）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `test-gap-analysis`、`safe-fix-implementation`
 
 ### `ci-failure-diagnosis` — CI Failure Diagnosis（CI 失败诊断）
@@ -153,7 +192,7 @@
 - **不应使用的例子：** API 在本地运行时稳定返回 500，没有 CI 上下文，请定位根因。 → 应转给 `bug-root-cause-analysis`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / CI Failure Diagnosis（CI 失败诊断）；ChatGPT ZIP：`dist/chatgpt-skills/rd-ci-failure-diagnosis.zip` / RD · CI Failure Diagnosis（CI 失败诊断）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / CI Failure Diagnosis（CI 失败诊断）；ChatGPT ZIP：`dist/chatgpt-skills/rd-ci-failure-diagnosis.zip` / RD · CI Failure Diagnosis（CI 失败诊断）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `bug-root-cause-analysis`、`project-health-check`、`safe-fix-implementation`
 
 ### `documentation-sync` — Documentation Sync（文档同步维护）
@@ -166,7 +205,7 @@
 - **不应使用的例子：** 修复 CLI 返回值错误并更新相应文档。 → 应转给 `safe-fix-implementation`
 - **声明权限：** 读取文件=是；写入文件=是；运行 shell=是；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=write, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Documentation Sync（文档同步维护）；ChatGPT ZIP：`dist/chatgpt-skills/rd-documentation-sync.zip` / RD · Documentation Sync（文档同步维护）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Documentation Sync（文档同步维护）；ChatGPT ZIP：`dist/chatgpt-skills/rd-documentation-sync.zip` / RD · Documentation Sync（文档同步维护）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `requirements-to-spec`、`safe-code-review`、`safe-fix-implementation`
 
 ### `release-readiness-check` — Release Readiness Check（发布就绪检查）
@@ -179,7 +218,7 @@
 - **不应使用的例子：** 对整个仓库做广泛健康检查，包括架构、安全、依赖和长期维护风险。 → 应转给 `project-health-check`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Release Readiness Check（发布就绪检查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-release-readiness-check.zip` / RD · Release Readiness Check（发布就绪检查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Release Readiness Check（发布就绪检查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-release-readiness-check.zip` / RD · Release Readiness Check（发布就绪检查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`safe-fix-implementation`
 
 ### `dependency-upgrade-analysis` — Dependency Upgrade Analysis（依赖升级分析）
@@ -192,7 +231,7 @@
 - **不应使用的例子：** 我要重命名内部模块，请分析调用方和普通代码影响。 → 应转给 `change-impact-analysis`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=optional
-- **分发：** 插件：`repo-doctor` v0.5.0 / Dependency Upgrade Analysis（依赖升级分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-dependency-upgrade-analysis.zip` / RD · Dependency Upgrade Analysis（依赖升级分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Dependency Upgrade Analysis（依赖升级分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-dependency-upgrade-analysis.zip` / RD · Dependency Upgrade Analysis（依赖升级分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`change-impact-analysis`、`safe-fix-implementation`
 
 ### `api-contract-review` — API Contract Review（API 契约审查）
@@ -205,7 +244,7 @@
 - **不应使用的例子：** 请对整个 PR 做普通正确性和可维护性代码审查。 → 应转给 `safe-code-review`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / API Contract Review（API 契约审查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-api-contract-review.zip` / RD · API Contract Review（API 契约审查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / API Contract Review（API 契约审查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-api-contract-review.zip` / RD · API Contract Review（API 契约审查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `safe-code-review`、`change-impact-analysis`、`safe-fix-implementation`
 
 ### `database-migration-review` — Database Migration Review（数据库迁移审查）
@@ -218,7 +257,7 @@
 - **不应使用的例子：** 需求和影响已经确认，请生成通用原子实施计划。 → 应转给 `safe-change-plan`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Database Migration Review（数据库迁移审查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-database-migration-review.zip` / RD · Database Migration Review（数据库迁移审查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Database Migration Review（数据库迁移审查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-database-migration-review.zip` / RD · Database Migration Review（数据库迁移审查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`change-impact-analysis`、`safe-change-plan`、`safe-fix-implementation`
 
 ### `dead-code-verification` — Dead Code Verification（死代码验证）
@@ -231,7 +270,7 @@
 - **不应使用的例子：** 我已经决定删除这个公共函数，请分析删除会影响哪些调用方。 → 应转给 `change-impact-analysis`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Dead Code Verification（死代码验证）；ChatGPT ZIP：`dist/chatgpt-skills/rd-dead-code-verification.zip` / RD · Dead Code Verification（死代码验证）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Dead Code Verification（死代码验证）；ChatGPT ZIP：`dist/chatgpt-skills/rd-dead-code-verification.zip` / RD · Dead Code Verification（死代码验证）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `safe-code-review`、`change-impact-analysis`、`safe-fix-implementation`
 
 ### `security-focused-review` — Security Focused Review（安全专项审查）
@@ -244,7 +283,7 @@
 - **不应使用的例子：** 请对整个仓库做架构、依赖、测试、安全和维护性健康体检。 → 应转给 `project-health-check`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=optional
-- **分发：** 插件：`repo-doctor` v0.5.0 / Security Focused Review（安全专项审查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-security-focused-review.zip` / RD · Security Focused Review（安全专项审查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Security Focused Review（安全专项审查）；ChatGPT ZIP：`dist/chatgpt-skills/rd-security-focused-review.zip` / RD · Security Focused Review（安全专项审查）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`safe-code-review`、`safe-fix-implementation`
 
 ### `performance-regression-analysis` — Performance Regression Analysis（性能回归分析）
@@ -257,7 +296,7 @@
 - **不应使用的例子：** 请普通审查这个 PR 的正确性、类型和可维护性问题。 → 应转给 `safe-code-review`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Performance Regression Analysis（性能回归分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-performance-regression-analysis.zip` / RD · Performance Regression Analysis（性能回归分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Performance Regression Analysis（性能回归分析）；ChatGPT ZIP：`dist/chatgpt-skills/rd-performance-regression-analysis.zip` / RD · Performance Regression Analysis（性能回归分析）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`safe-code-review`、`safe-fix-implementation`
 
 ### `architecture-decision-record` — Architecture Decision Record（架构决策记录）
@@ -270,7 +309,7 @@
 - **不应使用的例子：** 决策已经确定，请拆成逐步验证和回滚的代码实施计划。 → 应转给 `safe-change-plan`
 - **声明权限：** 读取文件=是；写入文件=是；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=write, git=optional, shell=none, web=optional
-- **分发：** 插件：`repo-doctor` v0.5.0 / Architecture Decision Record（架构决策记录）；ChatGPT ZIP：`dist/chatgpt-skills/rd-architecture-decision-record.zip` / RD · Architecture Decision Record（架构决策记录）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Architecture Decision Record（架构决策记录）；ChatGPT ZIP：`dist/chatgpt-skills/rd-architecture-decision-record.zip` / RD · Architecture Decision Record（架构决策记录）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `requirements-to-spec`、`safe-change-plan`、`documentation-sync`、`safe-fix-implementation`
 
 ### `configuration-audit` — Configuration Audit（配置审计）
@@ -283,8 +322,21 @@
 - **不应使用的例子：** 请对整个项目做广泛健康检查，包括架构、测试、依赖和配置。 → 应转给 `project-health-check`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=否；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Configuration Audit（配置审计）；ChatGPT ZIP：`dist/chatgpt-skills/rd-configuration-audit.zip` / RD · Configuration Audit（配置审计）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Configuration Audit（配置审计）；ChatGPT ZIP：`dist/chatgpt-skills/rd-configuration-audit.zip` / RD · Configuration Audit（配置审计）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`change-impact-analysis`、`safe-fix-implementation`
+
+### `session-handoff` — Session Handoff（Session Handoff（会话交接））
+
+- **Canonical 元数据：** `packs/engineering/repo-doctor/skills/session-handoff/skill.yaml`
+- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `safe_edit`
+- **调用标识：** `session-handoff`
+- **Canonical 用途与边界：** 生成经过敏感信息清理且区分事实与推断的续接摘要，使新 Agent 会话无需重做已完成工作即可继续仓库任务。用于上下文过长、负责人切换或稍后继续；引用已有产物，记录仓库和验证状态，推荐下一 Skills，并提供可复制启动指令。不修改业务代码、不创建 commit、不声称会自动加载，也不在缺少安全 scratch 位置或写入授权时落盘。
+- **适合使用的例子：** 当前会话太长，请生成脱敏交接摘要，让下一个 Agent 可以继续且不重复已完成工作。
+- **不应使用的例子：** 请审查当前 diff 是否符合规格并检查实现质量。 → 应转给 `safe-code-review`
+- **声明权限：** 读取文件=是；写入文件=是；运行 shell=否；访问网络=否；允许破坏性操作=否
+- **工具需求：** filesystem=write, git=optional, shell=none, web=none
+- **分发：** 插件：`repo-doctor` v0.6.0 / Session Handoff（Session Handoff（会话交接））；ChatGPT ZIP：`dist/chatgpt-skills/rd-session-handoff.zip` / RD · Session Handoff（Session Handoff（会话交接））（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **Activation contract 相邻 Skill：** `safe-code-review`、`documentation-sync`
 
 ### `safe-fix-implementation` — Safe Fix Implementation（最小安全修复）
 
@@ -296,7 +348,7 @@
 - **不应使用的例子：** 只复现并分析这个空指针错误的根因，建立证据链，不要修改任何文件。 → 应转给 `bug-root-cause-analysis`
 - **声明权限：** 读取文件=是；写入文件=是；运行 shell=是；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=write, git=optional, shell=optional, web=none
-- **分发：** 插件：`repo-doctor` v0.5.0 / Safe Fix Implementation（只修一个问题）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-fix-implementation.zip` / RD · Safe Fix Implementation（只修一个问题）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`repo-doctor` v0.6.0 / Safe Fix Implementation（只修一个问题）；ChatGPT ZIP：`dist/chatgpt-skills/rd-safe-fix-implementation.zip` / RD · Safe Fix Implementation（只修一个问题）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `bug-root-cause-analysis`、`safe-code-review`、`safe-change-plan`、`safe-test-implementation`、`documentation-sync`
 
 ## 2. Productivity Toolkit（通用办公与研究生产力工具包）
@@ -417,34 +469,34 @@
 - **Pack ID：** `engineering.skill-maintainer`
 - **Canonical：** `packs/engineering/skill-maintainer/pack.yaml`
 - **Active Skill：** 2
-- **Pack 版本 / 状态：** `0.1.0` / `beta`
+- **Pack 版本 / 状态：** `0.2.0` / `beta`
 - **Canonical Pack 说明：** 面向维护者的公开安全工作流，用于工程化创建 AI Skill，并在发布前审计 Skill、Pack、插件和生成物质量。
 - **实际 active 清单：** `skill-authoring`、`skill-quality-audit`
 
 ### `skill-authoring` — Skill Authoring（Skill 工程化创建）
 
 - **Canonical 元数据：** `packs/engineering/skill-maintainer/skills/skill-authoring/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `safe_edit`
+- **版本 / 状态 / 风险：** `0.2.0` / `beta` / `safe_edit`
 - **调用标识：** `skill-authoring`
 - **Canonical 用途与边界：** 在当前 Skills 仓库中，根据具体用例工程化创建或更新一个 AI Skill，覆盖 canonical 源、最少资源、双语元数据、UI 集成、activation 契约、验证和跨平台构建检查。维护者明确需要可复用 Skill 产物时使用；不用于一次性 Prompt、调用现有业务 Skill、只创建空插件、普通代码修改或未经确认批量创建多个 Skill。
 - **适合使用的例子：** 请按这个仓库现有脚手架工程化创建一个双语 AI Skill，包含真实触发例、反例、UI 元数据和跨平台验证。
 - **不应使用的例子：** 只帮我把这一封一次性请假邮件润色得更自然，不要创建任何可复用 Skill。 → 应转给 当前没有匹配的仓库 Skill；停止并说明边界
 - **声明权限：** 读取文件=是；写入文件=是；运行 shell=是；访问网络=是；允许破坏性操作=否
 - **工具需求：** filesystem=write, git=optional, shell=optional, web=optional
-- **分发：** 插件：`skill-maintainer` v0.1.0 / Skill Authoring（Skill 工程化创建）；ChatGPT ZIP：`dist/chatgpt-skills/sm-skill-authoring.zip` / SM · Skill Authoring（Skill 工程化创建）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`skill-maintainer` v0.2.0 / Skill Authoring（Skill 工程化创建）；ChatGPT ZIP：`dist/chatgpt-skills/sm-skill-authoring.zip` / SM · Skill Authoring（Skill 工程化创建）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `documentation-sync`、`safe-fix-implementation`、`report-writer`、`skill-quality-audit`
 
 ### `skill-quality-audit` — Skill Quality Audit（Skill 质量审计）
 
 - **Canonical 元数据：** `packs/engineering/skill-maintainer/skills/skill-quality-audit/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.0` / `beta` / `tool_execution`
+- **版本 / 状态 / 风险：** `0.2.0` / `beta` / `tool_execution`
 - **调用标识：** `skill-quality-audit`
 - **Canonical 用途与边界：** 对一个 AI Skill、Pack、插件或 Skills 仓库执行严格只读的发布前质量审计，覆盖结构、触发、工作流、渐进资源、双语跨平台产物、安全和发布集成。维护者需要发现、严重度、证据和发布建议时使用；不用于普通应用代码或 PR 审查、广泛项目体检、产品候选版本门禁，也不自动修复文件。
 - **适合使用的例子：** 发布前只读审计这个结构合法的 AI Skill，并在没有问题时也给出有证据的评分卡和发布建议。
 - **不应使用的例子：** 需要创建一个 Skill；如果平台脚手架工具不可用，请明确降级并检查仓库现有脚本，不要伪称已经生成文件。 → 应转给 `skill-authoring`
 - **声明权限：** 读取文件=是；写入文件=否；运行 shell=是；访问网络=否；允许破坏性操作=否
 - **工具需求：** filesystem=read, git=optional, shell=optional, web=none
-- **分发：** 插件：`skill-maintainer` v0.1.0 / Skill Quality Audit（Skill 质量审计）；ChatGPT ZIP：`dist/chatgpt-skills/sm-skill-quality-audit.zip` / SM · Skill Quality Audit（Skill 质量审计）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
+- **分发：** 插件：`skill-maintainer` v0.2.0 / Skill Quality Audit（Skill 质量审计）；ChatGPT ZIP：`dist/chatgpt-skills/sm-skill-quality-audit.zip` / SM · Skill Quality Audit（Skill 质量审计）（ZIP 内不嵌入 version/status，以构建来源和漂移检查证明一致性）
 - **Activation contract 相邻 Skill：** `project-health-check`、`safe-code-review`、`test-gap-analysis`、`release-readiness-check`、`security-focused-review`、`safe-fix-implementation`、`document-review`、`skill-authoring`
 
 ## 4. Document Data Doctor（文档数据医生）

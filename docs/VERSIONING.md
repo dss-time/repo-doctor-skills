@@ -28,11 +28,11 @@ For the 0.2.0 release candidate, the component baselines are:
 
 | Component | Version | Distribution rule |
 |---|---:|---|
-| Repo Doctor Pack / plugin | 0.5.0 | Pack and generated plugin must match. |
+| Repo Doctor Pack / plugin | 0.6.0 | Pack and generated plugin must match. |
 | Productivity Toolkit Pack / plugin | 0.1.0 | Pack and generated plugin must match. |
-| Skill Maintainer Pack / plugin | 0.1.0 | Pack and generated plugin must match. |
+| Skill Maintainer Pack / plugin | 0.2.0 | Pack and generated plugin must match. |
 | Document Data Doctor Pack | 0.1.0 | No standalone plugin or ChatGPT ZIP. |
-| Individual Skills | 33 at 0.1.0; `report-writer` at 0.2.0 | Per `skill.yaml`; independent of project and Pack versions. |
+| Individual Skills | 32 at 0.1.0; 6 at 0.2.0 | Per `skill.yaml`; independent of project and Pack versions. |
 
 Do not mechanically replace every component version with the project version. Update a component version only when its own contract changes, and regenerate plugin and platform outputs from `packs/`.
 
@@ -47,7 +47,7 @@ Maturity status is independent of both version layers:
 
 A Pack's maturity must not be higher than the least mature active Skill it contains. Template Packs and template Skills remain `draft`, are excluded from active counts, and are not released as plugins or standalone ZIPs.
 
-For the 0.2.0 release candidate, all 4 active Packs and all 34 active Skills are `beta`. The template Pack and its template Skill remain `draft`; no component is represented as `stable` without real-use evidence.
+For the 0.2.0 release candidate, all 4 active Packs and all 38 active Skills are `beta`. The template Pack and its template Skill remain `draft`; no component is represented as `stable` without real-use evidence.
 
 Repository validation, activation contracts, and deterministic builds are strong engineering evidence, but they are not a substitute for live-model routing evaluation. Live-model routing accuracy for this release candidate remains **UNKNOWN**.
 

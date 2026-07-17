@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "validate": "node scripts/validate-yaml-schemas.mjs && node scripts/validate-skills.mjs && node scripts/check-skill-quality.mjs && node scripts/check-user-docs.mjs",
-    "test": "node scripts/test-skill-activation.mjs && node scripts/test-maintainer-tools.mjs && node scripts/test-build-integrity.mjs && node scripts/test-repo-doctor-sync.mjs && node scripts/test-user-docs.mjs && node scripts/test-release-metadata.mjs",
+    "test": "node scripts/test-skill-activation.mjs && node scripts/test-repo-doctor-workflows.mjs && node scripts/test-maintainer-tools.mjs && node scripts/test-build-integrity.mjs && node scripts/test-repo-doctor-sync.mjs && node scripts/test-user-docs.mjs && node scripts/test-release-metadata.mjs",
     "build": "node scripts/build-skills.mjs && node scripts/sync-productivity-toolkit-plugin.mjs && node scripts/sync-skill-maintainer-plugin.mjs && node scripts/build-chatgpt-skills.mjs && node scripts/check-skill-quality.mjs --check-dist",
     "build:chatgpt": "node scripts/build-chatgpt-skills.mjs",
     "sync:plugin": "node scripts/sync-repo-doctor-plugin.mjs",

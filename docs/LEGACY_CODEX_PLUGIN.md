@@ -34,14 +34,17 @@ plugins/repo-doctor/skills/
 }
 ```
 
-The generated Repo Doctor distribution contains the original five Skills plus sixteen scoped workflow and specialized review Skills, for 21 total:
+The generated Repo Doctor distribution contains 25 scoped workflow and specialist engineering Skills:
 
+- `repo-doctor-router`
 - `repo-onboarding`
+- `requirements-clarification`
+- `requirements-to-spec`
+- `spec-to-work-items`
 - `project-health-check`
 - `safe-code-review`
 - `change-impact-analysis`
 - `safe-fix-implementation`
-- `requirements-to-spec`
 - `bug-root-cause-analysis`
 - `safe-change-plan`
 - `test-gap-analysis`
@@ -57,6 +60,7 @@ The generated Repo Doctor distribution contains the original five Skills plus si
 - `performance-regression-analysis`
 - `architecture-decision-record`
 - `configuration-audit`
+- `session-handoff`
 
 ## Maintain and Regenerate the Plugin
 

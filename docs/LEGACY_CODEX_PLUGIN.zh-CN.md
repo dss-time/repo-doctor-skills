@@ -34,14 +34,17 @@ plugins/repo-doctor/skills/
 }
 ```
 
-生成的 Repo Doctor 分发包含原来的 5 个 Skill 和 16 个边界明确的工作流及专项审查 Skill，共 21 个：
+生成的 Repo Doctor 分发包含 25 个边界明确的工作流与专项工程 Skill：
 
+- `repo-doctor-router`
 - `repo-onboarding`
+- `requirements-clarification`
+- `requirements-to-spec`
+- `spec-to-work-items`
 - `project-health-check`
 - `safe-code-review`
 - `change-impact-analysis`
 - `safe-fix-implementation`
-- `requirements-to-spec`
 - `bug-root-cause-analysis`
 - `safe-change-plan`
 - `test-gap-analysis`
@@ -57,6 +60,7 @@ plugins/repo-doctor/skills/
 - `performance-regression-analysis`
 - `architecture-decision-record`
 - `configuration-audit`
+- `session-handoff`
 
 ## 维护与重新生成插件
 

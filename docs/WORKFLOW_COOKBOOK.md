@@ -56,8 +56,9 @@ If the previous step has a blocking unknown, the next Skill should stop and ask.
 
 | Real task | Recommended starting point | Main gate before writing |
 |---|---|---|
+| Unsure which Repo Doctor workflow fits | **repo-doctor-router** | Router recommends only and never executes the next Skill |
 | Understand an unfamiliar repository | **repo-onboarding** | Normally no write phase |
-| Move from a vague requirement to a release gate | **requirements-to-spec** | Confirm specification, impact, and plan |
+| Move from a vague requirement to a release gate | **requirements-clarification** | Close material decisions, then confirm specification, slices, impact, and plan |
 | Diagnose and fix a runtime bug | **bug-root-cause-analysis** | Confirm root cause and minimal fix scope |
 | Diagnose a CI failure | **ci-failure-diagnosis** | Confirm the first real error and remediation branch |
 | Review a high-risk API, database, or security change | **change-impact-analysis** | Confirm specialist evidence and an atomic plan |
@@ -103,11 +104,13 @@ unknowns. Do not implement fixes.
 ## 2. Move from a Vague Requirement to a Release Gate
 
 **Use when:** A user has an incomplete feature request and wants it delivered safely.  
-**Sequence:** **requirements-to-spec [R]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **safe-fix-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → optional **[GATE] safe-test-implementation [W]** → optional **documentation-sync [W]** → **release-readiness-check [A/GATE]**.
+**Sequence:** **requirements-clarification [R]** → **requirements-to-spec [R]** → optional **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **safe-fix-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → optional **[GATE] safe-test-implementation [W]** → optional **documentation-sync [W]** → **release-readiness-check [A/GATE]**.
 
 | Phase | Why it comes here | Main boundary |
 |---|---|---|
+| Decision clarification | **requirements-clarification** reads repository evidence and closes only choices that materially affect behavior, compatibility, security, data, migration, or acceptance. | Asks one focused decision at a time and stops before specification or code. |
 | Specification | **requirements-to-spec** clarifies goals, scope, constraints, and acceptance criteria first. | Does not produce a concrete code-change plan or write files. |
+| Delivery slicing | For a large specification, **spec-to-work-items** creates vertical, independently verifiable items with dependencies, conflicts, tests, and parallel groups. | Does not create external issues or replace the code-level `safe-change-plan`. |
 | Impact analysis | **change-impact-analysis** uses repository evidence to identify affected modules, contracts, tests, and risks. | Does not implement changes. |
 | Implementation plan | **safe-change-plan** turns confirmed inputs into atomic steps with validation and rollback. | Stops and sends work back when requirements are vague or impact is unknown. |
 | Implementation | **safe-fix-implementation** implements one confirmed issue or tightly bounded fix. | The plan and file scope must be approved before code writes or commands. |
@@ -704,6 +707,14 @@ Do not address unapproved findings or change versions, commit, push, or publish.
 ```
 
 **Final gate:** Passing validate, test, and build and receiving a publishable audit recommendation still does not authorize publication. Version changes, commits, pushes, marketplace publication, and external distribution each require a new, explicit user request.
+
+## 11. Route or Transfer Work Safely
+
+Use **repo-doctor-router [R]** when the user knows the task but not the Skill. It returns a verified next Skill, a shortest safe workflow, alternatives, required inputs, and stop conditions; it never executes the recommendation. Use **session-handoff [R]** when the context is long or ownership changes. The handoff references existing artifacts, separates facts from inferences, removes sensitive values, records real commands and results, and gives a copyable next-session prompt without claiming automatic loading.
+
+## Future Roadmap — Not Implemented
+
+Potential future work may evaluate large-project decision maps, explicitly authorized issue-tracker adapters, background research coordination, and visual architecture reports. Automatic issue creation, commit, push, publication, merge, release, or conflict resolution is not implemented. Investment, stock, valuation, and trading Skills remain outside Repo Doctor's engineering scope.
 
 ## General Failure Handling
 

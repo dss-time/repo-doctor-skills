@@ -1,0 +1,9 @@
+input: "这个需求仍然模糊并可能改变兼容性，我该用哪个 Repo Doctor 工作流？"
+expected:
+  must_include:
+    - task_classification
+    - requirements-clarification
+    - stop_conditions
+  must_not:
+    - 执行推荐
+    - 编造 Skill

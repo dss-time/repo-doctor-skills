@@ -4,19 +4,19 @@
 
 ## Highlights
 
-- Expands Repo Doctor to 21 bilingual engineering Skills covering orientation, specification, diagnosis, review, impact analysis, planning, controlled implementation, test work, CI, documentation, release gates, and specialist engineering risk.
+- Expands Repo Doctor to 25 bilingual engineering Skills covering workflow routing, requirements clarification, specification, vertical work-item planning, diagnosis, review, controlled implementation, verification, release gates, and session handoff.
 - Adds Productivity Toolkit with 8 general office and research Skills.
 - Adds Skill Maintainer with 2 maintainer workflows for controlled Skill authoring and read-only quality auditing.
 - Retains 3 Document Data Doctor Basic Skills in the regular cross-platform build without giving them standalone plugins or ChatGPT ZIPs.
-- Builds 7 regular platform targets and 31 plugin-backed ChatGPT single-Skill ZIP packages.
+- Builds 7 regular platform targets and 35 plugin-backed ChatGPT single-Skill ZIP packages.
 - Adds bilingual User Manuals, complete generated Skill Catalogs, Workflow Cookbooks, and deterministic documentation checks.
 - Uses `packs/` as the only canonical Skill source and regenerates synchronized `plugins/` and `dist/` outputs.
 
 ## Version model
 
 - **Project Release Candidate:** 0.2.0.
-- **Component versions:** independent of the project release. Repo Doctor Pack/plugin is 0.5.0; Productivity Toolkit Pack/plugin and Skill Maintainer Pack/plugin are 0.1.0; Document Data Doctor Pack is 0.1.0; individual Skills keep their own versions.
-- **Maturity:** independent of both version layers. All 4 active Packs and 34 active Skills are `beta`; the template Pack and template Skill remain `draft`. Beta means repository-validated and usable for real tasks while broader public-use or Live-model routing evidence is still limited; it does not mean unusable. Stable would not mean bug-free.
+- **Component versions:** independent of the project release. Repo Doctor Pack/plugin is 0.6.0; Skill Maintainer Pack/plugin is 0.2.0; Productivity Toolkit Pack/plugin and Document Data Doctor Pack are 0.1.0; individual Skills keep their own versions.
+- **Maturity:** independent of both version layers. All 4 active Packs and 38 active Skills are `beta`; the template Pack and template Skill remain `draft`. Beta means repository-validated and usable for real tasks while broader public-use or Live-model routing evidence is still limited; it does not mean unusable. Stable would not mean bug-free.
 - **Live-model routing accuracy:** **UNKNOWN**. Activation contracts and deterministic validation do not replace an online model evaluation.
 
 See [Versioning and Lifecycle Policy](VERSIONING.md) for the full policy and the historical `v0.0.1` tag-label exception.

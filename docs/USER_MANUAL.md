@@ -66,7 +66,7 @@ The canonical source currently contains four active Packs. The latest counts, pe
 
 ### Release version and maturity
 
-This checkout is preparing project version **0.2.0** as a Release Candidate, not announcing a completed publication. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 34 active Skills use `beta`: they have passed repository contracts and are suitable for real tasks, but they do not yet have enough broad public-use or Live-model routing evidence for `stable`. Beta does not mean unusable; stable would not mean bug-free. Live-model routing accuracy remains **UNKNOWN**. See [Versioning and Lifecycle Policy](VERSIONING.md) for exact component baselines and the historical tag-label exception.
+This checkout is preparing project version **0.2.0** as a Release Candidate, not announcing a completed publication. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 38 active Skills use `beta`: they have passed repository contracts and are suitable for real tasks, but they do not yet have enough broad public-use or Live-model routing evidence for `stable`. Beta does not mean unusable; stable would not mean bug-free. Live-model routing accuracy remains **UNKNOWN**. See [Versioning and Lifecycle Policy](VERSIONING.md) for exact component baselines and the historical tag-label exception.
 
 ### Common choices
 

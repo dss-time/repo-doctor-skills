@@ -3,7 +3,12 @@ expected:
   must_include:
     - test basis
     - behavior mapping
+    - expected failure
+    - green verification
+    - related regression
     - results
   must_not:
     - modify production code
     - unrelated refactor
+    - expose private API
+    - install test framework

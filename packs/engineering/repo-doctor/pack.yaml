@@ -4,7 +4,7 @@ name:
   zh-CN: Repo Doctor / 仓库医生
 category: engineering
 visibility: public
-version: 0.5.0
+version: 0.6.0
 status: beta
 default_locale: zh-CN
 supported_locales:
@@ -14,8 +14,11 @@ description:
   en: Public-safe skills for understanding, reviewing, diagnosing, and safely changing software repositories.
   zh-CN: 用于理解、审查、诊断和安全修改软件仓库的公开安全技能包。
 skills:
+  - repo-doctor-router
   - repo-onboarding
+  - requirements-clarification
   - requirements-to-spec
+  - spec-to-work-items
   - bug-root-cause-analysis
   - project-health-check
   - safe-code-review
@@ -34,4 +37,5 @@ skills:
   - performance-regression-analysis
   - architecture-decision-record
   - configuration-audit
+  - session-handoff
   - safe-fix-implementation

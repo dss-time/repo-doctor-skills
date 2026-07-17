@@ -1,0 +1,11 @@
+input: "Split this approved multi-behavior specification into independently verifiable work items with dependencies and safe parallelism."
+expected:
+  must_include:
+    - user_visible_outcome
+    - dependencies
+    - parallelizable_with
+    - acceptance_criteria
+    - verification
+  must_not:
+    - database task only
+    - create external issue

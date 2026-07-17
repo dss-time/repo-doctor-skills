@@ -43,6 +43,26 @@ const pluginBuilds = [
 const reproducibleTimestamp = new Date("2000-01-01T00:00:00Z");
 
 const interfaces = {
+  "repo-doctor-router": {
+    displayName: "Repo Doctor Router（工作流路由）",
+    shortDescription: "分析工程任务状态并推荐现有 Repo Doctor Skill 或安全工作流",
+    defaultPrompt: "使用 $repo-doctor-router 推荐下一 Skill 或工作流，但不要执行推荐。",
+  },
+  "requirements-clarification": {
+    displayName: "Requirements Clarification（需求决策澄清）",
+    shortDescription: "在规格化前逐项关闭会实质改变实现的需求决策",
+    defaultPrompt: "使用 $requirements-clarification 澄清关键需求决策，不要实施代码。",
+  },
+  "spec-to-work-items": {
+    displayName: "Spec to Work Items（规格拆分工作项）",
+    shortDescription: "把已确认规格拆成可独立验证且可安全并行的垂直工作项",
+    defaultPrompt: "使用 $spec-to-work-items 拆分已确认规格，不创建外部 Issue。",
+  },
+  "session-handoff": {
+    displayName: "Session Handoff（会话交接）",
+    shortDescription: "生成脱敏、可续接的会话摘要和下一会话启动指令",
+    defaultPrompt: "使用 $session-handoff 生成脱敏交接，不修改业务代码。",
+  },
   "report-writer": {
     displayName: "Report Writer（报告撰写）",
     shortDescription: "基于目标、读者和证据撰写结构化报告并保持引用一致",

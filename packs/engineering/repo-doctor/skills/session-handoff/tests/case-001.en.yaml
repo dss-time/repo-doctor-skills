@@ -1,0 +1,11 @@
+input: "Prepare a sanitized continuation brief for another agent. Reference existing long artifacts and do not modify business code."
+expected:
+  must_include:
+    - next steps
+    - recommended existing Repo Doctor Skills
+    - copyable next-session start instruction
+    - sanitization
+  must_not:
+    - repeat full specification
+    - modify business code
+    - create commit

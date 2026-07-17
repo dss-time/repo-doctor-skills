@@ -14,18 +14,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- Sixteen scoped Repo Doctor workflows covering requirements specification, bug root-cause analysis, safe change planning, test-gap analysis, safe test implementation, CI diagnosis, documentation synchronization, release readiness, dependency upgrades, API contracts, database migrations, dead-code verification, security, performance regressions, architecture decisions, and configuration.
+- Twenty scoped Repo Doctor workflows covering workflow routing, requirements clarification and specification, vertical work-item planning, session handoff, bug root-cause analysis, safe change planning, test work, CI diagnosis, documentation synchronization, release readiness, dependency upgrades, API contracts, database migrations, dead-code verification, security, performance regressions, architecture decisions, and configuration.
+- Deterministic workflow-contract coverage for routing references, requirements decision states, vertical work-item fields, sanitized session transfer, repeatable bug feedback, dual-dimension review, incremental test feedback, and Skill-maintenance quality.
 - Independent Productivity Toolkit Pack and plugin with eight bilingual, cross-industry office and research Skills.
 - Independent Skill Maintainer Pack and plugin with controlled Skill authoring and strictly read-only Skill quality auditing.
 - Three Document Data Doctor Basic Skills for read-only PDF, Word, and spreadsheet inspection across the seven regular platform targets, without standalone plugin or ChatGPT ZIP distribution.
 - Bilingual activation contracts for positive, negative, boundary, adjacent-Skill, assumption, blocking, capability-degradation, and safety scenarios.
 - Deterministic quality fixtures for metadata, resources, UI integration, permissions, line limits, credentials, machine paths, YAML parsing, Schema validation, synchronization, and build integrity.
 - Cursor, Qwen, and Kimi adapters alongside the existing generic Markdown, Codex, and Claude Code outputs.
-- Thirty-one plugin-backed single-Skill ChatGPT ZIP packages using the `rd-*`, `pt-*`, and `sm-*` publication prefixes.
+- Thirty-five plugin-backed single-Skill ChatGPT ZIP packages using the `rd-*`, `pt-*`, and `sm-*` publication prefixes.
 - First-level `references/`, `assets/`, and deterministic `scripts/` resource packaging for supported targets.
 
 ### Changed
 
+- Upgraded Bug RCA, safe code review, safe test implementation, Skill authoring, and Skill quality audit while preserving their permission boundaries.
+- Advanced Repo Doctor Pack/plugin to 0.6.0 and Skill Maintainer Pack/plugin to 0.2.0.
 - Established `packs/` as the only canonical source for Skill logic, with `plugins/` and `dist/` treated as synchronized or generated outputs.
 - Moved the single canonical `report-writer` implementation to Productivity Toolkit while preserving its public invocation slug.
 - Made plugin synchronization, target traversal, resource copying, archive ordering, and repeated builds deterministic.
@@ -34,7 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Clarified bilingual UI labels, trigger exclusions, adjacent-Skill handoffs, Basic/Full document routing, and analysis-versus-implementation boundaries.
 - Limited Bug RCA shell use to explicit, minimal, non-destructive local reproduction supported by repository evidence.
 - Strengthened the Skill scaffold with global slug/ID checks, exact ID suffix and Pack category checks, length limits, and atomic cleanup after failed creation.
-- Promoted all 4 active Packs and 34 active Skills from `draft` to evidence-backed `beta`; the template Pack and template Skill remain `draft`, and no component is represented as `stable` without real-use evidence.
+- Promoted all 4 active Packs and 38 active Skills from `draft` to evidence-backed `beta`; the template Pack and template Skill remain `draft`, and no component is represented as `stable` without real-use evidence.
 
 ### Fixed
 

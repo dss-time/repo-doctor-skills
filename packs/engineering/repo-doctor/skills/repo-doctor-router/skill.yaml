@@ -1,0 +1,46 @@
+id: repo.repo-doctor-router
+name:
+  en: Repo Doctor Router
+  zh-CN: Repo Doctor Router（工作流路由）
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales:
+  - en
+  - zh-CN
+description:
+  en: Classify the current repository task and recommend one existing Repo Doctor Skill or an ordered workflow without executing it. Use when the user is entering an unfamiliar repository, is unsure which Skill to choose, or needs the next safe step across clarification, specification, planning, implementation, testing, review, diagnosis, release readiness, or session transfer; do not use for ordinary questions with no repository workflow decision.
+  zh-CN: 对当前仓库任务分类，并推荐一个现有 Repo Doctor Skill 或有序工作流，但不执行被推荐能力。用于初次进入陌生仓库、不知道选择哪个 Skill，或需要在澄清、规格、计划、实施、测试、审查、诊断、发布检查与会话交接之间选择安全下一步；普通问答不涉及仓库工作流决策时不要触发。
+triggers:
+  en:
+    - which Repo Doctor Skill should I use
+    - recommend the next repository workflow step
+    - route this engineering task
+    - I do not know which Skill fits
+  zh-CN:
+    - 我该用哪个 Repo Doctor Skill
+    - 推荐下一步仓库工作流
+    - 路由这个工程任务
+    - 我不知道该选哪个 Skill
+tool_requirements:
+  filesystem: read
+  git: none
+  shell: none
+  web: none
+permissions:
+  read_files: true
+  write_files: false
+  run_shell_commands: false
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: read_only
+output_schema:
+  type: repo_doctor_routing_report
+localization:
+  en:
+    status: complete
+  zh-CN:
+    status: complete

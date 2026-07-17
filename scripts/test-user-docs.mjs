@@ -15,12 +15,12 @@ const model = collectCatalogModel(root);
 
 assert.equal(model.projectVersion, "0.2.0", "expected project Release Candidate 0.2.0");
 assert.equal(model.counts.packs, 4, "expected four active Packs");
-assert.equal(model.counts.skills, 34, "expected 34 active Skills");
-assert.equal(model.counts.pluginSkills, 31, "expected 31 plugin/ChatGPT-distributed Skills");
+assert.equal(model.counts.skills, 38, "expected 38 active Skills");
+assert.equal(model.counts.pluginSkills, 35, "expected 35 plugin/ChatGPT-distributed Skills");
 assert.equal(model.counts.regularOnlySkills, 3, "expected three regular-build-only Skills");
 
 const expectedPackCounts = new Map([
-  ["engineering.repo-doctor", 21],
+  ["engineering.repo-doctor", 25],
   ["productivity.productivity-toolkit", 8],
   ["engineering.skill-maintainer", 2],
   ["office.document-data-doctor", 3],
@@ -62,7 +62,7 @@ for (const pack of model.packs) {
     publishedSlugs.add(skill.interface.publishedSlug);
   }
 }
-assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 21, pt: 8, sm: 2 });
+assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 25, pt: 8, sm: 2 });
 
 for (const locale of ["en", "zh-CN"]) {
   const first = renderCatalog(model, locale);
@@ -79,4 +79,4 @@ for (const [filename, expected] of Object.entries(generatedCatalogs(model))) {
 }
 assert.deepEqual(checkCatalogs(root), [], "generated catalogs must be current");
 
-console.log("User documentation catalog tests passed (4 Packs, 34 Skills, 31 plugin/ZIP distributions).");
+console.log("User documentation catalog tests passed (4 Packs, 38 Skills, 35 plugin/ZIP distributions).");

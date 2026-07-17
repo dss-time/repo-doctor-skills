@@ -3,6 +3,11 @@ expected:
   must_include:
     - 评分卡
     - P0/P1/P2
+    - 完成条件
+    - 重复权威来源
+    - 中英文一致
+    - Router 失效引用
+    - 职责重叠
     - 发布建议
   must_not:
     - 自动修复

@@ -3,6 +3,11 @@ expected:
   must_include:
     - scorecard
     - P0/P1/P2
+    - completion conditions
+    - duplicate authority
+    - bilingual consistency
+    - missing router reference
+    - responsibility overlap
     - release recommendation
   must_not:
     - automatic fix

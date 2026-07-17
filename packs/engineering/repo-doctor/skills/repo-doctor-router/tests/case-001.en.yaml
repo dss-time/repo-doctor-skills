@@ -1,0 +1,9 @@
+input: "This requirement is vague and may change compatibility. Which Repo Doctor workflow should I use?"
+expected:
+  must_include:
+    - task_classification
+    - requirements-clarification
+    - stop_conditions
+  must_not:
+    - execute the recommendation
+    - invent a Skill

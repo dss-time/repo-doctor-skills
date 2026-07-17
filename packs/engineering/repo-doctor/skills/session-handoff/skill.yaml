@@ -1,0 +1,46 @@
+id: repo.session-handoff
+name:
+  en: Session Handoff
+  zh-CN: Session Handoff（会话交接）
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales:
+  - en
+  - zh-CN
+description:
+  en: Prepare a sanitized, evidence-separated continuation brief so a new agent session can resume repository work without reconstructing completed work. Use when context is long, ownership is changing, or work must continue later; reference existing artifacts, record repository and validation state, recommend next Skills, and provide a copyable start prompt. Do not change business code, create commits, promise automatic loading, or write a file unless a safe scratch location and write authorization are available.
+  zh-CN: 生成经过敏感信息清理且区分事实与推断的续接摘要，使新 Agent 会话无需重做已完成工作即可继续仓库任务。用于上下文过长、负责人切换或稍后继续；引用已有产物，记录仓库和验证状态，推荐下一 Skills，并提供可复制启动指令。不修改业务代码、不创建 commit、不声称会自动加载，也不在缺少安全 scratch 位置或写入授权时落盘。
+triggers:
+  en:
+    - prepare this session for another agent
+    - create a continuation brief for the next session
+    - summarize the current repository work so it can resume
+    - session handoff
+  zh-CN:
+    - 把当前会话交接给另一个 Agent
+    - 为下一会话生成续接摘要
+    - 整理当前仓库工作以便继续
+    - 会话交接
+tool_requirements:
+  filesystem: write
+  git: optional
+  shell: none
+  web: none
+permissions:
+  read_files: true
+  write_files: true
+  run_shell_commands: false
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: safe_edit
+output_schema:
+  type: session_handoff_brief
+localization:
+  en:
+    status: complete
+  zh-CN:
+    status: complete

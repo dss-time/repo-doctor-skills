@@ -1,22 +1,27 @@
 # Safe Test Implementation
 
-Add the smallest set of high-value tests for confirmed behavior, a verified bug, or a prioritized test-gap report.
+Add the smallest high-value verification for one observable behavior at a time, using a red/green/regression feedback loop.
 
 ## Boundary
 
-- Modify only tests, fixtures, and necessary test helpers by default.
-- Stop and explain why if testability requires production-code changes. Continue only after the user explicitly expands authorization; route production fixes to `safe-fix-implementation`.
-- Do not perform general bug fixes, production refactors, unrelated cleanup, broad formatting, or dependency changes.
-- Do not add brittle snapshots, execution-order dependencies, excessive mocks, or assertions whose only value is increasing coverage.
-- Preserve user changes and existing test conventions.
+- Modify only tests, fixtures, and necessary test helpers by default. Preserve user changes and existing conventions.
+- Stop if passing requires production-code changes. Preserve the failing evidence and route the smallest production change to `safe-fix-implementation` unless the user explicitly authorizes another workflow.
+- Do not perform general fixes, production refactors, unrelated cleanup, broad formatting, dependency changes, or permission expansion.
+- Do not expose private production APIs only for tests, substitute snapshots for critical business assertions, add tests that cannot fail on regression, or create execution-order dependencies and excessive mocks.
+- Do not install a new test framework without explicit authorization.
 
-## Workflow
+## Behavior Feedback Loop
 
-1. Cite the `test-gap-analysis`, confirmed behavior, root cause, fix, requirement, or diff that justifies each test.
-2. Inspect the real test framework, directory and naming conventions, fixtures, mocks, helpers, setup, CI integration, and runnable commands. Never invent commands.
-3. Map every proposed test to one observable behavior, risk, or confirmed bug. Prioritize a regression test that fails before the fix and passes after it when feasible.
-4. Select the smallest appropriate layer and avoid duplicating the same assertion across layers.
-5. Check whether the test can be added without production changes. Stop with a scoped blocker when it cannot.
-6. Make minimal edits to test files, fixtures, or test helpers. Keep unrelated files untouched.
-7. Run the narrowest relevant test first. If it passes, run the smallest reasonable regression scope supported by repository evidence.
-8. Report exact commands, results, changed tests, behavior mapping, and remaining uncovered risks. Distinguish not run, failed, flaky, and passed.
+1. Cite the test-gap report, confirmed behavior, root cause, fix, requirement, or diff that justifies the next behavior slice.
+2. Inspect the real test framework, conventions, fixtures, helpers, setup, CI integration, and command definitions. Never invent commands.
+3. Select one externally observable behavior and define its test boundary, inputs, outputs, failure mode, and risk.
+4. Add one minimum verification at the smallest credible layer. Confirm the assertion can detect a real regression and does not require exposing a private API.
+5. Before the behavior implementation, run the narrow verification and confirm it fails for the expected reason. If it passes unexpectedly, fails for another reason, or cannot run, stop and correct the test or report the blocker; never count that as a valid red state.
+6. Make the smallest implementation permitted here: tests, fixtures, or necessary test helpers only. When a production implementation is required, stop at the boundary described above.
+7. Run the new verification and require a pass. Then run the smallest evidence-backed related regression scope and confirm existing behavior has not regressed.
+8. Perform only necessary test-structure cleanup while keeping behavior unchanged.
+9. Record the red, green, and regression evidence before selecting the next observable behavior. Do not create a large batch of tests and implement them later.
+
+## Completion and Failure Conditions
+
+Complete a slice only when its expected pre-implementation failure, successful verification, and related regression result are recorded. If tests cannot run, report `not run` with the exact user-runnable command. Distinguish expected failure, unexpected failure, passed, flaky, and not run; never claim a pass without a successful command.

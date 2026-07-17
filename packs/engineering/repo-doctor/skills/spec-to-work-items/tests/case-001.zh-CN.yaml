@@ -1,0 +1,11 @@
+input: "把这个已批准的多行为规格拆成可独立验证、标明依赖和安全并行的工作项。"
+expected:
+  must_include:
+    - user_visible_outcome
+    - dependencies
+    - parallelizable_with
+    - acceptance_criteria
+    - verification
+  must_not:
+    - 纯技术层拆分
+    - 创建外部 Issue

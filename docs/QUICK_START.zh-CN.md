@@ -13,7 +13,7 @@
 
 ## 候选版本说明
 
-当前 checkout 正在准备项目 **0.2.0 Release Candidate**；仅有元数据和文档不代表已经正式发布。项目版本、组件版本和成熟度状态彼此独立。4 个 active Pack 和 34 个 active Skill 当前均为 `beta`，表示已经通过仓库验证、可以用于真实任务，但仍缺少广泛公开使用和 Live-model 路由证据。当前 Live-model 路由准确率为 **UNKNOWN**。
+当前 checkout 正在准备项目 **0.2.0 Release Candidate**；仅有元数据和文档不代表已经正式发布。项目版本、组件版本和成熟度状态彼此独立。4 个 active Pack 和 38 个 active Skill 当前均为 `beta`，表示已经通过仓库验证、可以用于真实任务，但仍缺少广泛公开使用和 Live-model 路由证据。当前 Live-model 路由准确率为 **UNKNOWN**。
 
 ## 你正在看的是什么
 
@@ -54,7 +54,7 @@ npm run build
 
 | 前缀 | 插件 | 当前数量 |
 |---|---|---:|
-| `rd-*` | Repo Doctor | 21 |
+| `rd-*` | Repo Doctor | 25 |
 | `pt-*` | Productivity Toolkit | 8 |
 | `sm-*` | Skill Maintainer | 2 |
 

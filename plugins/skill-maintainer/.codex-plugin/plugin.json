@@ -1,6 +1,6 @@
 {
   "name": "skill-maintainer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Bilingual maintainer workflows for engineering AI Skills and auditing their release quality.",
   "author": {
     "name": "dss-time"

@@ -2,14 +2,18 @@ input: "Reproduce this 500 error and identify the root cause without fixing it."
 expected:
   must_include:
     - reproduction status
+    - repeatable feedback mechanism
+    - falsification method
     - executed diagnostic commands
     - command results
     - Observed / Reproduced / Inferred / Unverified / Blocked
     - causal chain
     - confidence
+    - regression check
   must_not:
     - modify files
     - implement the fix
     - install dependencies
     - run destructive commands
     - claim reproduction without executing a command
+    - high-confidence root cause without feedback

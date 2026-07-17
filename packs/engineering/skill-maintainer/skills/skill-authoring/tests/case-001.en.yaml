@@ -2,8 +2,12 @@ input: "Engineer one bilingual Skill from these recurring use cases, reusing the
 expected:
   must_include:
     - suitability
+    - explicit and automatic activation
     - adjacent Skills
+    - completion conditions
+    - bilingual parity
     - validation results
   must_not:
     - competing scaffold
     - automatic commit
+    - synonym pile

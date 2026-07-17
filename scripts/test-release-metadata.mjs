@@ -247,9 +247,9 @@ assert.equal(releaseContract.projectVersion, "0.2.0");
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.5.0",
+    "engineering.repo-doctor": "0.6.0",
     "productivity.productivity-toolkit": "0.1.0",
-    "engineering.skill-maintainer": "0.1.0",
+    "engineering.skill-maintainer": "0.2.0",
     "office.document-data-doctor": "0.1.0",
   },
   "default contract must preserve the confirmed two-layer Pack versions",

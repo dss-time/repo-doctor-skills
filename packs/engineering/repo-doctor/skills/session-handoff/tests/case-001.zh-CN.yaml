@@ -1,0 +1,11 @@
+input: "为另一个 Agent 生成脱敏续接摘要，已有长文档只引用路径，不修改业务代码。"
+expected:
+  must_include:
+    - 下一步
+    - 推荐的现有 Repo Doctor Skills
+    - 可复制的下一会话启动指令
+    - 脱敏
+  must_not:
+    - 重复完整规格
+    - 修改业务代码
+    - 创建 commit

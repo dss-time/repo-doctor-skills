@@ -3,8 +3,11 @@ import { fileURLToPath } from "node:url";
 import { discoverActivePackSkills, syncPackPlugin } from "./sync-pack-plugin.mjs";
 
 const uiDescriptions = {
+  "repo-doctor-router": "分析当前工程状态并推荐现有 Repo Doctor Skill 或安全工作流",
   "repo-onboarding": "快速理解陌生项目的结构、技术栈、入口、命令与核心模块",
+  "requirements-clarification": "在规格化前逐项关闭会实质改变实现的需求决策",
   "requirements-to-spec": "把模糊需求整理为可实施、可验证的规格与验收标准",
+  "spec-to-work-items": "把已确认规格拆成可独立验证且可安全并行的垂直工作项",
   "bug-root-cause-analysis": "复现具体故障并建立从输入到症状的根因证据链",
   "project-health-check": "全面检查架构、质量、安全、性能、测试和发布风险",
   "safe-code-review": "审查代码或 PR 并按优先级报告可操作问题",
@@ -23,11 +26,15 @@ const uiDescriptions = {
   "performance-regression-analysis": "基于基线和测量证据定位性能回归并设计验证实验",
   "architecture-decision-record": "按仓库约定记录架构选项、决策理由、后果与复审条件",
   "configuration-audit": "审计配置来源、优先级、环境漂移、危险默认值与凭据风险",
+  "session-handoff": "生成脱敏、可续接的会话状态摘要和下一会话启动指令",
   "safe-fix-implementation": "一次只实施一个小而安全、可验证的生产代码修复",
 };
 const uiPrompts = {
+  "repo-doctor-router": "使用 $repo-doctor-router 分析当前任务并推荐下一 Skill 或工作流，但不要执行推荐。",
   "repo-onboarding": "使用 $repo-onboarding 帮我理解这个陌生仓库的结构、入口和真实命令。",
+  "requirements-clarification": "使用 $requirements-clarification 在规格化前关闭关键需求决策，不要实施代码。",
   "requirements-to-spec": "使用 $requirements-to-spec 将模糊需求整理为可验证规格，不要修改代码。",
+  "spec-to-work-items": "使用 $spec-to-work-items 把已确认规格拆成可独立验证的垂直工作项，不创建外部 Issue。",
   "bug-root-cause-analysis": "使用 $bug-root-cause-analysis 复现并定位具体 Bug 根因，不要实施修复。",
   "project-health-check": "使用 $project-health-check 对这个项目执行广泛健康检查，不要直接修复。",
   "safe-code-review": "使用 $safe-code-review 审查这些代码改动，不要自动实施修复。",
@@ -46,6 +53,7 @@ const uiPrompts = {
   "performance-regression-analysis": "使用 $performance-regression-analysis 基于基线和测量证据分析性能回归，不直接优化代码。",
   "architecture-decision-record": "使用 $architecture-decision-record 按仓库约定创建或更新 ADR，只修改架构文档。",
   "configuration-audit": "使用 $configuration-audit 审计配置来源、优先级和漂移，不显示凭据值或修改配置。",
+  "session-handoff": "使用 $session-handoff 生成脱敏会话交接和可复制启动指令，不修改业务代码。",
   "safe-fix-implementation": "使用 $safe-fix-implementation 安全修复一个已确认问题并完成验证。",
 };
 const uiDisplayNames = {
