@@ -1,4 +1,5 @@
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   readFileSync,
@@ -73,6 +74,7 @@ export function discoverPackRoots(directory, roots = []) {
 }
 
 export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune = false, rebuild = false, log = true }) {
+  mkdirSync(pluginRoot, { recursive: true });
   const packMetadata = parseYamlSubset(readFileSync(path.join(packRoot, "pack.yaml"), "utf8"));
   const pluginManifestPath = path.join(pluginRoot, ".codex-plugin", "plugin.json");
   if (existsSync(pluginManifestPath)) {
@@ -80,6 +82,11 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
     pluginManifest.version = packMetadata.version;
     writeFileSync(pluginManifestPath, `${JSON.stringify(pluginManifest, null, 2)}\n`);
   }
+  const workflowSource = path.join(packRoot, "workflows.yaml");
+  const workflowDestination = path.join(pluginRoot, "workflows.yaml");
+  if (existsSync(workflowSource)) copyFileSync(workflowSource, workflowDestination);
+  else rmSync(workflowDestination, { force: true });
+
   const packSkills = path.join(packRoot, "skills");
   const pluginSkills = path.join(pluginRoot, "skills");
   const orderedSkills = skills ?? discoverActivePackSkills(packRoot);

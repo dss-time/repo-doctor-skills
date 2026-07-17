@@ -4,15 +4,20 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
-  validate:
+  quality-gates:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
 
@@ -21,11 +26,32 @@ jobs:
           if [ -f package-lock.json ]; then
             npm ci
           else
-            npm install
+            npm install --package-lock=false
           fi
 
-      - name: Validate skills
+      - name: Check script syntax
+        run: find scripts -type f -name '*.mjs' -exec node --check {} ;
+
+      - name: Validate schemas, Skills, and workflow registry
         run: npm run validate
 
-      - name: Build skill outputs
+      - name: Run activation, workflow, build-integrity, plugin-sync, documentation, and release tests
+        run: npm test
+
+      - name: Build all generated outputs
         run: npm run build
+
+      - name: Generate deterministic documentation
+        run: npm run docs:generate
+
+      - name: Check documentation
+        run: npm run docs:check
+
+      - name: Check Skill and generated-output quality
+        run: npm run quality:check
+
+      - name: Check release metadata
+        run: npm run release:check
+
+      - name: Check generated-file drift
+        run: git diff --exit-code -- plugins docs/SKILL_CATALOG.md docs/SKILL_CATALOG.zh-CN.md

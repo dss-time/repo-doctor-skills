@@ -3,7 +3,7 @@ name: session-handoff
 description: Prepare a sanitized, evidence-separated continuation brief so a new agent session can resume repository work without reconstructing completed work. Use when context is long, ownership is changing, or work must continue later; reference existing artifacts, record repository and validation state, recommend next Skills, and provide a copyable start prompt. Do not change business code, create commits, promise automatic loading, or write a file unless a safe scratch location and write authorization are available. 生成经过敏感信息清理且区分事实与推断的续接摘要，使新 Agent 会话无需重做已完成工作即可继续仓库任务。用于上下文过长、负责人切换或稍后继续；引用已有产物，记录仓库和验证状态，推荐下一 Skills，并提供可复制启动指令。不修改业务代码、不创建 commit、不声称会自动加载，也不在缺少安全 scratch 位置或写入授权时落盘。
 ---
 
-# Session Handoff（Session Handoff（会话交接））
+# Session Handoff（会话交接）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 

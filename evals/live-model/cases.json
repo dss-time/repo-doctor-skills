@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "mode": "offline_contract_only",
+  "cases": [
+    {
+      "id": "open-feature-en",
+      "pair_id": "open-feature",
+      "locale": "en",
+      "prompt": "We need SSO but have not chosen providers, migration behavior, or compatibility. Route the next step.",
+      "expected_workflow_id": "feature-delivery",
+      "expected_skill": "requirements-clarification",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "requirements-clarification"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "material_decision_unresolved"
+    },
+    {
+      "id": "open-feature-zh",
+      "pair_id": "open-feature",
+      "locale": "zh-CN",
+      "prompt": "我们需要 SSO，但提供商、迁移方式和兼容性都未确定，请路由下一步。",
+      "expected_workflow_id": "feature-delivery",
+      "expected_skill": "requirements-clarification",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "requirements-clarification"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "material_decision_unresolved"
+    },
+    {
+      "id": "settled-spec-en",
+      "pair_id": "settled-spec",
+      "locale": "en",
+      "prompt": "SSO provider, migration, compatibility, and acceptance criteria are settled. Route to a testable specification.",
+      "expected_workflow_id": "feature-delivery",
+      "expected_skill": "requirements-to-spec",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "requirements-to-spec"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "material_decision_reopened"
+    },
+    {
+      "id": "settled-spec-zh",
+      "pair_id": "settled-spec",
+      "locale": "zh-CN",
+      "prompt": "SSO 提供商、迁移、兼容性和验收标准都已确定，请路由到可测试规格。",
+      "expected_workflow_id": "feature-delivery",
+      "expected_skill": "requirements-to-spec",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "requirements-to-spec"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "material_decision_reopened"
+    },
+    {
+      "id": "post-fix-en",
+      "pair_id": "post-fix",
+      "locale": "en",
+      "prompt": "The fix is verified. Add its regression test without fabricating a pre-fix red run.",
+      "expected_workflow_id": "post-fix-regression-test",
+      "expected_skill": "safe-test-implementation",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "safe-test-implementation"
+      ],
+      "expected_permission": "write_scoped",
+      "expected_stop_condition": "production_change_required"
+    },
+    {
+      "id": "post-fix-zh",
+      "pair_id": "post-fix",
+      "locale": "zh-CN",
+      "prompt": "修复已验证，请补回归测试，不要伪造修复前红灯。",
+      "expected_workflow_id": "post-fix-regression-test",
+      "expected_skill": "safe-test-implementation",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "safe-test-implementation"
+      ],
+      "expected_permission": "write_scoped",
+      "expected_stop_condition": "production_change_required"
+    },
+    {
+      "id": "handoff-en",
+      "pair_id": "handoff",
+      "locale": "en",
+      "prompt": "Prepare a sanitized handoff so another agent can verify state and continue.",
+      "expected_workflow_id": "session-handoff",
+      "expected_skill": "session-handoff",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "session-handoff"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "sensitive_data_present"
+    },
+    {
+      "id": "handoff-zh",
+      "pair_id": "handoff",
+      "locale": "zh-CN",
+      "prompt": "生成脱敏交接，让下一 Agent 能核验状态并继续。",
+      "expected_workflow_id": "session-handoff",
+      "expected_skill": "session-handoff",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "repo-doctor-router",
+        "session-handoff"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "sensitive_data_present"
+    },
+    {
+      "id": "concept-en",
+      "pair_id": "concept",
+      "locale": "en",
+      "prompt": "What does semantic versioning mean? Do not route a repository workflow.",
+      "expected_workflow_id": "none",
+      "expected_skill": "none",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "repo-doctor-router",
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "none"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "no_workflow_required"
+    },
+    {
+      "id": "concept-zh",
+      "pair_id": "concept",
+      "locale": "zh-CN",
+      "prompt": "Semantic Versioning 是什么？不要路由仓库工作流。",
+      "expected_workflow_id": "none",
+      "expected_skill": "none",
+      "acceptable_alternatives": [],
+      "forbidden_skills": [
+        "repo-doctor-router",
+        "project-health-check"
+      ],
+      "expected_workflow": [
+        "none"
+      ],
+      "expected_permission": "read_only",
+      "expected_stop_condition": "no_workflow_required"
+    }
+  ]
+}

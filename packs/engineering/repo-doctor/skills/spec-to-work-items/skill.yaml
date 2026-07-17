@@ -1,7 +1,7 @@
 id: repo.spec-to-work-items
 name:
   en: Spec to Work Items
-  zh-CN: Spec to Work Items（规格拆分工作项）
+  zh-CN: 规格拆分工作项
 category: engineering
 visibility: public
 version: 0.1.0
@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Decompose a confirmed specification, implementation plan, or settled conversation into independently executable and verifiable vertical work items with dependencies, safe parallelism, conflict areas, tests, risks, and rollback notes. Use for delivery planning of a multi-behavior scope; default to a local Markdown plan and do not create external issues. Do not use for unresolved requirements, a single small fix, or a file-by-file technical-layer checklist.
-  zh-CN: 将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；默认输出本地 Markdown 计划，不创建外部 Issue。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。
+  en: Decompose a confirmed specification, implementation plan, or settled conversation into independently executable and verifiable vertical work items with dependencies, safe parallelism, conflict areas, tests, risks, and rollback notes. Use for delivery planning of a multi-behavior scope; return copyable Markdown in the current response only and never write files, invoke Shell, or create external tasks even with user authorization. Do not use for unresolved requirements, a single small fix, or a file-by-file technical-layer checklist.
+  zh-CN: 将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；只在当前响应返回可复制 Markdown；即使用户授权也不写文件、不调用 Shell、不创建外部任务。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。
 triggers:
   en:
     - split this specification into work items

@@ -480,6 +480,12 @@ function auditRepoDoctorPluginDrift() {
       path.join(actualPluginRoot, "skills"),
       "Repo Doctor plugin",
     );
+    const expectedWorkflow = path.join(expectedPluginRoot, "workflows.yaml");
+    const actualWorkflow = path.join(actualPluginRoot, "workflows.yaml");
+    if (!existsSync(actualWorkflow)) errors.push(relative(actualWorkflow) + ": missing generated workflow registry");
+    else if (!readFileSync(expectedWorkflow).equals(readFileSync(actualWorkflow))) {
+      errors.push(relative(actualWorkflow) + ": canonical/plugin drift, generated workflow registry differs");
+    }
   } catch (error) {
     errors.push(`Repo Doctor canonical/plugin drift check failed: ${error.message}`);
   } finally {
@@ -623,6 +629,14 @@ function auditDist(canonicalSlugs) {
           ? [path.join(targetRoot, ".cursor", "rules", `${slug}.mdc`)]
           : [path.join(targetRoot, `${slug}.md`)];
       if (!candidates.some(existsSync)) errors.push(`dist/${target}: missing generated skill ${slug}`);
+    }
+  }
+  const canonicalWorkflow = path.join(root, "packs", "engineering", "repo-doctor", "workflows.yaml");
+  for (const target of targets) {
+    const generatedWorkflow = path.join(root, "dist", target, "workflows.yaml");
+    if (!existsSync(generatedWorkflow)) errors.push("dist/" + target + "/workflows.yaml: missing generated workflow registry");
+    else if (!readFileSync(canonicalWorkflow).equals(readFileSync(generatedWorkflow))) {
+      errors.push("dist/" + target + "/workflows.yaml: generated workflow registry differs from canonical");
     }
   }
   const codex = path.join(root, "dist", "codex-zh-CN", "AGENTS.md");

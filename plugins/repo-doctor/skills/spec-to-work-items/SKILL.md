@@ -1,9 +1,9 @@
 ---
 name: spec-to-work-items
-description: Decompose a confirmed specification, implementation plan, or settled conversation into independently executable and verifiable vertical work items with dependencies, safe parallelism, conflict areas, tests, risks, and rollback notes. Use for delivery planning of a multi-behavior scope; default to a local Markdown plan and do not create external issues. Do not use for unresolved requirements, a single small fix, or a file-by-file technical-layer checklist. 将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；默认输出本地 Markdown 计划，不创建外部 Issue。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。
+description: Decompose a confirmed specification, implementation plan, or settled conversation into independently executable and verifiable vertical work items with dependencies, safe parallelism, conflict areas, tests, risks, and rollback notes. Use for delivery planning of a multi-behavior scope; return copyable Markdown in the current response only and never write files, invoke Shell, or create external tasks even with user authorization. Do not use for unresolved requirements, a single small fix, or a file-by-file technical-layer checklist. 将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；只在当前响应返回可复制 Markdown；即使用户授权也不写文件、不调用 Shell、不创建外部任务。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。
 ---
 
-# Spec to Work Items（Spec to Work Items（规格拆分工作项））
+# Spec to Work Items（规格拆分工作项）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
@@ -14,7 +14,7 @@ Convert settled scope into delivery slices that can be executed and verified ind
 ## Boundary
 
 - Require a confirmed specification, implementation plan, or sufficiently settled conversation. Route material open decisions to `requirements-clarification` or `requirements-to-spec`.
-- Stay read-only. Return a Markdown work-item plan in the response. Save a file or create GitHub, Linear, or other external tasks only after explicit authorization and confirmed platform support.
+- Stay read-only. Return copyable Markdown only in the response. Never write a local file, use Shell to write indirectly, create GitHub Issues or Linear tickets, or call an external task system, even when the user asks; this Skill's metadata does not grant those capabilities.
 - Do not substitute for the code-level atomic steps of `safe-change-plan`; this Skill owns delivery slicing, dependencies, and parallel coordination.
 - Include migrations, compatibility, rollback, documentation, and tests within the behavior slice they support.
 
@@ -45,6 +45,8 @@ Reject and explain a decomposition that:
 
 Complete only when every item has all required fields, dependencies are acyclic or explicitly blocked, parallel claims are justified, conflicts are visible, and every acceptance criterion is observable and verifiable.
 
+If the user needs persistence, state that the plan was not saved and ask them to save the Markdown manually or use an existing Skill whose metadata explicitly permits the requested documentation write.
+
 # Output Contract
 
 Start with source scope, dependency overview, parallel groups, conflict zones, and integration checkpoints. Then provide every work item with:
@@ -65,7 +67,7 @@ Start with source scope, dependency overview, parallel groups, conflict zones, a
 - `recommended_skills`
 - `status`
 
-End with rejected decomposition patterns, unresolved assumptions, and confirmation that no external issue or task was created.
+End with rejected decomposition patterns, unresolved assumptions, and confirmation that no file, Shell workaround, external issue, or task was created.
 
 ---
 
@@ -76,7 +78,7 @@ End with rejected decomposition patterns, unresolved assumptions, and confirmati
 ## 职责边界
 
 - 需要已确认规格、实施计划或足够闭合的对话；仍有关键决策时转给 `requirements-clarification` 或 `requirements-to-spec`。
-- 保持只读，默认在响应中输出 Markdown 工作项计划。只有明确授权且平台确认支持时，才保存文件或创建 GitHub、Linear 等外部任务。
+- 保持只读，只在当前响应中输出 Markdown 工作项计划。即使用户明确授权，也不得写入本地文件、调用 Shell、创建 GitHub Issue、Linear 任务或任何外部对象。
 - 不替代 `safe-change-plan` 的代码级原子步骤；本 Skill 负责交付切片、依赖和并行协调。
 - 迁移、兼容、回滚、文档和测试应进入其所支持的行为切片。
 
@@ -90,6 +92,8 @@ End with rejected decomposition patterns, unresolved assumptions, and confirmati
 6. 测试跟随对应行为，不得把所有测试推迟到最后；只有真正跨切片验证无法提前运行时才单列最终验证。
 7. 使用下述质量门禁检查计划，不通过时修改或拒绝该拆分。
 8. 输出有序 Markdown 计划、并行组、集成检查点和剩余规划未知项。
+
+若用户要求持久化工作项，请输出可复制的 Markdown，并让用户自行保存，或明确转交给已有且获得写权限的专用工具；不得用 Shell、临时脚本或其他变通方式绕过 `write_files: false`。
 
 ## 低质量拒绝门禁
 
@@ -127,4 +131,4 @@ End with rejected decomposition patterns, unresolved assumptions, and confirmati
 - `recommended_skills`
 - `status`
 
-最后列出被拒绝的低质量拆分模式、未解决假设，并确认没有创建任何外部 Issue 或任务。
+最后列出被拒绝的低质量拆分模式、未解决假设，并确认没有写入文件、使用 Shell 变通或创建任何外部 Issue 与任务。

@@ -1,27 +1,36 @@
 # Safe Test Implementation
 
-Add the smallest high-value verification for one observable behavior at a time, using a red/green/regression feedback loop.
+Add the smallest high-value verification for one observable behavior. Select and report exactly one test mode before editing.
 
 ## Boundary
 
-- Modify only tests, fixtures, and necessary test helpers by default. Preserve user changes and existing conventions.
-- Stop if passing requires production-code changes. Preserve the failing evidence and route the smallest production change to `safe-fix-implementation` unless the user explicitly authorizes another workflow.
-- Do not perform general fixes, production refactors, unrelated cleanup, broad formatting, dependency changes, or permission expansion.
-- Do not expose private production APIs only for tests, substitute snapshots for critical business assertions, add tests that cannot fail on regression, or create execution-order dependencies and excessive mocks.
-- Do not install a new test framework without explicit authorization.
+- Modify only tests, fixtures, and necessary test helpers. Stop when production-code changes are required and route them to `safe-fix-implementation`.
+- Do not perform general fixes, production refactors, dependency changes, broad cleanup, or permission expansion.
+- Never invent commands or results, expose private production APIs only for tests, use fragile snapshots instead of behavioral assertions, or claim an unobserved red state.
+- Do not install a test framework without explicit authorization.
 
-## Behavior Feedback Loop
+## Select One Mode
 
-1. Cite the test-gap report, confirmed behavior, root cause, fix, requirement, or diff that justifies the next behavior slice.
-2. Inspect the real test framework, conventions, fixtures, helpers, setup, CI integration, and command definitions. Never invent commands.
-3. Select one externally observable behavior and define its test boundary, inputs, outputs, failure mode, and risk.
-4. Add one minimum verification at the smallest credible layer. Confirm the assertion can detect a real regression and does not require exposing a private API.
-5. Before the behavior implementation, run the narrow verification and confirm it fails for the expected reason. If it passes unexpectedly, fails for another reason, or cannot run, stop and correct the test or report the blocker; never count that as a valid red state.
-6. Make the smallest implementation permitted here: tests, fixtures, or necessary test helpers only. When a production implementation is required, stop at the boundary described above.
-7. Run the new verification and require a pass. Then run the smallest evidence-backed related regression scope and confirm existing behavior has not regressed.
-8. Perform only necessary test-structure cleanup while keeping behavior unchanged.
-9. Record the red, green, and regression evidence before selecting the next observable behavior. Do not create a large batch of tests and implement them later.
+1. Use `test_first` when behavior is not implemented and the test will drive it. Require the narrow test to fail for the expected behavioral reason before production implementation.
+2. Use `regression_after_fix` when the fix already exists or is verified. Do not require or claim a historical red run. Prove sensitivity with a pre-fix commit, a safely reversible mutation in an isolated copy, or a precise assertion-to-defect mapping. Otherwise report `sensitivity_unverified`.
+3. Use `characterization` to preserve observable legacy behavior before refactoring. The initial run may pass. Record the behavior being frozen and show that assertions distinguish meaningful states.
 
-## Completion and Failure Conditions
+If ambiguity changes required evidence or authorization, stop and ask. Otherwise infer the narrowest mode and state that inference.
 
-Complete a slice only when its expected pre-implementation failure, successful verification, and related regression result are recorded. If tests cannot run, report `not run` with the exact user-runnable command. Distinguish expected failure, unexpected failure, passed, flaky, and not run; never claim a pass without a successful command.
+## Workflow
+
+1. Cite the requirement, test gap, verified fix, root cause, diff, or legacy behavior.
+2. Inspect the real test framework, commands, fixtures, helpers, setup, and CI conventions. Never invent them.
+3. Declare `test_mode`, `observable_behavior`, `test_boundary`, expected evidence, and the production-code boundary.
+4. Add the minimum credible verification at the smallest useful layer without excessive mocking.
+5. Collect mode-specific initial evidence:
+   - `test_first`: require an expected behavioral failure; unrelated failure, unexpected pass, flaky result, or unavailable command is not a valid red state. After valid red evidence, stop and hand production work to `safe-fix-implementation`; when that separate implementation completes, rerun the same test before regression scope.
+   - `regression_after_fix`: run on the fixed state and collect safe sensitivity evidence without changing working production source; otherwise mark sensitivity `sensitivity_unverified`.
+   - `characterization`: run on the current state and document observed behavior and assertion discrimination.
+6. Run the new verification and the smallest evidence-backed regression scope. Record exact commands and outcomes.
+7. Stop if passing requires production changes or evidence contradicts the mode. Never switch modes silently.
+8. Report changed test-side files, limitations, and the next recommended Skill.
+
+## Completion
+
+Use `not_run`, `unexpected_failure`, `flaky`, or `sensitivity_unverified` when appropriate. Never turn missing evidence into a pass.

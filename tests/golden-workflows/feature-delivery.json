@@ -1,0 +1,40 @@
+{
+  "id": "feature-delivery-bilingual",
+  "workflow_id": "feature-delivery",
+  "prompts": {
+    "en": "Deliver a new account-recovery feature. Compatibility choices are still open; carry it through specification, implementation, tests, and release readiness.",
+    "zh-CN": "交付新的账户恢复功能。兼容性选择仍未闭合，请贯穿规格、实施、测试和发布就绪。"
+  },
+  "expected": {
+    "ordered_skills": [
+      "repo-doctor-router",
+      "requirements-clarification",
+      "requirements-to-spec",
+      "change-impact-analysis",
+      "safe-change-plan",
+      "safe-fix-implementation",
+      "safe-code-review",
+      "test-gap-analysis",
+      "safe-test-implementation",
+      "release-readiness-check"
+    ],
+    "required_gates": [
+      "implementation-approval"
+    ],
+    "terminal_skill": "release-readiness-check",
+    "forbidden_skips": [
+      "clarification->implementation",
+      "specification->implementation",
+      "plan->implementation"
+    ],
+    "contract_assertions": [
+      "material_decisions_not_skipped",
+      "specification_before_implementation",
+      "vertical_work_items",
+      "explicit_write_gate",
+      "read_only_output_not_authorization",
+      "regression_after_fix",
+      "no_commit_push_publish"
+    ]
+  }
+}

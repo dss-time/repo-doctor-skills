@@ -6,7 +6,7 @@ Repo Doctor Skills keeps release versions, component versions, and maturity stat
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release-candidate notes.
 
-The current release candidate is **0.2.0**. It is a candidate only: this repository state has not, by itself, created a commit, tag, GitHub Release, npm publication, or marketplace publication.
+The current release candidate is **0.3.0-rc.1**. It is intentionally a prerelease because all deterministic gates pass while live-model routing accuracy remains **UNKNOWN**. The prior `v0.2.0` prerelease remains immutable.
 
 For future releases:
 
@@ -24,7 +24,7 @@ Packs, plugins, and Skills have component versions independent of the project re
 - a project release may include unchanged components without changing their component versions;
 - marketplace entries and ChatGPT ZIPs currently have no independent embedded version field.
 
-For the 0.2.0 release candidate, the component baselines are:
+For the 0.3.0-rc.1 release candidate, the component baselines are:
 
 | Component | Version | Distribution rule |
 |---|---:|---|
@@ -47,7 +47,7 @@ Maturity status is independent of both version layers:
 
 A Pack's maturity must not be higher than the least mature active Skill it contains. Template Packs and template Skills remain `draft`, are excluded from active counts, and are not released as plugins or standalone ZIPs.
 
-For the 0.2.0 release candidate, all 4 active Packs and all 38 active Skills are `beta`. The template Pack and its template Skill remain `draft`; no component is represented as `stable` without real-use evidence.
+For the 0.3.0-rc.1 release candidate, all 4 active Packs and all 38 active Skills are `beta`. The template Pack and its template Skill remain `draft`; no component is represented as `stable` without real-use evidence.
 
 Repository validation, activation contracts, and deterministic builds are strong engineering evidence, but they are not a substitute for live-model routing evaluation. Live-model routing accuracy for this release candidate remains **UNKNOWN**.
 
@@ -59,13 +59,13 @@ Use [Semantic Versioning](https://semver.org/) independently at the appropriate 
 - minor: backward-compatible Skills, Packs, platform outputs, or user capabilities;
 - major: incompatible public invocation, schema, Pack-format, or component-contract changes.
 
-Repo Doctor Skills is still pre-1.0. The 0.2.0 project release candidate is a minor increment over the 0.1.0 project baseline because it adds backward-compatible Packs, Skills, platform outputs, and user workflows. A 1.0.0 release requires an explicit product decision.
+Repo Doctor Skills is still pre-1.0. The 0.3.0-rc.1 project candidate is a prerelease of the next minor version after v0.2.0 because it adds backward-compatible workflow Skills, routing contracts, evaluation infrastructure, and release tooling. A 1.0.0 release requires an explicit product decision.
 
 ## Historical version-label exception
 
 The GitHub Release published on 2026-07-09 used the tag `v0.0.1`, while its release name/body, `package.json`, Pack and Skill metadata, and draft release notes identified the project content as **0.1.0**. The Repo Doctor plugin manifest already used its independent component version 0.2.0. This is a historical project tag-label error, not a reason to collapse project and component versions.
 
-For project history and SemVer planning, treat 0.1.0 as the content release baseline and preserve the existing `v0.0.1` tag as immutable history. Do not delete, move, or recreate that tag. The 0.2.0 release must use `v0.2.0` if and when publication is separately authorized.
+For project history and SemVer planning, treat 0.1.0 as the content release baseline and preserve the existing `v0.0.1` tag as immutable history. Do not delete, move, or recreate that tag. The `v0.2.0` prerelease was published on 2026-07-15 and remains immutable; later releases must use new tags.
 
 ## Release checks
 

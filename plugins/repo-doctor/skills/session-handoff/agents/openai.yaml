@@ -1,4 +1,4 @@
 interface:
-  display_name: "Session Handoff（Session Handoff（会话交接））"
+  display_name: "Session Handoff（会话交接）"
   short_description: "生成脱敏、可续接的会话状态摘要和下一会话启动指令"
   default_prompt: "使用 $session-handoff 生成脱敏会话交接和可复制启动指令，不修改业务代码。"

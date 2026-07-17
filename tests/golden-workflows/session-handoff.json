@@ -1,0 +1,26 @@
+{
+  "id": "session-handoff-bilingual",
+  "workflow_id": "session-handoff",
+  "prompts": {
+    "en": "The session is near its context limit. Create a sanitized, evidence-backed handoff for the next agent without changing repository files.",
+    "zh-CN": "当前会话接近上下文上限，请生成脱敏且有证据的下一 Agent 交接，不修改仓库文件。"
+  },
+  "expected": {
+    "ordered_skills": [
+      "repo-doctor-router",
+      "session-handoff"
+    ],
+    "required_gates": [],
+    "terminal_skill": "session-handoff",
+    "forbidden_skips": [],
+    "contract_assertions": [
+      "no_full_spec_copy",
+      "trusted_paths_only",
+      "sensitive_values_removed",
+      "evidence_statuses_separated",
+      "git_state_reverified",
+      "router_next_skill",
+      "handoff_not_authorization"
+    ]
+  }
+}

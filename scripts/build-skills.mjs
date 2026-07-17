@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { copyDirectoryContents } from "./deterministic-files.mjs";
@@ -89,6 +89,9 @@ function buildTarget(target) {
   const outDir = path.join(distDir, target);
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
+
+  const workflowRegistry = path.join(packsDir, "engineering", "repo-doctor", "workflows.yaml");
+  if (existsSync(workflowRegistry)) copyFileSync(workflowRegistry, path.join(outDir, "workflows.yaml"));
 
   const skillDirs = discoverCanonicalSkillDirs(packsDir);
 

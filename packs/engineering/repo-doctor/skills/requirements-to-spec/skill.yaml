@@ -1,7 +1,7 @@
 id: repo.requirements-to-spec
 name:
-  en: Requirements to Spec
-  zh-CN: 需求澄清与规格化
+  en: Requirements Specification
+  zh-CN: 需求规格化
 category: engineering
 visibility: public
 version: 0.1.0
@@ -11,23 +11,23 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Convert an ambiguous or incomplete request into an implementable, testable specification by using repository evidence, explicit assumptions, scoped questions, flows, boundaries, and acceptance criteria. Use before impact analysis or implementation planning; do not use alone for complete specifications, code explanation, bug fixing, or direct edits.
-  zh-CN: 将模糊、口语化或不完整的需求基于仓库证据整理为可实施、可验证的规格，明确假设、问题、流程、边界与验收标准。用于影响分析或实施计划之前；完整规格、代码解释、Bug 修复或直接修改请求不应单独使用。
+  en: Convert requirements whose material product, data, security, permission, compatibility, and acceptance decisions are already closed into a structured, implementable, testable specification. Use when a clarification summary or settled discussion is ready for specification and only non-blocking assumptions remain; stop and route material open decisions to requirements-clarification. Do not use for task decomposition, implementation planning, code explanation, bug fixing, or direct edits.
+  zh-CN: 将产品、数据、安全、权限、兼容性和验收等重大决策已经闭合的需求整理为结构化、可实施、可验证的规格。用于已有澄清摘要或讨论已定稿、只剩非阻塞假设时；发现重大未决决策必须停止并转交 requirements-clarification。不用于拆工作项、制定实施计划、解释代码、修 Bug 或直接修改。
 triggers:
   en:
-    - clarify this requirement
-    - turn this request into a specification
-    - define acceptance criteria
-    - requirements to spec
+    - turn these settled requirements into a specification
+    - organize the completed discussion as a PRD
+    - write acceptance criteria from confirmed decisions
+    - requirements specification
   zh-CN:
-    - 澄清这个需求
-    - 把需求整理成规格
-    - 补全验收标准
-    - 需求澄清与规格化
+    - 把已确认需求整理成规格
+    - 将讨论完成的内容整理成 PRD
+    - 根据已确认决策编写验收标准
+    - 需求规格化
 tool_requirements:
   filesystem: read
   git: optional
-  shell: optional
+  shell: none
   web: none
 permissions:
   read_files: true

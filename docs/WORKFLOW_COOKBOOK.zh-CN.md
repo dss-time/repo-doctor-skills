@@ -103,7 +103,7 @@
 | 阶段 | 为什么这样排 | 关键边界 |
 |---|---|---|
 | 决策澄清 | **requirements-clarification** 读取仓库证据，只关闭会实质影响行为、兼容、安全、数据、迁移或验收的选择。 | 一次只问一个关键决策，在规格或代码前停止。 |
-| 规格化 | **requirements-to-spec** 先把目标、范围、约束和验收标准说清楚。 | 不生成具体代码方案，不写文件。 |
+| 规格化 | **requirements-to-spec** 把已闭合的重大决策转换为范围、约束、流程和可测试验收标准。 | 发现重大未决选择时停止并退回澄清；不规划代码，也不写文件。 |
 | 交付切片 | 大规格使用 **spec-to-work-items** 创建垂直、可独立验证的工作项，标明依赖、冲突、测试和并行组。 | 不创建外部 Issue，也不替代代码级 `safe-change-plan`。 |
 | 影响分析 | **change-impact-analysis** 用仓库证据识别受影响模块、接口、测试和风险。 | 不实施变更。 |
 | 实施计划 | **safe-change-plan** 将已确认输入拆成原子步骤、验证和回滚。 | 需求仍模糊或影响未知时应停止并退回前一步。 |
@@ -111,10 +111,10 @@
 | 审查与测试 | **safe-code-review** 审查变更；**test-gap-analysis** 分析缺口；只有用户同意后 **safe-test-implementation** 才写测试。 | 代码审查和缺口分析都不能被当成写入授权。 |
 | 文档与门禁 | 用户可见行为变化时使用 **documentation-sync**；最后由 **release-readiness-check** 给出 GO、GO WITH CONDITIONS 或 NO-GO。 | 发布门禁不发布、不改版本、不打 tag、不提交、不推送。 |
 
-第一阶段提示词：
+先关闭重大决策，再形成规格：
 
 ```text
-请使用 requirements-to-spec 把下面需求整理成可实施、可验证的规格：
+请先使用 requirements-clarification 关闭重大决策。决策闭合后，再使用 requirements-to-spec 把已确认内容整理成可实施、可验证的规格：
 
 <粘贴原始需求>
 
@@ -172,7 +172,7 @@
 
 <粘贴缺口和行为映射>
 
-默认只修改测试、fixture 和必要的测试辅助代码。若必须修改生产代码，请停止说明原因。先跑最小相关测试，再跑合理范围回归。
+只选择一种模式：行为未实现用 test_first，修复已验证用 regression_after_fix，重构前固定旧行为用 characterization。只有 test_first 要求真实预期失败，绝不伪造红灯。只修改测试、fixture 和必要测试辅助代码。若必须修改生产代码，请停止说明原因。先跑最小相关测试，再跑合理范围回归。
 ```
 
 文档与最终门禁：
@@ -637,3 +637,23 @@ Word 基础与增强：
 - 查安装、平台调用和常见问题：[用户操作手册](USER_MANUAL.zh-CN.md)
 - 查 canonical、构建和新增 Skill：[新增 Skills 指南](ADDING_SKILLS.zh-CN.md)
 - English version: [Workflow Cookbook](WORKFLOW_COOKBOOK.md)
+
+## Canonical 注册工作流
+
+唯一机器可读的 Skill 关系来源是 `packs/engineering/repo-doctor/workflows.yaml`。Router 返回准确的 `workflow_id`；本文只解释用法，不重新定义转换。
+
+| 工作流 ID | 用途 | 写入门禁 |
+|---|---|---|
+| `feature-delivery` | 端到端功能交付。 | 实施和可选测试授权 |
+| `bug-repair` | 证据驱动的 Bug 修复与修复后回归。 | 修复和测试授权 |
+| `test-first-change` | 生产实现前建立预期失败。 | 测试和实施授权 |
+| `post-fix-regression-test` | 已验证修复后补回归。 | 测试授权 |
+| `review-only` | 只读审查 diff。 | 无 |
+| `ci-diagnosis` | 诊断 CI 第一个可信失败。 | 无 |
+| `dependency-upgrade` | 依赖升级分析。 | 无 |
+| `database-migration` | 迁移与发布顺序审查。 | 无 |
+| `api-contract-change` | API 兼容性审查。 | 无 |
+| `session-handoff` | 脱敏只读续接状态。 | 无 |
+| `release-preparation` | 只读发布门禁。 | 无；发布是外部动作 |
+
+只读输出只是证据，绝不构成写入授权。`spec-to-work-items` 只返回响应 Markdown，不能落盘或创建任务。Golden Workflow fixture 验证契约，不代表真实模型路由准确率。

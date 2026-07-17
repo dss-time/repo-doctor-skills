@@ -1,13 +1,15 @@
 # Output Contract
 
 1. `task_classification`
-2. `recommended_next_skill`, including inventory verification status
-3. `recommended_workflow`, in execution order
-4. `reason`
-5. `required_inputs`
-6. `safety_notes`
-7. `alternatives`
-8. `stop_conditions`
-9. Invocation examples: Codex `$skill-name`, platform-neutral natural language, and a copyable fallback prompt when explicit Skill invocation is unavailable
+2. `registry`: ID, version, and verification status
+3. `workflow_id` or `not_applicable`
+4. `recommended_next_skill`, including inventory verification
+5. `applicable_stages`, in registry order
+6. `reason`
+7. `required_inputs`
+8. `permission_gates`
+9. `alternatives`
+10. `stop_conditions`
+11. Codex invocation and platform-neutral copyable prompt
 
-Do not execute the recommendation. Do not name a Skill that is absent from the verified active inventory.
+Do not execute the recommendation or name an unverified Skill as available.

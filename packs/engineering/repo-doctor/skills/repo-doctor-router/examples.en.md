@@ -1,8 +1,8 @@
 # Examples
 
-- “The feature request is still vague and may change compatibility. Which workflow should I use?” -> recommend `requirements-clarification` without running it.
-- “The behavior and acceptance criteria are settled; turn them into an implementation-ready specification.” -> recommend `requirements-to-spec`.
-- “This is a large approved specification with several independent user behaviors.” -> recommend `spec-to-work-items`.
-- “A runtime failure crosses several modules and we do not know the root cause.” -> recommend `bug-root-cause-analysis`.
-- “Prepare this long session so another agent can continue.” -> recommend `session-handoff`.
-- Non-trigger: “What does semantic versioning mean?” Answer normally; do not activate repository routing.
+- “The feature request still has compatibility choices. Which workflow?” -> `feature-delivery`, next `requirements-clarification`.
+- “Behavior and acceptance criteria are settled; make the specification.” -> `feature-delivery`, next `requirements-to-spec`.
+- “Implement this clearly scoped one-file fix; writes are authorized.” -> preserve the registered write gate, then recommend `safe-fix-implementation`.
+- “Change the auth flow however you think best.” -> material behavior and permission choices remain open; clarify first.
+- “The fix is already merged; add its regression test.” -> `post-fix-regression-test` with `regression_after_fix`.
+- Non-trigger: “What does semantic versioning mean?” Answer normally.

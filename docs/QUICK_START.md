@@ -13,7 +13,7 @@ This guide is for first-time users.
 
 ## Release Candidate Note
 
-This checkout is preparing project version **0.2.0** as a Release Candidate; it is not a published release merely because the metadata and documentation are present. Project, component, and maturity versions are separate. All 4 active Packs and 38 active Skills are `beta`, meaning repository-validated and suitable for real tasks while broad public-use and Live-model routing evidence remains limited. Live-model routing accuracy is currently **UNKNOWN**.
+This checkout is the **v0.3.0-rc.1 Release Candidate**. It is intended for prerelease publication because deterministic gates pass while live-model routing accuracy remains **UNKNOWN**. Project, component, and maturity versions are separate. All 4 active Packs and 38 active Skills are `beta`, meaning repository-validated and suitable for real tasks while broad public-use and Live-model routing evidence remains limited. Live-model routing accuracy is currently **UNKNOWN**.
 
 ## What You Are Looking At
 

@@ -1,0 +1,954 @@
+version: 1
+registry_id: repo-doctor.workflows
+supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+workflows:
+  feature-delivery:
+    title:
+      en: Feature delivery
+      zh-CN: 功能交付
+    entry_conditions: [repository_feature_request]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [clarification]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [no_verified_skill]
+      -
+        id: clarification
+        type: skill
+        skill: requirements-clarification
+        optional: true
+        condition: material_decisions_open
+        prerequisites: [route]
+        next: [specification]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [material_decision_unresolved]
+      -
+        id: specification
+        type: skill
+        skill: requirements-to-spec
+        optional: false
+        condition: material_decisions_closed
+        prerequisites: [clarification]
+        next: [work-items]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [material_decision_reopened]
+      -
+        id: work-items
+        type: skill
+        skill: spec-to-work-items
+        optional: true
+        condition: multi_step_delivery
+        prerequisites: [specification]
+        next: [impact]
+        alternatives: [safe-change-plan]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [specification_missing]
+      -
+        id: impact
+        type: skill
+        skill: change-impact-analysis
+        optional: false
+        condition: change_target_known
+        prerequisites: [work-items]
+        next: [plan]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [impact_unknown]
+      -
+        id: plan
+        type: skill
+        skill: safe-change-plan
+        optional: false
+        condition: impact_known
+        prerequisites: [impact]
+        next: [implementation-approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [plan_input_incomplete]
+      -
+        id: implementation-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: write_requested
+        prerequisites: [plan]
+        next: [implementation]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [write_not_authorized]
+      -
+        id: implementation
+        type: skill
+        skill: safe-fix-implementation
+        optional: false
+        condition: write_authorized
+        prerequisites: [implementation-approval]
+        next: [review]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: implementation-approval
+        stop_conditions: [scope_expansion_required]
+      -
+        id: review
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: implementation_available
+        prerequisites: [implementation]
+        next: [test-gap]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [blocking_review_finding]
+      -
+        id: test-gap
+        type: skill
+        skill: test-gap-analysis
+        optional: false
+        condition: reviewed_change
+        prerequisites: [review]
+        next: [test-approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [test_boundary_unknown]
+      -
+        id: test-approval
+        type: gate
+        skill: none
+        optional: true
+        condition: test_changes_required
+        prerequisites: [test-gap]
+        next: [test-implementation]
+        alternatives: [release-readiness-check]
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [test_write_not_authorized]
+      -
+        id: test-implementation
+        type: skill
+        skill: safe-test-implementation
+        optional: true
+        condition: test_changes_authorized
+        prerequisites: [test-approval]
+        next: [release]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: test-approval
+        stop_conditions: [production_change_required]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: false
+        condition: candidate_available
+        prerequisites: [test-implementation]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found]
+    forbidden_transitions: [clarification->implementation, specification->implementation, plan->implementation]
+    stop_conditions: [material_decision_unresolved, write_not_authorized, release_blocker_found]
+  bug-repair:
+    title:
+      en: Bug repair
+      zh-CN: Bug 修复
+    entry_conditions: [reproducible_or_observable_bug]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [root-cause]
+        alternatives: [ci-failure-diagnosis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [bug_context_missing]
+      -
+        id: root-cause
+        type: skill
+        skill: bug-root-cause-analysis
+        optional: false
+        condition: non_ci_bug
+        prerequisites: [route]
+        next: [impact]
+        alternatives: [ci-failure-diagnosis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [root_cause_unverified]
+      -
+        id: impact
+        type: skill
+        skill: change-impact-analysis
+        optional: true
+        condition: shared_contract_affected
+        prerequisites: [root-cause]
+        next: [plan]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [impact_unknown]
+      -
+        id: plan
+        type: skill
+        skill: safe-change-plan
+        optional: false
+        condition: root_cause_supported
+        prerequisites: [impact]
+        next: [fix-approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [plan_not_rooted_in_evidence]
+      -
+        id: fix-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: write_requested
+        prerequisites: [plan]
+        next: [fix]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [write_not_authorized]
+      -
+        id: fix
+        type: skill
+        skill: safe-fix-implementation
+        optional: false
+        condition: write_authorized
+        prerequisites: [fix-approval]
+        next: [review]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: fix-approval
+        stop_conditions: [scope_expansion_required]
+      -
+        id: review
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: fix_available
+        prerequisites: [fix]
+        next: [test-gap]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [intent_mismatch]
+      -
+        id: test-gap
+        type: skill
+        skill: test-gap-analysis
+        optional: false
+        condition: fix_reviewed
+        prerequisites: [review]
+        next: [test-approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [regression_boundary_unknown]
+      -
+        id: test-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: regression_test_required
+        prerequisites: [test-gap]
+        next: [regression-test]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [test_write_not_authorized]
+      -
+        id: regression-test
+        type: skill
+        skill: safe-test-implementation
+        optional: false
+        condition: regression_after_fix
+        prerequisites: [test-approval]
+        next: [release]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: test-approval
+        stop_conditions: [sensitivity_evidence_unavailable]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: false
+        condition: candidate_available
+        prerequisites: [regression-test]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found]
+    forbidden_transitions: [root-cause->fix, plan->fix, test-gap->regression-test]
+    stop_conditions: [root_cause_unverified, write_not_authorized, release_blocker_found]
+  test-first-change:
+    title:
+      en: Test-first change
+      zh-CN: 测试优先变更
+    entry_conditions: [behavior_not_implemented, test_first_authorized]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [clarification]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [workflow_unverified]
+      -
+        id: clarification
+        type: skill
+        skill: requirements-clarification
+        optional: true
+        condition: material_decisions_open
+        prerequisites: [route]
+        next: [specification]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [material_decision_unresolved]
+      -
+        id: specification
+        type: skill
+        skill: requirements-to-spec
+        optional: false
+        condition: material_decisions_closed
+        prerequisites: [clarification]
+        next: [test-gap]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [specification_incomplete]
+      -
+        id: test-gap
+        type: skill
+        skill: test-gap-analysis
+        optional: false
+        condition: behavior_defined
+        prerequisites: [specification]
+        next: [test-approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [test_boundary_unknown]
+      -
+        id: test-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: test_write_requested
+        prerequisites: [test-gap]
+        next: [red-test]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [test_write_not_authorized]
+      -
+        id: red-test
+        type: skill
+        skill: safe-test-implementation
+        optional: false
+        condition: test_first
+        prerequisites: [test-approval]
+        next: [production-approval]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: test-approval
+        stop_conditions: [expected_failure_not_observed, production_change_required]
+      -
+        id: production-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: production_write_requested
+        prerequisites: [red-test]
+        next: [implementation]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [production_write_not_authorized]
+      -
+        id: implementation
+        type: skill
+        skill: safe-fix-implementation
+        optional: false
+        condition: production_write_authorized
+        prerequisites: [production-approval]
+        next: [green-test]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: production-approval
+        stop_conditions: [scope_expansion_required]
+      -
+        id: green-test
+        type: skill
+        skill: safe-test-implementation
+        optional: false
+        condition: production_implementation_complete
+        prerequisites: [implementation]
+        next: [review]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: test-approval
+        stop_conditions: [green_verification_failed]
+      -
+        id: review
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: green_verification_passed
+        prerequisites: [green-test]
+        next: []
+        alternatives: [release-readiness-check]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [blocking_review_finding]
+    forbidden_transitions: [specification->implementation, test-gap->red-test, red-test->implementation]
+    stop_conditions: [material_decision_unresolved, expected_failure_not_observed, write_not_authorized]
+  post-fix-regression-test:
+    title:
+      en: Post-fix regression test
+      zh-CN: 修复后回归测试
+    entry_conditions: [production_fix_complete]
+    entry_stage: test-gap
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: test-gap
+        type: skill
+        skill: test-gap-analysis
+        optional: false
+        condition: fix_evidence_available
+        prerequisites: []
+        next: [test-approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [observable_behavior_unknown]
+      -
+        id: test-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: test_write_requested
+        prerequisites: [test-gap]
+        next: [regression-test]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [test_write_not_authorized]
+      -
+        id: regression-test
+        type: skill
+        skill: safe-test-implementation
+        optional: false
+        condition: regression_after_fix
+        prerequisites: [test-approval]
+        next: [review]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: test-approval
+        stop_conditions: [production_change_required]
+      -
+        id: review
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: regression_test_available
+        prerequisites: [regression-test]
+        next: [release]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [test_quality_blocker]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: true
+        condition: candidate_release
+        prerequisites: [review]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [sensitivity_unverified]
+    forbidden_transitions: [test-gap->regression-test]
+    stop_conditions: [test_write_not_authorized, production_change_required]
+  review-only:
+    title:
+      en: Review only
+      zh-CN: 只读审查
+    entry_conditions: [diff_or_pull_request_available]
+    entry_stage: review
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: review
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: review_scope_known
+        prerequisites: []
+        next: [test-gap]
+        alternatives: [security-focused-review, performance-regression-analysis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [review_scope_unknown]
+      -
+        id: test-gap
+        type: skill
+        skill: test-gap-analysis
+        optional: true
+        condition: test_risk_requires_mapping
+        prerequisites: [review]
+        next: [release]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [test_evidence_missing]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: true
+        condition: candidate_release
+        prerequisites: [test-gap]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found]
+    forbidden_transitions: []
+    stop_conditions: [review_scope_unknown, blocking_finding]
+  ci-diagnosis:
+    title:
+      en: CI diagnosis
+      zh-CN: CI 诊断
+    entry_conditions: [ci_failure_context_available]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [diagnosis]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [failure_context_missing]
+      -
+        id: diagnosis
+        type: skill
+        skill: ci-failure-diagnosis
+        optional: false
+        condition: ci_specific_failure
+        prerequisites: [route]
+        next: [plan]
+        alternatives: [bug-root-cause-analysis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [first_error_unknown]
+      -
+        id: plan
+        type: skill
+        skill: safe-change-plan
+        optional: true
+        condition: diagnosis_supported
+        prerequisites: [diagnosis]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [impact_unknown]
+    forbidden_transitions: []
+    stop_conditions: [failure_context_missing, first_error_unknown]
+  dependency-upgrade:
+    title:
+      en: Dependency upgrade
+      zh-CN: 依赖升级
+    entry_conditions: [dependency_and_target_version_known]
+    entry_stage: analysis
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: analysis
+        type: skill
+        skill: dependency-upgrade-analysis
+        optional: false
+        condition: target_version_known
+        prerequisites: []
+        next: [impact]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [official_change_evidence_missing]
+      -
+        id: impact
+        type: skill
+        skill: change-impact-analysis
+        optional: false
+        condition: upgrade_evidence_available
+        prerequisites: [analysis]
+        next: [plan]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [ecosystem_impact_unknown]
+      -
+        id: plan
+        type: skill
+        skill: safe-change-plan
+        optional: false
+        condition: impact_known
+        prerequisites: [impact]
+        next: [approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [rollback_unknown]
+      -
+        id: approval
+        type: gate
+        skill: none
+        optional: false
+        condition: write_requested
+        prerequisites: [plan]
+        next: [implementation]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [write_not_authorized]
+      -
+        id: implementation
+        type: skill
+        skill: safe-fix-implementation
+        optional: false
+        condition: write_authorized
+        prerequisites: [approval]
+        next: [review]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: approval
+        stop_conditions: [dependency_scope_expands]
+      -
+        id: review
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: upgrade_diff_available
+        prerequisites: [implementation]
+        next: [release]
+        alternatives: [test-gap-analysis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [compatibility_blocker]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: false
+        condition: candidate_available
+        prerequisites: [review]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found]
+    forbidden_transitions: [analysis->implementation, plan->implementation]
+    stop_conditions: [official_change_evidence_missing, write_not_authorized]
+  database-migration:
+    title:
+      en: Database migration
+      zh-CN: 数据库迁移
+    entry_conditions: [migration_artifact_available]
+    entry_stage: review
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: review
+        type: skill
+        skill: database-migration-review
+        optional: false
+        condition: migration_scope_known
+        prerequisites: []
+        next: [impact]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [data_loss_risk_unknown]
+      -
+        id: impact
+        type: skill
+        skill: change-impact-analysis
+        optional: false
+        condition: migration_review_complete
+        prerequisites: [review]
+        next: [plan]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [rollout_impact_unknown]
+      -
+        id: plan
+        type: skill
+        skill: safe-change-plan
+        optional: false
+        condition: impact_known
+        prerequisites: [impact]
+        next: [approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [rollback_unknown]
+      -
+        id: approval
+        type: gate
+        skill: none
+        optional: false
+        condition: migration_write_requested
+        prerequisites: [plan]
+        next: [implementation]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [write_not_authorized]
+      -
+        id: implementation
+        type: skill
+        skill: safe-fix-implementation
+        optional: false
+        condition: migration_files_authorized
+        prerequisites: [approval]
+        next: [review-change]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: approval
+        stop_conditions: [production_database_access_required]
+      -
+        id: review-change
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: migration_diff_available
+        prerequisites: [implementation]
+        next: [release]
+        alternatives: [test-gap-analysis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [migration_blocker]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: false
+        condition: candidate_available
+        prerequisites: [review-change]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found]
+    forbidden_transitions: [review->implementation, plan->implementation]
+    stop_conditions: [data_loss_risk_unknown, write_not_authorized, production_database_access_required]
+  api-contract-change:
+    title:
+      en: API contract change
+      zh-CN: API 契约变更
+    entry_conditions: [api_contract_change_proposed]
+    entry_stage: review
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: review
+        type: skill
+        skill: api-contract-review
+        optional: false
+        condition: contract_artifacts_available
+        prerequisites: []
+        next: [impact]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [consumer_evidence_missing]
+      -
+        id: impact
+        type: skill
+        skill: change-impact-analysis
+        optional: false
+        condition: compatibility_classified
+        prerequisites: [review]
+        next: [plan]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [blast_radius_unknown]
+      -
+        id: plan
+        type: skill
+        skill: safe-change-plan
+        optional: false
+        condition: impact_known
+        prerequisites: [impact]
+        next: [approval]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [versioning_strategy_unknown]
+      -
+        id: approval
+        type: gate
+        skill: none
+        optional: false
+        condition: write_requested
+        prerequisites: [plan]
+        next: [implementation]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [write_not_authorized]
+      -
+        id: implementation
+        type: skill
+        skill: safe-fix-implementation
+        optional: false
+        condition: write_authorized
+        prerequisites: [approval]
+        next: [review-change]
+        alternatives: []
+        permission: write_scoped
+        approval_gate: approval
+        stop_conditions: [public_api_expansion_unapproved]
+      -
+        id: review-change
+        type: skill
+        skill: safe-code-review
+        optional: false
+        condition: contract_diff_available
+        prerequisites: [implementation]
+        next: [release]
+        alternatives: [test-gap-analysis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [breaking_change_unmitigated]
+      -
+        id: release
+        type: skill
+        skill: release-readiness-check
+        optional: false
+        condition: candidate_available
+        prerequisites: [review-change]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found]
+    forbidden_transitions: [review->implementation, plan->implementation]
+    stop_conditions: [consumer_evidence_missing, write_not_authorized]
+  session-handoff:
+    title:
+      en: Session handoff
+      zh-CN: 会话交接
+    entry_conditions: [session_context_long_or_ownership_changing]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [handoff]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [next_skill_unverified]
+      -
+        id: handoff
+        type: skill
+        skill: session-handoff
+        optional: false
+        condition: continuation_required
+        prerequisites: [route]
+        next: []
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [sensitive_content_not_redactable]
+    forbidden_transitions: []
+    stop_conditions: [sensitive_content_not_redactable, repository_state_unverified]
+  release-preparation:
+    title:
+      en: Release preparation
+      zh-CN: 发布准备
+    entry_conditions: [concrete_release_candidate]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [release-check]
+        alternatives: []
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [candidate_unknown]
+      -
+        id: release-check
+        type: skill
+        skill: release-readiness-check
+        optional: false
+        condition: candidate_known
+        prerequisites: [route]
+        next: []
+        alternatives: [documentation-sync]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [release_blocker_found, publication_not_authorized]
+    forbidden_transitions: []
+    stop_conditions: [release_blocker_found, publication_not_authorized]

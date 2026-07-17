@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Turn a confirmed specification, root-cause finding, or impact analysis into an atomic, verifiable, reversible implementation plan with explicit scope and risk controls. Use only when inputs and blast radius are sufficiently known; route ambiguity to requirements-to-spec, unknown impact to change-impact-analysis, architecture rationale or decision documentation to architecture-decision-record, and execution to safe-fix-implementation.
-  zh-CN: 将已确认规格、根因结论或影响分析转为原子化、可验证、可回滚且范围明确的实施计划。仅在输入和影响范围足够明确时使用；需求模糊交给 requirements-to-spec，影响未知交给 change-impact-analysis，架构理由或决策文档交给 architecture-decision-record，执行交给 safe-fix-implementation。
+  en: Turn a confirmed specification, root-cause finding, or impact analysis into an atomic, verifiable, reversible implementation plan with explicit scope and risk controls. Use only when material decisions are closed and blast radius is sufficiently known; route open decisions to requirements-clarification, settled requirements needing a specification to requirements-to-spec, unknown impact to change-impact-analysis, architecture rationale or decision documentation to architecture-decision-record, and execution to safe-fix-implementation.
+  zh-CN: 将已确认规格、根因结论或影响分析转为原子化、可验证、可回滚且范围明确的实施计划。仅在重大决策已闭合且影响范围足够明确时使用；未决需求交给 requirements-clarification，已闭合但尚需规格化的需求交给 requirements-to-spec，影响未知交给 change-impact-analysis，架构理由或决策文档交给 architecture-decision-record，执行交给 safe-fix-implementation。
 triggers:
   en:
     - create a safe implementation plan

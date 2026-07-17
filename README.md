@@ -40,6 +40,8 @@ Choose the shortest guide for your goal:
 - [User Manual](docs/USER_MANUAL.md) for installation, invocation syntax, permissions, and troubleshooting.
 - [Complete Skill Catalog](docs/SKILL_CATALOG.md) for choosing among all active Skills.
 - [Workflow Cookbook](docs/WORKFLOW_COOKBOOK.md) for chaining Skills into real tasks.
+- [Testing and Evaluation](docs/TESTING_AND_EVALUATION.md)
+- [0.3.0 Release Preparation Recommendation](docs/RELEASE_PREPARATION_0.3.0.md)
 - [Versioning and Lifecycle Policy](docs/VERSIONING.md) for project releases, component versions, and maturity status.
 - [Adding Skills](docs/ADDING_SKILLS.md) for maintainers working from canonical sources.
 
@@ -314,9 +316,20 @@ This public repository must not include:
 
 See [docs/PUBLIC_PRIVATE_BOUNDARY.md](docs/PUBLIC_PRIVATE_BOUNDARY.md).
 
+## For Users
+
+- Install and invoke Skills using the [User Manual](docs/USER_MANUAL.md); start uncertain repository work with `$repo-doctor-router`.
+- Browse all active Skills in the [Skill Catalog](docs/SKILL_CATALOG.md). If a Skill is missing, verify the selected plugin/ZIP, rebuild or reinstall the correct platform output, and use its canonical slug.
+- Run `npm run doctor` or `npm run doctor -- --json` for a read-only installation and synchronization check.
+- To update, pull a version you trust and rebuild/reinstall the relevant generated output. To uninstall, remove the installed plugin/Skill through the host; do not delete canonical `packs/` merely to disable an installation.
+
+## For Maintainers
+
+Use `npm run validate`, `npm test`, `npm run build`, `npm run docs:check`, `npm run quality:check`, and `npm run release:check`. Validate the machine-readable registry with `npm run workflow:validate`; Golden Workflows are part of `npm run test:workflow`. Prepare and record manual live-model runs using the [Testing and Evaluation guide](docs/TESTING_AND_EVALUATION.md). Deterministic contract tests are not live-model routing accuracy.
+
 ## Release Candidate Status
 
-This checkout is preparing the **0.2.0 Release Candidate**; repository changes alone do not mean it has been tagged or published. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 38 active Skills are marked `beta` for this candidate: they are repository-validated and suitable for real tasks, but broad public-use and Live-model routing evidence is still limited. Beta does not mean unusable, and a future `stable` label would not mean bug-free.
+The historical **v0.2.0 prerelease** remains unchanged. This checkout is the authorized **v0.3.0-rc.1 Release Candidate**; it is published as a prerelease because live-model evaluation remains UNKNOWN. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 38 active Skills in the current checkout are marked `beta`: they are repository-validated and suitable for real tasks, but broad public-use and Live-model routing evidence is still limited. Beta does not mean unusable, and a future `stable` label would not mean bug-free.
 
 Live-model routing accuracy remains **UNKNOWN**. See [Versioning and Lifecycle Policy](docs/VERSIONING.md) for the component baselines and the historical `v0.0.1` tag-label exception, and [CHANGELOG.md](CHANGELOG.md) for the candidate change record.
 

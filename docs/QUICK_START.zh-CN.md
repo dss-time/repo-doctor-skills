@@ -13,7 +13,7 @@
 
 ## 候选版本说明
 
-当前 checkout 正在准备项目 **0.2.0 Release Candidate**；仅有元数据和文档不代表已经正式发布。项目版本、组件版本和成熟度状态彼此独立。4 个 active Pack 和 38 个 active Skill 当前均为 `beta`，表示已经通过仓库验证、可以用于真实任务，但仍缺少广泛公开使用和 Live-model 路由证据。当前 Live-model 路由准确率为 **UNKNOWN**。
+当前 checkout 是 **v0.3.0-rc.1 Release Candidate**。确定性门禁已通过，但真实模型路由准确率仍为 **UNKNOWN**，因此它按 prerelease 发布。项目版本、组件版本和成熟度状态彼此独立。4 个 active Pack 和 38 个 active Skill 当前均为 `beta`，表示已经通过仓库验证、可以用于真实任务，但仍缺少广泛公开使用和 Live-model 路由证据。当前 Live-model 路由准确率为 **UNKNOWN**。
 
 ## 你正在看的是什么
 

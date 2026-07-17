@@ -131,6 +131,10 @@ try {
     "RCA plugin must include evidence status labels",
   );
 
+  const canonicalWorkflow = path.join(fixturePack, "workflows.yaml");
+  const pluginWorkflow = path.join(tempRoot, "plugins", "repo-doctor", "workflows.yaml");
+  expect(existsSync(pluginWorkflow), "sync must copy the canonical workflow registry");
+  expect(readFileSync(pluginWorkflow, "utf8") === readFileSync(canonicalWorkflow, "utf8"), "plugin workflow registry must match canonical");
   const firstSnapshot = snapshotTree(path.join(tempRoot, "plugins", "repo-doctor"));
   syncRepoDoctorPlugin({ root: tempRoot, log: false });
   expect(
@@ -147,6 +151,12 @@ try {
     snapshotTree(path.join(tempRoot, "plugins", "repo-doctor")) === firstSnapshot,
     "pruning an undeclared plugin skill must restore the deterministic tree",
   );
+
+  writeFileSync(pluginWorkflow, `${readFileSync(pluginWorkflow, "utf8")}\nmanual workflow drift\n`);
+  const workflowDrift = runChecker(tempRoot);
+  expect(workflowDrift.status === 1, "manual workflow registry drift must fail quality checks");
+  expect(workflowDrift.stderr.includes("generated workflow registry differs"), "workflow drift failure must identify registry drift");
+  syncRepoDoctorPlugin({ root: tempRoot, log: false });
 
   const valid = runChecker(tempRoot);
   expect(valid.status === 0, `freshly synchronized fixture should pass quality checks: ${valid.stderr}`);

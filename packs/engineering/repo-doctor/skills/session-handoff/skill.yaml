@@ -1,7 +1,7 @@
 id: repo.session-handoff
 name:
   en: Session Handoff
-  zh-CN: Session Handoff（会话交接）
+  zh-CN: 会话交接
 category: engineering
 visibility: public
 version: 0.1.0

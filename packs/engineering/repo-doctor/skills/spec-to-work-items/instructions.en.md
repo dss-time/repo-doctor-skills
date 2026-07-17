@@ -5,7 +5,7 @@ Convert settled scope into delivery slices that can be executed and verified ind
 ## Boundary
 
 - Require a confirmed specification, implementation plan, or sufficiently settled conversation. Route material open decisions to `requirements-clarification` or `requirements-to-spec`.
-- Stay read-only. Return a Markdown work-item plan in the response. Save a file or create GitHub, Linear, or other external tasks only after explicit authorization and confirmed platform support.
+- Stay read-only. Return copyable Markdown only in the response. Never write a local file, use Shell to write indirectly, create GitHub Issues or Linear tickets, or call an external task system, even when the user asks; this Skill's metadata does not grant those capabilities.
 - Do not substitute for the code-level atomic steps of `safe-change-plan`; this Skill owns delivery slicing, dependencies, and parallel coordination.
 - Include migrations, compatibility, rollback, documentation, and tests within the behavior slice they support.
 
@@ -35,3 +35,5 @@ Reject and explain a decomposition that:
 ## Completion Conditions
 
 Complete only when every item has all required fields, dependencies are acyclic or explicitly blocked, parallel claims are justified, conflicts are visible, and every acceptance criterion is observable and verifiable.
+
+If the user needs persistence, state that the plan was not saved and ask them to save the Markdown manually or use an existing Skill whose metadata explicitly permits the requested documentation write.

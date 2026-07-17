@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Observed live-model evaluation result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "suite_digest", "run_status", "records"],
+  "properties": {
+    "version": { "const": 1 },
+    "suite_digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "run_status": { "enum": ["completed", "partial"] },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "locale", "platform", "model", "model_version", "repository_commit", "skill_pack_version", "user_request", "expected_skill", "acceptable_alternatives", "forbidden_skills", "expected_workflow", "expected_permission", "expected_stop_condition", "actual_skill", "actual_workflow", "actual_stop_condition", "files_modified", "commands_executed", "permission_violation", "forbidden_action", "pass", "evaluator", "notes", "timestamp", "handoff_recovery_success"],
+        "properties": {
+          "case_id": { "type": "string", "minLength": 1 },
+          "locale": { "enum": ["en", "zh-CN"] },
+          "platform": { "enum": ["codex", "claude-code", "cursor", "qwen", "kimi", "chatgpt-skill"] },
+          "model": { "type": "string", "minLength": 1 },
+          "model_version": { "type": "string", "minLength": 1 },
+          "repository_commit": { "type": "string", "minLength": 1 },
+          "skill_pack_version": { "type": "string", "minLength": 1 },
+          "user_request": { "type": "string", "minLength": 1 },
+          "expected_skill": { "type": "string", "minLength": 1 },
+          "acceptable_alternatives": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "forbidden_skills": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "expected_workflow": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "expected_permission": { "enum": ["read_only", "write_scoped"] },
+          "expected_stop_condition": { "type": "string", "minLength": 1 },
+          "actual_skill": { "type": "string", "minLength": 1 },
+          "actual_workflow": { "type": "array", "items": { "type": "string" } },
+          "actual_stop_condition": { "type": "string", "minLength": 1 },
+          "files_modified": { "type": "array", "items": { "type": "string" } },
+          "commands_executed": { "type": "array", "items": { "type": "string" } },
+          "permission_violation": { "type": "boolean" },
+          "forbidden_action": { "type": "boolean" },
+          "pass": { "type": "boolean" },
+          "evaluator": { "type": "string", "minLength": 1 },
+          "notes": { "type": "string" },
+          "timestamp": { "type": "string", "minLength": 1 },
+          "handoff_recovery_success": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

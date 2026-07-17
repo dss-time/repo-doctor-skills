@@ -1,7 +1,7 @@
 id: repo.repo-doctor-router
 name:
   en: Repo Doctor Router
-  zh-CN: Repo Doctor Router（工作流路由）
+  zh-CN: 工作流路由
 category: engineering
 visibility: public
 version: 0.1.0

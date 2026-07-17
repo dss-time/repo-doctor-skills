@@ -1,40 +1,37 @@
 # Repo Doctor Router（工作流路由）
 
-判断当前工程任务所处状态，推荐下一个现有 Repo Doctor Skill 或有序工作流。只推荐，不执行被路由的 Skill。
+判断当前工程状态，推荐下一个现有 Repo Doctor Skill 或一个已注册工作流。只推荐，绝不执行被路由的 Skill。
 
 ## 职责边界
 
 - 保持只读，不修改文件、不运行命令、不联网，也不执行发布动作。
-- 不声称宿主平台能够递归调用 Skill；推荐只是给用户或下一轮 Agent 的操作指引。
-- 普通知识问答、解释或闲聊不需要仓库工作流时不要路由。
-- 命名 Skill 前必须从当前 Pack 或 Skill 目录验证其为 active；无法核实时将推荐标为 `unverified`，改为给自然语言下一步，不得编造 ID。
-- 不把澄清、规格、计划、实施、验证和发布隐式合并成一个动作。
+- 仓库可读时使用唯一 canonical 注册表 `packs/engineering/repo-doctor/workflows.yaml`；打包副本只是只读投影。不得编造或静默扩展工作流。
+- 不声称宿主会递归调用 Skill。推荐只是给用户或后续轮次的指引。
+- 普通知识问答不涉及仓库工作流决策时不要路由。
+- 只推荐已核验为 active 的 Skill；清单或注册表无法核实时标为 `unverified`，并给出边界明确的自然语言后备指令。
+- 不把澄清、规格、计划、权限门禁、实施、验证和发布合并成一个动作。
 
 ## 路由流程
 
-1. 阅读用户请求和已提供的仓库上下文，识别当前产物：问题、模糊需求、已确认决策、规格、工作项计划、diff、失败证据、候选版本或会话状态。
-2. 按任务状态、目标、证据成熟度、权限、风险，以及用户需要单一步骤还是完整工作流进行分类。
-3. 命名 Skill 前核对 active Repo Doctor 清单；拒绝过期、不存在、已弃用或不属于当前 Pack 的引用。
-4. 从下列路由表选择职责最窄的承接者：
-   - 初次进入陌生仓库 -> `repo-onboarding`；
-   - 仍有会实质改变实现的决策 -> `requirements-clarification`；
-   - 决策已闭合，需要可实施规格 -> `requirements-to-spec`；
-   - 大规格需要拆成可独立验证切片 -> `spec-to-work-items`；
-   - 修改范围或兼容影响不清楚 -> `change-impact-analysis`；
-   - 已确认变更需要原子实施计划 -> `safe-change-plan`；
-   - 已授权实施一个已确认的小型生产修复 -> `safe-fix-implementation`；
-   - 需要评估测试 -> `test-gap-analysis`；已授权只改测试 -> `safe-test-implementation`；
-   - 广泛 diff 或 PR 审查 -> `safe-code-review`；
-   - CI 特有失败 -> `ci-failure-diagnosis`；复杂非 CI Bug -> `bug-root-cause-analysis`；
-   - 依赖、数据库、API、安全、性能、配置或死代码问题 -> 对应专项 Skill；
-   - 文档漂移 -> `documentation-sync`；长期架构决定 -> `architecture-decision-record`；
-   - 具体候选版本 -> `release-readiness-check`；
-   - 会话过长或更换 Agent -> `session-handoff`；
-   - 没有更窄问题的全仓状态评估 -> `project-health-check`。
-5. 组成最短安全工作流；只有证据和风险需要时才插入澄清、影响分析、测试、审查或发布门禁。
-6. 说明必要输入、权限边界、替代路径，以及应该停止或改路由的条件。
-7. 同时给出两种调用：Codex 示例（如 `$requirements-clarification`）和平台无关自然语言指令。平台不支持显式调用时，提供一条可复制的自然语言下一步 Prompt。
+1. 识别当前产物和状态：模糊需求、已澄清决策、已闭合规格、工作项、影响证据、计划、diff、失败证据、候选版本或会话状态。
+2. 按目标、证据成熟度、重大决策、权限请求、风险，以及需要单一步骤还是端到端工作流进行分类。
+3. 核验 active Repo Doctor 清单，并读取注册表版本、工作流 ID、阶段、门禁、替代路径和停止条件。
+4. 应用职责边界：
+   - 产品、兼容性、安全、数据或发布方式仍有重大未决选择 -> `requirements-clarification`。
+   - 重大决策已闭合但缺少可测试规格 -> `requirements-to-spec`。
+   - 大型已闭合规格需要垂直交付切片 -> `spec-to-work-items`。
+   - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan`。
+   - 直接改代码请求仍有重大权限、行为、兼容性或破坏性选择 -> 先澄清。
+   - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和 `safe-fix-implementation`；清晰不等于授权。
+   - 测试意图 -> 分析交给 `test-gap-analysis`；已授权测试修改交给 `safe-test-implementation`，并指定 `test_first`、`regression_after_fix` 或 `characterization`。
+   - 广泛 diff 审查 -> `safe-code-review`；修改前影响范围分析 -> `change-impact-analysis`。
+   - CI 特有失败 -> `ci-failure-diagnosis`；复杂非 CI 运行故障 -> `bug-root-cause-analysis`。
+   - 文档漂移 -> `documentation-sync`；候选版本 -> `release-readiness-check`；长会话交接 -> `session-handoff`。
+   - 其他上手、体检或专项审查 -> 选择注册表或 active 清单中职责最窄的承接者。
+5. 若注册工作流匹配，返回准确 `workflow_id` 和适用阶段顺序；保留审批门禁、禁止跃迁、替代路径和停止条件，不另造重复流程。
+6. 若没有工作流匹配，只推荐一个已核验 Skill，并说明为何不适用注册工作流。
+7. 同时给出 Codex 调用示例和平台无关可复制 Prompt；平台语法只是示例，不是 canonical 工作流数据。
 
 ## 完成条件
 
-只有 `task_classification`、已验证的下一 Skill、有序工作流、原因、必要输入、安全说明、替代方案和停止条件齐全才结束。没有现有 Skill 承接时应明确说明，并给出边界明确的自然语言下一步，绝不编造 Skill。
+输出分类、注册表核验、适用时的 `workflow_id`、下一 Skill、适用阶段、原因、输入、权限门禁、替代路径和停止条件。不得执行推荐。

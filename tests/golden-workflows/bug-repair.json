@@ -1,0 +1,40 @@
+{
+  "id": "bug-repair-bilingual",
+  "workflow_id": "bug-repair",
+  "prompts": {
+    "en": "A reproducible login crash crosses modules. Establish the root cause, plan the smallest fix, implement only after approval, and add post-fix regression evidence.",
+    "zh-CN": "可复现的登录崩溃跨越多个模块。先确认根因、规划最小修复，仅在批准后实施，并补充修复后回归证据。"
+  },
+  "expected": {
+    "ordered_skills": [
+      "repo-doctor-router",
+      "bug-root-cause-analysis",
+      "change-impact-analysis",
+      "safe-change-plan",
+      "safe-fix-implementation",
+      "safe-code-review",
+      "test-gap-analysis",
+      "safe-test-implementation",
+      "release-readiness-check"
+    ],
+    "required_gates": [
+      "fix-approval",
+      "test-approval"
+    ],
+    "terminal_skill": "release-readiness-check",
+    "forbidden_skips": [
+      "root-cause->fix",
+      "plan->fix",
+      "test-gap->regression-test"
+    ],
+    "contract_assertions": [
+      "repeatable_feedback_before_root_cause",
+      "confidence_requires_evidence",
+      "plan_matches_root_cause",
+      "regression_after_fix",
+      "sensitivity_unverified_when_missing",
+      "dual_dimension_review",
+      "release_blocks_unverified"
+    ]
+  }
+}

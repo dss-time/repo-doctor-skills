@@ -1,4 +1,4 @@
 interface:
   display_name: "Safe Test Implementation（安全补充测试）"
-  short_description: "遵循仓库约定最小化补充高价值测试并验证结果"
-  default_prompt: "使用 $safe-test-implementation 最小化补充高价值测试，默认不要修改生产代码。"
+  short_description: "按测试先行、修复后回归或特征化模式最小化补充高价值测试"
+  default_prompt: "使用 $safe-test-implementation 选择 test_first、regression_after_fix 或 characterization 模式补测试，不要修改生产代码。"

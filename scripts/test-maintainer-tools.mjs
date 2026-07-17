@@ -251,6 +251,7 @@ try {
     yaml = replaceYamlSection(yaml, "permissions", permissions);
     yaml = replaceYamlSection(yaml, "risk_level", risk);
     yaml = yaml.replace("filesystem: read", `filesystem: ${filesystem}`);
+    if (permissions.includes("run_shell_commands: true")) yaml = yaml.replace("shell: none", "shell: optional");
     writeFileSync(path.join(skillRoot, "skill.yaml"), yaml);
     return runNode(checker, ["--root", fixtureRoot]);
   }

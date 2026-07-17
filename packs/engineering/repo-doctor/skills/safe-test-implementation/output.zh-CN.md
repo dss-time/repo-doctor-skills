@@ -1,14 +1,18 @@
 # 输出契约
 
-1. 测试依据与证据
-2. 外部可观察行为与测试边界
-3. 行为—风险—测试映射，以及断言为何能够发现回归
-4. 添加或修改的测试、fixture、辅助代码及文件
-5. 实现前预期失败命令、原因与结果
-6. 最小授权实现
-7. 绿灯验证和相关回归命令
-8. 结果：预期失败、意外失败、通过、flaky 或未运行
-9. 生产代码边界或阻塞项
-10. 清理与剩余未覆盖风险
+1. `test_mode`：`test_first`、`regression_after_fix` 或 `characterization`
+2. `test_basis`
+3. `observable_behavior`
+4. `test_boundary`
+5. `changed_test_files`
+6. `initial_result`
+7. `expected_failure_reason` 或 `not_applicable`
+8. `sensitivity_evidence`
+9. `sensitivity_status`：`verified`、`sensitivity_unverified` 或 `not_applicable`
+10. `production_change_required`
+11. `verification_commands`
+12. `regression_result`
+13. `limitations`
+14. `next_recommended_skill`
 
-测试命令未成功完成时，不得声称测试通过。
+只有 `test_first` 要求观察到预期失败。没有命令或证据时不得声称结果。

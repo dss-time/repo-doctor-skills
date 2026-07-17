@@ -1,9 +1,7 @@
 # Examples
 
-User: "Implement the P1 regression test from the test-gap report. Modify tests only and run the narrow test first."
-
-Expected: inspect conventions, map the test to the confirmed bug, make a minimal test-only edit, and report exact results.
-
-The new verification must first fail for the expected reason, then pass after the smallest authorized test-side implementation, followed by the narrow related regression scope.
-
-Non-trigger: "Fix the production null dereference." Use `safe-fix-implementation`.
+- `test_first`: “Before implementing account lockout, add the narrow test proving the sixth failed login is rejected.” Require a real expected behavioral failure; route production implementation separately.
+- `regression_after_fix`: “The null-session fix is verified. Add the regression test now.” Run on the fixed state and report safe sensitivity evidence; never fabricate a pre-fix red run.
+- `characterization`: “Capture current CSV escaping before replacing the parser.” A passing initial run is valid; state exactly what behavior is frozen.
+- Blocker: ask whether behavior is unimplemented, already fixed, or legacy behavior to preserve when the answer changes mode.
+- Non-trigger: “Fix the production null dereference.” Use `safe-fix-implementation`.

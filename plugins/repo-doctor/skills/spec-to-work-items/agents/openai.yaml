@@ -1,4 +1,4 @@
 interface:
-  display_name: "Spec to Work Items（Spec to Work Items（规格拆分工作项））"
+  display_name: "Spec to Work Items（规格拆分工作项）"
   short_description: "把已确认规格拆成可独立验证且可安全并行的垂直工作项"
   default_prompt: "使用 $spec-to-work-items 把已确认规格拆成可独立验证的垂直工作项，不创建外部 Issue。"

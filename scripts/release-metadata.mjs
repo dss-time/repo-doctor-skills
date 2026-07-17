@@ -12,7 +12,7 @@ import { discoverPackRoots } from "./sync-pack-plugin.mjs";
 import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 
 const scriptRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const semverPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
+const semverPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|[A-Za-z-][0-9A-Za-z-]*))*))?$/;
 const knownStatuses = new Set(["draft", "beta", "stable", "deprecated"]);
 const buildActiveStatuses = new Set(["draft", "beta", "stable"]);
 const releaseEligibleStatuses = new Set(["beta", "stable"]);
@@ -27,8 +27,8 @@ const maturityRank = new Map([
 // versions. Skill versions are protected against invalid values and known
 // regressions without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.2.0",
-  releaseDate: "2026-07-15",
+  projectVersion: "0.3.0-rc.1",
+  releaseDate: "2026-07-17",
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -91,10 +91,33 @@ function isSemver(value) {
 }
 
 function compareSemver(left, right) {
-  const leftParts = left.split(".").map(Number);
-  const rightParts = right.split(".").map(Number);
+  const leftMatch = left.match(semverPattern);
+  const rightMatch = right.match(semverPattern);
+  if (!leftMatch || !rightMatch) return 0;
+  const leftParts = leftMatch.slice(1, 4).map(Number);
+  const rightParts = rightMatch.slice(1, 4).map(Number);
   for (let index = 0; index < 3; index += 1) {
     if (leftParts[index] !== rightParts[index]) return leftParts[index] - rightParts[index];
+  }
+  const leftPrerelease = leftMatch[4];
+  const rightPrerelease = rightMatch[4];
+  if (!leftPrerelease && !rightPrerelease) return 0;
+  if (!leftPrerelease) return 1;
+  if (!rightPrerelease) return -1;
+  const leftIdentifiers = leftPrerelease.split(".");
+  const rightIdentifiers = rightPrerelease.split(".");
+  const length = Math.max(leftIdentifiers.length, rightIdentifiers.length);
+  for (let index = 0; index < length; index += 1) {
+    const leftIdentifier = leftIdentifiers[index];
+    const rightIdentifier = rightIdentifiers[index];
+    if (leftIdentifier === undefined) return -1;
+    if (rightIdentifier === undefined) return 1;
+    if (leftIdentifier === rightIdentifier) continue;
+    const leftNumeric = /^\d+$/.test(leftIdentifier);
+    const rightNumeric = /^\d+$/.test(rightIdentifier);
+    if (leftNumeric && rightNumeric) return Number(leftIdentifier) - Number(rightIdentifier);
+    if (leftNumeric !== rightNumeric) return leftNumeric ? -1 : 1;
+    return leftIdentifier.localeCompare(rightIdentifier, "en");
   }
   return 0;
 }
@@ -133,7 +156,7 @@ function readYaml(root, filename, errors) {
 
 function checkExactVersion(errors, label, actual, expected, kind = "version") {
   if (!isSemver(actual)) {
-    errors.push(`${label}: ${kind} must be strict SemVer x.y.z, found ${JSON.stringify(actual)}`);
+    errors.push(`${label}: ${kind} must be strict SemVer x.y.z[-prerelease], found ${JSON.stringify(actual)}`);
     return;
   }
   if (!isSemver(expected)) {
@@ -172,7 +195,7 @@ function auditPackage(root, contract, errors) {
   const packageJson = readJson(root, "package.json", errors);
   if (!packageJson) return;
   if (!isSemver(packageJson.version)) {
-    errors.push(`package.json: project version must be strict SemVer x.y.z, found ${JSON.stringify(packageJson.version)}`);
+    errors.push(`package.json: project version must be strict SemVer x.y.z[-prerelease], found ${JSON.stringify(packageJson.version)}`);
   } else if (packageJson.version !== contract.projectVersion) {
     const relation = compareSemver(packageJson.version, contract.projectVersion) < 0
       ? "regresses below"
@@ -248,7 +271,7 @@ function auditPacks(root, contract, errors) {
       if (!metadata) continue;
       metadataBySlug.set(slug, metadata);
       if (!isSemver(metadata.version)) {
-        errors.push(`${relative}: Skill version must be strict SemVer x.y.z, found ${JSON.stringify(metadata.version)}`);
+        errors.push(`${relative}: Skill version must be strict SemVer x.y.z[-prerelease], found ${JSON.stringify(metadata.version)}`);
       } else {
         const floor = contract.skillVersionFloorOverrides[metadata.id] ?? contract.skillVersionFloor;
         if (!isSemver(floor)) {
@@ -385,14 +408,6 @@ function auditChangelog(root, contract, errors) {
   const content = readFileSync(absolute, "utf8");
   const unreleased = content.match(/^## \[?Unreleased\]?\s*$/m);
   if (!unreleased) errors.push(`${contract.changelogPath}: must retain an Unreleased section`);
-  if (unreleased) {
-    const bodyStart = unreleased.index + unreleased[0].length;
-    const nextSectionOffset = content.slice(bodyStart).search(/\n## /);
-    const body = nextSectionOffset === -1
-      ? content.slice(bodyStart)
-      : content.slice(bodyStart, bodyStart + nextSectionOffset);
-    if (body.trim()) errors.push(`${contract.changelogPath}: Unreleased must be empty for this Release Candidate`);
-  }
 
   const version = escapeRegExp(contract.projectVersion);
   const date = escapeRegExp(contract.releaseDate);

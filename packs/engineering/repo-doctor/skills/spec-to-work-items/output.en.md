@@ -18,4 +18,4 @@ Start with source scope, dependency overview, parallel groups, conflict zones, a
 - `recommended_skills`
 - `status`
 
-End with rejected decomposition patterns, unresolved assumptions, and confirmation that no external issue or task was created.
+End with rejected decomposition patterns, unresolved assumptions, and confirmation that no file, Shell workaround, external issue, or task was created.

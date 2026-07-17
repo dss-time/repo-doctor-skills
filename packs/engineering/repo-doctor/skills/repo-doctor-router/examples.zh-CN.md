@@ -1,8 +1,8 @@
 # 示例
 
-- “功能需求还很模糊，可能影响兼容性，我该走哪个流程？” -> 推荐 `requirements-clarification`，但不执行。
-- “行为和验收标准已经确定，请整理成可实施规格。” -> 推荐 `requirements-to-spec`。
-- “这是一个较大的已批准规格，包含多个独立用户行为。” -> 推荐 `spec-to-work-items`。
-- “运行时故障跨越多个模块，目前不知道根因。” -> 推荐 `bug-root-cause-analysis`。
-- “当前会话太长，请整理给另一个 Agent 继续。” -> 推荐 `session-handoff`。
-- 反例：“Semantic Versioning 是什么？”应直接回答，不触发仓库工作流路由。
+- “功能需求仍有兼容性选择，我该走哪个流程？” -> `feature-delivery`，下一步 `requirements-clarification`。
+- “行为和验收标准已经确定，请形成规格。” -> `feature-delivery`，下一步 `requirements-to-spec`。
+- “实现这个范围明确的单文件修复，已授权写入。” -> 保留注册的写权限门禁，再推荐 `safe-fix-implementation`。
+- “认证流程你看着改。” -> 行为和权限仍有重大选择，先澄清。
+- “修复已经合并，请补回归测试。” -> `post-fix-regression-test`，模式为 `regression_after_fix`。
+- 反例：“Semantic Versioning 是什么？”应直接回答。

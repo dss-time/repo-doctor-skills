@@ -3,7 +3,7 @@ name: requirements-clarification
 description: Resolve the material product, behavior, compatibility, data, permission, security, migration, and acceptance decisions that remain open before specification or implementation. Use when a request contains consequential ambiguity; inspect repository evidence before asking one focused question at a time, then produce a clarification summary for requirements-to-spec. Do not use for an already clear small change, write the final specification, edit long-term documentation, or implement code. 在规格化或实施前，关闭仍未确定且会实质影响产品、行为、兼容性、数据、权限、安全、迁移和验收的决策。用于存在关键歧义的需求；先检查仓库证据，再一次聚焦一个问题，最终生成交给 requirements-to-spec 的澄清摘要。已清楚的小改动不使用，也不生成最终规格、不修改长期文档或实施代码。
 ---
 
-# Requirements Clarification（Requirements Clarification（需求决策澄清））
+# Requirements Clarification（需求决策澄清）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 

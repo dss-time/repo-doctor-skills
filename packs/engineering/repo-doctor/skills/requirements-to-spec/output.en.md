@@ -8,9 +8,9 @@
 6. Out of scope
 7. Constraints and dependencies
 8. Assumptions, confidence, and verification
-9. Open questions, labeled blocking or non-blocking
+9. Non-blocking assumptions, deferred items, and unknown evidence
 10. Acceptance criteria covering normal, failure, boundary, and compatibility behavior
 11. Risks
 12. Recommended next step
 
-Do not include a file-by-file implementation plan or edits.
+If a blocking decision exists, stop and return a handoff to `requirements-clarification` instead of presenting a completed specification. Do not include a file-by-file implementation plan or edits.

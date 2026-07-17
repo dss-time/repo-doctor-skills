@@ -243,7 +243,7 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.2.0");
+assert.equal(releaseContract.projectVersion, "0.3.0-rc.1");
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
@@ -346,10 +346,9 @@ expectFailure(
   (root) => replace(root, "CHANGELOG.md", "## Unreleased", "## Pending"),
   ["must retain an Unreleased section"],
 );
-expectFailure(
-  "changelog-unreleased-not-empty",
+expectPass(
+  "changelog-unreleased-development",
   (root) => replace(root, "CHANGELOG.md", "## Unreleased\n\n", "## Unreleased\n\n- Pending change.\n\n"),
-  ["Unreleased must be empty"],
 );
 expectFailure(
   "changelog-release",

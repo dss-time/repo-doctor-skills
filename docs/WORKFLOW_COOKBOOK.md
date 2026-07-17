@@ -109,7 +109,7 @@ unknowns. Do not implement fixes.
 | Phase | Why it comes here | Main boundary |
 |---|---|---|
 | Decision clarification | **requirements-clarification** reads repository evidence and closes only choices that materially affect behavior, compatibility, security, data, migration, or acceptance. | Asks one focused decision at a time and stops before specification or code. |
-| Specification | **requirements-to-spec** clarifies goals, scope, constraints, and acceptance criteria first. | Does not produce a concrete code-change plan or write files. |
+| Specification | **requirements-to-spec** converts settled material decisions into scope, constraints, flows, and testable acceptance criteria. | If a material decision is open, stop and return to clarification; do not plan code or write files. |
 | Delivery slicing | For a large specification, **spec-to-work-items** creates vertical, independently verifiable items with dependencies, conflicts, tests, and parallel groups. | Does not create external issues or replace the code-level `safe-change-plan`. |
 | Impact analysis | **change-impact-analysis** uses repository evidence to identify affected modules, contracts, tests, and risks. | Does not implement changes. |
 | Implementation plan | **safe-change-plan** turns confirmed inputs into atomic steps with validation and rollback. | Stops and sends work back when requirements are vague or impact is unknown. |
@@ -117,10 +117,10 @@ unknowns. Do not implement fixes.
 | Review and tests | **safe-code-review** reviews the change; **test-gap-analysis** identifies gaps; **safe-test-implementation** writes tests only after approval. | Review and gap analysis are not write authorization. |
 | Documentation and gate | Use **documentation-sync** for user-visible behavior, then **release-readiness-check** for GO, GO WITH CONDITIONS, or NO-GO. | The release gate does not release, change versions, create tags, commit, or push. |
 
-Start with the specification:
+Close material decisions first, then create the specification:
 
 ```text
-Use requirements-to-spec to turn the following request into an implementable,
+First use requirements-clarification to close material decisions. After they are closed, use requirements-to-spec to turn the settled request into an implementable,
 verifiable specification:
 
 <paste the original request>
@@ -191,7 +191,7 @@ Use safe-test-implementation to add only these confirmed high-value tests:
 
 <paste the gaps and behavior mapping>
 
-By default, modify only tests, fixtures, and necessary test helpers. If
+Choose exactly one mode: test_first before behavior exists, regression_after_fix after a verified fix, or characterization for legacy behavior. Only test_first requires an observed expected failure; never fabricate a red run. Modify only tests, fixtures, and necessary test helpers. If
 production code must change, stop and explain why. Run the smallest relevant
 tests first, then a reasonable regression scope.
 ```
@@ -732,3 +732,23 @@ Potential future work may evaluate large-project decision maps, explicitly autho
 - Learn installation, platform invocation, and troubleshooting in the [User Manual](USER_MANUAL.md).
 - Learn canonical authoring and build mechanics in [Adding Skills](ADDING_SKILLS.md).
 - 中文版本：[工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)
+
+## Canonical Registered Workflows
+
+The only machine-readable relationship source is `packs/engineering/repo-doctor/workflows.yaml`. The Router returns an exact `workflow_id`; prose here explains usage but does not redefine transitions.
+
+| Workflow ID | Purpose | Write gate |
+|---|---|---|
+| `feature-delivery` | End-to-end feature delivery. | Implementation and optional test approval |
+| `bug-repair` | Evidence-led bug repair and post-fix regression. | Fix and test approval |
+| `test-first-change` | Expected failure before production implementation. | Test and implementation approval |
+| `post-fix-regression-test` | Regression coverage after a verified fix. | Test approval |
+| `review-only` | Read-only diff review. | None |
+| `ci-diagnosis` | First credible CI failure diagnosis. | None |
+| `dependency-upgrade` | Dependency upgrade analysis. | None |
+| `database-migration` | Migration and rollout review. | None |
+| `api-contract-change` | API compatibility review. | None |
+| `session-handoff` | Sanitized read-only continuation state. | None |
+| `release-preparation` | Read-only release gate. | None; publishing is external |
+
+A read-only output is evidence, never write authorization. `spec-to-work-items` returns response Markdown only and cannot persist files or create tasks. Golden Workflow fixtures verify contracts, not live-model routing accuracy.

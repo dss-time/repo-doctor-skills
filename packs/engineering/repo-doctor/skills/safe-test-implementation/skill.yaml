@@ -4,25 +4,25 @@ name:
   zh-CN: 安全补充测试
 category: engineering
 visibility: public
-version: 0.2.0
+version: 0.3.0
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Add the smallest set of high-value tests from a test-gap analysis, confirmed behavior, or verified fix, following the repository's real framework and conventions. Use to edit tests, fixtures, and necessary test helpers only; do not use for general bug fixes, production refactors, or coverage-only assertions, and stop before production-code changes unless the user explicitly expands scope.
-  zh-CN: 根据测试缺口分析、已确认行为或已验证修复，遵循仓库真实框架和约定最小化补充高价值测试。用于修改测试、fixture 和必要测试辅助代码；不用于通用 Bug 修复、生产代码重构或只为覆盖率添加断言，必须改生产代码时除非用户明确扩大范围否则停止。
+  en: Add the smallest high-value tests in one explicit mode: test_first before behavior exists, regression_after_fix after a verified fix, or characterization for legacy behavior. Use for authorized test, fixture, and necessary test-helper edits only; do not fabricate a red state, modify production code, perform a general bug fix, or add coverage-only assertions.
+  zh-CN: 以一种明确模式最小化补充高价值测试：行为实现前的 test_first、已验证修复后的 regression_after_fix，或旧行为的 characterization。仅用于已授权的测试、fixture 和必要测试辅助代码修改；不得伪造红灯、修改生产代码、执行通用 Bug 修复或只为覆盖率补断言。
 triggers:
   en:
-    - implement the missing regression test
-    - add the highest-value tests from this gap analysis
-    - safely add tests for this confirmed behavior
+    - implement this test first before the behavior
+    - add a regression test after this verified fix
+    - characterize this legacy behavior with tests
     - safe test implementation
   zh-CN:
-    - 实施缺失的回归测试
-    - 根据缺口分析补充高价值测试
-    - 为已确认行为安全补测试
+    - 在实现行为前测试先行
+    - 为这个已验证修复补回归测试
+    - 用测试刻画这段旧行为
     - 安全补充测试
 tool_requirements:
   filesystem: write
