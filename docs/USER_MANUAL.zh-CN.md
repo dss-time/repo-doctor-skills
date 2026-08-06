@@ -66,7 +66,7 @@ $repo-onboarding
 
 ### 发布版本与成熟度
 
-当前正式版是 **v0.4.0**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。最终版本 317/317 次真实 Codex 调用全部通过，覆盖核心路由、双语工作流、模式、原型三态判定和权限边界。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
+当前正式版是 **v0.4.1**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。未变化的 Skill 集合具有 317/317 次真实 Codex 调用 PASS 证据，覆盖核心路由、双语工作流、模式、原型三态判定和权限边界。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
 
 ### 常见选择
 
@@ -133,13 +133,19 @@ Document Data Doctor 的 3 个 Basic Skill 当前没有独立 ChatGPT ZIP。不�
 
 官方插件界面可在 ChatGPT 的 Work 区域或桌面端 Work/Codex 的 Plugins 页面出现；可见性取决于产品版本、套餐和工作区管理员设置。仓库提供 3 个同步生成的插件：`repo-doctor`、`productivity-toolkit`、`skill-maintainer`。
 
-如果使用 Codex CLI，可添加本仓库 marketplace：
+如果使用 Codex CLI，稳定版安装必须固定到 Release tag：
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1
+```
+
+只有明确测试最新开发内容时才使用 `main`：
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 ```
 
-该命令读取远程已发布的 `main`，不会包含本地未提交改动。若要验收当前 checkout，请使用宿主支持的仓库本地 `.agents/plugins/marketplace.json` 或本地构建产物；具体本地入口仍以宿主界面为准。
+当前 Codex CLI 的 marketplace 命令支持 `--ref`。稳定 tag 可复现；远程 `main` 可能在安装后继续变化，也不会包含本地未提交改动。若要验收当前 checkout，请使用宿主支持的仓库本地 `.agents/plugins/marketplace.json` 或本地构建产物；具体本地入口仍以宿主界面为准。
 
 然后在 Codex 中输入 `/plugins`，选择并安装需要的插件，再开启新任务。若当前版本不接受该命令或没有 Plugins 页面，状态为 **UNKNOWN / 当前宿主不支持**；不要改写仓库文件来模拟安装。
 

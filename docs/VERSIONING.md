@@ -6,7 +6,7 @@ Repo Doctor Skills keeps release versions, component versions, and maturity stat
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release notes.
 
-The current project release is **0.4.0 stable**. Final Live-model validation is **PASS**: 317/317 final-version real Codex calls passed, comprising 200 core routing calls, 44 bilingual workflow steps, 61 mode and prototype-verdict cases, and 12 permission-boundary cases.
+The current project release is **0.4.1 stable**. The unchanged Skill corpus retains **PASS** evidence from 317/317 real Codex calls, comprising 200 core routing calls, 44 bilingual workflow steps, 61 mode and prototype-verdict cases, and 12 permission-boundary cases. The machine-readable 317-call report identifies its actual v0.4.0 execution version; v0.4.1 does not misrepresent it as a new run.
 
 For future releases:
 
@@ -24,7 +24,7 @@ Packs, plugins, and Skills have component versions independent of the project re
 - a project release may include unchanged components without changing their component versions;
 - marketplace entries and ChatGPT ZIPs currently have no independent embedded version field.
 
-For the 0.4.0 stable project release, the component baselines are:
+For the 0.4.1 stable project release, the component baselines remain:
 
 | Component | Version | Distribution rule |
 |---|---:|---|
@@ -35,6 +35,8 @@ For the 0.4.0 stable project release, the component baselines are:
 | Individual Skills | 31 at 0.1.0; 6 at 0.2.0; 2 at 0.3.0; 1 at 0.4.0 | Per `skill.yaml`; independent of project and Pack versions. |
 
 Do not mechanically replace every component version with the project version. Update a component version only when its own contract changes, and regenerate plugin and platform outputs from `packs/`.
+
+v0.4.1 changes repository documentation and the remote Release verifier, not Pack, plugin, or Skill public contracts. The Pack/plugin pairs therefore remain at their v0.4.0 component baselines and continue to match exactly.
 
 ## 3. Maturity status
 
@@ -47,9 +49,9 @@ Maturity status is independent of both version layers:
 
 A Pack's maturity must not be higher than the least mature active Skill it contains. Template Packs and template Skills remain `draft`, are excluded from active counts, and are not released as plugins or standalone ZIPs.
 
-For the 0.4.0 stable project release, all 4 active Packs and all 40 active Skills remain `beta`. The template Pack and its template Skill remain `draft`; project-channel stability does not automatically promote component maturity.
+For the 0.4.1 stable project release, all 4 active Packs and all 40 active Skills remain `beta`. The template Pack and its template Skill remain `draft`; project-channel stability does not automatically promote component maturity.
 
-Repository validation, activation contracts, deterministic builds, and live-model tests provide different evidence. For the 0.4.0 release, the final-version Live-model suite passed 317/317 with zero failed or blocked calls; the machine-readable report retains every case and bounded evidence.
+Repository validation, activation contracts, deterministic builds, and live-model tests provide different evidence. The unchanged Skill corpus passed 317/317 Live-model calls with zero failed or blocked cases at v0.4.0; the machine-readable report retains every case and bounded evidence. v0.4.1 reruns deterministic and remote Release gates and performs post-release routing and permission smoke tests.
 
 ## Semantic Versioning decisions
 
@@ -59,7 +61,7 @@ Use [Semantic Versioning](https://semver.org/) independently at the appropriate 
 - minor: backward-compatible Skills, Packs, platform outputs, or user capabilities;
 - major: incompatible public invocation, schema, Pack-format, or component-contract changes.
 
-Repo Doctor Skills is still pre-1.0. Version 0.4.0 is the next minor release after v0.3.0 because it adds two backward-compatible Skills, expands workflows and platform installation output, and enhances six existing Skills without removing or renaming a canonical slug. A 1.0.0 release requires an explicit product decision.
+Repo Doctor Skills is still pre-1.0. Version 0.4.0 was the minor release after v0.3.0 because it added two backward-compatible Skills, expanded workflows and platform installation output, and enhanced six existing Skills without removing or renaming a canonical slug. Version 0.4.1 is a patch because it changes documentation, reproducible installation guidance, and Release verification without changing a Skill contract. A 1.0.0 release requires an explicit product decision.
 
 ## Historical version-label exception
 

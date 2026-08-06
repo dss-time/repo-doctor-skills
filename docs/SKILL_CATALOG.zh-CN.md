@@ -2,9 +2,9 @@
 
 > 此文件由 `scripts/generate-skill-catalog.mjs` 基于 `packs/`、activation contracts 和插件 UI 元数据确定性生成。请勿手工编辑；运行 `node scripts/generate-skill-catalog.mjs` 更新。
 
-本目录对应项目版本 `0.4.0` 的当前工作树，收录 4 个 active Pack 中的 40 个 active Skill。当前其中 37 个配置了插件兼容产物和独立 ChatGPT ZIP，3 个仅进入常规跨平台构建产物。相邻 Skill 来自 300 条 activation contract 以及 canonical description 中明确提到的 Skill。
+本目录对应项目版本 `0.4.1` 的当前工作树，收录 4 个 active Pack 中的 40 个 active Skill。当前其中 37 个配置了插件兼容产物和独立 ChatGPT ZIP，3 个仅进入常规跨平台构建产物。相邻 Skill 来自 300 条 activation contract 以及 canonical description 中明确提到的 Skill。
 
-这里的 **beta** 表示已经可以公开使用并通过当前仓库的 contract、构建和文档验证，但仍需要真实环境反馈。0.4.0 最终版本通过了 317/317 次真实 Codex 调用，包括核心路由、双语工作流、模式、三态判定和权限边界。`stable` 也只表示成熟度更高，不代表绝对无 Bug。
+这里的 **beta** 表示已经可以公开使用并通过当前仓库的 contract、构建和文档验证，但仍需要真实环境反馈。未变化的 Skill 集合具有 317/317 次真实 Codex 调用 PASS 证据，包括核心路由、双语工作流、模式、三态判定和权限边界。`stable` 也只表示成熟度更高，不代表绝对无 Bug。
 
 权限字段表达 canonical 作者声明的意图，并不保证宿主平台会自动强制执行。实际读写、shell、网络和破坏性操作仍受宿主能力、用户授权和运行时安全控制约束。
 

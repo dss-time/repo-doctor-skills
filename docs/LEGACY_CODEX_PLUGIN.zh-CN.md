@@ -80,29 +80,21 @@ node scripts/check-skill-quality.mjs --check-dist
 
 ## Marketplace 来源
 
-使用：
-
-```text
-plugins/repo-doctor/
-```
-
 如果 Codex 宿主支持 plugin marketplace source，可以添加本仓库。宿主界面字段和安装行为可能随版本变化，请以所用宿主版本为准。
 
-```text
-Source: dss-time/repo-doctor-skills
-Git ref: main
-Sparse path: leave empty
+可复现的稳定版安装使用：
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1
 ```
 
-也可以使用完整 Git URL：
+只有明确需要最新开发内容时才使用：
 
-```text
-Source: https://github.com/dss-time/repo-doctor-skills.git
-Git ref: main
-Sparse path: leave empty
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 ```
 
-安装 `Repo Doctor` 插件后，请按宿主要求刷新或开启新会话。
+当前 Codex CLI 的 Git marketplace source 支持 `--ref`。在图形宿主中，可填写 `dss-time/repo-doctor-skills` 或完整 Git URL；稳定版 Git ref 使用 `v0.4.1`，sparse path 留空。安装 `Repo Doctor` 插件后，请按宿主要求刷新或开启新会话。
 
 ## 本地 Marketplace 配置
 

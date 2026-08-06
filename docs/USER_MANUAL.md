@@ -66,7 +66,7 @@ The canonical source currently contains four active Packs. The latest counts, pe
 
 ### Release version and maturity
 
-The current stable release is **v0.4.0**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The final-version suite passed 317/317 real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries. See [Versioning and Lifecycle Policy](VERSIONING.md).
+The current stable release is **v0.4.1**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries. See [Versioning and Lifecycle Policy](VERSIONING.md).
 
 ### Common choices
 
@@ -133,13 +133,19 @@ Use this route when you want a whole Pack and plugin-level Skill discovery.
 
 The official plugin interface can appear under Work in ChatGPT or under Work/Codex → Plugins in the desktop app. Availability depends on product version, plan, and workspace administration. This repository provides three synchronized plugins: `repo-doctor`, `productivity-toolkit`, and `skill-maintainer`.
 
-With Codex CLI, add this repository as a marketplace:
+With Codex CLI, pin stable installation to the release tag:
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1
+```
+
+Use `main` only when intentionally testing the latest development version:
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 ```
 
-That command resolves the published remote `main`; it cannot include uncommitted local work. To evaluate the current checkout, use its local `.agents/plugins/marketplace.json` through a host that supports local marketplace discovery, or use locally built artifacts. The exact local entry remains host-dependent.
+The `--ref` option is supported by the current Codex CLI marketplace command. A stable tag is reproducible; remote `main` can change after installation and cannot include uncommitted local work. To evaluate the current checkout, use its local `.agents/plugins/marketplace.json` through a host that supports local marketplace discovery, or use locally built artifacts. The exact local entry remains host-dependent.
 
 Then enter `/plugins` in Codex, install the desired plugin, and start a new task. If the current version rejects the command or exposes no Plugins page, the state is **UNKNOWN / unsupported by the current host**; do not alter repository files to simulate installation.
 

@@ -42,7 +42,9 @@ Choose the shortest guide for your goal:
 - [Quick Skill Entrypoints](docs/guides/quick-skill-entrypoints.md) when you know the problem but not the Skill name.
 - [Workflow Cookbook](docs/WORKFLOW_COOKBOOK.md) for chaining Skills into real tasks.
 - [Testing and Evaluation](docs/TESTING_AND_EVALUATION.md)
-- [0.4.0 Blocked Candidate Notes](docs/RELEASE_NOTES_0.4.0.md)
+- [v0.4.1 Release Notes](docs/RELEASE_NOTES_0.4.1.md)
+- [v0.4.0 Release Notes](docs/RELEASE_NOTES_0.4.0.md)
+- [Release Asset Selection Guide](docs/guides/release-asset-selection.md) for choosing and verifying published ZIPs.
 - [Historical 0.3.0 Release Preparation Recommendation](docs/RELEASE_PREPARATION_0.3.0.md)
 - [Versioning and Lifecycle Policy](docs/VERSIONING.md) for project releases, component versions, and maturity status.
 - [Adding Skills](docs/ADDING_SKILLS.md) for maintainers working from canonical sources.
@@ -77,6 +79,15 @@ node scripts/build-skills.mjs --target kimi-zh-CN
 Generated files are written to `dist/`. The generated output is ignored by Git; only `dist/.gitkeep` is kept.
 
 For a step-by-step guide, see [docs/QUICK_START.md](docs/QUICK_START.md).
+
+## Release Evidence
+
+- [Live Codex validation report](tests/reports/live-codex-skill-validation.md)
+- [Bilingual validation report](tests/reports/bilingual-skill-validation.md)
+- [Build artifact validation report](tests/reports/build-artifact-validation.json)
+- [Release Manifest verification](docs/guides/release-asset-selection.md#verify-release-metadata)
+- [SHA256SUMS verification](docs/guides/release-asset-selection.md#verify-release-metadata)
+- [Release Asset Selection Guide](docs/guides/release-asset-selection.md)
 
 ## Four Ways To Use This Repository
 
@@ -333,9 +344,9 @@ Use `npm run validate`, `npm test`, `npm run build`, `npm run docs:check`, `npm 
 
 ## Release Status
 
-The current stable project release is **v0.4.0**. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 40 active Skills remain `beta`.
+The current stable project release is **v0.4.1**. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 40 active Skills remain `beta`.
 
-The final-version suite passed 317/317 real Codex calls: 200 bilingual explicit, natural-language, and adjacent-negative routing calls; 44 bilingual workflow steps; 61 mode and prototype-verdict cases; and 12 permission-boundary cases. See [Versioning and Lifecycle Policy](docs/VERSIONING.md), [v0.4.0 release notes](docs/RELEASE_NOTES_0.4.0.md), and [CHANGELOG.md](CHANGELOG.md).
+The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls: 200 bilingual explicit, natural-language, and adjacent-negative routing calls; 44 bilingual workflow steps; 61 mode and prototype-verdict cases; and 12 permission-boundary cases. See [Versioning and Lifecycle Policy](docs/VERSIONING.md), [v0.4.1 release notes](docs/RELEASE_NOTES_0.4.1.md), and [CHANGELOG.md](CHANGELOG.md).
 
 ## Related Docs
 
@@ -343,6 +354,7 @@ The final-version suite passed 317/317 real Codex calls: 200 bilingual explicit,
 - [User Manual](docs/USER_MANUAL.md)
 - [Complete Skill Catalog](docs/SKILL_CATALOG.md)
 - [Workflow Cookbook](docs/WORKFLOW_COOKBOOK.md)
+- [Release Asset Selection Guide](docs/guides/release-asset-selection.md)
 - [Versioning and Lifecycle Policy](docs/VERSIONING.md)
 - [Adding Skills](docs/ADDING_SKILLS.md)
 - [Legacy Codex Plugin](docs/LEGACY_CODEX_PLUGIN.md)

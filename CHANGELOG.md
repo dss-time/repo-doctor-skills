@@ -8,6 +8,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-08-06
+
+> Stable documentation and release-verification patch. The public Skill inventory and behavior are unchanged from v0.4.0.
+
+### Added
+
+- Added bilingual Release Asset Selection guides for choosing individual ChatGPT Skill ZIPs, Codex plugins, and version-pinned installation paths.
+- Added a dependency-free remote Release asset verifier with deterministic tests and a `release:verify-remote` command.
+
+### Changed
+
+- Pinned stable Codex marketplace installation examples to `v0.4.1` and clearly separated them from development installs using `main`.
+- Advanced the project release version to 0.4.1 while preserving independent, unchanged Pack, plugin, and Skill component versions.
+
+### Fixed
+
+- Replaced stale blocked-candidate labels and proposed-version wording with published-release facts.
+- Synchronized the documented Release asset count and validation evidence with the actual remote Release inventory.
+
+### Security
+
+- Added remote checks for Release digests, Manifest and SHA-256 consistency, ZIP integrity, path traversal, absolute paths, repository/build debris, credential patterns, slug identity, and bilingual content.
+
+### Documentation
+
+- Added bilingual v0.4.1 Release Notes, evidence entry points, stable upgrade guidance, and asset selection instructions without adding, removing, or renaming a Skill.
+
 ## [0.4.0] - 2026-08-06
 
 > Stable project release with 317/317 final-version real Codex calls passing: 200 core routing calls, 44 bilingual workflow steps, 61 mode/verdict cases, and 12 permission-boundary cases.
@@ -171,7 +198,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0-rc.1...v0.3.0
 [0.3.0-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.2.0...v0.3.0-rc.1

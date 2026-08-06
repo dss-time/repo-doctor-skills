@@ -27,7 +27,11 @@ const releaseDocuments = [
   "docs/RELEASE_NOTES_DRAFT.md",
   "docs/RELEASE_NOTES_0.3.0.md",
   "docs/RELEASE_NOTES_0.4.0.md",
+  "docs/RELEASE_NOTES_0.4.1.md",
+  "docs/RELEASE_NOTES_0.4.1.zh-CN.md",
   "docs/RELEASE_PREPARATION_0.3.0.md",
+  "docs/guides/release-asset-selection.md",
+  "docs/guides/release-asset-selection.zh-CN.md",
   "CHANGELOG.md",
 ];
 
@@ -181,19 +185,36 @@ for (const term of ["0.3.0", "Stable Release", "non-prerelease", "Live-model", "
   if (!stableReleaseNotes.includes(term)) fail("docs/RELEASE_NOTES_0.3.0.md: missing stable release term " + term);
 }
 
-const currentReleaseNotes = read("docs/RELEASE_NOTES_0.4.0.md");
+const previousReleaseNotes = read("docs/RELEASE_NOTES_0.4.0.md");
 for (const term of ["0.4.0", "Stable Release", "non-prerelease", "Live-model", "317/317", "100%", "decision-prototype", "architecture-deepening-analysis"]) {
-  if (!currentReleaseNotes.includes(term)) fail("docs/RELEASE_NOTES_0.4.0.md: missing current release term " + term);
+  if (!previousReleaseNotes.includes(term)) fail("docs/RELEASE_NOTES_0.4.0.md: missing release term " + term);
+}
+
+for (const relativePath of ["docs/RELEASE_NOTES_0.4.1.md", "docs/RELEASE_NOTES_0.4.1.zh-CN.md"]) {
+  const content = read(relativePath);
+  for (const term of ["0.4.1", "317/317", "v0.4.1", "SHA256SUMS", "release-asset-selection"]) {
+    if (!content.includes(term)) fail(`${relativePath}: missing v0.4.1 release term ${term}`);
+  }
+}
+
+for (const relativePath of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", "docs/LEGACY_CODEX_PLUGIN.md", "docs/LEGACY_CODEX_PLUGIN.zh-CN.md"]) {
+  const content = read(relativePath);
+  if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1")) {
+    fail(`${relativePath}: missing stable marketplace tag installation`);
+  }
+  if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref main")) {
+    fail(`${relativePath}: missing explicitly separated development installation`);
+  }
 }
 
 const changelog = read("CHANGELOG.md");
-for (const heading of ["## [Unreleased]", "## [0.4.0] - 2026-08-06", "## [0.3.0] - 2026-07-17", "## [0.3.0-rc.1] - 2026-07-17", "## [0.2.0] - 2026-07-15", "## [0.1.0] - 2026-07-09"]) {
+for (const heading of ["## [Unreleased]", "## [0.4.1] - 2026-08-06", "## [0.4.0] - 2026-08-06", "## [0.3.0] - 2026-07-17", "## [0.3.0-rc.1] - 2026-07-17", "## [0.2.0] - 2026-07-15", "## [0.1.0] - 2026-07-09"]) {
   if (!changelog.includes(heading)) fail(`CHANGELOG.md: missing heading ${heading}`);
 }
 
 for (const relativePath of ["docs/VERSIONING.md", "docs/VERSIONING.zh-CN.md"]) {
   const content = read(relativePath);
-  for (const term of ["0.1.0", "0.2.0", "0.3.0", "0.3.0-rc.1", "0.4.0", "v0.0.1", "beta", "stable", "deprecated", "draft"]) {
+  for (const term of ["0.1.0", "0.2.0", "0.3.0", "0.3.0-rc.1", "0.4.0", "0.4.1", "v0.0.1", "beta", "stable", "deprecated", "draft"]) {
     if (!content.includes(term)) fail(`${relativePath}: missing version-policy term ${term}`);
   }
 }

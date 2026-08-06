@@ -331,7 +331,7 @@ export function renderCatalog(model, locale) {
     ? [
         `本目录对应项目版本 \`${model.projectVersion}\` 的当前工作树，收录 ${model.counts.packs} 个 active Pack 中的 ${model.counts.skills} 个 active Skill。当前其中 ${model.counts.pluginSkills} 个配置了插件兼容产物和独立 ChatGPT ZIP，${model.counts.regularOnlySkills} 个仅进入常规跨平台构建产物。相邻 Skill 来自 ${model.counts.activationCases} 条 activation contract 以及 canonical description 中明确提到的 Skill。`,
         "",
-        "这里的 **beta** 表示已经可以公开使用并通过当前仓库的 contract、构建和文档验证，但仍需要真实环境反馈。0.4.0 最终版本通过了 317/317 次真实 Codex 调用，包括核心路由、双语工作流、模式、三态判定和权限边界。`stable` 也只表示成熟度更高，不代表绝对无 Bug。",
+        "这里的 **beta** 表示已经可以公开使用并通过当前仓库的 contract、构建和文档验证，但仍需要真实环境反馈。未变化的 Skill 集合具有 317/317 次真实 Codex 调用 PASS 证据，包括核心路由、双语工作流、模式、三态判定和权限边界。`stable` 也只表示成熟度更高，不代表绝对无 Bug。",
         "",
         "权限字段表达 canonical 作者声明的意图，并不保证宿主平台会自动强制执行。实际读写、shell、网络和破坏性操作仍受宿主能力、用户授权和运行时安全控制约束。",
         "",
@@ -340,7 +340,7 @@ export function renderCatalog(model, locale) {
     : [
         `This catalog describes the current working tree at project version \`${model.projectVersion}\` and covers ${model.counts.skills} active Skills in ${model.counts.packs} active Packs. Of these, ${model.counts.pluginSkills} currently have plugin-compatible distributions and standalone ChatGPT ZIPs, while ${model.counts.regularOnlySkills} are included only in the regular cross-platform build outputs. Neighboring Skills are derived from ${model.counts.activationCases} activation-contract cases and explicit Skill references in canonical descriptions.`,
         "",
-        "Here, **beta** means the content is ready for public use and has passed the repository's current contract, build, and documentation checks, while still requiring real-environment feedback. The final 0.4.0 release passed 317/317 real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries. `stable` would indicate greater maturity, not an absolute absence of bugs.",
+        "Here, **beta** means the content is ready for public use and has passed the repository's current contract, build, and documentation checks, while still requiring real-environment feedback. The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries. `stable` would indicate greater maturity, not an absolute absence of bugs.",
         "",
         "Permission fields express declared canonical intent; they do not guarantee enforcement by a host platform. Actual file, shell, network, and destructive-operation access remains subject to host capabilities, user authorization, and runtime safety controls.",
         "",

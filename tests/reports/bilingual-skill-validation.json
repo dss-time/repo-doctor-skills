@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-06T02:53:32.278Z",
-  "project_version": "0.4.0",
+  "generated_at": "2026-08-06T09:38:11.737Z",
+  "project_version": "0.4.1",
   "semantic_parity_method": "Deterministic comparison of localized heading structure, declared backticked modes, evidence states, active-Skill handoffs, and example intent counts. Live Codex semantic review is reported separately.",
   "summary": {
     "active_skills": 40,

@@ -14,7 +14,7 @@ This guide is for first-time users.
 
 ## Release Note
 
-The current stable release is **v0.4.0**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The final-version suite passed 317/317 real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries.
+The current stable release is **v0.4.1**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries.
 
 ## What You Are Looking At
 

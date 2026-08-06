@@ -82,23 +82,19 @@ node scripts/check-skill-quality.mjs --check-dist
 
 In a Codex host that supports plugin marketplace sources, add this repository. Host UI labels and installation behavior may vary, so verify them against the host version you use.
 
-Use:
+For the reproducible stable release, use:
 
-```text
-Source: dss-time/repo-doctor-skills
-Git ref: main
-Sparse path: leave empty
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1
 ```
 
-Or use the full Git URL:
+Use the development branch only when you intentionally want the latest development content:
 
-```text
-Source: https://github.com/dss-time/repo-doctor-skills.git
-Git ref: main
-Sparse path: leave empty
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 ```
 
-Then install the `Repo Doctor` plugin.
+The current Codex CLI supports `--ref` for Git marketplace sources. In a graphical host, use source `dss-time/repo-doctor-skills` or its full Git URL, set the Git ref to `v0.4.1` for stable use, leave the sparse path empty, and then install the `Repo Doctor` plugin.
 
 ## Local Marketplace Configuration
 

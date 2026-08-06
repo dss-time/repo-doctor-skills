@@ -27,12 +27,13 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.4.0",
+  projectVersion: "0.4.1",
   releaseDate: "2026-08-06",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
   liveModelReport: "tests/reports/live-codex-skill-validation.json",
+  liveModelEvidenceVersion: "0.4.0",
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -85,7 +86,7 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.4.0.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.4.1.md",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 
@@ -570,9 +571,10 @@ function auditLiveModelEvidence(root, contract, errors) {
   }
   const report = readJson(root, contract.liveModelReport, errors);
   if (!report) return;
-  if (report.project_version !== contract.projectVersion) {
+  const evidenceVersion = contract.liveModelEvidenceVersion ?? contract.projectVersion;
+  if (report.project_version !== evidenceVersion) {
     errors.push(
-      `${contract.liveModelReport}: project version must be ${contract.projectVersion}, found ${report.project_version}`,
+      `${contract.liveModelReport}: evidence version must be ${evidenceVersion}, found ${report.project_version}`,
     );
   }
   if (report.result !== "PASS") {

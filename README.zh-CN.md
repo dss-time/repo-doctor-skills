@@ -40,7 +40,9 @@ Repo Doctor Skills 是一个双语、跨平台的 AI Skills 工程化框架，�
 - [Skill 快速入口](docs/guides/quick-skill-entrypoints.zh-CN.md)：知道问题但不知道 Skill 名时使用。
 - [工作流实战手册](docs/WORKFLOW_COOKBOOK.zh-CN.md)：把多个 Skill 串成真实任务流程。
 - [测试与评测说明](docs/TESTING_AND_EVALUATION.zh-CN.md)
-- [0.4.0 阻塞候选说明](docs/RELEASE_NOTES_0.4.0.md)
+- [v0.4.1 发布说明](docs/RELEASE_NOTES_0.4.1.zh-CN.md)
+- [v0.4.0 发布说明](docs/RELEASE_NOTES_0.4.0.md)
+- [Release 资产选择指南](docs/guides/release-asset-selection.zh-CN.md)：选择并校验已发布的 ZIP。
 - [历史 0.3.0 发布准备建议](docs/RELEASE_PREPARATION_0.3.0.md)
 - [版本与生命周期策略](docs/VERSIONING.zh-CN.md)：了解项目发布版本、组件版本和成熟度状态。
 - [新增 Skills 指南](docs/ADDING_SKILLS.zh-CN.md)：维护者从 canonical 源开始工作。
@@ -75,6 +77,15 @@ node scripts/build-skills.mjs --target kimi-zh-CN
 生成文件会写入 `dist/`。生成内容被 Git 忽略，只保留 `dist/.gitkeep`。
 
 更详细的新手步骤见 [docs/QUICK_START.zh-CN.md](docs/QUICK_START.zh-CN.md)。
+
+## 发布验证证据
+
+- [Live Codex 验证报告](tests/reports/live-codex-skill-validation.md)
+- [双语验证报告](tests/reports/bilingual-skill-validation.md)
+- [构建产物验证报告](tests/reports/build-artifact-validation.json)
+- [Release Manifest 校验说明](docs/guides/release-asset-selection.zh-CN.md#verify-release-metadata)
+- [SHA256SUMS 校验说明](docs/guides/release-asset-selection.zh-CN.md#verify-release-metadata)
+- [Release 资产选择指南](docs/guides/release-asset-selection.zh-CN.md)
 
 ## 四种使用方式
 
@@ -331,9 +342,9 @@ npm run build
 
 ## 发布状态
 
-当前项目正式版是 **v0.4.0**。项目发布版本、组件版本和成熟度状态彼此独立；4 个 active Pack 和 40 个 active Skill 仍标记为 `beta`。
+当前项目正式版是 **v0.4.1**。项目发布版本、组件版本和成熟度状态彼此独立；4 个 active Pack 和 40 个 active Skill 仍标记为 `beta`。
 
-最终版本 317/317 次真实 Codex 调用全部通过：200 项中英文显式、自然语言和相邻负例路由，44 个双语工作流步骤，61 项模式与原型三态判定，以及 12 项权限边界。详见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)、[v0.4.0 发布说明](docs/RELEASE_NOTES_0.4.0.md)和 [CHANGELOG.md](CHANGELOG.md)。
+未变化的 Skill 集合具有 317/317 次真实 Codex 调用 PASS 证据：200 项中英文显式、自然语言和相邻负例路由，44 个双语工作流步骤，61 项模式与原型三态判定，以及 12 项权限边界。详见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)、[v0.4.1 发布说明](docs/RELEASE_NOTES_0.4.1.zh-CN.md)和 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 相关文档
 
@@ -341,6 +352,7 @@ npm run build
 - [完整用户手册](docs/USER_MANUAL.zh-CN.md)
 - [Skill 完整目录](docs/SKILL_CATALOG.zh-CN.md)
 - [工作流实战手册](docs/WORKFLOW_COOKBOOK.zh-CN.md)
+- [Release 资产选择指南](docs/guides/release-asset-selection.zh-CN.md)
 - [版本与生命周期策略](docs/VERSIONING.zh-CN.md)
 - [新增 Skills 指南](docs/ADDING_SKILLS.zh-CN.md)
 - [旧版 Codex 插件](docs/LEGACY_CODEX_PLUGIN.zh-CN.md)

@@ -32,7 +32,7 @@ Final Live-model validation is **PASS** at 100% with zero failed or blocked call
 
 ## Compatibility and versioning
 
-The proposed version is a backward-compatible minor project release from `v0.3.0`: no canonical Skill slug is removed or renamed, and no public Pack format is broken. Project, Pack/plugin, and individual Skill versions remain independent.
+v0.4.0 is a backward-compatible minor project release from `v0.3.0`: no canonical Skill slug was removed or renamed, and no public Pack format was broken. Project, Pack/plugin, and individual Skill versions remain independent.
 
 Component baselines are:
 
