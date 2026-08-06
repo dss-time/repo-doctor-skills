@@ -1,0 +1,287 @@
+{
+  "generated_at": "2026-08-06T02:53:32.278Z",
+  "project_version": "0.4.0",
+  "expected_active_skills": 40,
+  "targets": [
+    {
+      "target": "generic-zh-CN",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "target": "generic-en",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "target": "codex-zh-CN",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "target": "claude-code-zh-CN",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "target": "cursor-zh-CN",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "target": "qwen-zh-CN",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "target": "kimi-zh-CN",
+      "expected_skill_count": 40,
+      "actual_skill_count": 40,
+      "status": "PASS",
+      "issues": []
+    }
+  ],
+  "chatgpt_zips": [
+    {
+      "zip": "pt-content-consistency-check.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-document-review.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-meeting-notes-to-actions.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-pdf-review.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-presentation-outline.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-report-writer.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-research-brief.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "pt-spreadsheet-data-cleaning.zip",
+      "entry_count": 5,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-api-contract-review.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-architecture-decision-record.zip",
+      "entry_count": 3,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-architecture-deepening-analysis.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-bug-root-cause-analysis.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-change-impact-analysis.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-ci-failure-diagnosis.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-configuration-audit.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-database-migration-review.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-dead-code-verification.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-decision-prototype.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-dependency-upgrade-analysis.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-documentation-sync.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-performance-regression-analysis.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-project-health-check.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-release-readiness-check.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-repo-doctor-router.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-repo-onboarding.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-requirements-clarification.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-requirements-to-spec.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-safe-change-plan.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-safe-code-review.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-safe-fix-implementation.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-safe-test-implementation.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-security-focused-review.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-session-handoff.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-spec-to-work-items.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "rd-test-gap-analysis.zip",
+      "entry_count": 2,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "sm-skill-authoring.zip",
+      "entry_count": 5,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "zip": "sm-skill-quality-audit.zip",
+      "entry_count": 5,
+      "status": "PASS",
+      "issues": []
+    }
+  ],
+  "summary": {
+    "target_count": 7,
+    "targets_passed": 7,
+    "zip_count": 37,
+    "zips_passed": 37,
+    "status": "PASS"
+  }
+}

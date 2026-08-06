@@ -1,11 +1,15 @@
-input: "Clarify this feature before specification. Read the repository first and distinguish facts, inferences, and open decisions."
+input: "Use fast mode to clarify this vague feature before specification. Read the repository first and ask only the highest-information decisions."
 expected:
   must_include:
+    - fast
+    - decision tree
+    - 3–5
     - confirmed
     - inferred
     - open
     - compatibility
-    - security
+    - current question
   must_not:
     - ask what the repository answers
+    - modify files
     - implement code

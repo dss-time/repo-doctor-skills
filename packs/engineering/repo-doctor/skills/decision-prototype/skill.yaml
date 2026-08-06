@@ -1,0 +1,46 @@
+id: repo.decision-prototype
+name:
+  en: Decision Prototype
+  zh-CN: 决策原型验证
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales:
+  - en
+  - zh-CN
+description:
+  en: Build the smallest explicitly disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation. Automatic invocation is appropriate only for a clearly bounded prototype request; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready.
+  zh-CN: 构建最小且明确可丢弃的逻辑或 UI 原型，回答一个设计、交互、状态或业务规则问题，并给出成立、否定或仍不确定的结论。用于正式实施前需要可运行证据的场景；只有范围清楚的原型请求适合自动调用，写文件和运行命令必须明确授权。绝不连接生产系统，也不把原型代码视为生产完成。
+triggers:
+  en:
+    - validate this design with a disposable prototype
+    - compare these UI directions before implementation
+    - test this state model with a small runnable prototype
+    - decision prototype
+  zh-CN:
+    - 用可丢弃原型验证这个设计
+    - 正式实施前比较这些 UI 方向
+    - 用小型可运行原型验证状态模型
+    - 决策原型验证
+tool_requirements:
+  filesystem: write
+  git: optional
+  shell: optional
+  web: none
+permissions:
+  read_files: true
+  write_files: true
+  run_shell_commands: true
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: safe_edit
+output_schema:
+  type: decision_prototype_report
+localization:
+  en:
+    status: complete
+  zh-CN:
+    status: complete

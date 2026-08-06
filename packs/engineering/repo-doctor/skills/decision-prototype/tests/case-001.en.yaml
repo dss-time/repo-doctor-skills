@@ -1,0 +1,17 @@
+input: "Build an authorized logic prototype to answer one state-transition question. Use synthetic data and do not touch production systems."
+expected:
+  must_include:
+    - logic-prototype
+    - validation question
+    - success criteria
+    - NON-PRODUCTION PROTOTYPE
+    - key states
+    - supported / rejected / uncertain
+    - delete / retain_as_evidence / reimplement_for_production
+    - next Repo Doctor Skill
+  must_not:
+    - production database
+    - real credentials
+    - real external requests
+    - production-ready
+    - automatically delete

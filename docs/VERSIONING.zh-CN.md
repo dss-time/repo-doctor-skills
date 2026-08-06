@@ -6,7 +6,7 @@ Repo Doctor Skills 将项目发布版本、组件版本和成熟度状态分开�
 
 项目发布版本描述整个仓库级发布。`package.json` 是项目版本的权威元数据；Git tag、GitHub Release、`CHANGELOG.md` 正式版本段和发布说明必须使用相同版本。
 
-当前项目发布版本是 **0.3.0 stable**，由功能内容不变的 `v0.3.0-rc.1` 晋级。Live-model 路由准确率仍为 **UNKNOWN**；维护者豁免仅限 `v0.3.0` 和这一缺失测量，不放宽 Schema、测试、权限、安全、构建、CI、产物或校验和门禁。历史 `v0.2.0` 和 `v0.3.0-rc.1` 预发布保持不可变。
+当前项目发布版本是 **0.4.0 stable**。最终 Live-model 验证为 **PASS**：最终版本 317/317 次真实 Codex 调用全部通过，包括 200 项核心路由、44 个双语工作流步骤、61 项模式与原型三态判定，以及 12 项权限边界。
 
 后续发布必须：
 
@@ -24,15 +24,15 @@ Pack、插件和 Skill 使用独立于项目发布版本的组件版本：
 - 项目发布可以包含未发生契约变化的组件，而不提升其组件版本；
 - marketplace 条目和 ChatGPT ZIP 当前没有独立的内嵌版本字段。
 
-0.3.0 项目正式稳定版的组件基线保持如下：
+0.4.0 项目正式稳定版组件基线如下：
 
 | 组件 | 版本 | 分发规则 |
 |---|---:|---|
-| Repo Doctor Pack / 插件 | 0.6.0 | Pack 与生成插件必须一致。 |
+| Repo Doctor Pack / 插件 | 0.7.0 | Pack 与生成插件必须一致。 |
 | Productivity Toolkit Pack / 插件 | 0.1.0 | Pack 与生成插件必须一致。 |
 | Skill Maintainer Pack / 插件 | 0.2.0 | Pack 与生成插件必须一致。 |
 | Document Data Doctor Pack | 0.1.0 | 没有独立插件或 ChatGPT ZIP。 |
-| 单个 Skill | 32 个为 0.1.0；6 个为 0.2.0 | 以各自 `skill.yaml` 为准；独立于项目版本和 Pack 版本。 |
+| 单个 Skill | 31 个为 0.1.0；6 个为 0.2.0；2 个为 0.3.0；1 个为 0.4.0 | 以各自 `skill.yaml` 为准；独立于项目版本和 Pack 版本。 |
 
 不要把所有组件版本机械替换成项目版本。只有组件自身契约变化时才更新其版本，并始终从 `packs/` 重新生成插件和平台产物。
 
@@ -47,9 +47,9 @@ Pack、插件和 Skill 使用独立于项目发布版本的组件版本：
 
 Pack 的成熟度不得高于其中成熟度最低的主要 active Skill。模板 Pack 和模板 Skill 保持 `draft`，不计入 active 数量，也不生成插件或独立 ZIP。
 
-0.3.0 项目正式稳定版中的 4 个 active Pack 和 38 个 active Skill 仍全部为 `beta`。模板 Pack 及其中的模板 Skill 继续保持 `draft`；项目通道 stable 不会自动提升组件成熟度。
+0.4.0 项目正式稳定版中，4 个 active Pack 和 40 个 active Skill 仍全部为 `beta`。模板 Pack 及其中的模板 Skill 继续保持 `draft`；项目通道 stable 也不会自动提升组件成熟度。
 
-仓库校验、activation contract 和确定性构建属于有价值的工程证据，但不能代替 Live-model 路由评测。本正式版的 Live-model 路由准确率仍为 **UNKNOWN**。版本限定的维护者豁免只覆盖这一证据缺口，不为其他版本建立先例。
+仓库校验、activation contract、确定性构建和真实模型测试分别提供不同证据。0.4.0 最终版本的 Live-model 套件达到 317/317 PASS，没有失败或阻塞调用；机器可读报告保留了全部案例和有界证据。
 
 ## Semantic Versioning 决策
 
@@ -59,13 +59,13 @@ Pack 的成熟度不得高于其中成熟度最低的主要 active Skill。模�
 - minor：向后兼容地增加 Skill、Pack、平台产物或用户能力；
 - major：公开调用名、Schema、Pack 格式或组件契约发生不兼容变化。
 
-Repo Doctor Skills 仍处于 1.0 之前。项目 0.3.0 是 v0.2.0 之后下一 minor 版本的正式稳定发布，新增了向后兼容的工作流 Skill、路由契约、评测基础设施和发布工具。1.0.0 必须是明确的产品决策。
+Repo Doctor Skills 仍处于 1.0 之前。0.4.0 是 v0.3.0 之后的下一 minor 版本：新增两个向后兼容 Skill，扩展工作流和平台安装产物，并增强六个既有 Skill，且未删除或重命名 canonical slug。1.0.0 必须是明确的产品决策。
 
 ## 历史版本标签例外
 
 2026-07-09 发布的 GitHub Release 使用了 `v0.0.1` tag，但其 Release 名称和正文、`package.json`、Pack/Skill metadata 和发布说明草稿都把项目内容标识为 **0.1.0**；Repo Doctor 插件 manifest 当时已经使用独立组件版本 0.2.0。这是一次历史项目 tag 标签错误，不能据此把项目版本与组件版本合并。
 
-项目历史和 SemVer 规划以 0.1.0 作为内容发布基线，同时原样保留已有 `v0.0.1` tag，不删除、不移动、不重建。`v0.2.0` 预发布已于 2026-07-15 发布并保持不可变。`v0.3.0-rc.1` 预发布也作为不可变历史保留；后续版本必须使用新 tag。
+项目历史和 SemVer 规划以 0.1.0 作为内容发布基线，同时原样保留已有 `v0.0.1` tag，不删除、不移动、不重建。`v0.2.0` 预发布、`v0.3.0-rc.1` 预发布和 `v0.3.0` 正式版也保持不可变；后续版本必须使用新 tag。
 
 ## 发布检查
 

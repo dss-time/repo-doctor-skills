@@ -7,13 +7,14 @@ This guide is for first-time users.
 - Stay here for a 5-minute build-oriented start.
 - Read the [User Manual](USER_MANUAL.md) for installation, invocation syntax, permissions, and troubleshooting.
 - Open the [Complete Skill Catalog](SKILL_CATALOG.md) when you know the task but not the Skill name.
+- Open [Quick Skill Entrypoints](guides/quick-skill-entrypoints.md) when you want one short example for your problem.
 - Follow the [Workflow Cookbook](WORKFLOW_COOKBOOK.md) when a task needs several Skills.
 - Read [Versioning and Lifecycle Policy](VERSIONING.md) when checking a release, Pack/plugin version, or Skill maturity status.
 - Maintainers should continue with [Adding Skills](ADDING_SKILLS.md).
 
-## Stable Release Note
+## Release Note
 
-This checkout is the authorized **v0.3.0 stable project release**, promoted from the unchanged `v0.3.0-rc.1` content after all non-waived gates passed. Project, component, and maturity versions are separate. All 4 active Packs and 38 active Skills remain `beta`. Live-model routing accuracy is **UNKNOWN** under a waiver limited to `v0.3.0` and that evidence gap; every other release gate remains mandatory.
+The current stable release is **v0.4.0**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The final-version suite passed 317/317 real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries.
 
 ## What You Are Looking At
 
@@ -54,7 +55,7 @@ Each package has a ZIP and a same-named expanded directory for inspection. The f
 
 | Prefix | Plugin | Current Count |
 |---|---|---:|
-| `rd-*` | Repo Doctor | 25 |
+| `rd-*` | Repo Doctor | 27 |
 | `pt-*` | Productivity Toolkit | 8 |
 | `sm-*` | Skill Maintainer | 2 |
 

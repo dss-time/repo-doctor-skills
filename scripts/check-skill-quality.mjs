@@ -671,8 +671,8 @@ function auditDist(canonicalSlugs) {
       auditChatGptPackage({ plugin, prefix, displayPrefix, skillPath });
     }
   }
-  if (expectedPackages.length !== 35) {
-    errors.push(`dist/chatgpt-skills: expected 35 plugin-backed packages, found ${expectedPackages.length}`);
+  if (expectedPackages.length !== 37) {
+    errors.push(`dist/chatgpt-skills: expected 37 plugin-backed packages, found ${expectedPackages.length}`);
   }
   const chatGptRoot = path.join(root, "dist", "chatgpt-skills");
   if (existsSync(chatGptRoot)) {

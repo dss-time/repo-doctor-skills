@@ -1,11 +1,19 @@
-input: "Prepare a sanitized continuation brief for another agent. Reference existing long artifacts and do not modify business code."
+input: "Prepare a standard sanitized handoff for a next session focused on validation. Reference artifacts and save outside the project by default."
 expected:
   must_include:
+    - next-session goal
+    - confirmed facts
+    - unverified information
+    - completed changes
+    - unfinished tasks
+    - operating-system temporary
+    - specifications, ADRs, issues, commits, and diffs
     - next steps
     - recommended existing Repo Doctor Skills
-    - copyable next-session start instruction
+    - minimum start instruction
     - sanitization
   must_not:
     - repeat full specification
+    - write to the project directory without authorization
     - modify business code
     - create commit

@@ -1,6 +1,6 @@
 # Examples
 
-- “This session is nearly full. Prepare a sanitized brief so another agent can continue the current fix without repeating diagnosis.”
-- “Reference the existing specification and ADR by path; include the changed files, commands, test results, blockers, and next Skill.”
-- When no safe scratch directory or write permission is available, return the complete brief in the response and state that no file was created.
+- “This session is nearly full. Create a standard handoff for finishing validation.” Tailor the brief to validation and save it to a unique OS temporary path.
+- “Reference the existing specification, ADR, issue, commit, and diff; do not copy them.” Include changed files, actual commands, results, blockers, and the next Skill.
+- If safe temporary storage is unavailable, return the complete sanitized brief in the response and mark file creation `Blocked`.
 - Non-trigger: “Commit these changes and send them to another developer.” This Skill never commits or sends external messages.

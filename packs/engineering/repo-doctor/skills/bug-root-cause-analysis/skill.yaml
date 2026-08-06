@@ -4,15 +4,15 @@ name:
   zh-CN: Bug 根因分析
 category: engineering
 visibility: public
-version: 0.2.0
+version: 0.3.0
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Reproduce and locate a specific runtime bug by tracing the first trustworthy failure through code, logs, configuration, existing tests, and minimal experiments into an evidence-backed causal chain. Use for non-CI symptom-to-root-cause diagnosis; do not absorb CI pipeline failures, general code review, broad health checks, requests to add or modify tests, or requests to implement a fix.
-  zh-CN: 针对具体运行时 Bug，从第一个可信错误出发，结合代码、日志、配置、现有测试和最小实验复现并建立有证据的因果链。用于非 CI 的症状到根因分析；不要吸收 CI 流水线失败、普通代码审查、项目体检、新增或修改测试请求或直接修复请求。
+  en: Diagnose a specific non-CI runtime bug by first qualifying a repeatable success/failure signal, then using minimal reproduction, boundary isolation, and falsifiable experiments to separate trigger, direct cause, and systemic root cause. Use automatically only when a concrete runtime symptom exists. Do not use for CI failures, broad review, test writing, or fix implementation; the Skill is read-only and defaults to concise output.
+  zh-CN: 针对具体非 CI 运行时 Bug，先确认可重复且能区分成败的观测信号，再通过最小复现、故障边界和可证伪实验区分触发条件、直接原因与系统性根因。只有存在具体运行症状时适合自动调用；CI 故障、广泛审查、编写测试或实施修复不使用。本 Skill 只读且默认简洁输出。
 triggers:
   en:
     - find the root cause of this bug

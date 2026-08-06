@@ -63,9 +63,9 @@ export function inspectDoctor(root = scriptRoot) {
   const pluginSkills = pluginRoots.reduce((sum, plugin) => sum + directories(path.join(root, "plugins", plugin, "skills"), "SKILL.md").length, 0);
   const zipRoot = path.join(root, "dist", "chatgpt-skills");
   const zipCount = existsSync(zipRoot) ? sortedDirectoryEntries(zipRoot).filter((entry) => entry.isFile() && entry.name.endsWith(".zip")).length : 0;
-  record("canonical-inventory", packRoots.length === 4 && activeSkills === 38 && repoSkills === 25, `${packRoots.length} Packs, ${activeSkills} active Skills, ${repoSkills} Repo Doctor Skills`);
-  record("plugin-inventory", pluginSkills === 35, `${pluginSkills} plugin Skills; expected 35`);
-  record("chatgpt-packages", zipCount === 35, String(zipCount) + " ZIPs; expected 35 after build", "warning");
+  record("canonical-inventory", packRoots.length === 4 && activeSkills === 40 && repoSkills === 27, `${packRoots.length} Packs, ${activeSkills} active Skills, ${repoSkills} Repo Doctor Skills`);
+  record("plugin-inventory", pluginSkills === 37, `${pluginSkills} plugin Skills; expected 37`);
+  record("chatgpt-packages", zipCount === 37, String(zipCount) + " ZIPs; expected 37 after build", "warning");
 
   let localeMissing = 0;
   for (const { packRoot, skills } of packSkills) for (const slug of skills) {
@@ -118,7 +118,7 @@ export function inspectDoctor(root = scriptRoot) {
     read_only: true,
     network_called: false,
     environment: { node: process.versions.node, branch, workspace_clean: workspace === "", head },
-    inventory: { packs: packRoots.length, active_skills: activeSkills, repo_doctor_skills: repoSkills, plugin_skills: pluginSkills, expected_chatgpt_zips: 35, actual_chatgpt_zips: zipCount, platform_targets: targets.length },
+    inventory: { packs: packRoots.length, active_skills: activeSkills, repo_doctor_skills: repoSkills, plugin_skills: pluginSkills, expected_chatgpt_zips: 37, actual_chatgpt_zips: zipCount, platform_targets: targets.length },
     workflow: { registry_id: workflow.registry?.registry_id ?? null, version: workflow.registry?.version ?? null, count: workflow.registry ? Object.keys(workflow.registry.workflows).length : 0 },
     release: {
       current_project_version: packageJson?.version ?? null,

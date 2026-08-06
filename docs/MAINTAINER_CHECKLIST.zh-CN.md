@@ -8,6 +8,7 @@
 - [ ] `docs/QUICK_START.md` 和 `docs/QUICK_START.zh-CN.md` 仍匹配当前命令和输出。
 - [ ] `docs/ADDING_SKILLS.md` 和 `docs/ADDING_SKILLS.zh-CN.md` 仍匹配当前 skill 结构。
 - [ ] `CHANGELOG.md` 已记录相关公开变化。
+- [ ] 面向问题的 Skill 快速入口保持双语，并使用稳定 canonical 名称，不伪造 alias frontmatter。
 - [ ] `docs/VERSIONING.md` 和 `docs/VERSIONING.zh-CN.md` 仍匹配项目/组件版本模型和成熟度策略。
 - [ ] `packs/` 仍是唯一 canonical 来源；没有在生成的 `plugins/` 或 `dist/` 副本中直接维护 Skill 业务逻辑。
 
@@ -31,6 +32,8 @@
 - [ ] `visibility` 适合公开仓库。
 - [ ] `supported_locales` 包含 `en` 和 `zh-CN`。
 - [ ] 权限明确声明是否允许写文件、运行命令、联网和破坏性操作。
+- [ ] 变更 Skill 说明何时适合自动调用、何时需要明确写权限，以及排除工作由哪个相邻 Skill 承接。
+- [ ] 适用 Skill 保持 `fast`、`standard`、`audit` 语义；`documented`、`test_mode` 等专项模式与输出模式保持独立。
 - [ ] 项目发布版本在 `package.json`、计划使用的 Git tag/GitHub Release、`CHANGELOG.md` 和候选版本说明中一致。
 - [ ] 每个 Pack 版本与对应生成插件 manifest 一致；不要把 Pack/插件版本机械强制为项目版本。
 - [ ] 每个 Skill 保持有独立依据的语义版本，不自动继承 Pack 或项目版本。
@@ -51,6 +54,7 @@
 - [ ] `npm run validate` 通过。
 - [ ] `npm test` 通过，包括 activation、维护工具、同步和构建完整性契约。
 - [ ] `npm run build` 通过。
+- [ ] Codex、Claude Code、Cursor、Qwen、Kimi、中英文 generic、portable prompt 和 ChatGPT 包均包含全部 active Skill，且没有手工编辑生成物造成漂移。
 - [ ] `npm run docs:generate` 已刷新生成的 Skill Catalog，且 `npm run docs:check` 通过。
 - [ ] 构建后 `node scripts/check-skill-quality.mjs --check-dist` 通过。
 - [ ] 重复运行 `npm run build` 后，生成树指纹保持一致，且没有陈旧或额外产物。
@@ -70,7 +74,7 @@
 
 ## Release Candidate
 
-- [ ] `CHANGELOG.md` 保留空的 `Unreleased` 区域，并包含候选项目版本对应的带日期正式段。
+- [ ] `CHANGELOG.md` 在 `Unreleased` 记录当前工作；只有真正准备项目发布时才创建带日期候选段。
 - [ ] CHANGELOG 比较链接、候选发布说明和版本策略链接有效。
 - [ ] 在 commit、push、tag 和外部发布动作真正成功之前，候选版本没有被写成“已发布”。
 - [ ] 除非确实执行了有证据的在线评测，否则 Live-model 路由准确率保持 `UNKNOWN`。

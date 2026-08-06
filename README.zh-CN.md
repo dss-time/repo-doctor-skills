@@ -37,9 +37,11 @@ Repo Doctor Skills 是一个双语、跨平台的 AI Skills 工程化框架，�
 - [5 分钟快速开始](docs/QUICK_START.zh-CN.md)：克隆、校验和构建。
 - [完整用户手册](docs/USER_MANUAL.zh-CN.md)：安装、调用语法、权限和故障排查。
 - [Skill 完整目录](docs/SKILL_CATALOG.zh-CN.md)：从全部 active Skill 中选择正确能力。
+- [Skill 快速入口](docs/guides/quick-skill-entrypoints.zh-CN.md)：知道问题但不知道 Skill 名时使用。
 - [工作流实战手册](docs/WORKFLOW_COOKBOOK.zh-CN.md)：把多个 Skill 串成真实任务流程。
 - [测试与评测说明](docs/TESTING_AND_EVALUATION.zh-CN.md)
-- [0.3.0 发布准备建议](docs/RELEASE_PREPARATION_0.3.0.md)
+- [0.4.0 阻塞候选说明](docs/RELEASE_NOTES_0.4.0.md)
+- [历史 0.3.0 发布准备建议](docs/RELEASE_PREPARATION_0.3.0.md)
 - [版本与生命周期策略](docs/VERSIONING.zh-CN.md)：了解项目发布版本、组件版本和成熟度状态。
 - [新增 Skills 指南](docs/ADDING_SKILLS.zh-CN.md)：维护者从 canonical 源开始工作。
 
@@ -84,13 +86,14 @@ node scripts/build-skills.mjs --target kimi-zh-CN
 plugins/repo-doctor/
 ```
 
-这个生成的兼容分发由 `packs/engineering/repo-doctor/` 同步而来，共包含 25 个边界明确的工作流与专项工程 Skill：
+这个生成的兼容分发由 `packs/engineering/repo-doctor/` 同步而来，共包含 27 个边界明确的工作流与专项工程 Skill：
 
 - `repo-doctor-router`
 - `repo-onboarding`
 - `requirements-clarification`
 - `requirements-to-spec`
 - `spec-to-work-items`
+- `decision-prototype`
 - `project-health-check`
 - `safe-code-review`
 - `change-impact-analysis`
@@ -108,6 +111,7 @@ plugins/repo-doctor/
 - `dead-code-verification`
 - `security-focused-review`
 - `performance-regression-analysis`
+- `architecture-deepening-analysis`
 - `architecture-decision-record`
 - `configuration-audit`
 - `session-handoff`
@@ -171,7 +175,7 @@ npm run build
 
 | 前缀 | 插件 | 当前数量 | 用途 |
 |---|---|---:|---|
-| `rd-*` | Repo Doctor | 25 | 软件工程路由、澄清、诊断、计划、安全修改、验证和会话交接。 |
+| `rd-*` | Repo Doctor | 27 | 软件工程路由、澄清、原型、架构分析、诊断、计划、安全修改、验证和会话交接。 |
 | `pt-*` | Productivity Toolkit | 8 | 报告、研究、表格清洗、PDF/Word 审查、会议和演示生产力。 |
 | `sm-*` | Skill Maintainer | 2 | Skill 工程化创建和只读质量审计。 |
 
@@ -186,7 +190,7 @@ Document Data Doctor 的 3 个 Basic Skill 会参与 canonical Pack 和全部 7 
 | `adapters/` | 各平台适配说明。 | 只有适配行为变化时修改。 |
 | `dist/` | 构建流水线生成的跨平台产物和 ChatGPT 上传包。 | 永远不要直接修改。 |
 
-当前 canonical 清单为 4 个 active Pack、38 个 active Skill，另有 1 个 template Pack 和其中的 1 个 template Skill。3 个插件分发共含 35 个 Skill；构建会生成 35 个对应 ChatGPT ZIP 和 7 个常规跨平台目标。校验器从 manifest 自动发现 Pack 和 Skill 集合，不依赖这些文档数字。
+当前 canonical 清单为 4 个 active Pack、40 个 active Skill，另有 1 个 template Pack 和其中的 1 个 template Skill。3 个插件分发共含 37 个 Skill；构建会生成 37 个对应 ChatGPT ZIP 和 7 个常规跨平台目标。校验器从 manifest 自动发现 Pack 和 Skill 集合，不依赖这些文档数字。
 
 ## 支持平台
 
@@ -325,11 +329,11 @@ npm run build
 
 运行 `npm run validate`、`npm test`、`npm run build`、`npm run docs:check`、`npm run quality:check` 和 `npm run release:check`。用 `npm run workflow:validate` 校验机器可读注册表；Golden Workflow 已纳入 `npm run test:workflow`。按[测试与评测说明](docs/TESTING_AND_EVALUATION.zh-CN.md)准备并记录人工真实模型运行。确定性契约测试不等于真实模型路由准确率。
 
-## 正式稳定版状态
+## 发布状态
 
-历史 **v0.2.0 预发布**和 **v0.3.0-rc.1 Release Candidate**保持不变。当前 checkout 是已授权的 **v0.3.0 项目正式稳定版**。项目发布版本、组件版本和成熟度状态彼此独立。4 个 active Pack 和 38 个 active Skill 仍标记为 `beta`：它们已经通过仓库验证，可以用于真实任务，但广泛公开使用和 Live-model 路由证据仍有限。项目 stable 不代表每个组件都已 stable，也不代表绝对无 Bug。
+当前项目正式版是 **v0.4.0**。项目发布版本、组件版本和成熟度状态彼此独立；4 个 active Pack 和 40 个 active Skill 仍标记为 `beta`。
 
-Live-model 路由准确率仍为 **UNKNOWN**；维护者豁免仅限 `v0.3.0` 和缺失的 Live-model 测量，不豁免 Schema、测试、权限、安全、构建、CI、产物或校验和门禁。详见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)、[正式版发布说明](docs/RELEASE_NOTES_0.3.0.md)和 [CHANGELOG.md](CHANGELOG.md)。
+最终版本 317/317 次真实 Codex 调用全部通过：200 项中英文显式、自然语言和相邻负例路由，44 个双语工作流步骤，61 项模式与原型三态判定，以及 12 项权限边界。详见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)、[v0.4.0 发布说明](docs/RELEASE_NOTES_0.4.0.md)和 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 相关文档
 

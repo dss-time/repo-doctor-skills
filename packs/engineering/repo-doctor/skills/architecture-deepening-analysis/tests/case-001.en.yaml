@@ -1,0 +1,20 @@
+input: "Analyze caller burden and repeated adapters in standard mode. Compare reversible options but do not refactor."
+expected:
+  must_include:
+    - observed friction
+    - code evidence
+    - root cause
+    - impact scope
+    - at least two
+    - recommended option
+    - why other options
+    - migration
+    - test strategy
+    - rollback
+    - ADR
+    - next Skill
+  must_not:
+    - file size alone
+    - style preference
+    - hypothetical abstraction
+    - rewrite code

@@ -2,6 +2,10 @@
 
 Repo Doctor Skills canonical skills live under `packs/`. Adapters render them into platform-specific formats.
 
+## Invocation names and aliases
+
+Canonical Skill slugs are the only portable invocation identity. The current canonical Schema intentionally has no `alias` field: host support is inconsistent, and unrecognized frontmatter would not create a reliable cross-platform shortcut. Codex and plugin distributions use their generated names, while other adapters preserve the canonical slug or expose it through their native rule format. Use natural-language routing when a host does not expose direct Skill invocation, and treat any host-specific shortcut as adapter UI metadata rather than canonical behavior.
+
 ## Claude Code
 
 Target output:

@@ -7,13 +7,14 @@
 - 想在 5 分钟内完成构建：继续阅读本页。
 - 想了解安装、调用语法、权限和故障排查：看[完整用户手册](USER_MANUAL.zh-CN.md)。
 - 知道任务但不知道 Skill 名：查[Skill 完整目录](SKILL_CATALOG.zh-CN.md)。
+- 想按问题直接复制一个最短示例：看[Skill 快速入口](guides/quick-skill-entrypoints.zh-CN.md)。
 - 一个任务需要串联多个 Skill：看[工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
 - 需要核对发布、Pack/插件版本或 Skill 成熟度：看[版本与生命周期策略](VERSIONING.zh-CN.md)。
 - 需要新增或维护 Skill：继续看[新增 Skills 指南](ADDING_SKILLS.zh-CN.md)。
 
-## 正式稳定版说明
+## 发布说明
 
-当前 checkout 是已授权的 **v0.3.0 项目正式稳定版**，由功能内容不变的 `v0.3.0-rc.1` 在全部非豁免门禁通过后晋级。项目版本、组件版本和成熟度状态彼此独立。4 个 active Pack 和 38 个 active Skill 仍为 `beta`。Live-model 路由准确率为 **UNKNOWN**；豁免仅限 `v0.3.0` 和这一证据缺口，其他发布门禁全部保持强制。
+当前正式版是 **v0.4.0**。项目版本、组件版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。最终版本 317/317 次真实 Codex 调用全部通过，覆盖核心路由、双语工作流、模式、原型三态判定和权限边界。
 
 ## 你正在看的是什么
 
@@ -54,7 +55,7 @@ npm run build
 
 | 前缀 | 插件 | 当前数量 |
 |---|---|---:|
-| `rd-*` | Repo Doctor | 25 |
+| `rd-*` | Repo Doctor | 27 |
 | `pt-*` | Productivity Toolkit | 8 |
 | `sm-*` | Skill Maintainer | 2 |
 

@@ -4,15 +4,15 @@ name:
   zh-CN: 安全补充测试
 category: engineering
 visibility: public
-version: 0.3.0
+version: 0.4.0
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Add the smallest high-value tests in one explicit mode: test_first before behavior exists, regression_after_fix after a verified fix, or characterization for legacy behavior. Use for authorized test, fixture, and necessary test-helper edits only; do not fabricate a red state, modify production code, perform a general bug fix, or add coverage-only assertions.
-  zh-CN: 以一种明确模式最小化补充高价值测试：行为实现前的 test_first、已验证修复后的 regression_after_fix，或旧行为的 characterization。仅用于已授权的测试、fixture 和必要测试辅助代码修改；不得伪造红灯、修改生产代码、执行通用 Bug 修复或只为覆盖率补断言。
+  en: Protect one externally observable behavior through a gated red–green–organize cycle in test_first, regression_after_fix, or characterization mode. Use only for explicitly authorized test, fixture, and necessary test-helper edits; inspect real commands and public test boundaries first. Do not auto-invoke for production fixes, modify production code, install dependencies, or write coverage-only assertions.
+  zh-CN: 通过有门禁的红—绿—整理循环，一次保护一个外部可观察行为，可选 test_first、regression_after_fix 或 characterization。仅用于已明确授权的测试、fixture 和必要测试辅助代码修改；先检查真实命令与公共测试边界。生产修复不得自动调用，也不得修改生产代码、安装依赖或只为覆盖率补断言。
 triggers:
   en:
     - implement this test first before the behavior

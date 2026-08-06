@@ -1,10 +1,9 @@
 # Output Contract
 
-1. Overall conclusion and review scope
-2. Intent evidence and Intent Alignment result, explicitly `insufficient evidence` when applicable
-3. Implementation Quality result
-4. Deduplicated findings: priority, dimension, location, evidence, problem, impact, recommendation, validation
-5. Missing behavior, unauthorized scope, compatibility, boundary, and failure-path review
-6. Correctness, security, data integrity, concurrency, performance, maintainability, module boundaries, duplication, tests, observability, and rollback review
-7. Commands or tests actually run, evidence gaps, and residual risks
-8. Final bounded recommendation
+Lead with the overall conclusion, review scope, and highest-priority next action.
+
+- `fast`: only evidence-backed P0/P1/P2 findings, blockers, and a bounded recommendation.
+- `standard`: separate results for `Repository Conformance`, `Change Intent Fidelity`, and `Operational Safety`; explicitly state `no findings` or `insufficient evidence` per axis.
+- `audit`: add evidence sources, commands/tests, skipped checks, permission record, and residual-risk ledger.
+
+Every deduplicated finding must include: severity, contributing axis or axes, file, tight location, direct evidence, problem, impact, recommendation, and validation method. Never output a finding without evidence or implement the recommendation.

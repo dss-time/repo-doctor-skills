@@ -1,6 +1,6 @@
 {
   "name": "repo-doctor-skills",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, document review, and safe agent workflows.",
   "type": "module",
@@ -30,6 +30,10 @@
     "docs:generate": "node scripts/generate-skill-catalog.mjs",
     "docs:check": "node scripts/check-user-docs.mjs",
     "release:check": "node scripts/release-metadata.mjs --check",
+    "release:inventory": "node scripts/release-validation-reports.mjs inventory",
+    "release:bilingual": "node scripts/release-validation-reports.mjs bilingual",
+    "release:artifacts": "node scripts/release-validation-reports.mjs artifacts",
+    "release:reports": "node scripts/release-validation-reports.mjs all",
     "eval:prepare": "node scripts/eval-prepare.mjs",
     "eval:validate": "node scripts/eval-validate.mjs",
     "eval:report": "node scripts/eval-report.mjs",

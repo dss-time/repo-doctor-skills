@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decision Prototype（决策原型验证）"
+  short_description: "用最小可丢弃逻辑或 UI 原型验证一个设计决策"
+  default_prompt: "使用 $decision-prototype 以最小非生产原型验证一个逻辑或 UI 决策，不把原型当作正式实现。"

@@ -1,0 +1,10 @@
+input: "使用 fast 模式分析这个运行错误，但当前没有安全可重复的成败信号。"
+expected:
+  must_include:
+    - fast
+    - Unverified
+    - 置信度
+    - 下一诊断动作
+  must_not:
+    - 根因已确认
+    - 实施修复

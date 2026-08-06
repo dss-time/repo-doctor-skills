@@ -615,7 +615,7 @@ Word 基础与增强：
 
 ## 11. 安全路由或交接工作
 
-用户知道任务但不知道 Skill 时，使用 **repo-doctor-router [R]**。它返回已核验的下一 Skill、最短安全工作流、替代方案、必要输入和停止条件，但不执行推荐。上下文过长或负责人切换时使用 **session-handoff [R]**；交接只引用已有产物，区分事实与推断，清理敏感值，记录真实命令和结果，并给出可复制启动指令，不声称下一会话会自动读取。
+用户知道任务但不知道 Skill 时，使用 **repo-doctor-router [R]**。默认 `fast` 只返回一个推荐、一句话原因、模式和最小输入；需要 workflow ID、门禁、替代路径和注册表证据时再要求 `standard` 或 `audit`。它不执行推荐。一个逻辑或 UI 决策需要可运行非生产证据时使用 **decision-prototype [W]**。具体调用方、变更或测试已经显示架构摩擦，但只需要分析方案时使用 **architecture-deepening-analysis [R+T]**。上下文过长或负责人切换时使用 **session-handoff [W]**；它引用已有产物、清理敏感值，并默认写入系统临时目录。
 
 ## 未来路线图（本轮未实现）
 
@@ -653,7 +653,9 @@ Word 基础与增强：
 | `dependency-upgrade` | 依赖升级分析。 | 无 |
 | `database-migration` | 迁移与发布顺序审查。 | 无 |
 | `api-contract-change` | API 兼容性审查。 | 无 |
-| `session-handoff` | 脱敏只读续接状态。 | 无 |
+| `decision-prototype` | 用非生产逻辑或 UI 原型回答一个决策问题。 | 明确原型路径授权 |
+| `architecture-deepening` | 基于证据分析架构摩擦与可回滚方案。 | 无 |
+| `session-handoff` | 带产物引用的脱敏续接摘要。 | 默认写系统临时目录；项目路径需明确授权 |
 | `release-preparation` | 只读发布门禁。 | 无；发布是外部动作 |
 
-只读输出只是证据，绝不构成写入授权。`spec-to-work-items` 只返回响应 Markdown，不能落盘或创建任务。Golden Workflow fixture 验证契约，不代表真实模型路由准确率。
+只读输出只是证据，绝不构成写入授权。`decision-prototype` 必须经过明确写门禁且不得访问生产系统。`session-handoff` 默认只创建脱敏的系统临时摘要；项目写入需要明确授权。`spec-to-work-items` 只返回响应 Markdown，不能落盘或创建任务。Golden Workflow fixture 验证契约，不代表真实模型路由准确率。

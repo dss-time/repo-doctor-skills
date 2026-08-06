@@ -1,12 +1,13 @@
 # Codex Adapter
 
-Codex adapter output may target:
+Codex adapter output includes:
 
 ```text
 AGENTS.md
+skills/<skill-name>/SKILL.md
 ```
 
-or a plugin-compatible Skill directory. This repository synchronizes compatibility distributions under `plugins/` from canonical Packs.
+`AGENTS.md` preserves the aggregate compatibility target. Each installable Skill package contains both English and Simplified Chinese instructions and can be copied into an isolated Codex Skills root. This repository also synchronizes compatibility distributions under `plugins/` from canonical Packs.
 
 ## Mapping
 

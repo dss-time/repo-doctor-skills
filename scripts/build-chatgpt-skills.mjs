@@ -53,6 +53,11 @@ const interfaces = {
     shortDescription: "在规格化前逐项关闭会实质改变实现的需求决策",
     defaultPrompt: "使用 $requirements-clarification 澄清关键需求决策，不要实施代码。",
   },
+  "decision-prototype": {
+    displayName: "Decision Prototype（决策原型验证）",
+    shortDescription: "用最小可丢弃逻辑或 UI 原型验证一个设计决策",
+    defaultPrompt: "使用 $decision-prototype 以非生产原型验证一个逻辑或 UI 决策，不把原型当作正式实现。",
+  },
   "spec-to-work-items": {
     displayName: "Spec to Work Items（规格拆分工作项）",
     shortDescription: "把已确认规格拆成可独立验证且可安全并行的垂直工作项",
@@ -137,6 +142,11 @@ const interfaces = {
     displayName: "Architecture Decision Record（架构决策记录）",
     shortDescription: "按仓库约定记录架构选项、决策理由、后果与复审条件",
     defaultPrompt: "使用 $architecture-decision-record 按仓库约定创建或更新 ADR，只修改架构文档。",
+  },
+  "architecture-deepening-analysis": {
+    displayName: "Architecture Deepening Analysis（架构深化分析）",
+    shortDescription: "分析接口与调用方摩擦并比较可迁移、可回滚的深化方案",
+    defaultPrompt: "使用 $architecture-deepening-analysis 只读分析架构摩擦并比较方案，不执行重构。",
   },
   "configuration-audit": {
     displayName: "Configuration Audit（配置审计）",

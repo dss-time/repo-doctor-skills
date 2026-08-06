@@ -1,0 +1,46 @@
+id: repo.architecture-deepening-analysis
+name:
+  en: Architecture Deepening Analysis
+  zh-CN: 架构深化分析
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales:
+  - en
+  - zh-CN
+description:
+  en: Analyze evidence-backed architecture friction such as broad interfaces, caller knowledge, responsibility leakage, repeated adaptation, scattered change, and unstable test seams, then compare migratable and reversible deepening options. Use for read-only architecture analysis after concrete caller or change evidence exists. Do not auto-invoke to perform a large refactor, judge by file size, or create speculative abstractions; no writes are allowed.
+  zh-CN: 分析有证据的架构摩擦，例如接口过宽、调用方知识负担、职责泄漏、重复适配、修改分散和测试接缝不稳定，再比较可迁移、可回滚的深化方案。用于已有具体调用方或变更证据后的只读架构分析。不得自动执行大规模重构、按文件大小下结论或创建推测性抽象；不允许写入。
+triggers:
+  en:
+    - analyze why this architecture is hard to change
+    - find broad interfaces and caller burden
+    - compare reversible module deepening options
+    - architecture deepening analysis
+  zh-CN:
+    - 分析这个架构为什么越来越难改
+    - 查找过宽接口和调用方负担
+    - 比较可回滚的模块深化方案
+    - 架构深化分析
+tool_requirements:
+  filesystem: read
+  git: optional
+  shell: optional
+  web: none
+permissions:
+  read_files: true
+  write_files: false
+  run_shell_commands: true
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: tool_execution
+output_schema:
+  type: architecture_deepening_analysis_report
+localization:
+  en:
+    status: complete
+  zh-CN:
+    status: complete

@@ -1,14 +1,19 @@
-input: "Implement the highest-value regression test from this gap report. Modify tests only."
+input: "In audit output mode, implement one authorized test-first behavior slice. Modify tests only and preflight every command."
 expected:
   must_include:
+    - output_mode
+    - test_first
+    - public test boundary
     - test basis
-    - behavior mapping
-    - expected failure
-    - green verification
-    - related regression
-    - results
+    - red evidence
+    - green evidence
+    - command ledger
+    - working directory
+    - exit code
+    - Blocked
   must_not:
     - modify production code
+    - horizontal slice
     - unrelated refactor
     - expose private API
     - install test framework

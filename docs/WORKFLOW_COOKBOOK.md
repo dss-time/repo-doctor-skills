@@ -710,7 +710,7 @@ Do not address unapproved findings or change versions, commit, push, or publish.
 
 ## 11. Route or Transfer Work Safely
 
-Use **repo-doctor-router [R]** when the user knows the task but not the Skill. It returns a verified next Skill, a shortest safe workflow, alternatives, required inputs, and stop conditions; it never executes the recommendation. Use **session-handoff [R]** when the context is long or ownership changes. The handoff references existing artifacts, separates facts from inferences, removes sensitive values, records real commands and results, and gives a copyable next-session prompt without claiming automatic loading.
+Use **repo-doctor-router [R]** when the user knows the task but not the Skill. Its default `fast` response is one recommendation, one-sentence reason, mode, and minimum input; request `standard` or `audit` for workflow IDs, gates, alternatives, and registry evidence. It never executes the recommendation. Use **decision-prototype [W]** when one logic or UI decision needs runnable non-production evidence. Use **architecture-deepening-analysis [R+T]** when concrete callers, changes, or tests show architecture friction and alternatives need analysis without refactoring. Use **session-handoff [W]** when the context is long or ownership changes; it references existing artifacts, removes sensitive values, and writes to an OS temporary directory by default.
 
 ## Future Roadmap — Not Implemented
 
@@ -748,7 +748,9 @@ The only machine-readable relationship source is `packs/engineering/repo-doctor/
 | `dependency-upgrade` | Dependency upgrade analysis. | None |
 | `database-migration` | Migration and rollout review. | None |
 | `api-contract-change` | API compatibility review. | None |
-| `session-handoff` | Sanitized read-only continuation state. | None |
+| `decision-prototype` | One-question non-production logic or UI validation. | Explicit prototype-path approval |
+| `architecture-deepening` | Evidence-backed architecture friction and reversible option analysis. | None |
+| `session-handoff` | Sanitized continuation brief with artifact references. | OS temporary output by default; explicit approval for a project path |
 | `release-preparation` | Read-only release gate. | None; publishing is external |
 
-A read-only output is evidence, never write authorization. `spec-to-work-items` returns response Markdown only and cannot persist files or create tasks. Golden Workflow fixtures verify contracts, not live-model routing accuracy.
+A read-only output is evidence, never write authorization. `decision-prototype` requires an explicit write gate and cannot access production systems. `session-handoff` may create only a sanitized OS-temporary brief by default; project writes require explicit authorization. `spec-to-work-items` returns response Markdown only and cannot persist files or create tasks. Golden Workflow fixtures verify contracts, not live-model routing accuracy.

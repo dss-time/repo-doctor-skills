@@ -1,0 +1,17 @@
+input: "构建已授权的逻辑原型回答一个状态转换问题，使用合成数据且不接触生产系统。"
+expected:
+  must_include:
+    - logic-prototype
+    - 验证问题
+    - 成功判据
+    - NON-PRODUCTION PROTOTYPE
+    - 关键状态
+    - supported / rejected / uncertain
+    - delete / retain_as_evidence / reimplement_for_production
+    - 下一 Repo Doctor Skill
+  must_not:
+    - 生产数据库
+    - 真实凭证
+    - 真实外部请求
+    - 生产就绪
+    - 自动删除

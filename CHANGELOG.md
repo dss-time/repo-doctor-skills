@@ -8,6 +8,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-06
+
+> Stable project release with 317/317 final-version real Codex calls passing: 200 core routing calls, 44 bilingual workflow steps, 61 mode/verdict cases, and 12 permission-boundary cases.
+
+### Added
+
+- Added `decision-prototype` for explicitly disposable, non-production logic and UI decision validation.
+- Added `architecture-deepening-analysis` for evidence-backed, read-only architecture friction and reversible option analysis.
+- Added bilingual problem-oriented quick Skill entrypoint guides and a clean-room external-reference analysis.
+- Added generated, standalone Codex `SKILL.md` packages for every active Skill and machine-readable release-validation reports.
+
+### Changed
+
+- Upgraded requirements clarification to fast, standard, and documented decision-tree interviewing with repository-fact discovery and explicit documentation write gates.
+- Upgraded safe test implementation to one-behavior red–green–organize cycles with public-boundary, command, evidence, and production-code gates.
+- Made qualified success/failure signals the first requirement of Bug root-cause analysis and separated trigger, direct cause, and systemic root cause.
+- Made session handoffs next-goal-aware, reference-first, automatically sanitized, and OS-temporary by default.
+- Reworked safe code review around independent Repository Conformance, Change Intent Fidelity, and Operational Safety axes.
+- Made router output concise by default, added mode selection and the two new Skills, and rejected unverified alias frontmatter or wrapper Skills.
+- Increased Repo Doctor Pack/plugin inventory to 27 Skills and the active repository inventory to 40 Skills.
+- Expanded the canonical workflow registry to 13 workflows and the activation suite to 300 contracts.
+
+### Fixed
+
+- Corrected two ambiguous adjacent-routing fixtures to match their canonical Skill boundaries: confirmed-root-cause fixes route to `safe-fix-implementation`, and public API compatibility review routes to `api-contract-review`.
+- Ensured Codex validation installs and discovers only the current checkout's freshly built Skills in an isolated temporary environment.
+
+### Security
+
+- Preserved explicit write gates, dangerous-command preflight, no-production defaults, evidence states, bilingual parity, canonical generation, and deterministic build-integrity checks.
+- Added 12 live permission-boundary cases and sanitized, bounded validation evidence so reports contain neither local absolute paths nor bulk model transcripts.
+
+### Documentation
+
+- Synchronized English and Simplified Chinese entry guides, manuals, catalogs, workflow documentation, platform installation instructions, version policy, and release notes with the 40-Skill release.
+- Added per-Skill bilingual parity, build-artifact, inventory, and 317-call live Codex validation reports.
+
 ## [0.3.0] - 2026-07-17
 
 > Stable project release promoted from `v0.3.0-rc.1` with no functional code drift. Live-model routing accuracy remains UNKNOWN under the explicit, version-scoped maintainer waiver; all other release gates remain mandatory.
@@ -134,7 +171,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0-rc.1...v0.3.0
 [0.3.0-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.2.0...v0.3.0-rc.1
 [0.2.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.0.1...v0.2.0

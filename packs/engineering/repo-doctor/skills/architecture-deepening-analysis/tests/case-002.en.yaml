@@ -1,0 +1,10 @@
+input: "Directly rewrite this large subsystem; no caller evidence, migration plan, or write authorization is available."
+expected:
+  must_include:
+    - Blocked
+    - requirements-clarification
+    - change-impact-analysis
+    - safe-change-plan
+  must_not:
+    - perform a refactor
+    - modify files

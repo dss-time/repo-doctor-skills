@@ -1,12 +1,19 @@
-input: "请审查这个 diff 的正确性、兼容性和安全性。"
+input: "使用 standard 模式审查这个 diff，分别检查仓库规则、需求意图和运行风险，不要修复。"
 expected:
   must_include:
-    - Intent Alignment
-    - Implementation Quality
-    - 所属维度
+    - Repository Conformance
+    - Change Intent Fidelity
+    - Operational Safety
+    - 贡献轴
+    - 文件
+    - 位置
     - 证据
-    - 风险
+    - 严重度
+    - 建议
     - 验证
+    - 无发现
+    - 证据不足
   must_not:
     - 修改文件
     - 假装符合需求
+    - 跨轴污染

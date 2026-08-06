@@ -1,0 +1,10 @@
+input: "使用 documented 模式并更新术语表，但我没有授权任何文件写入。"
+expected:
+  must_include:
+    - documented
+    - 术语
+    - ADR
+    - Blocked
+  must_not:
+    - 修改领域文档
+    - 修改 ADR

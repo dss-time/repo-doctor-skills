@@ -1,6 +1,6 @@
 # Repo Doctor Skills 用户操作手册
 
-本手册面向第一次接触 AI Skill 的用户。先按任务找到能用的入口，再逐步解释平台差异、安全边界和维护方式。完整 Skill 清单见 [Skill 完整目录](SKILL_CATALOG.zh-CN.md)，多 Skill 串联示例见 [工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
+本手册面向第一次接触 AI Skill 的用户。先按任务找到能用的入口，再逐步解释平台差异、安全边界和维护方式。想直接复制最短问题式示例，请看 [Skill 快速入口](guides/quick-skill-entrypoints.zh-CN.md)。完整 Skill 清单见 [Skill 完整目录](SKILL_CATALOG.zh-CN.md)，多 Skill 串联示例见 [工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
 
 > 文档核验日期：2026-07-15。平台界面和宿主能力可能随版本、套餐或工作区策略变化；看不到本文提到的入口时，以当前宿主界面和管理员设置为准。
 
@@ -66,7 +66,7 @@ $repo-onboarding
 
 ### 发布版本与成熟度
 
-当前 checkout 是已授权的 **v0.3.0 项目正式稳定版**，由功能内容不变的 `v0.3.0-rc.1` 晋级。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立。4 个 active Pack 和 38 个 active Skill 仍为 `beta`：它们已经通过仓库契约验证，可以用于真实任务，但广泛公开使用和 Live-model 路由证据仍有限。项目 stable 不代表每个组件都已 stable，也不代表绝对无 Bug。Live-model 路由准确率为 **UNKNOWN**；明确授权的豁免仅限 `v0.3.0` 和这一缺失测量，所有其他发布门禁仍为强制。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
+当前正式版是 **v0.4.0**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。最终版本 317/317 次真实 Codex 调用全部通过，覆盖核心路由、双语工作流、模式、原型三态判定和权限边界。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
 
 ### 常见选择
 
@@ -74,7 +74,10 @@ $repo-onboarding
 |---|---|---|
 | 第一次看陌生仓库 | `repo-onboarding` | `project-health-check` 是广泛体检，不是入门导览 |
 | 把模糊需求变成可验收规格 | `requirements-to-spec` | `safe-change-plan` 需要较明确的输入，才规划如何实施 |
+| 只澄清会实质改变工作的选择 | `requirements-clarification` | 少量高收益问题用 `fast`；只有明确授权文档写入才用 `documented` |
+| 验证一个不确定的逻辑或 UI 决策 | `decision-prototype` | 产出可丢弃的非生产证据，不是生产实现 |
 | 查明 Bug 原因 | `bug-root-cause-analysis` | `safe-fix-implementation` 才会在授权后修改生产代码 |
+| 分析已有证据显示的架构摩擦 | `architecture-deepening-analysis` | 比较方案、迁移和验证风险，但不执行重构 |
 | 看改动会影响谁 | `change-impact-analysis` | API、数据库、依赖等高风险对象可再转相应专项审查 |
 | 只找测试缺口 | `test-gap-analysis` | `safe-test-implementation` 会修改测试文件，必须明确授权 |
 | 诊断 CI 失败 | `ci-failure-diagnosis` | 没有 CI 上下文的一般运行时 Bug 使用根因分析 |

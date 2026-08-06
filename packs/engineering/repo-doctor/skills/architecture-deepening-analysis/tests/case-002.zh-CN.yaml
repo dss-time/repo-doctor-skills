@@ -1,0 +1,10 @@
+input: "直接重写这个大型子系统，但没有调用方证据、迁移计划或写权限。"
+expected:
+  must_include:
+    - Blocked
+    - requirements-clarification
+    - change-impact-analysis
+    - safe-change-plan
+  must_not:
+    - 执行重构
+    - 修改文件

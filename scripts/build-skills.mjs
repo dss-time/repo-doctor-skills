@@ -11,17 +11,17 @@ const requestedTarget = process.argv.includes("--target")
   ? process.argv[process.argv.indexOf("--target") + 1]
   : null;
 
-const targets = requestedTarget
-  ? [requestedTarget]
-  : [
-      "generic-zh-CN",
-      "generic-en",
-      "codex-zh-CN",
-      "claude-code-zh-CN",
-      "cursor-zh-CN",
-      "qwen-zh-CN",
-      "kimi-zh-CN",
-    ];
+export const buildTargets = Object.freeze([
+  "generic-zh-CN",
+  "generic-en",
+  "codex-zh-CN",
+  "claude-code-zh-CN",
+  "cursor-zh-CN",
+  "qwen-zh-CN",
+  "kimi-zh-CN",
+]);
+
+const targets = requestedTarget ? [requestedTarget] : buildTargets;
 
 function field(yaml, block, locale) {
   const pattern = new RegExp(`^${block}:\\n(?:.*\\n)*?\\s{2}${locale}:\\s*(.+)$`, "m");
@@ -78,6 +78,38 @@ function renderSkill(skillDir, locale, target) {
   return `# ${name}\n\n- ID: ${id}\n- Visibility: ${visibility}\n\n${description}\n\n${instructions}\n\n${output}\n`;
 }
 
+function renderCodexSkill(skillDir) {
+  const yaml = readFileSync(path.join(skillDir, "skill.yaml"), "utf8");
+  const skillName = path.basename(skillDir);
+  const descriptionEn = field(yaml, "description", "en");
+  const descriptionZh = field(yaml, "description", "zh-CN");
+  const instructionsEn = readFileSync(path.join(skillDir, "instructions.en.md"), "utf8")
+    .replaceAll("../../references/", "references/");
+  const instructionsZh = readFileSync(path.join(skillDir, "instructions.zh-CN.md"), "utf8")
+    .replaceAll("../../references/", "references/");
+  const outputEn = readFileSync(path.join(skillDir, "output.en.md"), "utf8");
+  const outputZh = readFileSync(path.join(skillDir, "output.zh-CN.md"), "utf8");
+  return [
+    "---",
+    `name: ${skillName}`,
+    `description: ${JSON.stringify(`${descriptionEn} ${descriptionZh}`)}`,
+    "---",
+    "",
+    "# English",
+    "",
+    instructionsEn.trim(),
+    "",
+    outputEn.trim(),
+    "",
+    "# 简体中文",
+    "",
+    instructionsZh.trim(),
+    "",
+    outputZh.trim(),
+    "",
+  ].join("\n");
+}
+
 export function discoverCanonicalSkillDirs(directory = packsDir) {
   return discoverPackRoots(directory).flatMap((packRoot) =>
     discoverActivePackSkills(packRoot).map((slug) => path.join(packRoot, "skills", slug)),
@@ -121,7 +153,17 @@ function buildTarget(target) {
       path.join(outDir, "AGENTS.md"),
       `# Generated Codex Skills\n\nThis file was generated from canonical skills under packs/.\n\n${sections.join("\n\n---\n\n")}`
     );
-    for (const skillDir of skillDirs) copyFlatResources(skillDir, outDir);
+    for (const skillDir of skillDirs) {
+      const skillName = path.basename(skillDir);
+      const skillOutDir = path.join(outDir, "skills", skillName);
+      mkdirSync(skillOutDir, { recursive: true });
+      writeFileSync(path.join(skillOutDir, "SKILL.md"), renderCodexSkill(skillDir));
+      const packRoot = path.dirname(path.dirname(skillDir));
+      copyDirectoryContents(path.join(packRoot, "references"), path.join(skillOutDir, "references"));
+      copyDirectoryContents(path.join(skillDir, "references"), path.join(skillOutDir, "references"));
+      copyDirectoryContents(path.join(skillDir, "assets"), path.join(skillOutDir, "assets"));
+      copyDirectoryContents(path.join(skillDir, "scripts"), path.join(skillOutDir, "scripts"));
+    }
   } else {
     for (const skillDir of skillDirs) {
       const outName = `${path.basename(skillDir)}.md`;
@@ -132,7 +174,7 @@ function buildTarget(target) {
 
   writeFileSync(
     path.join(outDir, "README.md"),
-    `# ${target}\n\nGenerated from canonical skills under packs/.\n\n- Generic, Qwen, and Kimi targets contain copyable Markdown prompts.\n- Codex targets contain AGENTS.md.\n- Claude Code targets contain .claude/skills/<skill-name>/SKILL.md.\n- Cursor targets contain .cursor/rules/<skill-name>.mdc.\n\nGenerated resources are copied beside the platform prompts when applicable.\n`
+    `# ${target}\n\nGenerated from canonical skills under packs/.\n\n- Generic, Qwen, and Kimi targets contain copyable Markdown prompts.\n- Codex targets contain AGENTS.md plus installable skills/<skill-name>/SKILL.md packages.\n- Claude Code targets contain .claude/skills/<skill-name>/SKILL.md.\n- Cursor targets contain .cursor/rules/<skill-name>.mdc.\n\nGenerated resources are copied beside the platform prompts when applicable.\n`
   );
   console.log(`Built ${target} with ${skillDirs.length} skills.`);
 }

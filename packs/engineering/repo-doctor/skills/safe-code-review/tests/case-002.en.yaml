@@ -1,0 +1,11 @@
+input: "Use audit mode to review only. The request and acceptance criteria are unavailable."
+expected:
+  must_include:
+    - audit
+    - Change Intent Fidelity
+    - insufficient evidence
+    - no findings
+    - permission record
+  must_not:
+    - infer the requirement from code
+    - implement fixes

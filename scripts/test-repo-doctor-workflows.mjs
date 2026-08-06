@@ -19,8 +19,32 @@ function requireTerms(relativePath, terms) {
   return content;
 }
 
-for (const slug of ["repo-doctor-router", "requirements-clarification", "spec-to-work-items", "session-handoff"]) {
+for (const slug of ["repo-doctor-router", "requirements-clarification", "decision-prototype", "architecture-deepening-analysis", "spec-to-work-items", "session-handoff"]) {
   assert.ok(active.has(slug), `${slug} must be active in Repo Doctor`);
+}
+
+const progressiveModeSkills = [
+  "repo-doctor-router",
+  "safe-test-implementation",
+  "bug-root-cause-analysis",
+  "session-handoff",
+  "safe-code-review",
+  "decision-prototype",
+  "architecture-deepening-analysis",
+];
+for (const slug of progressiveModeSkills) {
+  for (const locale of ["en", "zh-CN"]) {
+    requireTerms(
+      `packs/engineering/repo-doctor/skills/${slug}/instructions.${locale}.md`,
+      ["fast", "standard", "audit"],
+    );
+  }
+}
+for (const locale of ["en", "zh-CN"]) {
+  requireTerms(
+    `packs/engineering/repo-doctor/skills/requirements-clarification/instructions.${locale}.md`,
+    ["fast", "standard", "documented"],
+  );
 }
 
 for (const locale of ["en", "zh-CN"]) {
@@ -31,7 +55,9 @@ for (const locale of ["en", "zh-CN"]) {
       "requirements-clarification",
       "requirements-to-spec",
       "spec-to-work-items",
+      "decision-prototype",
       "bug-root-cause-analysis",
+      "architecture-deepening-analysis",
       "session-handoff",
       "release-readiness-check",
     ],
@@ -41,7 +67,9 @@ for (const locale of ["en", "zh-CN"]) {
   }
   requireTerms(
     `packs/engineering/repo-doctor/skills/repo-doctor-router/output.${suffix}.md`,
-    ["task_classification", "registry", "workflow_id", "recommended_next_skill", "applicable_stages", "permission_gates", "alternatives", "stop_conditions"],
+    locale === "en"
+      ? ["Recommend: $<skill-name>", "Reason:", "Mode:", "Needs:", "workflow ID", "permission gate", "stop condition"]
+      : ["推荐：$<skill-name>", "原因：", "模式：", "需要：", "workflow ID", "权限门禁", "停止条件"],
   );
   requireTerms(
     `packs/engineering/repo-doctor/skills/requirements-clarification/output.${suffix}.md`,
@@ -53,13 +81,13 @@ for (const locale of ["en", "zh-CN"]) {
   );
   requireTerms(
     `packs/engineering/repo-doctor/skills/safe-test-implementation/output.${suffix}.md`,
-    ["test_mode", "observable_behavior", "test_boundary", "initial_result", "expected_failure_reason", "sensitivity_evidence", "sensitivity_status", "production_change_required", "verification_commands", "regression_result", "limitations", "next_recommended_skill"],
+    ["test_mode", "observable_behavior", "test_boundary", "production_change_required", "next_recommended_skill", "audit"],
   );
   requireTerms(
     `packs/engineering/repo-doctor/skills/session-handoff/output.${suffix}.md`,
     locale === "en"
-      ? ["Current objective", "Modified files", "Commands run", "Test and validation results", "Unresolved questions", "Recommended next steps", "must not be repeated", "Copyable next-session"]
-      : ["当前目标", "已修改文件", "已运行命令", "测试与验证结果", "未解决问题", "下一步", "不应重复执行", "可复制的下一会话"],
+      ? ["next-session goal", "confirmed facts", "unverified information", "completed changes", "unfinished tasks", "repository state", "validation commands", "minimum start instruction"]
+      : ["下一会话目标", "已确认事实", "未验证信息", "已完成修改", "未完成任务", "仓库状态", "验证命令", "最小启动指令"],
   );
 }
 
@@ -68,12 +96,16 @@ requireTerms("packs/engineering/repo-doctor/skills/requirements-to-spec/instruct
 requireTerms("packs/engineering/repo-doctor/skills/spec-to-work-items/instructions.en.md", ["Return copyable Markdown only in the response", "even when the user asks", "use Shell to write indirectly"]);
 requireTerms("packs/engineering/repo-doctor/skills/spec-to-work-items/instructions.zh-CN.md", ["当前响应中输出 Markdown", "即使用户明确授权", "不得用 Shell"]);
 
-requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.en.md", ["Repeatable feedback mechanism", "symptom reproduction alone is not root-cause confirmation", "falsification"]);
-requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.zh-CN.md", ["可重复反馈方式", "现象复现本身不等于根因确认", "反证"]);
-requireTerms("packs/engineering/repo-doctor/skills/safe-code-review/instructions.en.md", ["Intent Alignment", "Implementation Quality", "insufficient"]);
-requireTerms("packs/engineering/repo-doctor/skills/safe-code-review/instructions.zh-CN.md", ["Intent Alignment", "Implementation Quality", "证据不足"]);
-requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.en.md", ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified", "Never switch modes silently"]);
-requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.zh-CN.md", ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified", "不得静默切换模式"]);
+requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.en.md", ["trustworthy, repeatable signal", "success predicate", "falsifiable hypotheses", "trigger_condition", "systemic_root_cause"]);
+requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.zh-CN.md", ["可信、可重复", "成功判据", "可证伪", "trigger_condition", "systemic_root_cause"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-code-review/instructions.en.md", ["Repository Conformance", "Change Intent Fidelity", "Operational Safety", "insufficient evidence"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-code-review/instructions.zh-CN.md", ["Repository Conformance", "Change Intent Fidelity", "Operational Safety", "证据不足"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.en.md", ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified", "Never switch either silently", "One behavior slice"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.zh-CN.md", ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified", "不得静默切换", "一个行为切片"]);
+requireTerms("packs/engineering/repo-doctor/skills/decision-prototype/instructions.en.md", ["logic-prototype", "ui-prototype", "NON-PRODUCTION PROTOTYPE", "supported", "rejected", "uncertain"]);
+requireTerms("packs/engineering/repo-doctor/skills/decision-prototype/instructions.zh-CN.md", ["logic-prototype", "ui-prototype", "NON-PRODUCTION PROTOTYPE", "supported", "rejected", "uncertain"]);
+requireTerms("packs/engineering/repo-doctor/skills/architecture-deepening-analysis/instructions.en.md", ["caller", "at least two", "rollback", "ADR", "never performs a broad refactor"]);
+requireTerms("packs/engineering/repo-doctor/skills/architecture-deepening-analysis/instructions.zh-CN.md", ["调用方", "至少两个", "回滚", "ADR", "绝不执行大范围重构"]);
 
 for (const slug of discoverActivePackSkills(maintainerPack)) {
   const en = read(`packs/engineering/skill-maintainer/skills/${slug}/instructions.en.md`);
@@ -87,4 +119,4 @@ for (const term of ["multiple authoritative sources", "ineffective", "duplicated
   assert.ok(sharedQuality.includes(term), `shared Skill quality model missing ${term}`);
 }
 
-console.log("Repo Doctor workflow contract tests passed for routing, clarification, work items, handoff, RCA, dual-dimension review, test feedback, and Skill quality.");
+console.log("Repo Doctor workflow contract tests passed for concise routing, decision-tree clarification, prototypes, architecture analysis, handoff, signal-first RCA, three-axis review, test cycles, and Skill quality.");

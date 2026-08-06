@@ -1,0 +1,10 @@
+input: "Use fast mode for this runtime error, but no safe repeatable success/failure signal is available."
+expected:
+  must_include:
+    - fast
+    - Unverified
+    - confidence
+    - next diagnostic action
+  must_not:
+    - confirmed root cause
+    - implement a fix

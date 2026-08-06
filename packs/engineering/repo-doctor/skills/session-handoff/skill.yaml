@@ -4,15 +4,15 @@ name:
   zh-CN: 会话交接
 category: engineering
 visibility: public
-version: 0.1.0
+version: 0.2.0
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Prepare a sanitized, evidence-separated continuation brief so a new agent session can resume repository work without reconstructing completed work. Use when context is long, ownership is changing, or work must continue later; reference existing artifacts, record repository and validation state, recommend next Skills, and provide a copyable start prompt. Do not change business code, create commits, promise automatic loading, or write a file unless a safe scratch location and write authorization are available.
-  zh-CN: 生成经过敏感信息清理且区分事实与推断的续接摘要，使新 Agent 会话无需重做已完成工作即可继续仓库任务。用于上下文过长、负责人切换或稍后继续；引用已有产物，记录仓库和验证状态，推荐下一 Skills，并提供可复制启动指令。不修改业务代码、不创建 commit、不声称会自动加载，也不在缺少安全 scratch 位置或写入授权时落盘。
+  en: Create a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Use automatically when a long repository conversation must move to a fresh session. Save to an operating-system temporary directory by default; project-directory writes require explicit authorization. Never modify business files, Git state, or external systems.
+  zh-CN: 创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。长仓库对话需要切换到新会话时可自动调用。默认保存到操作系统临时目录；写入项目目录必须明确授权。绝不修改业务文件、Git 状态或外部系统。
 triggers:
   en:
     - prepare this session for another agent

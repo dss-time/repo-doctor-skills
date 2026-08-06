@@ -1,4 +1,4 @@
-version: 1
+version: 2
 registry_id: repo-doctor.workflows
 supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
 workflows:
@@ -884,6 +884,86 @@ workflows:
         stop_conditions: [release_blocker_found]
     forbidden_transitions: [review->implementation, plan->implementation]
     stop_conditions: [consumer_evidence_missing, write_not_authorized]
+  decision-prototype:
+    title:
+      en: Decision prototype validation
+      zh-CN: 决策原型验证
+    entry_conditions: [one_design_question_requires_runnable_evidence]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [prototype-approval]
+        alternatives: [requirements-clarification]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [validation_question_not_singular]
+      -
+        id: prototype-approval
+        type: gate
+        skill: none
+        optional: false
+        condition: prototype_write_requested
+        prerequisites: [route]
+        next: [prototype]
+        alternatives: []
+        permission: none
+        approval_gate: explicit_write_authorization
+        stop_conditions: [prototype_write_not_authorized]
+      -
+        id: prototype
+        type: skill
+        skill: decision-prototype
+        optional: false
+        condition: prototype_scope_authorized
+        prerequisites: [prototype-approval]
+        next: []
+        alternatives: [requirements-to-spec]
+        permission: write_scoped
+        approval_gate: prototype-approval
+        stop_conditions: [production_access_required, prototype_question_unresolved]
+    forbidden_transitions: [route->prototype]
+    stop_conditions: [prototype_write_not_authorized, production_access_required]
+  architecture-deepening:
+    title:
+      en: Architecture deepening analysis
+      zh-CN: 架构深化分析
+    entry_conditions: [evidence_backed_architecture_friction]
+    entry_stage: route
+    supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+    stages:
+      -
+        id: route
+        type: skill
+        skill: repo-doctor-router
+        optional: false
+        condition: always
+        prerequisites: []
+        next: [analysis]
+        alternatives: [project-health-check, change-impact-analysis]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [architecture_scope_unknown]
+      -
+        id: analysis
+        type: skill
+        skill: architecture-deepening-analysis
+        optional: false
+        condition: caller_or_change_evidence_available
+        prerequisites: [route]
+        next: []
+        alternatives: [safe-change-plan, architecture-decision-record]
+        permission: read_only
+        approval_gate: none
+        stop_conditions: [caller_evidence_missing, adr_constraint_unavailable]
+    forbidden_transitions: []
+    stop_conditions: [caller_evidence_missing, direct_refactor_not_authorized]
   session-handoff:
     title:
       en: Session handoff

@@ -1,0 +1,11 @@
+input: "使用 audit 模式只审查；当前拿不到需求和验收条件。"
+expected:
+  must_include:
+    - audit
+    - Change Intent Fidelity
+    - 证据不足
+    - 无发现
+    - 权限记录
+  must_not:
+    - 从代码反推需求
+    - 实施修复

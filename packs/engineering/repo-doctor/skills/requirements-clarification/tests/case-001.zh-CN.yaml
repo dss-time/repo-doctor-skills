@@ -1,11 +1,15 @@
-input: "规格化前澄清这个功能。先读仓库，并区分事实、推断和开放决策。"
+input: "使用 fast 模式在规格化前澄清这个模糊功能。先读仓库，只问信息增益最高的决策。"
 expected:
   must_include:
+    - fast
+    - 问题树
+    - 3～5
     - confirmed
     - inferred
     - open
     - 兼容性
-    - 安全
+    - 当前问题
   must_not:
     - 重复询问仓库已有答案
+    - 修改文件
     - 实施代码

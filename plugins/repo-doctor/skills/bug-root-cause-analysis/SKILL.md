@@ -1,6 +1,6 @@
 ---
 name: bug-root-cause-analysis
-description: Reproduce and locate a specific runtime bug by tracing the first trustworthy failure through code, logs, configuration, existing tests, and minimal experiments into an evidence-backed causal chain. Use for non-CI symptom-to-root-cause diagnosis; do not absorb CI pipeline failures, general code review, broad health checks, requests to add or modify tests, or requests to implement a fix. 针对具体运行时 Bug，从第一个可信错误出发，结合代码、日志、配置、现有测试和最小实验复现并建立有证据的因果链。用于非 CI 的症状到根因分析；不要吸收 CI 流水线失败、普通代码审查、项目体检、新增或修改测试请求或直接修复请求。
+description: Diagnose a specific non-CI runtime bug by first qualifying a repeatable success/failure signal, then using minimal reproduction, boundary isolation, and falsifiable experiments to separate trigger, direct cause, and systemic root cause. Use automatically only when a concrete runtime symptom exists. Do not use for CI failures, broad review, test writing, or fix implementation; the Skill is read-only and defaults to concise output. 针对具体非 CI 运行时 Bug，先确认可重复且能区分成败的观测信号，再通过最小复现、故障边界和可证伪实验区分触发条件、直接原因与系统性根因。只有存在具体运行症状时适合自动调用；CI 故障、广泛审查、编写测试或实施修复不使用。本 Skill 只读且默认简洁输出。
 ---
 
 # Bug Root Cause Analysis（Bug 根因分析）
@@ -9,7 +9,15 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 
 # Bug Root Cause Analysis
 
-Reproduce and locate the root cause of a specific defect. Build an evidence chain; do not implement the fix.
+A root-cause investigation starts with a trustworthy, repeatable signal that can tell success from the target failure.
+
+## Output modes
+
+- `fast`: concise default for a bounded bug: status, signal, reproduction, likely causal chain, confidence, blockers, and next step.
+- `standard`: adds the main hypotheses, discriminating experiment, trigger/direct/systemic cause separation, and regression-protection advice.
+- `audit`: adds the full evidence table, permission decisions, exact command ledger, alternatives, contradictory evidence, and all unverified items.
+
+Collect the same quality of evidence in every mode; output mode changes disclosure, not rigor.
 
 ## Boundary
 
@@ -19,6 +27,7 @@ Reproduce and locate the root cause of a specific defect. Build an evidence chai
 - Shell permission authorizes only the non-destructive diagnostics defined below. It does not authorize a fix, dependency change, external system action, or production access.
 - Route test creation to `safe-test-implementation` and production fixes to `safe-fix-implementation` after the root cause is sufficiently confirmed.
 - Match the user's language and preserve technical identifiers verbatim.
+- Never modify code, tests, configuration, documentation, dependencies, or diagnostic instrumentation. If a useful probe requires a file edit or new test, report it as `Blocked` until separately authorized under the appropriate Skill.
 
 ## Safe Diagnostic Execution
 
@@ -77,54 +86,54 @@ Before running `npm test`, a repository script, or a language-specific test comm
 
 Record every executed diagnostic with its exact command, working directory, exit status, and relevant result. Redact sensitive values. Never claim `Reproduced` or a passing test when the corresponding command did not run successfully.
 
-### Repeatable feedback mechanism
+### Qualified observation signal
 
-- Establish a repeatable feedback mechanism before assigning high confidence to a root cause. It may be an existing test, static check, log query, minimum script in an isolated temporary location, non-production interface request, or precise user action sequence.
-- Record the mechanism, inputs, environment, expected symptom, observed result, and repeatability limits. Keep symptom reproduction separate from causal confirmation.
+- Establish or confirm a signal before assigning a causal conclusion. A valid signal names the expected success and target failure, drives the relevant path, distinguishes this bug from nearby failures, and is repeatable under recorded conditions.
+- The signal may be an existing test, static check, log query, already available non-production command, read-only probe, or precise user action sequence. Creating a new file or test is outside this Skill.
+- Record the signal, inputs, environment, success predicate, failure predicate, observed result, and repeatability limits. Keep symptom reproduction separate from causal confirmation.
 - When commands cannot run, provide the smallest user-runnable reproduction and evidence-collection steps. Mark their result `Unverified` until output is returned.
 - For every hypothesis, record supporting evidence, a concrete falsification method or contradictory observation, confidence, and remaining unknowns.
-- Without a reliable feedback mechanism, a causal conclusion may be only `Inferred` or `Unverified`; never label it a confirmed high-confidence root cause.
+- Without a reliable signal, a causal conclusion may be only `Inferred` or `Unverified`; never label it a confirmed high-confidence root cause.
 - A repair direction must remove the causal mechanism, not merely suppress the visible symptom. Always propose a regression test or repeatable regression check.
 
 ## Workflow
 
-1. Record the symptom, user impact, affected scope, environment, version, inputs, state, and reproduction conditions.
-2. Inspect repository instructions, command definitions, existing tests, configuration, and current workspace state before selecting a command.
-3. Apply the safe diagnostic and test-command gates; record skipped commands as `Blocked` or `Unverified` with the reason.
-4. Select and record a repeatable feedback mechanism. If none can run, provide minimum user-runnable steps and cap the conclusion at `Inferred` or `Unverified`.
-5. Reproduce the symptom when safely possible. If not reproduced, state why; symptom reproduction alone is not root-cause confirmation.
-6. Start from the first trustworthy error or invariant violation. Treat later failures as possible cascades until proven otherwise.
-7. Trace `input/state -> execution path -> failure point -> user-visible symptom` using file locations, logs, stack frames, configuration, tests, or minimum experiments.
-8. Compare working and failing paths, versions, inputs, or environments when evidence permits.
-9. For primary and alternative hypotheses, record support, falsification method, contradictory evidence, confidence, and unknowns. Run the safest discriminator available.
-10. Confirm the root cause only when the feedback mechanism and causal evidence distinguish it from plausible alternatives.
-11. State the smallest causal repair direction and regression test or check without editing files. Reject symptom-only workarounds as root-cause fixes.
-12. Assign confidence and list the exact evidence needed to raise it.
+1. Collect the symptom, user impact, affected scope, environment, version, inputs, state, timing, and reported reproduction conditions.
+2. Establish or confirm the observation signal. Define its success predicate and target-failure predicate before forming a conclusion.
+3. Prove the signal is relevant: show that it exercises the reported path and distinguishes the user's fault from unrelated failure. If this cannot be shown, mark the signal `Unverified` and cap the conclusion.
+4. Build the smallest safe reproduction from existing commands, tests, logs, or user actions. Record failure rate and everything that remains load-bearing.
+5. Partition the fault boundary across input, caller, module, dependency, configuration, environment, and time; compare working and failing cases when available.
+6. Form ranked falsifiable hypotheses. For each, state the prediction, supporting and contradicting evidence, confidence, and one safe discriminator.
+7. Apply command preflight, then use the narrowest available log, debugger observation, read-only probe, controlled comparison, or bisection. Change one explanatory variable at a time.
+8. Separate `trigger_condition`, `direct_cause`, and `systemic_root_cause`. Do not call the trigger or visible exception the root cause unless causal evidence supports that level.
+9. Recommend a regression test or repeatable regression check at the observable boundary, plus the smallest causal repair direction. Do not create the test or implement the fix.
+10. Report `Observed`, `Reproduced`, `Inferred`, `Unverified`, and `Blocked` evidence honestly. State exactly what evidence would raise confidence.
 
 # Output Contract
 
-1. Problem summary and reported symptom
-2. Environment, exact reproduction conditions, and repeatable feedback mechanism or user-runnable fallback
-3. Executed diagnostic commands, working directories, and exit status
-4. Command results, including commands that failed, were not run, or were blocked
-5. Evidence table with source, observation, and `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` status
-6. Symptom reproduction result, kept separate from root-cause confirmation
-7. Execution path and causal chain
-8. Hypothesis table with support, falsification method, contradictory evidence, confidence, and unknowns
-9. Root cause, labeled confirmed, inferred, or unverified
-10. Impact scope
-11. Minimum causal repair direction without implementation; identify symptom-only workarounds
-12. Regression test or repeatable regression-check recommendation without creating tests
-13. Confidence cap and evidence needed next
-14. Unverified and blocked items with reasons
+Lead with `status`, current conclusion, confidence, and next diagnostic action.
 
-Without a reliable feedback mechanism, the root-cause status must remain `Inferred` or `Unverified`. Never claim `Reproduced` or a passing test unless the corresponding command actually ran successfully under the reported conditions.
+- `fast` (default): symptom, qualified signal or fallback, reproduction status, trigger/direct/systemic cause summary, confidence, blockers, regression protection, and next step.
+- `standard`: add environment, minimum reproduction, fault boundary, causal chain, ranked falsifiable hypotheses, distinguishing result, impact, and repair direction.
+- `audit`: add the complete evidence table and command ledger with command, working directory, exit code, result, permission decision, and `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` status.
+
+When diagnostic commands are used, include `Executed diagnostic commands` and `Command results` as separate fields. Always include `Unverified and blocked items`, even when the value is `none`.
+
+Without a qualified signal, root-cause status remains `Inferred` or `Unverified`. Never claim `Reproduced`, a confirmed cause, or a passing test unless the corresponding evidence exists.
 
 ---
 
 # Bug 根因分析
 
-复现并定位具体缺陷的根因，建立完整证据链；不要实施修复。
+根因调查首先需要一个可信、可重复、能够区分成功与目标故障的观测信号。
+
+## 输出模式
+
+- `fast`：有边界 Bug 的默认简洁输出，包括状态、信号、复现、可能因果链、置信度、阻塞和下一步。
+- `standard`：增加主要假设、区分实验、触发条件/直接原因/系统性根因，以及回归保护建议。
+- `audit`：增加完整证据表、权限判断、准确命令账本、替代假设、矛盾证据和所有未验证项。
+
+所有模式收集同等质量的证据；输出模式只改变披露深度，不降低严谨性。
 
 ## 职责边界
 
@@ -134,6 +143,7 @@ Without a reliable feedback mechanism, the root-cause status must remain `Inferr
 - Shell 权限只允许执行下述非破坏性诊断，不授权修复、依赖变更、外部系统操作或生产环境访问。
 - 根因充分确认后，新增测试交给 `safe-test-implementation`，生产代码修复交给 `safe-fix-implementation`。
 - 输出语言跟随用户输入，技术标识符保持原样。
+- 不得修改代码、测试、配置、文档、依赖或诊断插桩。有效探针若需要改文件或新增测试，应标为 `Blocked`，等待相应 Skill 的独立授权。
 
 ## 安全诊断执行
 
@@ -192,45 +202,37 @@ Without a reliable feedback mechanism, the root-cause status must remain `Inferr
 
 记录每条已执行诊断的准确命令、工作目录、退出状态和相关结果，并对敏感值脱敏。对应命令未成功运行时，不得声称 `Reproduced` 或测试通过。
 
-### 可重复反馈方式
+### 合格观测信号
 
-- 在给出高置信根因前先建立可重复反馈方式，可以是现有测试、静态检查、日志查询、隔离临时目录中的最小脚本、非生产接口请求或准确的用户操作步骤。
-- 记录反馈方式、输入、环境、预期现象、观察结果和重复性限制；严格区分“现象复现”和“因果确认”。
+- 给出因果结论前先建立或确认观测信号。合格信号必须定义预期成功与目标失败，覆盖相关路径，能够区分本 Bug 与附近故障，并在记录条件下可重复。
+- 信号可以是现有测试、静态检查、日志查询、已有非生产命令、只读探针或准确用户操作步骤；创建新文件或测试不属于本 Skill。
+- 记录信号、输入、环境、成功判据、失败判据、观察结果和重复性限制；严格区分“现象复现”和“因果确认”。
 - 无法运行命令时，给出用户可运行的最小复现与证据收集步骤；用户未返回结果前保持 `Unverified`。
 - 每个假设都记录支持证据、具体反证方法或矛盾观察、置信度和剩余未知。
-- 没有可靠反馈方式时，因果结论最高只能是 `Inferred` 或 `Unverified`，不得标成已确认的高置信根因。
+- 没有可靠信号时，因果结论最高只能是 `Inferred` 或 `Unverified`，不得标成已确认的高置信根因。
 - 修复方向必须消除因果机制，而不是只隐藏表面症状；始终给出回归测试或可重复回归验证建议。
 
 ## 工作流程
 
-1. 记录症状、用户影响、影响范围、环境、版本、输入、状态和复现条件。
-2. 选择命令前，检查仓库指令、命令定义、现有测试、配置和当前工作区状态。
-3. 应用安全诊断与测试命令门禁；跳过的命令按原因标记为 `Blocked` 或 `Unverified`。
-4. 选择并记录可重复反馈方式；无法执行时给出最小用户操作步骤，并把结论上限设为 `Inferred` 或 `Unverified`。
-5. 在安全可行时复现现象；无法复现时说明原因。现象复现本身不等于根因确认。
-6. 从第一个可信错误或不变量破坏开始；后续错误在证实前视为可能的级联结果。
-7. 使用文件位置、日志、堆栈、配置、测试或最小实验建立“输入/状态 → 执行路径 → 失效点 → 用户可见症状”链条。
-8. 有证据时比较正常与异常路径、版本、输入或环境。
-9. 对主要和替代假设记录支持证据、反证方式、矛盾证据、置信度和未知项，并运行最安全的区分实验。
-10. 只有反馈方式和因果证据能够排除合理替代解释时，才确认根因。
-11. 给出消除因果机制的最小修复方向，以及回归测试或检查，但不修改文件；症状绕过不得写成根因修复。
-12. 标注置信度，并列出提高置信度所需的确切证据。
+1. 收集症状、用户影响、范围、环境、版本、输入、状态、时间特征和用户报告的复现条件。
+2. 建立或确认观测信号；形成结论前先定义成功判据和目标失败判据。
+3. 证明信号与目标故障相关：说明它覆盖报告路径，并能把用户故障与无关失败区分开；无法证明时将信号标为 `Unverified` 并限制结论。
+4. 使用已有命令、测试、日志或用户步骤构建最小安全复现，记录失败率和所有仍然必要的条件。
+5. 按输入、调用方、模块、依赖、配置、环境和时间划分故障边界；可用时对比正常与异常案例。
+6. 建立有排序、可证伪的假设；每项写明预测、支持与矛盾证据、置信度和一个安全区分方法。
+7. 通过命令预检后，使用最窄的日志、断点观察、只读探针、对照实验或二分验证；一次只改变一个解释变量。
+8. 区分 `trigger_condition`、`direct_cause` 和 `systemic_root_cause`；没有因果证据时，不得把触发条件或可见异常写成根因。
+9. 在外部可观察边界给出回归测试或可重复回归检查建议，以及最小因果修复方向；不创建测试，也不实施修复。
+10. 如实报告 `Observed`、`Reproduced`、`Inferred`、`Unverified` 和 `Blocked`，并列出提高置信度所需的确切证据。
 
 # 输出契约
 
-1. 问题摘要与用户报告现象
-2. 环境、准确复现条件、可重复反馈方式或用户可运行的替代步骤
-3. 已执行的诊断命令、工作目录和退出状态
-4. 命令结果，包括失败、未运行或被阻止的命令
-5. 证据表，包含来源、观察结果和 `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` 状态
-6. 现象复现结果，与根因确认分开
-7. 执行路径与因果链
-8. 假设表，包含支持证据、反证方法、矛盾证据、置信度和未知项
-9. 根因，标明已确认、推断或未验证
-10. 影响范围
-11. 不实施修改的最小因果修复方向，并标识只绕过症状的方案
-12. 不创建测试的回归测试或可重复回归检查建议
-13. 置信度上限与下一步所需证据
-14. 未验证和阻塞项及其原因
+先给 `status`、当前结论、置信度和下一诊断动作。
 
-没有可靠反馈方式时，根因状态必须保持 `Inferred` 或 `Unverified`。对应命令未在所报告条件下成功运行时，不得声称 `Reproduced` 或测试通过。
+- `fast`（默认）：症状、合格信号或替代步骤、复现状态、触发条件/直接原因/系统性根因摘要、置信度、阻塞、回归保护和下一步。
+- `standard`：增加环境、最小复现、故障边界、因果链、有排序可证伪假设、区分结果、影响和修复方向。
+- `audit`：增加完整证据表和命令账本，包含命令、工作目录、退出码、结果、权限判断，以及 `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` 状态。
+
+使用诊断命令时，把“已执行的诊断命令”和“命令结果”作为独立字段。始终包含“未验证和阻塞项”，没有时填写 `none`。
+
+没有合格信号时，根因状态必须保持 `Inferred` 或 `Unverified`。缺少对应证据时，不得声称 `Reproduced`、根因已确认或测试通过。

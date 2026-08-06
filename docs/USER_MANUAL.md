@@ -1,6 +1,6 @@
 # Repo Doctor Skills User Manual
 
-This manual is for people encountering AI Skills for the first time. It starts with practical task entry points, then explains platform differences, safety boundaries, and maintenance. See the [complete Skill catalog](SKILL_CATALOG.md) for every Skill and the [workflow cookbook](WORKFLOW_COOKBOOK.md) for multi-Skill recipes.
+This manual is for people encountering AI Skills for the first time. It starts with practical task entry points, then explains platform differences, safety boundaries, and maintenance. For the shortest problem-oriented examples, use the [quick Skill entry points](guides/quick-skill-entrypoints.md). See the [complete Skill catalog](SKILL_CATALOG.md) for every Skill and the [workflow cookbook](WORKFLOW_COOKBOOK.md) for multi-Skill recipes.
 
 > Documentation verified on 2026-07-15. Product interfaces and host capabilities can vary by version, plan, and workspace policy. When an entry described here is not visible, follow the current host UI and administrator policy.
 
@@ -66,7 +66,7 @@ The canonical source currently contains four active Packs. The latest counts, pe
 
 ### Release version and maturity
 
-This checkout is the authorized **v0.3.0 stable project release**, promoted from functionally unchanged `v0.3.0-rc.1` content. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 38 active Skills remain `beta`: they have passed repository contracts and are suitable for real tasks, while broad public-use and Live-model routing evidence remains limited. Stable project release does not mean every component is stable or bug-free. Live-model routing accuracy is **UNKNOWN** under an explicit waiver limited to `v0.3.0` and that missing measurement; all other release gates remain mandatory. See [Versioning and Lifecycle Policy](VERSIONING.md).
+The current stable release is **v0.4.0**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The final-version suite passed 317/317 real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries. See [Versioning and Lifecycle Policy](VERSIONING.md).
 
 ### Common choices
 
@@ -74,7 +74,10 @@ This checkout is the authorized **v0.3.0 stable project release**, promoted from
 |---|---|---|
 | Understand an unfamiliar repository | `repo-onboarding` | `project-health-check` is a broad audit, not an orientation guide |
 | Turn an ambiguous request into testable requirements | `requirements-to-spec` | `safe-change-plan` needs sufficiently confirmed input before planning implementation |
+| Clarify only the choices that materially change the work | `requirements-clarification` | Use `fast` for a few high-gain questions; use `documented` only with explicit documentation-write authorization |
+| Test one uncertain logic or UI decision | `decision-prototype` | Produces disposable non-production evidence, not production implementation |
 | Find a bug's cause | `bug-root-cause-analysis` | `safe-fix-implementation` changes production code only after authorization |
+| Analyze demonstrated architecture friction | `architecture-deepening-analysis` | Compares options and migration risk without performing a refactor |
 | Understand who a change affects | `change-impact-analysis` | Follow with the API, database, dependency, or other specialist review only when relevant |
 | Identify test gaps only | `test-gap-analysis` | `safe-test-implementation` edits tests and requires explicit authorization |
 | Diagnose CI | `ci-failure-diagnosis` | A runtime bug without CI context belongs to root-cause analysis |

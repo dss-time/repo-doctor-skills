@@ -1,7 +1,7 @@
 # Examples
 
-- `test_first`: “Before implementing account lockout, add the narrow test proving the sixth failed login is rejected.” Require a real expected behavioral failure; route production implementation separately.
-- `regression_after_fix`: “The null-session fix is verified. Add the regression test now.” Run on the fixed state and report safe sensitivity evidence; never fabricate a pre-fix red run.
-- `characterization`: “Capture current CSV escaping before replacing the parser.” A passing initial run is valid; state exactly what behavior is frozen.
-- Blocker: ask whether behavior is unimplemented, already fixed, or legacy behavior to preserve when the answer changes mode.
+- `test_first`: “Protect the behavior that a locked account rejects login.” Confirm the public boundary, add one test, prove it fails for that behavior, then stop for separately authorized production implementation.
+- `regression_after_fix`: “The session fix is verified; add its regression test.” Run on the fixed state and report safe sensitivity evidence without inventing historical red.
+- `characterization`: “Preserve the current CSV escaping contract before refactoring.” A passing initial run is valid if the assertion discriminates meaningful states.
+- Audit blocker: a test script contains an install or database migration step. Record the command as `Blocked` and do not execute it.
 - Non-trigger: “Fix the production null dereference.” Use `safe-fix-implementation`.

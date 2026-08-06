@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Deepening Analysis（架构深化分析）"
+  short_description: "分析接口、调用方与测试摩擦并比较可迁移可回滚的深化方案"
+  default_prompt: "使用 $architecture-deepening-analysis 只读分析架构摩擦并比较迁移方案，不执行重构。"

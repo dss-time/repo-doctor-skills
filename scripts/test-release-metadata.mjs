@@ -20,6 +20,8 @@ const checker = path.join(repositoryRoot, "scripts", "release-metadata.mjs");
 const fixtureContract = Object.freeze({
   projectVersion: "0.2.0",
   releaseDate: "2026-07-15",
+  releaseChannel: "candidate",
+  liveModelStatus: "UNKNOWN",
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -243,19 +245,14 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.3.0");
+assert.equal(releaseContract.projectVersion, "0.4.0");
 assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
-assert.deepEqual(releaseContract.liveModelWaiver, {
-  authorized: true,
-  version: "0.3.0",
-  scope: "live-model-status-only",
-  record: "docs/RELEASE_PREPARATION_0.3.0.md",
-});
+assert.equal(releaseContract.liveModelStatus, "PASS");
+assert.equal(releaseContract.liveModelWaiver, null);
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.6.0",
+    "engineering.repo-doctor": "0.7.0",
     "productivity.productivity-toolkit": "0.1.0",
     "engineering.skill-maintainer": "0.2.0",
     "office.document-data-doctor": "0.1.0",
@@ -389,14 +386,25 @@ expectFailure(
   ],
 );
 
-const missingWaiver = inspectReleaseMetadata(repositoryRoot, { ...releaseContract, liveModelWaiver: null });
+const historicalWaiver = {
+  authorized: true,
+  version: releaseContract.projectVersion,
+  scope: "live-model-status-only",
+  record: "docs/RELEASE_PREPARATION_0.3.0.md",
+};
+const missingWaiver = inspectReleaseMetadata(repositoryRoot, {
+  ...releaseContract,
+  liveModelStatus: "UNKNOWN",
+  liveModelWaiver: null,
+});
 assert.ok(
   missingWaiver.errors.some((error) => error.includes("requires an explicit maintainer waiver")),
   "stable UNKNOWN Live-model status must require explicit authorization",
 );
 const broadWaiver = inspectReleaseMetadata(repositoryRoot, {
   ...releaseContract,
-  liveModelWaiver: { ...releaseContract.liveModelWaiver, scope: "all-release-gates" },
+  liveModelStatus: "UNKNOWN",
+  liveModelWaiver: { ...historicalWaiver, scope: "all-release-gates" },
 });
 assert.ok(
   broadWaiver.errors.some((error) => error.includes("scope must be live-model-status-only")),

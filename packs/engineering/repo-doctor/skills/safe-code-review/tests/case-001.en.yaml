@@ -1,12 +1,19 @@
-input: "Review this diff for correctness, compatibility, and security."
+input: "Review this diff in standard mode. Keep repository rules, requested intent, and operational risk independent, and do not fix anything."
 expected:
   must_include:
-    - Intent Alignment
-    - Implementation Quality
-    - dimension
+    - Repository Conformance
+    - Change Intent Fidelity
+    - Operational Safety
+    - contributing axis
+    - file
+    - location
     - evidence
-    - risk
+    - severity
+    - recommendation
     - validation
+    - no findings
+    - insufficient evidence
   must_not:
     - modify files
     - assume requirement compliance
+    - cross-axis contamination

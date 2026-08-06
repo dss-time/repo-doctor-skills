@@ -9,6 +9,7 @@ It includes:
 - `requirements-clarification`
 - `requirements-to-spec`
 - `spec-to-work-items`
+- `decision-prototype`
 - `bug-root-cause-analysis`
 - `project-health-check`
 - `safe-code-review`
@@ -25,9 +26,10 @@ It includes:
 - `dead-code-verification`
 - `security-focused-review`
 - `performance-regression-analysis`
+- `architecture-deepening-analysis`
 - `architecture-decision-record`
 - `configuration-audit`
 - `session-handoff`
 - `safe-fix-implementation`
 
-The pack defaults to read-first behavior. Routing, clarification, work-item planning, analysis, diagnosis, specialized review, and release-gate skills are read-only. `session-handoff` may write only a sanitized handoff in an authorized scratch location; `safe-test-implementation` may edit tests, fixtures, and test helpers; `documentation-sync` may edit documentation; `architecture-decision-record` may edit ADR and architecture documentation only. Production-code editing remains the responsibility of `safe-fix-implementation` after a clear diagnosis and validation plan.
+The pack defaults to read-first behavior. Routing, work-item planning, architecture analysis, diagnosis, specialized review, and release-gate skills are read-only. `requirements-clarification` is read-only in `fast` and `standard`; its `documented` mode may update an explicitly authorized terminology or ADR path. `decision-prototype` may write only an explicitly authorized, non-production prototype scope. `session-handoff` writes a sanitized brief to the operating-system temporary directory by default and needs explicit authorization for project paths. `safe-test-implementation` may edit tests, fixtures, and test helpers; `documentation-sync` may edit documentation; `architecture-decision-record` may edit ADR and architecture documentation only. Production-code editing remains the responsibility of `safe-fix-implementation` after a clear diagnosis and validation plan.

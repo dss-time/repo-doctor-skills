@@ -1,0 +1,384 @@
+{
+  "generated_at": "2026-08-06T02:53:32.278Z",
+  "project_version": "0.4.0",
+  "semantic_parity_method": "Deterministic comparison of localized heading structure, declared backticked modes, evidence states, active-Skill handoffs, and example intent counts. Live Codex semantic review is reported separately.",
+  "summary": {
+    "active_skills": 40,
+    "files_complete": 40,
+    "metadata_complete": 40,
+    "semantic_parity": 40,
+    "passed": 40
+  },
+  "skills": [
+    {
+      "skill": "repo-doctor-router",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "repo-onboarding",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "requirements-clarification",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "requirements-to-spec",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "spec-to-work-items",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "decision-prototype",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "bug-root-cause-analysis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "project-health-check",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "safe-code-review",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "change-impact-analysis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "safe-change-plan",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "test-gap-analysis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "safe-test-implementation",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "ci-failure-diagnosis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "documentation-sync",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "release-readiness-check",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "dependency-upgrade-analysis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "api-contract-review",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "database-migration-review",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "dead-code-verification",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "security-focused-review",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "performance-regression-analysis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "architecture-deepening-analysis",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "architecture-decision-record",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "configuration-audit",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "session-handoff",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "safe-fix-implementation",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "skill-authoring",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "skill-quality-audit",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "pdf-review-basic",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "word-document-review-basic",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "excel-data-quality-check-basic",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "report-writer",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "research-brief",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "spreadsheet-data-cleaning",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "document-review",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "pdf-review",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "meeting-notes-to-actions",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "presentation-outline",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "content-consistency-check",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    }
+  ],
+  "documentation": [
+    {
+      "en": "README.md",
+      "zh-CN": "README.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/QUICK_START.md",
+      "zh-CN": "docs/QUICK_START.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/USER_MANUAL.md",
+      "zh-CN": "docs/USER_MANUAL.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/SKILL_CATALOG.md",
+      "zh-CN": "docs/SKILL_CATALOG.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/WORKFLOW_COOKBOOK.md",
+      "zh-CN": "docs/WORKFLOW_COOKBOOK.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/guides/quick-skill-entrypoints.md",
+      "zh-CN": "docs/guides/quick-skill-entrypoints.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/MAINTAINER_CHECKLIST.md",
+      "zh-CN": "docs/MAINTAINER_CHECKLIST.zh-CN.md",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "en": "docs/LEGACY_CODEX_PLUGIN.md",
+      "zh-CN": "docs/LEGACY_CODEX_PLUGIN.zh-CN.md",
+      "passed": true,
+      "issues": []
+    }
+  ]
+}

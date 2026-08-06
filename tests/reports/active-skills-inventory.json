@@ -1,0 +1,1837 @@
+{
+  "generated_at": "2026-08-06T02:53:32.278Z",
+  "project_version": "0.4.0",
+  "packs": [
+    {
+      "id": "engineering.repo-doctor",
+      "name": {
+        "en": "Repo Doctor",
+        "zh-CN": "Repo Doctor / 仓库医生"
+      },
+      "version": "0.7.0",
+      "status": "beta",
+      "path": "packs/engineering/repo-doctor",
+      "skills": [
+        "repo-doctor-router",
+        "repo-onboarding",
+        "requirements-clarification",
+        "requirements-to-spec",
+        "spec-to-work-items",
+        "decision-prototype",
+        "bug-root-cause-analysis",
+        "project-health-check",
+        "safe-code-review",
+        "change-impact-analysis",
+        "safe-change-plan",
+        "test-gap-analysis",
+        "safe-test-implementation",
+        "ci-failure-diagnosis",
+        "documentation-sync",
+        "release-readiness-check",
+        "dependency-upgrade-analysis",
+        "api-contract-review",
+        "database-migration-review",
+        "dead-code-verification",
+        "security-focused-review",
+        "performance-regression-analysis",
+        "architecture-deepening-analysis",
+        "architecture-decision-record",
+        "configuration-audit",
+        "session-handoff",
+        "safe-fix-implementation"
+      ]
+    },
+    {
+      "id": "engineering.skill-maintainer",
+      "name": {
+        "en": "Skill Maintainer",
+        "zh-CN": "Skill 维护工具"
+      },
+      "version": "0.2.0",
+      "status": "beta",
+      "path": "packs/engineering/skill-maintainer",
+      "skills": [
+        "skill-authoring",
+        "skill-quality-audit"
+      ]
+    },
+    {
+      "id": "office.document-data-doctor",
+      "name": {
+        "en": "Document Data Doctor",
+        "zh-CN": "文档数据医生"
+      },
+      "version": "0.1.0",
+      "status": "beta",
+      "path": "packs/office/document-data-doctor",
+      "skills": [
+        "pdf-review-basic",
+        "word-document-review-basic",
+        "excel-data-quality-check-basic"
+      ]
+    },
+    {
+      "id": "productivity.productivity-toolkit",
+      "name": {
+        "en": "Productivity Toolkit",
+        "zh-CN": "通用办公与研究生产力工具包"
+      },
+      "version": "0.1.0",
+      "status": "beta",
+      "path": "packs/productivity/productivity-toolkit",
+      "skills": [
+        "report-writer",
+        "research-brief",
+        "spreadsheet-data-cleaning",
+        "document-review",
+        "pdf-review",
+        "meeting-notes-to-actions",
+        "presentation-outline",
+        "content-consistency-check"
+      ]
+    }
+  ],
+  "active_skills": [
+    {
+      "slug": "repo-doctor-router",
+      "id": "repo.repo-doctor-router",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
+      "version": "0.2.0",
+      "status": "beta",
+      "name": {
+        "en": "Repo Doctor Router",
+        "zh-CN": "工作流路由"
+      },
+      "description": {
+        "en": "Recommend one verified Repo Doctor Skill and fast, standard, or audit mode from the current repository state, or return a registered workflow when detailed routing is requested. Use automatically only when the user asks which Skill or next safe step fits. Do not execute the recommendation, route ordinary factual questions, invent aliases, or bypass permission gates.",
+        "zh-CN": "根据当前仓库状态推荐一个已核验 Repo Doctor Skill 及 fast、standard 或 audit 模式；用户要求详细路由时再返回注册工作流。只有用户询问该用哪个 Skill 或下一安全步骤时适合自动调用。不得执行推荐、路由普通知识问答、编造别名或绕过权限门禁。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "none",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "repo-onboarding",
+      "id": "repo.repo-onboarding",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/repo-onboarding",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Repo Onboarding",
+        "zh-CN": "仓库理解"
+      },
+      "description": {
+        "en": "Understand an unfamiliar software repository before making changes.",
+        "zh-CN": "在修改代码前理解一个陌生软件仓库。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "requirements-clarification",
+      "id": "repo.requirements-clarification",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/requirements-clarification",
+      "version": "0.2.0",
+      "status": "beta",
+      "name": {
+        "en": "Requirements Clarification",
+        "zh-CN": "需求决策澄清"
+      },
+      "description": {
+        "en": "Close consequential product, behavior, data, permission, compatibility, and acceptance decisions through an evidence-first decision-tree interview. Use for a vague or disputed request before specification; choose fast, standard, or documented mode. Do not use when a testable specification already exists or to implement code. Automatic invocation is appropriate only when material ambiguity is evident; durable terminology or ADR edits require explicit write authorization.",
+        "zh-CN": "通过证据优先的问题树访谈，关闭会影响产品、行为、数据、权限、兼容性和验收的重要决策。用于规格化前仍模糊或存在争议的需求，可选 fast、standard 或 documented 模式。已有可测试规格或需要实施代码时不使用；仅在明显存在重大歧义时适合自动调用，持久术语或 ADR 修改必须获得明确写权限。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "none",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "requirements-to-spec",
+      "id": "repo.requirements-to-spec",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/requirements-to-spec",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Requirements Specification",
+        "zh-CN": "需求规格化"
+      },
+      "description": {
+        "en": "Convert requirements whose material product, data, security, permission, compatibility, and acceptance decisions are already closed into a structured, implementable, testable specification. Use when a clarification summary or settled discussion is ready for specification and only non-blocking assumptions remain; stop and route material open decisions to requirements-clarification. Do not use for task decomposition, implementation planning, code explanation, bug fixing, or direct edits.",
+        "zh-CN": "将产品、数据、安全、权限、兼容性和验收等重大决策已经闭合的需求整理为结构化、可实施、可验证的规格。用于已有澄清摘要或讨论已定稿、只剩非阻塞假设时；发现重大未决决策必须停止并转交 requirements-clarification。不用于拆工作项、制定实施计划、解释代码、修 Bug 或直接修改。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "none",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "spec-to-work-items",
+      "id": "repo.spec-to-work-items",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/spec-to-work-items",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Spec to Work Items",
+        "zh-CN": "规格拆分工作项"
+      },
+      "description": {
+        "en": "Decompose a confirmed specification, implementation plan, or settled conversation into independently executable and verifiable vertical work items with dependencies, safe parallelism, conflict areas, tests, risks, and rollback notes. Use for delivery planning of a multi-behavior scope; return copyable Markdown in the current response only and never write files, invoke Shell, or create external tasks even with user authorization. Do not use for unresolved requirements, a single small fix, or a file-by-file technical-layer checklist.",
+        "zh-CN": "将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；只在当前响应返回可复制 Markdown；即使用户授权也不写文件、不调用 Shell、不创建外部任务。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "none",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "decision-prototype",
+      "id": "repo.decision-prototype",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/decision-prototype",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Decision Prototype",
+        "zh-CN": "决策原型验证"
+      },
+      "description": {
+        "en": "Build the smallest explicitly disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation. Automatic invocation is appropriate only for a clearly bounded prototype request; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready.",
+        "zh-CN": "构建最小且明确可丢弃的逻辑或 UI 原型，回答一个设计、交互、状态或业务规则问题，并给出成立、否定或仍不确定的结论。用于正式实施前需要可运行证据的场景；只有范围清楚的原型请求适合自动调用，写文件和运行命令必须明确授权。绝不连接生产系统，也不把原型代码视为生产完成。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "bug-root-cause-analysis",
+      "id": "repo.bug-root-cause-analysis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/bug-root-cause-analysis",
+      "version": "0.3.0",
+      "status": "beta",
+      "name": {
+        "en": "Bug Root Cause Analysis",
+        "zh-CN": "Bug 根因分析"
+      },
+      "description": {
+        "en": "Diagnose a specific non-CI runtime bug by first qualifying a repeatable success/failure signal, then using minimal reproduction, boundary isolation, and falsifiable experiments to separate trigger, direct cause, and systemic root cause. Use automatically only when a concrete runtime symptom exists. Do not use for CI failures, broad review, test writing, or fix implementation; the Skill is read-only and defaults to concise output.",
+        "zh-CN": "针对具体非 CI 运行时 Bug，先确认可重复且能区分成败的观测信号，再通过最小复现、故障边界和可证伪实验区分触发条件、直接原因与系统性根因。只有存在具体运行症状时适合自动调用；CI 故障、广泛审查、编写测试或实施修复不使用。本 Skill 只读且默认简洁输出。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "project-health-check",
+      "id": "repo.project-health-check",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/project-health-check",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Project Health Check",
+        "zh-CN": "项目体检"
+      },
+      "description": {
+        "en": "Diagnose broad repository health across architecture, correctness, security, performance, dependencies, tests, and general release risk. Use a specialized review for one bounded dependency upgrade, API contract, database migration, dead-code candidate, security surface, performance regression, or configuration scope; use release-readiness-check for a specific release gate.",
+        "zh-CN": "从架构、正确性、安全、性能、依赖、测试和一般发布风险等方面广泛诊断项目健康度。单一依赖升级、API 契约、数据库迁移、死代码候选、安全边界、性能回归或配置范围应交给相应专项审查；具体候选版本门禁使用 release-readiness-check。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "safe-code-review",
+      "id": "repo.safe-code-review",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/safe-code-review",
+      "version": "0.3.0",
+      "status": "beta",
+      "name": {
+        "en": "Safe Code Review",
+        "zh-CN": "安全代码审查"
+      },
+      "description": {
+        "en": "Review a concrete diff or PR through three independent axes: repository conformance, change-intent fidelity, and operational safety, then deduplicate evidence-backed findings. Use automatically for broad change review, not specialist-only security, performance, API, or migration assessment. Read-only: never implement fixes without a separate explicit request and write authorization.",
+        "zh-CN": "通过仓库符合度、变更意图忠实度和运行安全三个独立轴审查具体 Diff 或 PR，再对有证据的问题去重。适合自动承接广泛变更审查，不吸收单一安全、性能、API 或迁移专项。本 Skill 只读；没有独立明确请求和写权限时绝不实施修复。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "change-impact-analysis",
+      "id": "repo.change-impact-analysis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/change-impact-analysis",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Change Impact Analysis",
+        "zh-CN": "变更影响分析"
+      },
+      "description": {
+        "en": "Analyze general dependency and compatibility impact before modifying, renaming, moving, or deleting shared code. Use dependency-upgrade-analysis, api-contract-review, database-migration-review, or dead-code-verification when the core question is that specialized risk; do not modify files.",
+        "zh-CN": "在修改、重命名、移动或删除共享代码前分析一般依赖关系和兼容性影响。核心问题是依赖升级、API 契约、数据库迁移或死代码可删除性时使用对应专项 Skill；本 Skill 不修改文件。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "safe-change-plan",
+      "id": "repo.safe-change-plan",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Safe Change Plan",
+        "zh-CN": "安全变更计划"
+      },
+      "description": {
+        "en": "Turn a confirmed specification, root-cause finding, or impact analysis into an atomic, verifiable, reversible implementation plan with explicit scope and risk controls. Use only when material decisions are closed and blast radius is sufficiently known; route open decisions to requirements-clarification, settled requirements needing a specification to requirements-to-spec, unknown impact to change-impact-analysis, architecture rationale or decision documentation to architecture-decision-record, and execution to safe-fix-implementation.",
+        "zh-CN": "将已确认规格、根因结论或影响分析转为原子化、可验证、可回滚且范围明确的实施计划。仅在重大决策已闭合且影响范围足够明确时使用；未决需求交给 requirements-clarification，已闭合但尚需规格化的需求交给 requirements-to-spec，影响未知交给 change-impact-analysis，架构理由或决策文档交给 architecture-decision-record，执行交给 safe-fix-implementation。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "test-gap-analysis",
+      "id": "repo.test-gap-analysis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/test-gap-analysis",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Test Gap Analysis",
+        "zh-CN": "测试缺口分析"
+      },
+      "description": {
+        "en": "Map a requirement, root cause, existing tests, or Git diff to evidence-backed test coverage and prioritized gaps across unit, integration, contract, end-to-end, and manual validation. Use to decide what is covered or missing; do not generate bulk test code, and route explicit test implementation to safe-test-implementation when available.",
+        "zh-CN": "将需求、根因、现有测试或 Git Diff 映射到有证据的测试覆盖与优先级缺口，覆盖单元、集成、契约、端到端和人工验证。用于判断已覆盖和缺失场景；不得批量生成测试代码，明确实施测试时交给可用的 safe-test-implementation。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "safe-test-implementation",
+      "id": "repo.safe-test-implementation",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/safe-test-implementation",
+      "version": "0.4.0",
+      "status": "beta",
+      "name": {
+        "en": "Safe Test Implementation",
+        "zh-CN": "安全补充测试"
+      },
+      "description": {
+        "en": "Protect one externally observable behavior through a gated red–green–organize cycle in test_first, regression_after_fix, or characterization mode. Use only for explicitly authorized test, fixture, and necessary test-helper edits; inspect real commands and public test boundaries first. Do not auto-invoke for production fixes, modify production code, install dependencies, or write coverage-only assertions.",
+        "zh-CN": "通过有门禁的红—绿—整理循环，一次保护一个外部可观察行为，可选 test_first、regression_after_fix 或 characterization。仅用于已明确授权的测试、fixture 和必要测试辅助代码修改；先检查真实命令与公共测试边界。生产修复不得自动调用，也不得修改生产代码、安装依赖或只为覆盖率补断言。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "ci-failure-diagnosis",
+      "id": "repo.ci-failure-diagnosis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/ci-failure-diagnosis",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "CI Failure Diagnosis",
+        "zh-CN": "CI 失败诊断"
+      },
+      "description": {
+        "en": "Diagnose a CI-specific failure from workflow definitions and logs by locating the failed workflow, job, step, and first trustworthy error, then comparing CI and local environments. Use for CI pipeline context; do not use as a general local bug analysis or implement fixes, reveal credential values, or recommend weakening security controls.",
+        "zh-CN": "根据 workflow 定义和日志定位失败的 workflow、job、step 与第一个可信错误，并对比 CI 和本地环境以诊断 CI 特定失败。用于 CI 流水线上下文；不作为普通本地 Bug 分析，不实施修复、不泄露密钥，也不建议降低安全控制。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "documentation-sync",
+      "id": "repo.documentation-sync",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/documentation-sync",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Documentation Sync",
+        "zh-CN": "文档同步维护"
+      },
+      "description": {
+        "en": "Synchronize documentation with a confirmed code, configuration, API, or behavior change by updating only evidence-backed README, API, configuration, example, migration, and changelog content while preserving style and language. Use for documentation-only edits; do not modify production behavior, invent undocumented facts, or use as a general code fix.",
+        "zh-CN": "根据已确认的代码、配置、API 或行为变更，只更新有证据支持的 README、API、配置、示例、迁移和 CHANGELOG 内容，并保留原有风格与语言。用于仅文档修改；不得改变生产行为、编造未证实内容，也不作为通用代码修复。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "release-readiness-check",
+      "id": "repo.release-readiness-check",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/release-readiness-check",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Release Readiness Check",
+        "zh-CN": "发布就绪检查"
+      },
+      "description": {
+        "en": "Perform an evidence-backed, read-only release gate for a specific candidate version and return GO, GO WITH CONDITIONS, or NO-GO after checking workspace state, versioning, changes, validation, compatibility, rollback, documentation, and sensitive artifacts. Use for release candidates; do not use as a broad project health check or execute release, commit, tag, push, or version changes.",
+        "zh-CN": "针对具体候选版本执行有证据的只读发布门禁，检查工作区、版本、变更、验证、兼容性、回滚、文档和敏感产物后给出 GO、GO WITH CONDITIONS 或 NO-GO。用于候选版本；不作为广泛项目体检，也不执行发布、提交、tag、push 或版本修改。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "dependency-upgrade-analysis",
+      "id": "repo.dependency-upgrade-analysis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/dependency-upgrade-analysis",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Dependency Upgrade Analysis",
+        "zh-CN": "依赖升级分析"
+      },
+      "description": {
+        "en": "Analyze a specific dependency upgrade using manifests, lockfiles, repository usage, and verified official release evidence, including breaking changes, runtime requirements, security, licensing, ecosystem compatibility, validation, and rollback. Use before changing dependency versions; do not perform general impact analysis or modify manifests or lockfiles.",
+        "zh-CN": "基于 manifest、锁文件、仓库用法和已验证官方发布资料分析具体依赖升级，覆盖破坏性变更、运行时要求、安全、许可证、生态兼容、验证和回滚。用于修改依赖版本前；不替代通用影响分析，也不修改 manifest 或锁文件。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "api-contract-review",
+      "id": "repo.api-contract-review",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/api-contract-review",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "API Contract Review",
+        "zh-CN": "API 契约审查"
+      },
+      "description": {
+        "en": "Review a specific REST, GraphQL, RPC, event, SDK, or internal-module contract across server, client, schema, documentation, and tests, classifying breaking, non-breaking, and behavioral changes. Use for API contract compatibility; do not perform a general code review, generic impact analysis, or modify the interface.",
+        "zh-CN": "审查具体 REST、GraphQL、RPC、事件、SDK 或内部模块契约在服务端、客户端、Schema、文档和测试间的一致性，并分类破坏性、非破坏性和行为变化。用于 API 契约兼容性；不替代普通代码审查或通用影响分析，也不修改接口。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "database-migration-review",
+      "id": "repo.database-migration-review",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/database-migration-review",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Database Migration Review",
+        "zh-CN": "数据库迁移审查"
+      },
+      "description": {
+        "en": "Review a concrete database schema or data migration for reversibility, data safety, locking, backfill, replication, compatibility, zero-downtime rollout, validation, and rollback. Use for migration-specific risk; do not perform generic impact analysis, execute migrations, connect to production, or modify migration files.",
+        "zh-CN": "审查具体数据库 Schema 或数据迁移的可逆性、数据安全、锁、回填、复制、兼容、零停机发布、验证和回滚。用于迁移专项风险；不替代通用影响分析，不执行迁移、不连接生产，也不修改迁移文件。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "dead-code-verification",
+      "id": "repo.dead-code-verification",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/dead-code-verification",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Dead Code Verification",
+        "zh-CN": "死代码验证"
+      },
+      "description": {
+        "en": "Verify whether a specific symbol, file, route, configuration path, or feature is safely removable by checking static and dynamic usage, registries, build entries, templates, plugins, scripts, and external contracts. Use for evidence of unused code; do not perform general impact analysis, assume absence from text search proves safety, or delete code.",
+        "zh-CN": "通过检查静态与动态使用、注册器、构建入口、模板、插件、脚本和外部契约，验证具体符号、文件、路由、配置路径或功能是否可安全删除。用于无用代码证据；不替代通用影响分析，不把文本搜索无结果当安全证明，也不删除代码。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "security-focused-review",
+      "id": "repo.security-focused-review",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/security-focused-review",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Security Focused Review",
+        "zh-CN": "安全专项审查"
+      },
+      "description": {
+        "en": "Perform a scoped security review by establishing assets, trust boundaries, attacker prerequisites, and evidence-backed findings across authentication, authorization, validation, injection, path handling, SSRF, XSS, CSRF, deserialization, credential handling, logging, and dependencies. Use for security depth; do not replace general code review, run attacks, access production, reveal credentials, or implement fixes.",
+        "zh-CN": "通过建立资产、信任边界和攻击前提，对鉴权、授权、校验、注入、路径、SSRF、XSS、CSRF、反序列化、凭证、日志和依赖执行有证据的范围化安全审查。用于安全深度审查；不替代普通代码审查，不执行攻击、不访问生产、不显示密钥，也不实施修复。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "performance-regression-analysis",
+      "id": "repo.performance-regression-analysis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/performance-regression-analysis",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Performance Regression Analysis",
+        "zh-CN": "性能回归分析"
+      },
+      "description": {
+        "en": "Analyze a specific performance regression against a defined baseline and workload using profiles, benchmarks, traces, logs, or reproducible experiments, covering algorithms, I/O, N+1, caching, memory, concurrency, network, database, and rendering. Use for measured regression depth; do not replace general code review, infer slowness from appearance alone, or optimize code.",
+        "zh-CN": "针对明确基线和工作负载，使用 profile、benchmark、trace、日志或可复现实验分析具体性能回归，覆盖算法、I/O、N+1、缓存、内存、并发、网络、数据库和渲染。用于有测量依据的性能深度分析；不替代普通代码审查，不凭代码外观断言变慢，也不优化代码。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "architecture-deepening-analysis",
+      "id": "repo.architecture-deepening-analysis",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/architecture-deepening-analysis",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Architecture Deepening Analysis",
+        "zh-CN": "架构深化分析"
+      },
+      "description": {
+        "en": "Analyze evidence-backed architecture friction such as broad interfaces, caller knowledge, responsibility leakage, repeated adaptation, scattered change, and unstable test seams, then compare migratable and reversible deepening options. Use for read-only architecture analysis after concrete caller or change evidence exists. Do not auto-invoke to perform a large refactor, judge by file size, or create speculative abstractions; no writes are allowed.",
+        "zh-CN": "分析有证据的架构摩擦，例如接口过宽、调用方知识负担、职责泄漏、重复适配、修改分散和测试接缝不稳定，再比较可迁移、可回滚的深化方案。用于已有具体调用方或变更证据后的只读架构分析。不得自动执行大规模重构、按文件大小下结论或创建推测性抽象；不允许写入。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "architecture-decision-record",
+      "id": "repo.architecture-decision-record",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/architecture-decision-record",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Architecture Decision Record",
+        "zh-CN": "架构决策记录"
+      },
+      "description": {
+        "en": "Create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting the repository's ADR location, numbering, and template. Use only when the user authorizes ADR or architecture-document edits; do not generate an implementation plan, fabricate team consensus, or modify business code.",
+        "zh-CN": "根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库 ADR 目录、编号和模板。仅在用户授权修改 ADR 或架构文档时使用；不生成实施计划、不虚构团队共识，也不修改业务代码。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "none",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "configuration-audit",
+      "id": "repo.configuration-audit",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/configuration-audit",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Configuration Audit",
+        "zh-CN": "配置审计"
+      },
+      "description": {
+        "en": "Audit configuration sources, precedence, environment overrides, defaults, required fields, types, validation, drift, obsolete settings, dangerous defaults, undocumented variables, and credential-commit risk using repository evidence. Use for configuration-specific risk; do not perform a broad health check, read or display sensitive values, connect to external environments, or modify configuration.",
+        "zh-CN": "基于仓库证据审计配置来源、优先级、环境覆盖、默认值、必填、类型、校验、漂移、过期项、危险默认值、未文档化变量和凭证误提交风险。用于配置专项风险；不替代广泛体检，不读取或显示敏感值、不连接外部环境，也不修改配置。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "session-handoff",
+      "id": "repo.session-handoff",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/session-handoff",
+      "version": "0.2.0",
+      "status": "beta",
+      "name": {
+        "en": "Session Handoff",
+        "zh-CN": "会话交接"
+      },
+      "description": {
+        "en": "Create a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Use automatically when a long repository conversation must move to a fresh session. Save to an operating-system temporary directory by default; project-directory writes require explicit authorization. Never modify business files, Git state, or external systems.",
+        "zh-CN": "创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。长仓库对话需要切换到新会话时可自动调用。默认保存到操作系统临时目录；写入项目目录必须明确授权。绝不修改业务文件、Git 状态或外部系统。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "none",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "safe-fix-implementation",
+      "id": "repo.safe-fix-implementation",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/safe-fix-implementation",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Safe Fix Implementation",
+        "zh-CN": "最小安全修复"
+      },
+      "description": {
+        "en": "Implement one small, safe, verified production fix after a clear diagnosis. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes.",
+        "zh-CN": "在明确诊断后实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "skill-authoring",
+      "id": "maintainer.skill-authoring",
+      "pack": "engineering.skill-maintainer",
+      "path": "packs/engineering/skill-maintainer/skills/skill-authoring",
+      "version": "0.2.0",
+      "status": "beta",
+      "name": {
+        "en": "Skill Authoring",
+        "zh-CN": "Skill 工程化创建"
+      },
+      "description": {
+        "en": "Engineer one new or updated AI Skill in this Skills repository from concrete use cases through canonical source, minimal resources, bilingual metadata, UI integration, activation contracts, validation, and cross-platform build inspection. Use when a maintainer explicitly wants a reusable Skill artifact, not for a one-off prompt, using an existing business Skill, empty plugin scaffolding, ordinary code changes, or silently creating multiple Skills.",
+        "zh-CN": "在当前 Skills 仓库中，根据具体用例工程化创建或更新一个 AI Skill，覆盖 canonical 源、最少资源、双语元数据、UI 集成、activation 契约、验证和跨平台构建检查。维护者明确需要可复用 Skill 产物时使用；不用于一次性 Prompt、调用现有业务 Skill、只创建空插件、普通代码修改或未经确认批量创建多个 Skill。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": true,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "skill-quality-audit",
+      "id": "maintainer.skill-quality-audit",
+      "pack": "engineering.skill-maintainer",
+      "path": "packs/engineering/skill-maintainer/skills/skill-quality-audit",
+      "version": "0.2.0",
+      "status": "beta",
+      "name": {
+        "en": "Skill Quality Audit",
+        "zh-CN": "Skill 质量审计"
+      },
+      "description": {
+        "en": "Perform a strictly read-only, pre-release quality audit of one AI Skill, a Pack, a plugin, or a Skills repository across structure, triggering, workflow, progressive resources, bilingual cross-platform output, safety, and publishing integration. Use when maintainers want findings, severity, evidence, and a release recommendation; do not audit ordinary application code or PRs, run a broad project health check, gate a product release candidate, or automatically fix files.",
+        "zh-CN": "对一个 AI Skill、Pack、插件或 Skills 仓库执行严格只读的发布前质量审计，覆盖结构、触发、工作流、渐进资源、双语跨平台产物、安全和发布集成。维护者需要发现、严重度、证据和发布建议时使用；不用于普通应用代码或 PR 审查、广泛项目体检、产品候选版本门禁，也不自动修复文件。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "pdf-review-basic",
+      "id": "office.pdf-review-basic",
+      "pack": "office.document-data-doctor",
+      "path": "packs/office/document-data-doctor/skills/pdf-review-basic",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Basic PDF Review",
+        "zh-CN": "PDF 基础审查"
+      },
+      "description": {
+        "en": "Perform a lightweight, read-only, text-only PDF check only when the user explicitly limits the task to extractable text, headings, obvious textual issues, and a short issue list without OCR, rendering, scanned-content recognition, tables, images, complex layout, or source-file changes. Do not use for an unqualified PDF review; use pdf-review for generic requests, page or visual verification, OCR, scanned pages, tables, images, layout, or completeness. PDF modification or regeneration is outside both review Skills and requires a separately authorized editing workflow.",
+        "zh-CN": "仅在用户明确把任务限定为基础、轻量、只读、纯文本检查时，检查 PDF 的可提取文字、标题和明显文本问题并给出简短清单，不做 OCR、页面渲染、扫描内容识别、表格、图片、复杂版式或源文件修改。不得用于未限定范围的通用 PDF 审查；通用请求、页码或视觉核验、OCR、扫描页、表格、图片、版式或完整性应使用 pdf-review。PDF 修改或重新生成不属于这两个审查 Skill，需要另行授权的编辑流程。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "word-document-review-basic",
+      "id": "office.word-document-review-basic",
+      "pack": "office.document-data-doctor",
+      "path": "packs/office/document-data-doctor/skills/word-document-review-basic",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Basic Word Document Review",
+        "zh-CN": "Word 文档基础审查"
+      },
+      "description": {
+        "en": "Perform a lightweight, read-only, text-only Word check only when the user explicitly limits the task to wording, heading hierarchy, simple grammar, obvious consistency, and unresolved placeholders without editing the source, preserving complex formatting, or handling tracked changes, comments, complex tables, images, headers, footers, or visual layout. Do not use for an unqualified Word or document review; use document-review for holistic structure, logic, facts, revisions, formatting, tables, links, comments, or rendered DOCX verification.",
+        "zh-CN": "仅在用户明确把任务限定为基础、轻量、只读、纯文本检查时，检查 Word 文档的文字、标题层级、简单语法、明显一致性和未解决占位符，不编辑源文件、不保留复杂格式，也不处理修订痕迹、批注、复杂表格、图片、页眉页脚或视觉版式。不得用于未限定范围的通用 Word 或文档审查；整体结构、逻辑、事实、修订、格式、表格、链接、批注或 DOCX 渲染验证应使用 document-review。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "excel-data-quality-check-basic",
+      "id": "office.excel-data-quality-check-basic",
+      "pack": "office.document-data-doctor",
+      "path": "packs/office/document-data-doctor/skills/excel-data-quality-check-basic",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Basic Excel Data Quality Check",
+        "zh-CN": "Excel 数据质量基础检查"
+      },
+      "description": {
+        "en": "Perform a read-only spreadsheet data-quality audit that reports missing values, duplicates, types, formats, anomalies, and source-traceability issues without cleaning, standardizing, filling, deduplicating, overwriting, or generating a modified copy. Use for requests to check, audit, or list data-quality problems; use spreadsheet-data-cleaning when the user requests transformations, fixes, or a cleaned output.",
+        "zh-CN": "对表格执行只读数据质量审计，报告缺失、重复、类型、格式、异常和来源可追溯性问题，不清洗、标准化、填补、去重、覆盖或生成修改后的副本。用于检查、审计或列出数据质量问题；用户要求转换、修复或输出清洗结果时使用 spreadsheet-data-cleaning。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "report-writer",
+      "id": "productivity.report-writer",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/report-writer",
+      "version": "0.2.0",
+      "status": "beta",
+      "name": {
+        "en": "Report Writer",
+        "zh-CN": "报告撰写"
+      },
+      "description": {
+        "en": "Draft or revise a structured report from user-provided goals, audience, evidence, and format, separating facts, quotations, inferences, recommendations, and unknowns. Use when the deliverable is a report; use research-brief when the main task is gathering and synthesizing evidence, and do not invent missing facts or claim DOCX/PDF generation without available tools and explicit authorization.",
+        "zh-CN": "根据用户提供的目标、读者、证据和格式撰写或修订结构化报告，并区分事实、引用、推断、建议和未知项。交付物是报告时使用；主要任务是搜集和综合证据时使用 research-brief；不得补造事实，也不得在缺少工具或未获明确授权时声称生成 DOCX/PDF。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": true,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "none",
+        "shell": "optional",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "research-brief",
+      "id": "productivity.research-brief",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/research-brief",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Research Brief",
+        "zh-CN": "研究简报"
+      },
+      "description": {
+        "en": "Define and answer a bounded research question with a source plan, evidence ledger, cross-checking, conclusions, unknowns, and next steps. Use when gathering or synthesizing evidence is the primary task; use report-writer when supplied material only needs a polished report, and never claim current research without accessible sources or network capability.",
+        "zh-CN": "围绕有边界的研究问题制定来源计划、建立证据台账、交叉验证并输出结论、未知项和下一步。主要任务是搜集或综合证据时使用；已有材料只需形成正式报告时使用 report-writer；无法访问资料或网络时不得声称完成实时研究。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": true,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "none",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "spreadsheet-data-cleaning",
+      "id": "productivity.spreadsheet-data-cleaning",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/spreadsheet-data-cleaning",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Spreadsheet Data Cleaning",
+        "zh-CN": "表格数据清洗"
+      },
+      "description": {
+        "en": "Profile, clean, standardize, transform, fill, or deduplicate spreadsheet or delimited data into an authorized new output with traceable rules, before/after statistics, an audit log, and validation of formulas, encoding, dimensions, and key summaries. Do not overwrite source data, guess critical values, or delete plausible records, and degrade to a cleaning plan when execution tools are unavailable. Use excel-data-quality-check-basic instead when the user requests only a read-only data-quality audit or issue report without changes or a cleaned copy.",
+        "zh-CN": "对电子表格或分隔数据进行画像、清洗、标准化、转换、填补或去重，并在用户授权下生成新结果，提供可追踪规则、前后统计、审计日志及公式、编码、行列数和关键汇总验证。不得覆盖原始数据、猜测关键值或删除可能有效的记录；缺少执行工具时降级为清洗计划。用户只要求只读数据质量审计或问题报告，不要求修改或清洗副本时，应使用 excel-data-quality-check-basic。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "none",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "document-review",
+      "id": "productivity.document-review",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/document-review",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Document Review",
+        "zh-CN": "文档审查"
+      },
+      "description": {
+        "en": "Default to this Skill for an unqualified document or Word review and for holistic checks of structure, logic, completeness, terminology, factual support, figures, citations, grammar, formatting, tables, links, comments, tracked changes, or authorized revisions. When DOCX or rendering tools are unavailable, degrade within this Skill and state the limitation. Use content-consistency-check for cross-document reconciliation, and do not use when the user explicitly requests word-document-review-basic or a lightweight, read-only, text-and-headings-only Word check without complex formatting or revisions.",
+        "zh-CN": "未限定范围的通用文档或 Word 审查，以及结构、逻辑、完整性、术语、事实依据、数字、引用、语法、格式、表格、链接、批注、修订痕迹或获授权修订等整体检查，默认使用本 Skill。DOCX 或渲染工具不可用时仍在本 Skill 内降级并说明限制。跨文档核对应使用 content-consistency-check；用户明确指定 word-document-review-basic，或明确要求轻量、只读、只检查文字和标题且不处理复杂格式或修订时不使用本 Skill。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": true,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "none",
+        "shell": "optional",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "pdf-review",
+      "id": "productivity.pdf-review",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/pdf-review",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "PDF Review",
+        "zh-CN": "PDF 审查"
+      },
+      "description": {
+        "en": "Default to this Skill for an unqualified PDF review and for checks involving searchable text, structure, tables, page-located claims, numeric consistency, citations, scanned pages, OCR, rendering, completeness, or visual layout. Detect available capabilities and degrade within this Skill when tools are unavailable; do not modify the source PDF or claim unsupported verification. Do not use when the user explicitly requests pdf-review-basic or a lightweight, text-only check without OCR, rendering, or complex layout review.",
+        "zh-CN": "未限定范围的通用 PDF 审查，以及涉及可搜索文字、结构、表格、页码定位、数字一致性、引用、扫描页、OCR、渲染、完整性或视觉版式的检查，默认使用本 Skill。检测可用能力，工具不可用时仍在本 Skill 内降级；不得修改原 PDF 或声称完成不受支持的验证。用户明确指定 pdf-review-basic，或明确要求不做 OCR、渲染和复杂版式检查的轻量纯文本任务时不使用本 Skill。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "optional",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "meeting-notes-to-actions",
+      "id": "productivity.meeting-notes-to-actions",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/meeting-notes-to-actions",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Meeting Notes to Actions",
+        "zh-CN": "会议纪要转行动项"
+      },
+      "description": {
+        "en": "Convert supplied meeting notes or transcripts into a summary, decisions, action items, owners, due dates, dependencies, and open questions while distinguishing discussion, proposals, decisions, and commitments. Use when the source is meeting material; do not invent owners, dates, decisions, or task-system updates, and mark missing fields TBD.",
+        "zh-CN": "将给定会议记录或转写整理为摘要、决定、行动项、负责人、截止日期、依赖和待确认问题，并区分讨论、建议、决定和承诺。来源是会议材料时使用；不得虚构负责人、日期、决定或任务系统更新，缺失字段标记 TBD。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": false,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "none",
+        "web": "none"
+      }
+    },
+    {
+      "slug": "presentation-outline",
+      "id": "productivity.presentation-outline",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/presentation-outline",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Presentation Outline",
+        "zh-CN": "演示文稿大纲"
+      },
+      "description": {
+        "en": "Design an audience-specific presentation story and slide-by-slide outline with each slide's purpose, title, key points, evidence, and suggested visual. Use when the default deliverable is an outline; generate PPTX only when the user explicitly requests it and capable presentation tools are available, and do not invent missing data or turn a report into dense slides.",
+        "zh-CN": "针对受众设计演示故事线和逐页大纲，包含每页目的、标题、要点、证据和建议视觉。默认交付物是大纲时使用；仅在用户明确要求且平台具备演示工具时生成 PPTX；不得编造缺失数据，也不得把报告机械切成高密度幻灯片。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": true,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "none",
+        "shell": "optional",
+        "web": "optional"
+      }
+    },
+    {
+      "slug": "content-consistency-check",
+      "id": "productivity.content-consistency-check",
+      "pack": "productivity.productivity-toolkit",
+      "path": "packs/productivity/productivity-toolkit/skills/content-consistency-check",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Content Consistency Check",
+        "zh-CN": "内容一致性检查"
+      },
+      "description": {
+        "en": "Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; use document-review for holistic quality of one document, and do not select a correct value without authoritative evidence or claim unsupported file-format checks.",
+        "zh-CN": "对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；单份文档整体质量应使用 document-review；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": false,
+        "run_shell_commands": true,
+        "access_network": true,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "read",
+        "git": "none",
+        "shell": "optional",
+        "web": "optional"
+      }
+    }
+  ],
+  "repo_doctor_skills": [
+    "repo-doctor-router",
+    "repo-onboarding",
+    "requirements-clarification",
+    "requirements-to-spec",
+    "spec-to-work-items",
+    "decision-prototype",
+    "bug-root-cause-analysis",
+    "project-health-check",
+    "safe-code-review",
+    "change-impact-analysis",
+    "safe-change-plan",
+    "test-gap-analysis",
+    "safe-test-implementation",
+    "ci-failure-diagnosis",
+    "documentation-sync",
+    "release-readiness-check",
+    "dependency-upgrade-analysis",
+    "api-contract-review",
+    "database-migration-review",
+    "dead-code-verification",
+    "security-focused-review",
+    "performance-regression-analysis",
+    "architecture-deepening-analysis",
+    "architecture-decision-record",
+    "configuration-audit",
+    "session-handoff",
+    "safe-fix-implementation"
+  ],
+  "workflows": [
+    "api-contract-change",
+    "architecture-deepening",
+    "bug-repair",
+    "ci-diagnosis",
+    "database-migration",
+    "decision-prototype",
+    "dependency-upgrade",
+    "feature-delivery",
+    "post-fix-regression-test",
+    "release-preparation",
+    "review-only",
+    "session-handoff",
+    "test-first-change"
+  ],
+  "plugins": [
+    {
+      "name": "productivity-toolkit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/productivity-toolkit"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "repo-doctor",
+      "source": {
+        "source": "local",
+        "path": "./plugins/repo-doctor"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "skill-maintainer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/skill-maintainer"
+      },
+      "category": "Productivity"
+    }
+  ],
+  "build_targets": [
+    "generic-zh-CN",
+    "generic-en",
+    "codex-zh-CN",
+    "claude-code-zh-CN",
+    "cursor-zh-CN",
+    "qwen-zh-CN",
+    "kimi-zh-CN"
+  ],
+  "chatgpt_zips": [
+    "pt-content-consistency-check.zip",
+    "pt-document-review.zip",
+    "pt-meeting-notes-to-actions.zip",
+    "pt-pdf-review.zip",
+    "pt-presentation-outline.zip",
+    "pt-report-writer.zip",
+    "pt-research-brief.zip",
+    "pt-spreadsheet-data-cleaning.zip",
+    "rd-api-contract-review.zip",
+    "rd-architecture-decision-record.zip",
+    "rd-architecture-deepening-analysis.zip",
+    "rd-bug-root-cause-analysis.zip",
+    "rd-change-impact-analysis.zip",
+    "rd-ci-failure-diagnosis.zip",
+    "rd-configuration-audit.zip",
+    "rd-database-migration-review.zip",
+    "rd-dead-code-verification.zip",
+    "rd-decision-prototype.zip",
+    "rd-dependency-upgrade-analysis.zip",
+    "rd-documentation-sync.zip",
+    "rd-performance-regression-analysis.zip",
+    "rd-project-health-check.zip",
+    "rd-release-readiness-check.zip",
+    "rd-repo-doctor-router.zip",
+    "rd-repo-onboarding.zip",
+    "rd-requirements-clarification.zip",
+    "rd-requirements-to-spec.zip",
+    "rd-safe-change-plan.zip",
+    "rd-safe-code-review.zip",
+    "rd-safe-fix-implementation.zip",
+    "rd-safe-test-implementation.zip",
+    "rd-security-focused-review.zip",
+    "rd-session-handoff.zip",
+    "rd-spec-to-work-items.zip",
+    "rd-test-gap-analysis.zip",
+    "sm-skill-authoring.zip",
+    "sm-skill-quality-audit.zip"
+  ],
+  "activation_contract_count": 300,
+  "activation_contracts": [
+    "rdr-zh-positive",
+    "rdr-en-positive",
+    "rdr-adjacent",
+    "rdr-negative",
+    "rdr-assumption",
+    "rdr-blocking",
+    "rcl-zh-positive",
+    "rcl-en-positive",
+    "rcl-adjacent",
+    "rcl-negative",
+    "rcl-assumption",
+    "rcl-blocking",
+    "swi-zh-positive",
+    "swi-en-positive",
+    "swi-adjacent",
+    "swi-negative",
+    "swi-assumption",
+    "swi-blocking",
+    "sho-zh-positive",
+    "sho-en-positive",
+    "sho-adjacent",
+    "sho-negative",
+    "sho-assumption",
+    "sho-blocking",
+    "rts-zh-positive",
+    "rts-en-positive",
+    "rts-adjacent",
+    "rts-negative",
+    "rts-assumption",
+    "rts-blocking",
+    "rca-zh-positive",
+    "rca-en-positive",
+    "rca-adjacent",
+    "rca-negative",
+    "rca-assumption",
+    "rca-blocking",
+    "rca-zh-test-implementation-negative",
+    "rca-en-migration-blocking",
+    "rca-zh-install-blocking",
+    "rca-en-delete-blocking",
+    "rca-zh-targeted-test-positive",
+    "scp-zh-positive",
+    "scp-en-positive",
+    "scp-adjacent",
+    "scp-negative",
+    "scp-assumption",
+    "scp-blocking",
+    "tga-zh-positive",
+    "tga-en-positive",
+    "tga-adjacent",
+    "tga-negative",
+    "tga-assumption",
+    "tga-blocking",
+    "sti-zh-positive",
+    "sti-en-positive",
+    "sti-adjacent",
+    "sti-negative",
+    "sti-assumption",
+    "sti-blocking",
+    "cid-zh-positive",
+    "cid-en-positive",
+    "cid-adjacent",
+    "cid-negative",
+    "cid-assumption",
+    "cid-blocking",
+    "docs-zh-positive",
+    "docs-en-positive",
+    "docs-adjacent",
+    "docs-negative",
+    "docs-assumption",
+    "docs-blocking",
+    "rrc-zh-positive",
+    "rrc-en-positive",
+    "rrc-adjacent",
+    "rrc-negative",
+    "rrc-assumption",
+    "rrc-blocking",
+    "dua-zh-positive",
+    "dua-en-positive",
+    "dua-adjacent",
+    "dua-negative",
+    "dua-assumption",
+    "dua-blocking",
+    "acr-zh-positive",
+    "acr-en-positive",
+    "acr-adjacent",
+    "acr-negative",
+    "acr-assumption",
+    "acr-blocking",
+    "dmr-zh-positive",
+    "dmr-en-positive",
+    "dmr-adjacent",
+    "dmr-negative",
+    "dmr-assumption",
+    "dmr-blocking",
+    "dcv-zh-positive",
+    "dcv-en-positive",
+    "dcv-adjacent",
+    "dcv-negative",
+    "dcv-assumption",
+    "dcv-blocking",
+    "sfr-zh-positive",
+    "sfr-en-positive",
+    "sfr-adjacent",
+    "sfr-negative",
+    "sfr-assumption",
+    "sfr-blocking",
+    "pra-zh-positive",
+    "pra-en-positive",
+    "pra-adjacent",
+    "pra-negative",
+    "pra-assumption",
+    "pra-blocking",
+    "adr-zh-positive",
+    "adr-en-positive",
+    "adr-adjacent",
+    "adr-negative",
+    "adr-assumption",
+    "adr-blocking",
+    "cfa-zh-positive",
+    "cfa-en-positive",
+    "cfa-adjacent",
+    "cfa-negative",
+    "cfa-assumption",
+    "cfa-blocking",
+    "rw-zh-positive",
+    "rw-en-positive",
+    "rw-adjacent",
+    "rw-negative",
+    "rw-assumption",
+    "rw-blocking",
+    "rb-zh-positive",
+    "rb-en-positive",
+    "rb-adjacent",
+    "rb-negative",
+    "rb-assumption",
+    "rb-blocking",
+    "edqb-zh-positive",
+    "edqb-en-positive",
+    "edqb-adjacent",
+    "edqb-zh-negative",
+    "edqb-en-negative",
+    "edqb-assumption",
+    "edqb-blocking",
+    "sdc-zh-positive",
+    "sdc-en-positive",
+    "sdc-adjacent",
+    "sdc-negative",
+    "sdc-assumption",
+    "sdc-blocking",
+    "wdrb-zh-positive",
+    "wdrb-en-positive",
+    "wdrb-adjacent",
+    "wdrb-zh-negative",
+    "wdrb-en-negative",
+    "wdrb-assumption",
+    "wdrb-blocking",
+    "dr-zh-positive",
+    "dr-en-positive",
+    "dr-adjacent",
+    "dr-negative",
+    "dr-assumption",
+    "dr-blocking",
+    "pbr-zh-positive",
+    "pbr-en-positive",
+    "pbr-adjacent",
+    "pbr-zh-negative",
+    "pbr-en-negative",
+    "pbr-assumption",
+    "pbr-blocking",
+    "pdf-zh-positive",
+    "pdf-en-positive",
+    "pdf-adjacent",
+    "pdf-negative",
+    "pdf-assumption",
+    "pdf-blocking",
+    "mna-zh-positive",
+    "mna-en-positive",
+    "mna-adjacent",
+    "mna-negative",
+    "mna-assumption",
+    "mna-blocking",
+    "po-zh-positive",
+    "po-en-positive",
+    "po-adjacent",
+    "po-negative",
+    "po-assumption",
+    "po-blocking",
+    "ccc-zh-positive",
+    "ccc-en-positive",
+    "ccc-adjacent",
+    "ccc-negative",
+    "ccc-assumption",
+    "ccc-blocking",
+    "sa-zh-positive",
+    "sa-en-positive",
+    "sa-adjacent",
+    "sa-negative",
+    "sa-assumption",
+    "sa-blocking",
+    "sqa-valid",
+    "sqa-frontmatter",
+    "sqa-trigger-breadth",
+    "sqa-broken-reference",
+    "sqa-duplicate-content",
+    "sqa-missing-tests",
+    "sqa-build-drift",
+    "sqa-private-risk",
+    "sqa-negative",
+    "sqa-tool-unavailable",
+    "sa-plugin-scaffold-adjacent",
+    "sqa-skill-pr-conflict",
+    "ro-zh-positive",
+    "ro-en-positive",
+    "ro-zh-health-negative",
+    "ro-en-review-negative",
+    "ro-assumption",
+    "ro-blocking",
+    "ro-spec-adjacent",
+    "ro-modify-negative",
+    "ro-zh-readonly",
+    "ro-zh-explicit",
+    "ro-en-explicit",
+    "phc-zh-positive",
+    "phc-en-positive",
+    "phc-zh-onboarding-negative",
+    "phc-en-review-negative",
+    "phc-assumption",
+    "phc-blocking",
+    "phc-security-adjacent",
+    "phc-release-adjacent",
+    "phc-modify-negative",
+    "phc-zh-readonly",
+    "phc-zh-explicit",
+    "phc-en-explicit",
+    "scr-zh-positive",
+    "scr-en-positive",
+    "scr-zh-health-negative",
+    "scr-en-security-negative",
+    "scr-assumption",
+    "scr-blocking",
+    "scr-api-adjacent",
+    "scr-modify-negative",
+    "scr-zh-readonly",
+    "scr-zh-explicit",
+    "scr-en-explicit",
+    "cia-zh-positive",
+    "cia-en-positive",
+    "cia-zh-plan-negative",
+    "cia-en-dead-code-negative",
+    "cia-assumption",
+    "cia-blocking",
+    "cia-dependency-adjacent",
+    "cia-modify-negative",
+    "cia-requirements-adjacent",
+    "cia-zh-readonly",
+    "cia-zh-explicit",
+    "cia-en-explicit",
+    "sfi-zh-positive",
+    "sfi-en-positive",
+    "sfi-zh-rca-negative",
+    "sfi-en-plan-negative",
+    "sfi-assumption",
+    "sfi-blocking",
+    "sfi-test-adjacent",
+    "sfi-docs-negative",
+    "sfi-zh-minimal-scope",
+    "sfi-zh-explicit",
+    "sfi-en-explicit",
+    "rdr-direct-ambiguous-zh",
+    "rdr-direct-clear-en",
+    "rts-open-decision-zh",
+    "rts-settled-en-extra",
+    "swi-no-file-write-zh",
+    "swi-no-external-task-en",
+    "sti-test-first-en",
+    "sti-post-fix-zh",
+    "sti-characterization-en",
+    "sti-mode-blocking-zh",
+    "rcl-to-spec-en",
+    "scp-open-choice-zh",
+    "dp-zh-positive",
+    "dp-en-positive",
+    "dp-adjacent",
+    "dp-negative",
+    "dp-assumption",
+    "dp-blocking",
+    "ada-zh-positive",
+    "ada-en-positive",
+    "ada-adjacent",
+    "ada-negative",
+    "ada-assumption",
+    "ada-blocking",
+    "rdr-ui-prototype-zh",
+    "rdr-architecture-refactor-en",
+    "rdr-long-session-zh",
+    "rdr-review-only-en",
+    "rdr-ci-specific-zh",
+    "rdr-runtime-bug-en",
+    "rdr-test-only-zh"
+  ]
+}

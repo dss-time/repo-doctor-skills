@@ -27,16 +27,12 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.3.0",
-  releaseDate: "2026-07-17",
+  projectVersion: "0.4.0",
+  releaseDate: "2026-08-06",
   releaseChannel: "stable",
-  liveModelStatus: "UNKNOWN",
-  liveModelWaiver: Object.freeze({
-    authorized: true,
-    version: "0.3.0",
-    scope: "live-model-status-only",
-    record: "docs/RELEASE_PREPARATION_0.3.0.md",
-  }),
+  liveModelStatus: "PASS",
+  liveModelWaiver: null,
+  liveModelReport: "tests/reports/live-codex-skill-validation.json",
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -44,9 +40,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.6.0",
-      activeSkillCount: 25,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.6.0" }),
+      version: "0.7.0",
+      activeSkillCount: 27,
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.7.0" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
@@ -73,9 +69,12 @@ export const releaseContract = Object.freeze({
   skillVersionFloor: "0.1.0",
   skillVersionFloorOverrides: Object.freeze({
     "productivity.report-writer": "0.2.0",
-    "repo.bug-root-cause-analysis": "0.2.0",
-    "repo.safe-code-review": "0.2.0",
-    "repo.safe-test-implementation": "0.2.0",
+    "repo.bug-root-cause-analysis": "0.3.0",
+    "repo.repo-doctor-router": "0.2.0",
+    "repo.requirements-clarification": "0.2.0",
+    "repo.safe-code-review": "0.3.0",
+    "repo.safe-test-implementation": "0.4.0",
+    "repo.session-handoff": "0.2.0",
     "maintainer.skill-authoring": "0.2.0",
     "maintainer.skill-quality-audit": "0.2.0",
   }),
@@ -86,7 +85,7 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.3.0.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.4.0.md",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 
@@ -497,8 +496,21 @@ function auditReleaseDocument(root, contract, errors) {
   } else if (!/(?:release candidate|候选版本|发布候选)/i.test(content)) {
     errors.push(`${relative}: must describe the artifact as a Release Candidate`);
   }
-  if (!/Live-model/i.test(content) || !/UNKNOWN/.test(content)) {
-    errors.push(`${relative}: must disclose Live-model routing accuracy as UNKNOWN`);
+  if (contract.liveModelStatus === "UNKNOWN") {
+    if (!/Live-model/i.test(content) || !/UNKNOWN/.test(content)) {
+      errors.push(`${relative}: must disclose Live-model routing accuracy as UNKNOWN`);
+    }
+  } else if (contract.liveModelStatus === "PASS") {
+    if (!/Live-model[\s\S]{0,200}(?:PASS|100%)/i.test(content)) {
+      errors.push(`${relative}: must record Live-model validation as PASS or 100%`);
+    }
+    if (/Live-model[\s\S]{0,120}UNKNOWN/i.test(content)) {
+      errors.push(`${relative}: must not describe final Live-model validation as UNKNOWN`);
+    }
+  } else if (contract.liveModelStatus === "BLOCKED") {
+    if (!/Live-model/i.test(content) || !/BLOCKED/.test(content)) {
+      errors.push(`${relative}: must disclose Live-model validation as BLOCKED`);
+    }
   }
   if (!content.includes(`v${contract.projectVersion}`)) {
     errors.push(`${relative}: must record release tag v${contract.projectVersion}`);
@@ -544,6 +556,36 @@ function auditLiveModelWaiver(root, contract, errors) {
   }
 }
 
+function auditLiveModelEvidence(root, contract, errors) {
+  if (contract.releaseChannel !== "stable") return;
+  if (contract.liveModelStatus !== "PASS") {
+    errors.push(
+      `release contract: Live-model status ${contract.liveModelStatus} is not release-eligible; expected PASS`,
+    );
+    return;
+  }
+  if (typeof contract.liveModelReport !== "string" || !contract.liveModelReport) {
+    errors.push("release contract: PASS Live-model status requires a machine-readable report");
+    return;
+  }
+  const report = readJson(root, contract.liveModelReport, errors);
+  if (!report) return;
+  if (report.project_version !== contract.projectVersion) {
+    errors.push(
+      `${contract.liveModelReport}: project version must be ${contract.projectVersion}, found ${report.project_version}`,
+    );
+  }
+  if (report.result !== "PASS") {
+    errors.push(`${contract.liveModelReport}: final result must be PASS, found ${report.result}`);
+  }
+  if (report.summary?.total !== 317
+    || report.summary?.passed !== 317
+    || report.summary?.failed !== 0
+    || report.summary?.blocked !== 0) {
+    errors.push(`${contract.liveModelReport}: expected 317/317 PASS with zero failed or blocked cases`);
+  }
+}
+
 export function inspectReleaseMetadata(root = scriptRoot, contract = releaseContract) {
   const resolvedRoot = path.resolve(root);
   const errors = [];
@@ -554,6 +596,7 @@ export function inspectReleaseMetadata(root = scriptRoot, contract = releaseCont
   auditChangelog(resolvedRoot, contract, errors);
   auditReleaseDocument(resolvedRoot, contract, errors);
   auditLiveModelWaiver(resolvedRoot, contract, errors);
+  auditLiveModelEvidence(resolvedRoot, contract, errors);
   return {
     errors: errors.sort(compareNames),
     summary: {

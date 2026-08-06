@@ -1,6 +1,6 @@
 ---
 name: safe-code-review
-description: Review a code change or PR broadly for correctness, compatibility, security, maintainability, and tests. Use security-focused-review, performance-regression-analysis, or api-contract-review when the user requests one bounded specialist assessment; do not implement fixes. 广泛审查代码改动或 PR 的正确性、兼容性、安全性、可维护性和测试。用户要求单一安全、性能回归或 API 契约专项时分别使用对应专项 Skill；本 Skill 不实施修复。
+description: Review a concrete diff or PR through three independent axes: repository conformance, change-intent fidelity, and operational safety, then deduplicate evidence-backed findings. Use automatically for broad change review, not specialist-only security, performance, API, or migration assessment. Read-only: never implement fixes without a separate explicit request and write authorization. 通过仓库符合度、变更意图忠实度和运行安全三个独立轴审查具体 Diff 或 PR，再对有证据的问题去重。适合自动承接广泛变更审查，不吸收单一安全、性能、API 或迁移专项。本 Skill 只读；没有独立明确请求和写权限时绝不实施修复。
 ---
 
 # Safe Code Review（安全代码审查）
@@ -9,84 +9,100 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 
 # Safe Code Review
 
-Review a code change in two independent dimensions, then deduplicate findings without losing their dimension. Stay read-only.
+Independent review axes prevent a clean result in one concern from hiding a failure in another.
+
+## Output modes
+
+- `fast`: conclusion and only evidence-backed P0/P1/P2 findings, plus blockers and the next action.
+- `standard` (default): all actionable findings, explicit no-finding axes, evidence gaps, and residual risks.
+- `audit`: `standard` plus complete scope, source ledger, commands, skipped checks, axis-local evidence, and permission record.
 
 ## Boundary and Evidence
 
 - Read repository instructions, the original request, relevant specification and acceptance criteria, diff, surrounding code, interfaces, and tests before judging.
 - Do not modify files or implement fixes. Do not invent behavior, requirements, or passing validation.
 - Prioritize correctness and material risk over style. Search references before recommending deletion and require compatibility evidence before public-interface changes.
-- Use P0/P1/P2/P3. Every finding needs a tight location, evidence, impact, recommendation, and validation method.
-- If no reliable requirement or specification exists, mark Intent Alignment evidence as insufficient. Do not infer compliance from the implementation itself.
+- Use P0/P1/P2/P3. Every finding requires file, tight location, evidence, severity, impact, recommendation, and validation method.
+- Do not create findings to fill a list. When an axis has no evidence-backed finding, explicitly say so. When evidence is missing, report the gap rather than guessing.
 
-## Phase A: Intent Alignment
+## Axis A: Repository Conformance
 
-Review the change against the original user request, specification, acceptance criteria, repository policy, and compatibility commitments. Check for missing required behavior, incomplete acceptance criteria, unauthorized behavior, scope expansion, compatibility regressions, and unhandled boundaries, failures, permissions, data rules, migration, or rollback requirements.
+Evaluate only compliance with repository instructions, documented architecture constraints, naming, test conventions, relevant ADRs, and language/framework conventions. Distinguish documented violations from judgment calls. Do not use the requested feature as evidence on this axis.
 
-Record the intent evidence used and each gap. If intent evidence is unavailable, report the unknowns and limit the conclusion.
+## Axis B: Change Intent Fidelity
 
-## Phase B: Implementation Quality
+Evaluate only whether the change implements the original request, specification, and acceptance criteria. Check missing behavior, partial criteria, scope drift, unauthorized behavior, and implementation that looks reasonable but solves a different problem. If intent evidence is unavailable, mark this axis `insufficient evidence`; do not infer the requirement from the code.
 
-Independently review correctness, security, data integrity, concurrency, performance, maintainability, module boundaries, duplication, test quality, observability, and rollback capability. Inspect changed files and the minimum surrounding paths needed to prove or disprove a risk.
+## Axis C: Operational Safety
+
+Evaluate only operational consequences: data migration and integrity, compatibility, authorization and security, rollback capability, runtime behavior, resource use, observability, release sequencing, and release blockers. Do not turn style or unmet product scope into an operational finding unless it independently creates runtime risk.
 
 ## Synthesis
 
-1. Run the two phases separately even when the platform has no subagents; do not let a clean implementation-quality pass substitute for intent evidence.
-2. Merge duplicate findings by root problem while retaining `Intent Alignment`, `Implementation Quality`, or both as the dimension.
-3. Rank by user impact and likelihood, not by which phase found the issue.
-4. Report no-finding areas, evidence gaps, tests not run, and residual risks.
-5. Finish with a bounded recommendation. No findings does not prove full requirement compliance when intent evidence is insufficient.
+1. Pin the reviewed diff or file set and record the evidence sources available to each axis.
+2. Run all three axes separately, even without subagents. Do not pass conclusions, assumptions, or severity rankings from one axis into another.
+3. Finish each axis with its own findings, no-finding statement, and evidence gaps.
+4. Aggregate only after all axes finish. Merge duplicates by root problem while retaining every contributing axis and the strongest direct evidence.
+5. Rank by user impact and likelihood. Do not inflate severity because multiple axes observed the same root problem.
+6. Report commands/tests actually run, skipped validation, residual risks, and a bounded next action. Review-only authority never permits a fix.
 
 # Output Contract
 
-1. Overall conclusion and review scope
-2. Intent evidence and Intent Alignment result, explicitly `insufficient evidence` when applicable
-3. Implementation Quality result
-4. Deduplicated findings: priority, dimension, location, evidence, problem, impact, recommendation, validation
-5. Missing behavior, unauthorized scope, compatibility, boundary, and failure-path review
-6. Correctness, security, data integrity, concurrency, performance, maintainability, module boundaries, duplication, tests, observability, and rollback review
-7. Commands or tests actually run, evidence gaps, and residual risks
-8. Final bounded recommendation
+Lead with the overall conclusion, review scope, and highest-priority next action.
+
+- `fast`: only evidence-backed P0/P1/P2 findings, blockers, and a bounded recommendation.
+- `standard`: separate results for `Repository Conformance`, `Change Intent Fidelity`, and `Operational Safety`; explicitly state `no findings` or `insufficient evidence` per axis.
+- `audit`: add evidence sources, commands/tests, skipped checks, permission record, and residual-risk ledger.
+
+Every deduplicated finding must include: severity, contributing axis or axes, file, tight location, direct evidence, problem, impact, recommendation, and validation method. Never output a finding without evidence or implement the recommendation.
 
 ---
 
 # 安全代码审查
 
-从两个独立维度审查代码变更，最终去重但保留问题所属维度。全程只读。
+独立审查轴可以防止一个维度的干净结论掩盖另一个维度的失败。
+
+## 输出模式
+
+- `fast`：结论、仅有证据的 P0/P1/P2 问题、阻塞和下一动作。
+- `standard`（默认）：全部可操作问题、明确的无发现轴、证据缺口和剩余风险。
+- `audit`：在 `standard` 基础上增加完整范围、来源账本、命令、跳过检查、各轴独立证据和权限记录。
 
 ## 边界与证据
 
 - 判断前读取仓库指令、用户原始需求、相关规格与验收标准、diff、周边代码、接口和测试。
 - 不修改文件或实施修复，不编造行为、需求或验证通过结果。
 - 正确性和实质风险优先于风格；建议删除前搜索引用，建议修改公共接口前需要兼容性证据。
-- 使用 P0/P1/P2/P3。每个问题都需要精确位置、证据、影响、建议和验证方式。
-- 没有可靠需求或规格时，将 Intent Alignment 标为证据不足，不得从实现本身反推“符合需求”。
+- 使用 P0/P1/P2/P3。每个问题都需要文件、精确位置、证据、严重度、影响、建议和验证方式。
+- 不为了凑数输出问题。某轴没有有证据的问题时明确写“无发现”；证据缺失时报告缺口，不猜测。
 
-## 阶段 A：Intent Alignment（需求意图符合度）
+## 轴 A：Repository Conformance（仓库符合度）
 
-根据用户原始需求、规格、验收标准、仓库政策和兼容承诺，检查是否遗漏要求行为、是否未完整满足验收标准、是否实现未授权范围、是否破坏兼容性，以及是否遗漏边界、失败路径、权限、数据规则、迁移或回滚要求。
+只检查仓库指令、已记录架构约束、命名、测试约定、相关 ADR，以及语言/框架惯例。区分文档明确违规与判断性建议；不得用功能需求作为本轴证据。
 
-记录使用的意图证据和每个缺口。意图证据不可用时，报告未知项并限制结论。
+## 轴 B：Change Intent Fidelity（变更意图忠实度）
 
-## 阶段 B：Implementation Quality（实现质量）
+只检查改动是否实现用户原始需求、规格和验收条件；查找遗漏行为、不完整验收、范围漂移、未授权行为，以及“代码看似合理但解决了另一个问题”的实现。意图证据不可用时，本轴标为“证据不足（`insufficient evidence`）”，不得从代码反推需求。
 
-独立检查正确性、安全、数据完整性、并发、性能、可维护性、模块边界、重复、测试质量、可观察性和回滚能力。只扩展到能够证明或反驳风险的最少周边路径。
+## 轴 C：Operational Safety（运行安全）
+
+只检查运行后果：数据迁移与完整性、兼容性、权限与安全、回滚能力、运行时行为、资源使用、可观察性、发布顺序和发布阻塞。风格问题或未满足产品范围只有在独立造成运行风险时才属于本轴。
 
 ## 汇总
 
-1. 即使平台不支持子代理，也按两个独立阶段执行；实现质量通过不能替代意图证据。
-2. 按根问题合并重复发现，但保留 `Intent Alignment`、`Implementation Quality` 或两者兼有的维度标记。
-3. 按用户影响与发生可能性排序，不按发现阶段排序。
-4. 报告未发现问题的区域、证据缺口、未运行测试和剩余风险。
-5. 给出有边界的最终建议；意图证据不足时，“未发现问题”不代表完全符合需求。
+1. 固定被审查的 Diff 或文件集合，并记录各轴可用的证据来源。
+2. 即使平台没有子代理，也分别运行三个轴；一个轴的结论、假设和严重度不得污染另一个轴。
+3. 每个轴独立输出问题、无发现声明和证据缺口。
+4. 三轴完成后再聚合；按根问题合并重复项，同时保留所有贡献轴和最强直接证据。
+5. 按用户影响和发生可能性排序；同一根问题被多轴发现不得自动抬高严重度。
+6. 报告实际运行的命令/测试、跳过验证、剩余风险和有边界的下一动作。只审查权限永远不包含修复权限。
 
 # 输出契约
 
-1. 整体结论与审查范围
-2. 意图证据和 Intent Alignment 结果；适用时明确标记“证据不足”
-3. Implementation Quality 结果
-4. 去重后问题：优先级、所属维度、位置、证据、问题、影响、建议、验证
-5. 遗漏行为、未授权范围、兼容性、边界与失败路径审查
-6. 正确性、安全、数据完整性、并发、性能、可维护性、模块边界、重复、测试、可观察性和回滚审查
-7. 实际运行的命令或测试、证据缺口与剩余风险
-8. 有边界的最终建议
+先给整体结论、审查范围和最高优先级下一动作。
+
+- `fast`：仅输出有证据的 P0/P1/P2 问题、阻塞和有边界建议。
+- `standard`：分别输出 `Repository Conformance`、`Change Intent Fidelity` 和 `Operational Safety` 结果；每个轴明确写“无发现”或“证据不足”。
+- `audit`：增加证据来源、命令/测试、跳过检查、权限记录和剩余风险账本。
+
+每项去重问题必须包含：严重度、贡献轴、文件、精确位置、直接证据、问题、影响、建议和验证方式。不得输出无证据问题，也不得实施建议。

@@ -4,7 +4,7 @@ name:
   zh-CN: Repo Doctor / 仓库医生
 category: engineering
 visibility: public
-version: 0.6.0
+version: 0.7.0
 status: beta
 default_locale: zh-CN
 supported_locales:
@@ -19,6 +19,7 @@ skills:
   - requirements-clarification
   - requirements-to-spec
   - spec-to-work-items
+  - decision-prototype
   - bug-root-cause-analysis
   - project-health-check
   - safe-code-review
@@ -35,6 +36,7 @@ skills:
   - dead-code-verification
   - security-focused-review
   - performance-regression-analysis
+  - architecture-deepening-analysis
   - architecture-decision-record
   - configuration-audit
   - session-handoff

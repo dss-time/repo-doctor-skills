@@ -34,13 +34,14 @@ plugins/repo-doctor/skills/
 }
 ```
 
-生成的 Repo Doctor 分发包含 25 个边界明确的工作流与专项工程 Skill：
+生成的 Repo Doctor 分发包含 27 个边界明确的工作流与专项工程 Skill：
 
 - `repo-doctor-router`
 - `repo-onboarding`
 - `requirements-clarification`
 - `requirements-to-spec`
 - `spec-to-work-items`
+- `decision-prototype`
 - `project-health-check`
 - `safe-code-review`
 - `change-impact-analysis`
@@ -58,6 +59,7 @@ plugins/repo-doctor/skills/
 - `dead-code-verification`
 - `security-focused-review`
 - `performance-regression-analysis`
+- `architecture-deepening-analysis`
 - `architecture-decision-record`
 - `configuration-audit`
 - `session-handoff`

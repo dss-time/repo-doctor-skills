@@ -1,29 +1,38 @@
 # Safe Code Review
 
-Review a code change in two independent dimensions, then deduplicate findings without losing their dimension. Stay read-only.
+Independent review axes prevent a clean result in one concern from hiding a failure in another.
+
+## Output modes
+
+- `fast`: conclusion and only evidence-backed P0/P1/P2 findings, plus blockers and the next action.
+- `standard` (default): all actionable findings, explicit no-finding axes, evidence gaps, and residual risks.
+- `audit`: `standard` plus complete scope, source ledger, commands, skipped checks, axis-local evidence, and permission record.
 
 ## Boundary and Evidence
 
 - Read repository instructions, the original request, relevant specification and acceptance criteria, diff, surrounding code, interfaces, and tests before judging.
 - Do not modify files or implement fixes. Do not invent behavior, requirements, or passing validation.
 - Prioritize correctness and material risk over style. Search references before recommending deletion and require compatibility evidence before public-interface changes.
-- Use P0/P1/P2/P3. Every finding needs a tight location, evidence, impact, recommendation, and validation method.
-- If no reliable requirement or specification exists, mark Intent Alignment evidence as insufficient. Do not infer compliance from the implementation itself.
+- Use P0/P1/P2/P3. Every finding requires file, tight location, evidence, severity, impact, recommendation, and validation method.
+- Do not create findings to fill a list. When an axis has no evidence-backed finding, explicitly say so. When evidence is missing, report the gap rather than guessing.
 
-## Phase A: Intent Alignment
+## Axis A: Repository Conformance
 
-Review the change against the original user request, specification, acceptance criteria, repository policy, and compatibility commitments. Check for missing required behavior, incomplete acceptance criteria, unauthorized behavior, scope expansion, compatibility regressions, and unhandled boundaries, failures, permissions, data rules, migration, or rollback requirements.
+Evaluate only compliance with repository instructions, documented architecture constraints, naming, test conventions, relevant ADRs, and language/framework conventions. Distinguish documented violations from judgment calls. Do not use the requested feature as evidence on this axis.
 
-Record the intent evidence used and each gap. If intent evidence is unavailable, report the unknowns and limit the conclusion.
+## Axis B: Change Intent Fidelity
 
-## Phase B: Implementation Quality
+Evaluate only whether the change implements the original request, specification, and acceptance criteria. Check missing behavior, partial criteria, scope drift, unauthorized behavior, and implementation that looks reasonable but solves a different problem. If intent evidence is unavailable, mark this axis `insufficient evidence`; do not infer the requirement from the code.
 
-Independently review correctness, security, data integrity, concurrency, performance, maintainability, module boundaries, duplication, test quality, observability, and rollback capability. Inspect changed files and the minimum surrounding paths needed to prove or disprove a risk.
+## Axis C: Operational Safety
+
+Evaluate only operational consequences: data migration and integrity, compatibility, authorization and security, rollback capability, runtime behavior, resource use, observability, release sequencing, and release blockers. Do not turn style or unmet product scope into an operational finding unless it independently creates runtime risk.
 
 ## Synthesis
 
-1. Run the two phases separately even when the platform has no subagents; do not let a clean implementation-quality pass substitute for intent evidence.
-2. Merge duplicate findings by root problem while retaining `Intent Alignment`, `Implementation Quality`, or both as the dimension.
-3. Rank by user impact and likelihood, not by which phase found the issue.
-4. Report no-finding areas, evidence gaps, tests not run, and residual risks.
-5. Finish with a bounded recommendation. No findings does not prove full requirement compliance when intent evidence is insufficient.
+1. Pin the reviewed diff or file set and record the evidence sources available to each axis.
+2. Run all three axes separately, even without subagents. Do not pass conclusions, assumptions, or severity rankings from one axis into another.
+3. Finish each axis with its own findings, no-finding statement, and evidence gaps.
+4. Aggregate only after all axes finish. Merge duplicates by root problem while retaining every contributing axis and the strongest direct evidence.
+5. Rank by user impact and likelihood. Do not inflate severity because multiple axes observed the same root problem.
+6. Report commands/tests actually run, skipped validation, residual risks, and a bounded next action. Review-only authority never permits a fix.

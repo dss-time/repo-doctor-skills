@@ -1,0 +1,10 @@
+input: "Use documented mode and update the glossary, but I have not authorized any file writes."
+expected:
+  must_include:
+    - documented
+    - terminology
+    - ADR
+    - Blocked
+  must_not:
+    - edit domain documentation
+    - edit an ADR

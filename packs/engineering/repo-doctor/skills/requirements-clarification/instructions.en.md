@@ -1,27 +1,37 @@
 # Requirements Clarification
 
-Close only the decisions whose answers can materially change scope, behavior, compatibility, security, data handling, migration, or acceptance. Stop before specification authoring or implementation.
+Every question must close a named decision; repository facts are discovered, while product choices are decided by the user.
 
-## Boundary
+## Modes
+
+- `fast`: ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
+- `standard` (default): close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
+- `documented`: perform `standard`, then inspect project terminology and relevant ADRs for conflicts. A documentation change is optional and requires explicit path-scoped write authorization. Record why each edit is necessary and which evidence supports it.
+
+Do not silently change mode. Output modes and their minimum fields are defined in the localized output contract.
+
+## Permission and scope boundary
 
 - Read user-provided material and relevant repository files before asking. Do not ask the user to repeat an answer reliably established by repository evidence.
-- Stay read-only. Do not edit code, tests, configuration, ADRs, documentation, or task systems.
+- Never edit code, tests, configuration, task systems, or production data.
+- In `fast` and `standard`, stay read-only. In `documented`, do not edit domain documentation or ADRs until the user explicitly authorizes the exact write scope. A request to clarify requirements is not write authorization.
+- Before an authorized documentation edit, inspect repository rules and the target file, preserve established structure, and report the reason and evidence. Use `architecture-decision-record` for a new durable architectural decision and `documentation-sync` for general confirmed drift when either is the narrower owner.
 - Keep facts, reasoned inferences, open decisions, deferred decisions, and out-of-scope items separate.
-- Do not manufacture a long questionnaire for a simple, explicit, low-risk change.
-- Recommend `architecture-decision-record` for a durable hard-to-reverse design decision and `documentation-sync` for confirmed documentation drift; never overwrite long-term documentation without explicit authorization.
+- Do not manufacture a long questionnaire for a simple, explicit, low-risk change or re-open decisions already fixed by an authoritative specification.
 
-## Workflow
+## Decision-tree workflow
 
 1. Read the request, linked specifications, repository instructions, terminology, interfaces, configuration, tests, and relevant history available within scope.
-2. Build a decision ledger with five states: `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`. Cite the source of confirmed facts and the basis of each inference.
-3. Check target users, core business behavior, inputs and outputs, failures and boundaries, permissions, data sources, compatibility, performance, security, migration, tests and acceptance, exclusions, and unresolved questions.
-4. Normalize domain language: detect vague terms, synonyms, and overloaded words; prefer established repository terminology; define each necessary new term briefly. Do not silently rename project concepts.
-5. Rank open decisions by impact, risk, reversibility, and dependency. Ask only the highest-value unresolved question in the current turn.
-6. Make the question concrete. Offer a recommended option and concise trade-offs among viable alternatives. Do not ask a choice that repository evidence already resolves.
-7. After each answer, update the ledger, state what changed, and select the next material decision.
-8. Stop asking when remaining unknowns cannot materially change scope, external behavior, compatibility, security, data boundaries, migration, or acceptance. Mark non-blocking unknowns `deferred` rather than pretending they are resolved.
-9. Produce a Requirements Clarification Summary for `requirements-to-spec`, including terminology, constraints, acceptance direction, and all five decision states. Do not enter implementation.
+2. Create a decision ledger with `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`. Cite sources for facts and the basis and confidence for inferences.
+3. Build a question tree. Each node names the decision it resolves, why it matters, dependencies, answer source (`repository` or `user`), and child branches.
+4. Explore every fact that can be verified from code or documentation before asking. Ask the user only for product choices, business trade-offs, priorities, or value judgments.
+5. Rank unresolved branches by direction-changing impact, risk, reversibility, and dependency. In `fast`, select at most five highest-gain branches.
+6. Work one branch at a time. Ask one concrete question, include a recommended option and concise trade-offs, wait for the answer, then update the ledger. Do not enter another dependent branch until the current branch is resolved or explicitly deferred.
+7. In `standard` and `documented`, cover goal, non-goals, users, current behavior, expected behavior, business rules, data boundaries, exceptional paths, compatibility, acceptance criteria, and remaining decisions.
+8. In `documented`, compare user language with the project glossary and relevant ADRs. Record terminology conflicts separately from product decisions; do not silently rename established concepts.
+9. Stop when no remaining open decision can materially change the implementation contract. Mark lesser unknowns `deferred` with a revisit condition.
+10. Return the decision ledger, unresolved items, and a compact handoff to `requirements-to-spec`. Do not implement.
 
-## Completion and Failure Conditions
+## Stop conditions
 
-Complete when no `open` decision can materially alter the implementation contract. Stop as blocked when essential evidence is unavailable, the user declines a required decision, or two authoritative sources conflict. A clear small request may complete immediately with a short ledger and no questions.
+Return `Blocked` when essential evidence is unavailable, the user declines a required choice, authoritative sources conflict, or a requested durable edit lacks explicit write authorization. A clear request or existing complete specification should finish immediately or route to `requirements-to-spec`, not start an interview.
