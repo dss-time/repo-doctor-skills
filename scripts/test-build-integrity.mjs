@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { execFileSync, spawnSync } from "node:child_process";
 import {
+  cpSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -117,19 +118,6 @@ for (const { packRoot, pluginRoot, prefix } of pluginBuilds) {
 expect(pluginSkillCount === 37, `ChatGPT source coverage should include 37 plugin Skills, received ${pluginSkillCount}`);
 
 const repoDoctorPack = path.join(root, "packs", "engineering", "repo-doctor");
-for (const slug of discoverActivePackSkills(repoDoctorPack)) {
-  const yaml = readFileSync(path.join(repoDoctorPack, "skills", slug, "skill.yaml"), "utf8");
-  const expectedPolicy = yaml.match(/^\s{2}allow_implicit_invocation:\s*(true|false)$/m)?.[1];
-  const interfacePath = path.join(root, "dist", "codex-zh-CN", "skills", slug, "agents", "openai.yaml");
-  expect(existsSync(interfacePath), `${slug} Codex installable Skill should include agents/openai.yaml`);
-  if (existsSync(interfacePath)) {
-    const content = readFileSync(interfacePath, "utf8");
-    expect(
-      content.includes(`allow_implicit_invocation: ${expectedPolicy}`),
-      `${slug} Codex implicit policy should match canonical execution metadata`,
-    );
-  }
-}
 
 const names = ["Z", "a", "ä", "中", "_"];
 const expectedNameOrder = [...names].sort(compareNames);
@@ -190,6 +178,32 @@ function runIsolatedBuild(fixtureRoot) {
 
 const tempRoot = mkdtempSync(path.join(tmpdir(), "skill-build-integrity-"));
 try {
+  const canonicalBuildRoot = path.join(tempRoot, "canonical");
+  cpSync(repoDoctorPack, path.join(canonicalBuildRoot, "packs", "engineering", "repo-doctor"), { recursive: true });
+  const canonicalBuild = runIsolatedBuild(canonicalBuildRoot);
+  expect(canonicalBuild.status === 0, `isolated canonical Codex build should pass: ${canonicalBuild.stderr}`);
+  for (const slug of discoverActivePackSkills(repoDoctorPack)) {
+    const yaml = readFileSync(path.join(repoDoctorPack, "skills", slug, "skill.yaml"), "utf8");
+    const expectedPolicy = yaml.match(/^\s{2}allow_implicit_invocation:\s*(true|false)$/m)?.[1];
+    const interfacePath = path.join(
+      canonicalBuildRoot,
+      "dist",
+      "codex-zh-CN",
+      "skills",
+      slug,
+      "agents",
+      "openai.yaml",
+    );
+    expect(existsSync(interfacePath), `${slug} Codex installable Skill should include agents/openai.yaml`);
+    if (existsSync(interfacePath)) {
+      const content = readFileSync(interfacePath, "utf8");
+      expect(
+        content.includes(`allow_implicit_invocation: ${expectedPolicy}`),
+        `${slug} Codex implicit policy should match canonical execution metadata`,
+      );
+    }
+  }
+
   const firstBuildRoot = path.join(tempRoot, "first");
   const secondBuildRoot = path.join(tempRoot, "second");
   writeBuildFixture(firstBuildRoot, false);
