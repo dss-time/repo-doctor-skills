@@ -2,3 +2,5 @@ interface:
   display_name: "API Contract Review（API 契约审查）"
   short_description: "核对接口各方契约并判定兼容性、行为变化与版本化风险"
   default_prompt: "使用 $api-contract-review 审查接口契约变化及兼容性，不修改接口。"
+policy:
+  allow_implicit_invocation: true

@@ -1,6 +1,6 @@
 # Repo Doctor Skills 用户操作手册
 
-本手册面向第一次接触 AI Skill 的用户。先按任务找到能用的入口，再逐步解释平台差异、安全边界和维护方式。想直接复制最短问题式示例，请看 [Skill 快速入口](guides/quick-skill-entrypoints.zh-CN.md)。完整 Skill 清单见 [Skill 完整目录](SKILL_CATALOG.zh-CN.md)，多 Skill 串联示例见 [工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
+本手册面向第一次接触 AI Skill 的用户。先按任务找到能用的入口，再逐步解释平台差异、安全边界和维护方式。想直接复制最短问题式示例，请看 [Skill 快速入口](guides/quick-skill-entrypoints.zh-CN.md)。完整 Skill 清单见 [Skill 完整目录](SKILL_CATALOG.zh-CN.md)，fast/standard/audit 规则见[执行模式](guides/execution-modes.zh-CN.md)，显式多 Skill 流程见 [工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
 
 > 文档核验日期：2026-07-15。平台界面和宿主能力可能随版本、套餐或工作区策略变化；看不到本文提到的入口时，以当前宿主界面和管理员设置为准。
 
@@ -53,6 +53,8 @@ $repo-onboarding
 
 这一步只读，不应该修改代码。确认结果后，再决定是否进入影响分析、变更计划或实施 Skill。
 
+明确、局部、低风险任务默认使用 `fast` 和一个主 Skill。Repo Doctor 不会自动继续执行下一 Skill。生成的 Codex/ChatGPT 策略会关闭重型专项 Skill 的隐式调用，必须通过 `$<skill-name>` 或当前宿主的 Skill 选择器显式调用。详见[执行模式](guides/execution-modes.zh-CN.md)。
+
 ## 3. 先选 Pack，再选 Skill
 
 当前 canonical 中有 4 个 active Pack。最新数量、权限和逐项示例由 [Skill 完整目录](SKILL_CATALOG.zh-CN.md) 从 canonical metadata 生成。
@@ -66,7 +68,7 @@ $repo-onboarding
 
 ### 发布版本与成熟度
 
-当前正式版是 **v0.4.1**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。未变化的 Skill 集合具有 317/317 次真实 Codex 调用 PASS 证据，覆盖核心路由、双语工作流、模式、原型三态判定和权限边界。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
+当前正式版是 **v0.5.0**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。v0.5.0 性能对比完成 30/30 组配对案例，正确率由 27/30 提升至 30/30，并保持安全与权限门禁通过。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
 
 ### 常见选择
 
@@ -136,7 +138,7 @@ Document Data Doctor 的 3 个 Basic Skill 当前没有独立 ChatGPT ZIP。不�
 如果使用 Codex CLI，稳定版安装必须固定到 Release tag：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.0
 ```
 
 只有明确测试最新开发内容时才使用 `main`：

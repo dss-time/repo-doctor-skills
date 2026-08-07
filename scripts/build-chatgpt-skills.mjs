@@ -242,16 +242,25 @@ function titleCase(slug) {
 }
 
 export function interfaceFor(source, slug) {
-  const configured = interfaces[slug];
-  if (configured) return configured;
-
   const content = readFileSync(source, "utf8");
+  const uiPath = path.join(path.dirname(source), "agents", "openai.yaml");
+  const uiContent = existsSync(uiPath) ? readFileSync(uiPath, "utf8") : "";
+  const implicitPolicy = uiContent.match(/^\s*allow_implicit_invocation:\s*(true|false)\s*$/m)?.[1];
+  const configured = interfaces[slug];
+  if (configured) {
+    return {
+      ...configured,
+      allowImplicitInvocation: implicitPolicy === undefined ? undefined : implicitPolicy === "true",
+    };
+  }
+
   const heading = content.match(/^#\s+(.+)$/m)?.[1] ?? titleCase(slug);
   const description = content.match(/^description:\s*(.+)$/m)?.[1] ?? "Repo Doctor workflow";
   return {
     displayName: heading,
     shortDescription: description.slice(0, 80),
     defaultPrompt: `使用 $${slug} 执行这个 Repo Doctor 工作流。`,
+    allowImplicitInvocation: implicitPolicy === undefined ? undefined : implicitPolicy === "true",
   };
 }
 
@@ -344,6 +353,12 @@ export function renderInterface(config, publishedSlug, displayPrefix) {
     `  display_name: ${yamlString(`${displayPrefix} · ${config.displayName}`)}`,
     `  short_description: ${yamlString(config.shortDescription)}`,
     `  default_prompt: ${yamlString(defaultPrompt)}`,
+    ...(typeof config.allowImplicitInvocation === "boolean"
+      ? [
+          "policy:",
+          `  allow_implicit_invocation: ${config.allowImplicitInvocation}`,
+        ]
+      : []),
     "",
   ].join("\n");
 }

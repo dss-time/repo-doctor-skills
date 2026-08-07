@@ -1,6 +1,6 @@
 # Repo Doctor Skills User Manual
 
-This manual is for people encountering AI Skills for the first time. It starts with practical task entry points, then explains platform differences, safety boundaries, and maintenance. For the shortest problem-oriented examples, use the [quick Skill entry points](guides/quick-skill-entrypoints.md). See the [complete Skill catalog](SKILL_CATALOG.md) for every Skill and the [workflow cookbook](WORKFLOW_COOKBOOK.md) for multi-Skill recipes.
+This manual is for people encountering AI Skills for the first time. It starts with practical task entry points, then explains platform differences, safety boundaries, and maintenance. For the shortest problem-oriented examples, use the [quick Skill entry points](guides/quick-skill-entrypoints.md). See the [complete Skill catalog](SKILL_CATALOG.md) for every Skill, [execution modes](guides/execution-modes.md) for fast/standard/audit behavior, and the [workflow cookbook](WORKFLOW_COOKBOOK.md) for explicitly requested multi-Skill recipes.
 
 > Documentation verified on 2026-07-15. Product interfaces and host capabilities can vary by version, plan, and workspace policy. When an entry described here is not visible, follow the current host UI and administrator policy.
 
@@ -53,6 +53,8 @@ Do not modify any files. Mark anything you cannot verify as unknown.
 
 This first step is read-only. Review the result before deciding whether to proceed to impact analysis, a change plan, or an implementation Skill.
 
+Clear, local, low-risk tasks use `fast` and one primary Skill by default. Repo Doctor does not automatically continue into another Skill. Heavyweight specialist Skills whose generated Codex/ChatGPT policy disables implicit invocation must be selected explicitly with `$<skill-name>` or the current host's Skill selector. See [Execution Modes](guides/execution-modes.md).
+
 ## 3. Choose a Pack, Then a Skill
 
 The canonical source currently contains four active Packs. The latest counts, permissions, and per-Skill examples are generated from canonical metadata in the [complete Skill catalog](SKILL_CATALOG.md).
@@ -66,7 +68,7 @@ The canonical source currently contains four active Packs. The latest counts, pe
 
 ### Release version and maturity
 
-The current stable release is **v0.4.1**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries. See [Versioning and Lifecycle Policy](VERSIONING.md).
+The current stable release is **v0.5.0**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The v0.5.0 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates. See [Versioning and Lifecycle Policy](VERSIONING.md).
 
 ### Common choices
 
@@ -136,7 +138,7 @@ The official plugin interface can appear under Work in ChatGPT or under Work/Cod
 With Codex CLI, pin stable installation to the release tag:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.4.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.0
 ```
 
 Use `main` only when intentionally testing the latest development version:

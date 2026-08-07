@@ -2,3 +2,5 @@ interface:
   display_name: "Dead Code Verification（死代码验证）"
   short_description: "以静态与动态证据验证代码可删除性，证据不足时保持保守"
   default_prompt: "使用 $dead-code-verification 验证这些代码是否可以安全删除，不删除文件。"
+policy:
+  allow_implicit_invocation: true

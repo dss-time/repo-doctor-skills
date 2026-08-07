@@ -7,14 +7,21 @@ description: Protect one externally observable behavior through a gated red–gr
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Execution Contract
+
+Default to `fast`; bounded natural-language invocation is allowed.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+
 # Safe Test Implementation
 
 One behavior slice earns one trustworthy red signal, one green result, and only then any organization.
 
 ## Output modes
 
-- `fast`: status, protected behavior, test mode, changed test files, focused command, result, and next step.
-- `standard` (default): full behavior-cycle record and bounded regression result.
+- `fast` (default): status, protected behavior, test mode, changed test files, focused command, result, and next step.
+- `standard`: full behavior-cycle record and bounded regression result.
 - `audit`: `standard` plus permission decisions, command preflight, exact working directories, exit codes, evidence status, mock rationale, and skipped/blocked checks.
 
 Output mode is independent from `test_mode`. Never switch either silently.
@@ -73,14 +80,21 @@ Only `test_first` requires an observed expected failure. Do not claim red, green
 
 ---
 
+## 执行契约
+
+默认使用 `fast`；允许边界明确的自然语言隐式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+
 # Safe Test Implementation（安全补充测试）
 
 一个行为切片只对应一个可信红灯、一个绿灯结果，全部通过后才能整理。
 
 ## 输出模式
 
-- `fast`：状态、受保护行为、测试模式、测试侧改动、定向命令、结果和下一步。
-- `standard`（默认）：完整行为循环记录及有边界的回归结果。
+- `fast`（默认）：状态、受保护行为、测试模式、测试侧改动、定向命令、结果和下一步。
+- `standard`：完整行为循环记录及有边界的回归结果。
 - `audit`：在 `standard` 基础上增加权限判断、命令预检、准确工作目录、退出码、证据状态、Mock 理由和跳过/阻塞项。
 
 输出模式与 `test_mode` 相互独立，二者都不得静默切换。

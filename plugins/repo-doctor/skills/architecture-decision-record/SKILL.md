@@ -1,11 +1,18 @@
 ---
 name: architecture-decision-record
-description: Create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting the repository's ADR location, numbering, and template. Use only when the user authorizes ADR or architecture-document edits; do not generate an implementation plan, fabricate team consensus, or modify business code. 根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库 ADR 目录、编号和模板。仅在用户授权修改 ADR 或架构文档时使用；不生成实施计划、不虚构团队共识，也不修改业务代码。
+description: Explicit-invocation Skill to create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting repository conventions. Requires authorized ADR scope; do not fabricate consensus, plan implementation, or modify business code. 仅显式调用：根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库约定。必须获得 ADR 范围授权；不虚构共识、不生成实施计划，也不修改业务代码。
 ---
 
 # Architecture Decision Record（架构决策记录）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `standard`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Architecture Decision Record
 
@@ -35,6 +42,13 @@ Create or update one ADR when the user explicitly authorizes architecture-docume
 7. Unknowns and implementation handoff
 
 ---
+
+## 执行契约
+
+默认使用 `standard`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # 架构决策记录
 

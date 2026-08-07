@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Review a concrete database schema or data migration for reversibility, data safety, locking, backfill, replication, compatibility, zero-downtime rollout, validation, and rollback. Use for migration-specific risk; do not perform generic impact analysis, execute migrations, connect to production, or modify migration files.
-  zh-CN: 审查具体数据库 Schema 或数据迁移的可逆性、数据安全、锁、回填、复制、兼容、零停机发布、验证和回滚。用于迁移专项风险；不替代通用影响分析，不执行迁移、不连接生产，也不修改迁移文件。
+  en: Explicit-invocation review of one concrete database schema or data migration for reversibility, data safety, locking, backfill, replication, compatibility, rollout, validation, and rollback. Never execute migrations, connect to production, or modify migration files.
+  zh-CN: 仅显式调用：审查一个具体数据库 Schema 或数据迁移的可逆性、数据安全、锁、回填、复制、兼容、发布、验证和回滚。绝不执行迁移、不连接生产，也不修改迁移文件。
 triggers:
   en: [review this database migration, assess zero downtime migration risk, database migration review]
   zh-CN: [审查这个数据库迁移, 评估零停机迁移风险, 数据库迁移审查]
@@ -28,6 +28,10 @@ permissions:
   access_network: false
   destructive_actions_allowed: false
 risk_level: {default: read_only}
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema: {type: database_migration_report}
 localization:
   en: {status: complete}

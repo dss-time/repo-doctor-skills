@@ -4,8 +4,8 @@ One behavior slice earns one trustworthy red signal, one green result, and only 
 
 ## Output modes
 
-- `fast`: status, protected behavior, test mode, changed test files, focused command, result, and next step.
-- `standard` (default): full behavior-cycle record and bounded regression result.
+- `fast` (default): status, protected behavior, test mode, changed test files, focused command, result, and next step.
+- `standard`: full behavior-cycle record and bounded regression result.
 - `audit`: `standard` plus permission decisions, command preflight, exact working directories, exit codes, evidence status, mock rationale, and skipped/blocked checks.
 
 Output mode is independent from `test_mode`. Never switch either silently.

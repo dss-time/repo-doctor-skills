@@ -1,11 +1,18 @@
 ---
 name: configuration-audit
-description: Audit configuration sources, precedence, environment overrides, defaults, required fields, types, validation, drift, obsolete settings, dangerous defaults, undocumented variables, and credential-commit risk using repository evidence. Use for configuration-specific risk; do not perform a broad health check, read or display sensitive values, connect to external environments, or modify configuration. 基于仓库证据审计配置来源、优先级、环境覆盖、默认值、必填、类型、校验、漂移、过期项、危险默认值、未文档化变量和凭证误提交风险。用于配置专项风险；不替代广泛体检，不读取或显示敏感值、不连接外部环境，也不修改配置。
+description: Explicit-invocation audit of configuration sources, precedence, overrides, defaults, validation, drift, dangerous settings, undocumented variables, and credential-commit risk using repository evidence. Do not trigger for one settled config edit, read sensitive values, connect to external environments, or modify configuration. 仅显式调用：基于仓库证据审计配置来源、优先级、覆盖、默认值、校验、漂移、危险设置、未文档化变量和凭据误提交风险。不得因一个已确定配置修改而触发，不读取敏感值、不连接外部环境，也不修改配置。
 ---
 
 # Configuration Audit（配置审计）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `standard`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Configuration Audit
 
@@ -34,6 +41,13 @@ Audit a defined configuration surface from repository evidence. Keep configurati
 7. Unknowns
 
 ---
+
+## 执行契约
+
+默认使用 `standard`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # 配置审计
 

@@ -2,3 +2,5 @@ interface:
   display_name: "Release Readiness Check（发布就绪检查）"
   short_description: "对具体候选版本执行有证据的只读发布门禁检查"
   default_prompt: "使用 $release-readiness-check 检查候选版本并给出门禁结论，不执行发布操作。"
+policy:
+  allow_implicit_invocation: false

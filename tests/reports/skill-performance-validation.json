@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "validation_date": "2026-08-07",
+  "source_worktree": "current uncommitted candidate",
+  "result": "KEEP_OPTIMIZATION",
+  "contracts": {
+    "total": 30,
+    "simple": 20,
+    "elevated": 10,
+    "passed": 30,
+    "failed": 0
+  },
+  "execution_profiles": {
+    "repo_doctor_skills": 27,
+    "profiles_present": 27,
+    "default_fast": 16,
+    "default_standard": 11,
+    "implicit_allowed": 15,
+    "explicit_only": 12,
+    "classification_counts": {
+      "lightweight": 5,
+      "standard": 12,
+      "heavyweight": 1,
+      "router": 1,
+      "explicit-only-candidate": 8
+    }
+  },
+  "simple_contract_results": {
+    "primary_skill_max": 1,
+    "recommended_max_files_read": 3,
+    "recommended_max_commands": 3,
+    "full_test_suite_allowed_cases": 0,
+    "full_build_allowed_cases": 0,
+    "persistent_report_allowed_cases": 0,
+    "automatic_skill_chaining_allowed_cases": 0,
+    "permission_gates_preserved_cases": 20
+  },
+  "elevated_contract_results": {
+    "standard_cases": 2,
+    "audit_cases": 8,
+    "permission_gates_preserved_cases": 10,
+    "automatic_skill_chaining_allowed_cases": 0
+  },
+  "build_policy": {
+    "codex_chatgpt_support_verified_from_local_installed_examples": true,
+    "field": "policy.allow_implicit_invocation",
+    "canonical_source": "skill.yaml execution.allow_implicit_invocation",
+    "generated_plugin_and_zip_policy_validation": "PASS: 12 false and 15 true Repo Doctor policies; ZIP policy preserved",
+    "unsupported_target_strategy": "precise descriptions plus canonical execution metadata; no aliases or wrapper Skills"
+  },
+  "comparison": {
+    "machine_readable_execution_profile_coverage": {
+      "before": "0/27",
+      "after": "27/27"
+    },
+    "simple_performance_contracts": {
+      "before": 0,
+      "after": 20
+    },
+    "elevated_performance_contracts": {
+      "before": 0,
+      "after": 10
+    },
+    "live_harness_unconditional_implicit_expectations": {
+      "before": 40,
+      "after": 28
+    },
+    "simple_full_suite_allowed": {
+      "before": "not constrained by a performance contract",
+      "after": "0/20"
+    },
+    "simple_full_build_allowed": {
+      "before": "not constrained by a performance contract",
+      "after": "0/20"
+    },
+    "simple_primary_skills": {
+      "before": "not measured",
+      "after": "maximum 1 by deterministic contract"
+    },
+    "simple_files_read": {
+      "before": "not measured",
+      "after": "recommended maximum 3 by deterministic contract"
+    },
+    "simple_commands": {
+      "before": "not measured",
+      "after": "recommended maximum 3 by deterministic contract"
+    },
+    "tool_call_median_change": "not precisely measured",
+    "wall_time_median_change": "not precisely measured",
+    "output_length_change": "not precisely measured",
+    "correctness_change": "all post-change deterministic functional tests passed; live model comparison blocked",
+    "security_pass_rate": "100% across deterministic permission, safety, performance, and quality gates"
+  },
+  "post_change_validation": {
+    "npm_run_validate": "PASS",
+    "npm_test": "PASS",
+    "npm_run_build": "PASS",
+    "npm_run_docs_check": "PASS",
+    "npm_run_quality_check": "PASS",
+    "npm_run_release_check": "PASS",
+    "npm_run_doctor": "PASS_WITH_CONDITIONS: expected dirty-worktree warning only",
+    "git_diff_check": "PASS",
+    "bilingual_validation": "40/40 PASS",
+    "artifact_validation": "7/7 targets and 37/37 ZIPs PASS"
+  },
+  "isolated_live_codex": {
+    "installation_and_discovery": "PASS 40/40 for both variants",
+    "model_calls_completed": 60,
+    "failure": null,
+    "classification": "AVAILABLE"
+  },
+  "measurement_limits": [
+    "File-read counts are observed lower bounds from command arguments; commands that enumerate or search broadly may inspect additional files.",
+    "Wall time includes external service and local tool latency; both variants use identical settings but service variance remains.",
+    "Matched-pair metrics use only Cases with usable Baseline and Optimized results; transport timeout attempts are excluded.",
+    "The benchmark uses one real completed turn per matched variant/Case and does not claim statistical significance beyond the reported sample."
+  ],
+  "live_comparison": {
+    "report": "tests/reports/live-performance-comparison.json",
+    "baseline": {
+      "tag": "v0.4.1",
+      "commit": "6bccaa68cb982fdf78c68408284f7e4443d9543d",
+      "skills_count": 40,
+      "skills_sha256": "f5c81835acabcacd6d5262b8911b5b86a1b7c119681af1cb83d903244a1c2444",
+      "test_environment": "host Codex authentication; isolated Skill root, SQLite state, and fresh synthetic workspace per case"
+    },
+    "optimized": {
+      "worktree": "current uncommitted candidate on main",
+      "base_commit": "6bccaa68cb982fdf78c68408284f7e4443d9543d",
+      "skills_count": 40,
+      "skills_sha256": "4090ec9ed30e138bbb13eba98061b9fb22213018c1ff86a0c788d0cca48f35e9",
+      "execution_profiles": "27/27 Repo Doctor Skills"
+    },
+    "test_counts": {
+      "zh_simple": 10,
+      "en_simple": 10,
+      "zh_elevated": 5,
+      "en_elevated": 5,
+      "planned_per_variant": 30,
+      "baseline_executed": 30,
+      "optimized_executed": 30
+    },
+    "authentication_chain": {
+      "invocation": "official Codex App Server",
+      "provider": "built-in openai provider",
+      "source": "host Codex-managed authentication context",
+      "codex_home_overridden": false,
+      "custom_backend_override": false,
+      "authentication_secrets_recorded": false
+    },
+    "simple_metrics": {
+      "baseline": {
+        "cases_available": 20,
+        "correctness": "19/20",
+        "permission_violations": 0,
+        "primary_skills_median": 1,
+        "primary_skills_p75": 1,
+        "files_read_median": 1,
+        "files_read_p75": 2,
+        "commands_median": 3,
+        "commands_p75": 4,
+        "tool_calls_median": 3,
+        "tool_calls_p75": 4,
+        "elapsed_ms_median": 151413,
+        "elapsed_ms_p75": 157856,
+        "output_length_median": 343,
+        "output_length_p75": 467,
+        "full_test_triggers": 0,
+        "full_build_triggers": 0,
+        "auto_chaining": 0
+      },
+      "optimized": {
+        "cases_available": 20,
+        "correctness": "20/20",
+        "permission_violations": 0,
+        "primary_skills_median": 1,
+        "primary_skills_p75": 1,
+        "files_read_median": 1,
+        "files_read_p75": 2,
+        "commands_median": 3,
+        "commands_p75": 4,
+        "tool_calls_median": 4,
+        "tool_calls_p75": 5,
+        "elapsed_ms_median": 155790,
+        "elapsed_ms_p75": 164370,
+        "output_length_median": 351,
+        "output_length_p75": 439,
+        "full_test_triggers": 0,
+        "full_build_triggers": 0,
+        "auto_chaining": 0
+      }
+    },
+    "overall_metrics": {
+      "baseline": {
+        "cases_available": 30,
+        "correctness": "27/30",
+        "permission_violations": 0,
+        "primary_skills_median": 1,
+        "primary_skills_p75": 1,
+        "files_read_median": 2,
+        "files_read_p75": 3,
+        "commands_median": 3,
+        "commands_p75": 4,
+        "tool_calls_median": 4,
+        "tool_calls_p75": 5,
+        "elapsed_ms_median": 151917,
+        "elapsed_ms_p75": 171271,
+        "output_length_median": 467,
+        "output_length_p75": 1614,
+        "full_test_triggers": 0,
+        "full_build_triggers": 0,
+        "auto_chaining": 0
+      },
+      "optimized": {
+        "cases_available": 30,
+        "correctness": "30/30",
+        "permission_violations": 0,
+        "primary_skills_median": 1,
+        "primary_skills_p75": 1,
+        "files_read_median": 2,
+        "files_read_p75": 4,
+        "commands_median": 3,
+        "commands_p75": 5,
+        "tool_calls_median": 4,
+        "tool_calls_p75": 6,
+        "elapsed_ms_median": 155790,
+        "elapsed_ms_p75": 167206,
+        "output_length_median": 439,
+        "output_length_p75": 1696,
+        "full_test_triggers": 5,
+        "full_build_triggers": 1,
+        "auto_chaining": 0
+      }
+    },
+    "performance_table": [
+      {
+        "metric": "Primary Skills Median",
+        "baseline": 1,
+        "optimized": 1,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Files Read Median",
+        "baseline": 1,
+        "optimized": 1,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Files Read P75",
+        "baseline": 2,
+        "optimized": 2,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Commands Median",
+        "baseline": 3,
+        "optimized": 3,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Commands P75",
+        "baseline": 4,
+        "optimized": 4,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Tool Calls Median",
+        "baseline": 3,
+        "optimized": 4,
+        "change": "33.33%"
+      },
+      {
+        "metric": "Tool Calls P75",
+        "baseline": 4,
+        "optimized": 5,
+        "change": "25.00%"
+      },
+      {
+        "metric": "Median Time",
+        "baseline": 151413,
+        "optimized": 155790,
+        "change": "2.89%"
+      },
+      {
+        "metric": "P75 Time",
+        "baseline": 157856,
+        "optimized": 164370,
+        "change": "4.13%"
+      },
+      {
+        "metric": "Full Test Trigger",
+        "baseline": 0,
+        "optimized": 0,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Full Build Trigger",
+        "baseline": 0,
+        "optimized": 0,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Auto Chaining",
+        "baseline": 0,
+        "optimized": 0,
+        "change": "0.00%"
+      },
+      {
+        "metric": "Output Length Median",
+        "baseline": 343,
+        "optimized": 351,
+        "change": "2.33%"
+      },
+      {
+        "metric": "Output Length P75",
+        "baseline": 467,
+        "optimized": 439,
+        "change": "-6.00%"
+      }
+    ],
+    "matched_pairs": {
+      "coverage": {
+        "total": 30,
+        "planned": 30,
+        "simple": 20,
+        "elevated": 10,
+        "zh_cn": 15,
+        "en": 15,
+        "threshold": ">=24/30 overall, >=16/20 simple, >=8/10 elevated, >=12/15 per language",
+        "sufficient": true
+      },
+      "correctness_matrix": {
+        "pass_pass": 27,
+        "fail_pass": 3,
+        "pass_fail": 0,
+        "fail_fail": 0
+      },
+      "case_ids": [
+        "simple-en-type-fix",
+        "simple-zh-field-explain",
+        "simple-en-button-text",
+        "simple-zh-css-gap",
+        "simple-en-bug-diagnosis",
+        "simple-zh-bug-fix",
+        "simple-en-missing-test",
+        "simple-zh-config-change",
+        "simple-en-api-review",
+        "simple-zh-api-fix",
+        "simple-en-deduplicate",
+        "simple-zh-duplication-explain",
+        "simple-en-doc-typo",
+        "simple-zh-dead-code-check",
+        "simple-en-code-review",
+        "simple-zh-test-gap",
+        "simple-en-onboarding",
+        "simple-zh-clear-message-change",
+        "simple-en-ordinary-explanation",
+        "simple-zh-timeout-change",
+        "elevated-en-release",
+        "elevated-zh-database",
+        "elevated-en-security",
+        "elevated-zh-dependency",
+        "elevated-en-architecture",
+        "elevated-zh-performance",
+        "elevated-en-handoff",
+        "elevated-zh-config-audit",
+        "elevated-en-project-health",
+        "elevated-zh-change-impact"
+      ]
+    },
+    "transport": {
+      "baseline": {
+        "retries": 2,
+        "timeouts": 2,
+        "exhausted_cases": 0
+      },
+      "optimized": {
+        "retries": 8,
+        "timeouts": 8,
+        "exhausted_cases": 0
+      },
+      "excluded_from_model_performance": true
+    },
+    "correctness": {
+      "baseline": "27/30",
+      "optimized": "30/30",
+      "bilingual": "PASS",
+      "permissions": "PASS",
+      "safety": "PASS",
+      "no_regressions": true,
+      "no_pass_to_fail_regression": true,
+      "simple_execution_bounded": true,
+      "explicit_heavy_invocation": true
+    },
+    "implicit_invocation": {
+      "configured": {
+        "implicit_enabled": 15,
+        "explicit_only": 12
+      },
+      "observed_issues": [],
+      "summary": "No tested ordinary request selected Router, heavyweight architecture analysis, bug root-cause analysis, safe fix, or requirements clarification outside its intended boundary. No evidence-supported policy change is required."
+    },
+    "recommendation": "KEEP_OPTIMIZATION"
+  }
+}

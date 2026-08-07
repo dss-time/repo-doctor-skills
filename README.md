@@ -39,10 +39,11 @@ Choose the shortest guide for your goal:
 - [5-minute Quick Start](docs/QUICK_START.md) for cloning, validating, and building.
 - [User Manual](docs/USER_MANUAL.md) for installation, invocation syntax, permissions, and troubleshooting.
 - [Complete Skill Catalog](docs/SKILL_CATALOG.md) for choosing among all active Skills.
+- [Execution Modes](docs/guides/execution-modes.md) for fast, standard, audit, Simple Request Bypass, and explicit-only Skills.
 - [Quick Skill Entrypoints](docs/guides/quick-skill-entrypoints.md) when you know the problem but not the Skill name.
 - [Workflow Cookbook](docs/WORKFLOW_COOKBOOK.md) for chaining Skills into real tasks.
 - [Testing and Evaluation](docs/TESTING_AND_EVALUATION.md)
-- [v0.4.1 Release Notes](docs/RELEASE_NOTES_0.4.1.md)
+- [v0.5.0 Release Notes](docs/RELEASE_NOTES_0.5.0.md)
 - [v0.4.0 Release Notes](docs/RELEASE_NOTES_0.4.0.md)
 - [Release Asset Selection Guide](docs/guides/release-asset-selection.md) for choosing and verifying published ZIPs.
 - [Historical 0.3.0 Release Preparation Recommendation](docs/RELEASE_PREPARATION_0.3.0.md)
@@ -82,6 +83,8 @@ For a step-by-step guide, see [docs/QUICK_START.md](docs/QUICK_START.md).
 
 ## Release Evidence
 
+- [Skill runtime efficiency analysis](docs/research/skill-runtime-efficiency-analysis.md)
+- [Performance contract validation](tests/reports/skill-performance-validation.md)
 - [Live Codex validation report](tests/reports/live-codex-skill-validation.md)
 - [Bilingual validation report](tests/reports/bilingual-skill-validation.md)
 - [Build artifact validation report](tests/reports/build-artifact-validation.json)
@@ -344,9 +347,9 @@ Use `npm run validate`, `npm test`, `npm run build`, `npm run docs:check`, `npm 
 
 ## Release Status
 
-The current stable project release is **v0.4.1**. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 40 active Skills remain `beta`.
+The current stable project release is **v0.5.0**. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 40 active Skills remain `beta`.
 
-The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls: 200 bilingual explicit, natural-language, and adjacent-negative routing calls; 44 bilingual workflow steps; 61 mode and prototype-verdict cases; and 12 permission-boundary cases. See [Versioning and Lifecycle Policy](docs/VERSIONING.md), [v0.4.1 release notes](docs/RELEASE_NOTES_0.4.1.md), and [CHANGELOG.md](CHANGELOG.md).
+The v0.5.0 performance comparison matched all 30 baseline/optimized cases: baseline correctness was 27/30 and optimized correctness was 30/30, with safety and permission checks passing. The earlier 317/317 live-model corpus remains historical v0.4.0 evidence. See [Versioning and Lifecycle Policy](docs/VERSIONING.md), [v0.5.0 release notes](docs/RELEASE_NOTES_0.5.0.md), and [CHANGELOG.md](CHANGELOG.md).
 
 ## Related Docs
 

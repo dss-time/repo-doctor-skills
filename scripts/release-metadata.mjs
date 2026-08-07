@@ -27,8 +27,8 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.4.1",
-  releaseDate: "2026-08-06",
+  projectVersion: "0.5.0",
+  releaseDate: "2026-08-07",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
@@ -41,9 +41,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.7.0",
+      version: "0.8.0",
       activeSkillCount: 27,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.7.0" }),
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.8.0" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
@@ -74,6 +74,7 @@ export const releaseContract = Object.freeze({
     "repo.repo-doctor-router": "0.2.0",
     "repo.requirements-clarification": "0.2.0",
     "repo.safe-code-review": "0.3.0",
+    "repo.safe-fix-implementation": "0.2.0",
     "repo.safe-test-implementation": "0.4.0",
     "repo.session-handoff": "0.2.0",
     "maintainer.skill-authoring": "0.2.0",
@@ -86,7 +87,7 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.4.1.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.5.0.md",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 

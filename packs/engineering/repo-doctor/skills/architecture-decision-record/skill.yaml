@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting the repository's ADR location, numbering, and template. Use only when the user authorizes ADR or architecture-document edits; do not generate an implementation plan, fabricate team consensus, or modify business code.
-  zh-CN: 根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库 ADR 目录、编号和模板。仅在用户授权修改 ADR 或架构文档时使用；不生成实施计划、不虚构团队共识，也不修改业务代码。
+  en: Explicit-invocation Skill to create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting repository conventions. Requires authorized ADR scope; do not fabricate consensus, plan implementation, or modify business code.
+  zh-CN: 仅显式调用：根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库约定。必须获得 ADR 范围授权；不虚构共识、不生成实施计划，也不修改业务代码。
 triggers:
   en: [create an architecture decision record, update this ADR, document this architecture decision]
   zh-CN: [创建架构决策记录, 更新这个 ADR, 记录这个架构决策]
@@ -28,6 +28,10 @@ permissions:
   access_network: false
   destructive_actions_allowed: false
 risk_level: {default: safe_edit}
+execution:
+  classification: standard
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema: {type: architecture_decision_record}
 localization:
   en: {status: complete}

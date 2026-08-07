@@ -264,6 +264,13 @@ function renderSkill(skill, locale) {
     zh
       ? `- **调用标识：** \`${skill.slug}\``
       : `- **Invocation identifier:** \`${skill.slug}\``,
+    ...(skill.metadata.execution
+      ? [
+          zh
+            ? `- **执行配置：** 分类=\`${skill.metadata.execution.classification}\`；默认=\`${skill.metadata.execution.default_mode}\`；允许隐式调用=${yesNo(skill.metadata.execution.allow_implicit_invocation, locale)}`
+            : `- **Execution profile:** classification=\`${skill.metadata.execution.classification}\`; default=\`${skill.metadata.execution.default_mode}\`; implicit invocation=${yesNo(skill.metadata.execution.allow_implicit_invocation, locale)}`,
+        ]
+      : []),
     zh
       ? `- **Canonical 用途与边界：** ${skill.metadata.description[locale]}`
       : `- **Canonical purpose and boundary:** ${skill.metadata.description[locale]}`,

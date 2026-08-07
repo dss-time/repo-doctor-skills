@@ -2,3 +2,5 @@ interface:
   display_name: "Architecture Decision Record（架构决策记录）"
   short_description: "按仓库约定记录架构选项、决策理由、后果与复审条件"
   default_prompt: "使用 $architecture-decision-record 按仓库约定创建或更新 ADR，只修改架构文档。"
+policy:
+  allow_implicit_invocation: false

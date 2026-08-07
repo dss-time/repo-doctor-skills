@@ -2,3 +2,5 @@ interface:
   display_name: "Repo Onboarding（理解新项目）"
   short_description: "快速理解陌生项目的结构、技术栈、入口、命令与核心模块"
   default_prompt: "使用 $repo-onboarding 帮我理解这个陌生仓库的结构、入口和真实命令。"
+policy:
+  allow_implicit_invocation: true

@@ -2,3 +2,5 @@ interface:
   display_name: "CI Failure Diagnosis（CI 失败诊断）"
   short_description: "定位 CI 首个可信错误并区分代码、环境、权限与 flaky 问题"
   default_prompt: "使用 $ci-failure-diagnosis 定位 CI 第一个可信错误，不要实施修复或暴露敏感值。"
+policy:
+  allow_implicit_invocation: true

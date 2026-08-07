@@ -2,3 +2,5 @@ interface:
   display_name: "Safe Change Plan（安全变更计划）"
   short_description: "把已确认分析拆成原子、可验证、可回滚的实施计划"
   default_prompt: "使用 $safe-change-plan 将已确认分析拆成可验证、可回滚计划，不要执行计划。"
+policy:
+  allow_implicit_invocation: true

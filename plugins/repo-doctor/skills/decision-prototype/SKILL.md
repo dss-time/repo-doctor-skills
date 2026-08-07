@@ -1,11 +1,18 @@
 ---
 name: decision-prototype
-description: Build the smallest explicitly disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation. Automatic invocation is appropriate only for a clearly bounded prototype request; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready. 构建最小且明确可丢弃的逻辑或 UI 原型，回答一个设计、交互、状态或业务规则问题，并给出成立、否定或仍不确定的结论。用于正式实施前需要可运行证据的场景；只有范围清楚的原型请求适合自动调用，写文件和运行命令必须明确授权。绝不连接生产系统，也不把原型代码视为生产完成。
+description: Explicit-invocation Skill for building the smallest disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready. 仅显式调用：构建最小且可丢弃的逻辑或 UI 原型，回答一个设计、交互、状态或业务规则问题，并给出成立、否定或仍不确定的结论。用于正式实施前需要可运行证据的场景；写文件和运行命令必须明确授权。绝不连接生产系统，也不把原型代码视为生产完成。
 ---
 
 # Decision Prototype（决策原型验证）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `standard`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Decision Prototype
 
@@ -68,6 +75,13 @@ Lead with `status`, validation question, verdict, and recommended disposition.
 Audit mode also includes exact permission and command ledgers. Never describe the prototype as production-ready.
 
 ---
+
+## 执行契约
+
+默认使用 `standard`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # Decision Prototype（决策原型验证）
 

@@ -1,11 +1,18 @@
 ---
 name: session-handoff
-description: Create a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Use automatically when a long repository conversation must move to a fresh session. Save to an operating-system temporary directory by default; project-directory writes require explicit authorization. Never modify business files, Git state, or external systems. 创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。长仓库对话需要切换到新会话时可自动调用。默认保存到操作系统临时目录；写入项目目录必须明确授权。绝不修改业务文件、Git 状态或外部系统。
+description: Explicit-invocation Skill that creates a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Save to an operating-system temporary directory by default; project-directory writes require authorization. Never modify business files, Git state, or external systems. 仅显式调用：创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。默认保存到操作系统临时目录；写入项目目录必须授权。绝不修改业务文件、Git 状态或外部系统。
 ---
 
 # Session Handoff（会话交接）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `standard`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Session Handoff
 
@@ -55,6 +62,13 @@ Lead with `status`, next-session goal, saved path, and recommended first action.
 Use references for specifications, ADRs, issues, commits, and diffs. Do not include raw sensitive values, repeat long artifacts, or claim automatic discovery.
 
 ---
+
+## 执行契约
+
+默认使用 `standard`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # Session Handoff（会话交接）
 

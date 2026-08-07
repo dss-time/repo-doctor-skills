@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Audit configuration sources, precedence, environment overrides, defaults, required fields, types, validation, drift, obsolete settings, dangerous defaults, undocumented variables, and credential-commit risk using repository evidence. Use for configuration-specific risk; do not perform a broad health check, read or display sensitive values, connect to external environments, or modify configuration.
-  zh-CN: 基于仓库证据审计配置来源、优先级、环境覆盖、默认值、必填、类型、校验、漂移、过期项、危险默认值、未文档化变量和凭证误提交风险。用于配置专项风险；不替代广泛体检，不读取或显示敏感值、不连接外部环境，也不修改配置。
+  en: Explicit-invocation audit of configuration sources, precedence, overrides, defaults, validation, drift, dangerous settings, undocumented variables, and credential-commit risk using repository evidence. Do not trigger for one settled config edit, read sensitive values, connect to external environments, or modify configuration.
+  zh-CN: 仅显式调用：基于仓库证据审计配置来源、优先级、覆盖、默认值、校验、漂移、危险设置、未文档化变量和凭据误提交风险。不得因一个已确定配置修改而触发，不读取敏感值、不连接外部环境，也不修改配置。
 triggers:
   en: [audit this configuration system, compare environment configuration drift, configuration audit]
   zh-CN: [审计这个配置系统, 比较环境配置漂移, 配置审计]
@@ -28,6 +28,10 @@ permissions:
   access_network: false
   destructive_actions_allowed: false
 risk_level: {default: read_only}
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema: {type: configuration_audit_report}
 localization:
   en: {status: complete}

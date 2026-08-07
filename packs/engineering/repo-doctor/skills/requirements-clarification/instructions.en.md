@@ -4,8 +4,8 @@ Every question must close a named decision; repository facts are discovered, whi
 
 ## Modes
 
-- `fast`: ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
-- `standard` (default): close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
+- `fast` (default): ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
+- `standard`: close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
 - `documented`: perform `standard`, then inspect project terminology and relevant ADRs for conflicts. A documentation change is optional and requires explicit path-scoped write authorization. Record why each edit is necessary and which evidence supports it.
 
 Do not silently change mode. Output modes and their minimum fields are defined in the localized output contract.

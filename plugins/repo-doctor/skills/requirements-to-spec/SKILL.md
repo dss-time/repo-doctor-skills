@@ -7,6 +7,13 @@ description: Convert requirements whose material product, data, security, permis
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Execution Contract
+
+Default to `fast`; bounded natural-language invocation is allowed.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+
 # Requirements to Spec
 
 Convert requirements whose material decisions are already closed into an implementable and testable specification. Do not reopen settled choices, modify files, or produce a file-by-file implementation plan.
@@ -51,6 +58,13 @@ Convert requirements whose material decisions are already closed into an impleme
 If a blocking decision exists, stop and return a handoff to `requirements-clarification` instead of presenting a completed specification. Do not include a file-by-file implementation plan or edits.
 
 ---
+
+## 执行契约
+
+默认使用 `fast`；允许边界明确的自然语言隐式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # Requirements Specification（需求规格化）
 

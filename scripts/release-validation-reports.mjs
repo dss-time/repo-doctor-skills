@@ -88,6 +88,7 @@ function activeModel() {
       supported_locales: metadata.supported_locales,
       permissions: metadata.permissions,
       tool_requirements: metadata.tool_requirements,
+      execution: metadata.execution ?? null,
     };
   }));
   const workflowRegistry = readYaml(path.join(root, "packs", "engineering", "repo-doctor", "workflows.yaml"));

@@ -122,6 +122,12 @@ try {
     expect(pluginSkill.includes(metadata.description.en), `${slug} plugin description must include canonical English text`);
     expect(pluginSkill.includes(metadata.description["zh-CN"]), `${slug} plugin description must include canonical Chinese text`);
     expect(pluginUi.includes(expectedDisplayNames[slug]), `${slug} must preserve its bilingual UI display name`);
+    expect(
+      pluginUi.includes(`allow_implicit_invocation: ${metadata.execution.allow_implicit_invocation}`),
+      `${slug} plugin implicit-invocation policy must come from canonical execution metadata`,
+    );
+    expect(pluginSkill.includes("## Execution Contract"), `${slug} plugin must include the English execution contract`);
+    expect(pluginSkill.includes("## 执行契约"), `${slug} plugin must include the Chinese execution contract`);
   }
   const rcaPluginSkill = readFileSync(path.join(pluginSkills, rcaSlug, "SKILL.md"), "utf8");
   expect(rcaPluginSkill.includes("## Safe Diagnostic Execution"), "RCA plugin must include the English shell safety contract");

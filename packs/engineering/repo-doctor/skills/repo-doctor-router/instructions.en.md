@@ -9,6 +9,7 @@ The best route is the smallest verified next capability that matches the current
 - `audit`: add registry version, active-inventory evidence, rejected routes, platform capability, and unresolved routing uncertainty.
 
 Do not display detailed workflow fields unless the user requests detail or ambiguity cannot be explained safely in the compact form.
+Read `../../references/execution-modes.en.md` only when the requested mode, fast budget, or escalation boundary is unclear.
 
 ## Boundary
 

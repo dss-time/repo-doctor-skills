@@ -11,6 +11,7 @@ Use this checklist before release, merge, or major documentation updates.
 - [ ] Problem-oriented Skill entrypoint guides remain bilingual and use stable canonical names rather than unverified alias frontmatter.
 - [ ] `docs/VERSIONING.md` and `docs/VERSIONING.zh-CN.md` still match the project/component version model and maturity policy.
 - [ ] `packs/` remains the only canonical source; no Skill logic was maintained directly in generated `plugins/` or `dist/` copies.
+- [ ] `docs/guides/execution-modes.md` and its Chinese counterpart remain semantically aligned.
 
 ## Skill Structure
 
@@ -34,6 +35,8 @@ For each new or changed skill, confirm these files exist:
 - [ ] Permissions explicitly declare file write, shell, network, and destructive-action behavior.
 - [ ] Changed Skills state when automatic invocation is appropriate, when explicit write authorization is required, and which adjacent Skill owns excluded work.
 - [ ] Applicable Skills preserve `fast`, `standard`, and `audit` semantics; specialized mode sets such as `documented` or `test_mode` remain distinct from output modes.
+- [ ] Every Repo Doctor `skill.yaml` has an `execution` classification, `fast` or `standard` default, and an intentional implicit-invocation policy.
+- [ ] Heavyweight and explicit-only candidates generate `allow_implicit_invocation: false`; adapters without an equivalent field use precise descriptions instead of aliases.
 - [ ] The project release version agrees across `package.json`, the intended Git tag/GitHub Release, `CHANGELOG.md`, and release-candidate notes.
 - [ ] Every Pack version matches its corresponding generated plugin manifest; Pack/plugin versions are not mechanically forced to equal the project version.
 - [ ] Each Skill keeps an independently justified semantic version rather than inheriting its Pack or project version automatically.
@@ -53,6 +56,7 @@ For each new or changed skill, confirm these files exist:
 - [ ] `find scripts -type f -name '*.mjs' -exec node --check {} \;` passes.
 - [ ] `npm run validate` passes.
 - [ ] `npm test` passes, including activation, maintainer, synchronization, and build-integrity contracts.
+- [ ] `npm run test:performance` passes at least 20 simple and 10 elevated scenarios without weakening permission gates.
 - [ ] `npm run build` passes.
 - [ ] Codex, Claude Code, Cursor, Qwen, Kimi, generic Chinese/English, portable prompt, and ChatGPT package outputs include every active Skill without hand-edited generated drift.
 - [ ] `npm run docs:generate` refreshes the generated Skill Catalogs and `npm run docs:check` passes.

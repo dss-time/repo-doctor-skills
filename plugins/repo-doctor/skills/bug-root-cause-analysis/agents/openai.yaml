@@ -2,3 +2,5 @@ interface:
   display_name: "Bug Root Cause Analysis（Bug 根因分析）"
   short_description: "复现具体故障并建立从输入到症状的根因证据链"
   default_prompt: "使用 $bug-root-cause-analysis 复现并定位具体 Bug 根因，不要实施修复。"
+policy:
+  allow_implicit_invocation: true

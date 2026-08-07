@@ -29,6 +29,30 @@ function yamlString(value) {
   return JSON.stringify(value);
 }
 
+export function executionContract(execution, locale) {
+  if (!execution) return "";
+  const defaultMode = execution.default_mode;
+  const implicit = execution.allow_implicit_invocation;
+  if (locale === "zh-CN") {
+    return [
+      "## 执行契约",
+      "",
+      `默认使用 \`${defaultMode}\`；${implicit ? "允许边界明确的自然语言隐式调用" : "仅允许用户显式调用"}。`,
+      "清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。",
+      "只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。",
+      "模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。",
+    ].join("\n");
+  }
+  return [
+    "## Execution Contract",
+    "",
+    `Default to \`${defaultMode}\`; ${implicit ? "bounded natural-language invocation is allowed" : "explicit invocation is required"}.`,
+    "Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.",
+    "Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.",
+    "For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.",
+  ].join("\n");
+}
+
 export function discoverActivePackSkills(packRoot) {
   const packPath = path.join(packRoot, "pack.yaml");
   const pack = parseYamlSubset(readFileSync(packPath, "utf8"));
@@ -94,16 +118,19 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
   const plans = orderedSkills.map((slug) => {
     if (!interfaces[slug]) throw new Error(`Missing plugin interface metadata for ${slug}`);
     const source = path.join(packSkills, slug);
-    const metadata = readFileSync(path.join(source, "skill.yaml"), "utf8");
+    const metadataSource = readFileSync(path.join(source, "skill.yaml"), "utf8");
+    const metadata = parseYamlSubset(metadataSource);
     const normalizeReferences = (content) => content.replaceAll("../../references/", "references/");
     return {
       slug,
       source,
       interface: interfaces[slug],
-      nameEn: localized(metadata, "name", "en"),
-      nameZh: localized(metadata, "name", "zh-CN"),
-      descriptionEn: localized(metadata, "description", "en"),
-      descriptionZh: localized(metadata, "description", "zh-CN"),
+      execution: metadata.execution,
+      allowImplicitInvocation: metadata.execution?.allow_implicit_invocation,
+      nameEn: localized(metadataSource, "name", "en"),
+      nameZh: localized(metadataSource, "name", "zh-CN"),
+      descriptionEn: localized(metadataSource, "description", "en"),
+      descriptionZh: localized(metadataSource, "description", "zh-CN"),
       instructionsEn: normalizeReferences(readFileSync(path.join(source, "instructions.en.md"), "utf8").trim()),
       instructionsZh: normalizeReferences(readFileSync(path.join(source, "instructions.zh-CN.md"), "utf8").trim()),
       outputEn: readFileSync(path.join(source, "output.en.md"), "utf8").trim(),
@@ -124,6 +151,8 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
       slug,
       source,
       interface: pluginInterface,
+      execution,
+      allowImplicitInvocation,
       nameEn,
       nameZh,
       descriptionEn,
@@ -140,7 +169,7 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
 
     writeFileSync(
       path.join(destination, "SKILL.md"),
-      `---\nname: ${slug}\ndescription: ${descriptionEn} ${descriptionZh}\n---\n\n# ${nameEn}（${nameZh}）\n\nUse the section matching the user's language. 使用与用户输入语言一致的章节。\n\n${instructionsEn}\n\n${outputEn}\n\n---\n\n${instructionsZh}\n\n${outputZh}\n`,
+      `---\nname: ${slug}\ndescription: ${descriptionEn} ${descriptionZh}\n---\n\n# ${nameEn}（${nameZh}）\n\nUse the section matching the user's language. 使用与用户输入语言一致的章节。\n\n${execution ? `${executionContract(execution, "en")}\n\n` : ""}${instructionsEn}\n\n${outputEn}\n\n---\n\n${execution ? `${executionContract(execution, "zh-CN")}\n\n` : ""}${instructionsZh}\n\n${outputZh}\n`,
     );
     writeFileSync(
       path.join(agents, "openai.yaml"),
@@ -149,6 +178,12 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
         `  display_name: ${yamlString(pluginInterface.displayName ?? `${nameEn}（${nameZh}）`)}`,
         `  short_description: ${yamlString(pluginInterface.shortDescription)}`,
         `  default_prompt: ${yamlString(pluginInterface.defaultPrompt)}`,
+        ...(typeof allowImplicitInvocation === "boolean"
+          ? [
+              "policy:",
+              `  allow_implicit_invocation: ${allowImplicitInvocation}`,
+            ]
+          : []),
         "",
       ].join("\n"),
     );

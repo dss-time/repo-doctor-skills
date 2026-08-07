@@ -2,3 +2,5 @@ interface:
   display_name: "Documentation Sync（文档同步维护）"
   short_description: "根据已确认实现同步受影响文档并保持结构与术语一致"
   default_prompt: "使用 $documentation-sync 根据已确认变更同步文档，只修改文档。"
+policy:
+  allow_implicit_invocation: true

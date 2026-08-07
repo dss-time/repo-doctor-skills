@@ -2,6 +2,8 @@
 
 This guide starts with real tasks instead of assuming that you already know every Skill name. Each workflow explains the sequence, why each Skill belongs there, copyable prompts, permission transitions, stop conditions, and safe handoffs.
 
+These sequences are recipes, not automatic pipelines. Use one primary Skill for a normal request. Continue to another step only when the user explicitly invokes it or asks for an end-to-end flow; every write or high-risk gate still requires its own authorization. See [Execution Modes](guides/execution-modes.md).
+
 For the purpose of an individual Skill, open the [Complete Skill Catalog](SKILL_CATALOG.md). If you have not installed or built the project yet, start with the [User Manual](USER_MANUAL.md).
 
 ## Before You Start: Invocation and Safety Conventions

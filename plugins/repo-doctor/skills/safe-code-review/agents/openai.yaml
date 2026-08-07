@@ -2,3 +2,5 @@ interface:
   display_name: "Safe Code Review（安全审查代码）"
   short_description: "审查代码或 PR 并按优先级报告可操作问题"
   default_prompt: "使用 $safe-code-review 审查这些代码改动，不要自动实施修复。"
+policy:
+  allow_implicit_invocation: true

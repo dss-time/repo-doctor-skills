@@ -2,3 +2,5 @@ interface:
   display_name: "Safe Fix Implementation（只修一个问题）"
   short_description: "一次只实施一个小而安全、可验证的生产代码修复"
   default_prompt: "使用 $safe-fix-implementation 安全修复一个已确认问题并完成验证。"
+policy:
+  allow_implicit_invocation: true

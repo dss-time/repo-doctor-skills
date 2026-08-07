@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Diagnose broad repository health across architecture, correctness, security, performance, dependencies, tests, and general release risk. Use a specialized review for one bounded dependency upgrade, API contract, database migration, dead-code candidate, security surface, performance regression, or configuration scope; use release-readiness-check for a specific release gate.
-  zh-CN: 从架构、正确性、安全、性能、依赖、测试和一般发布风险等方面广泛诊断项目健康度。单一依赖升级、API 契约、数据库迁移、死代码候选、安全边界、性能回归或配置范围应交给相应专项审查；具体候选版本门禁使用 release-readiness-check。
+  en: Explicit-invocation broad repository diagnosis across architecture, correctness, security, performance, dependencies, tests, and general release risk. Do not trigger for a bounded file, error, diff, or simple request. Use a specialized review for one dependency upgrade, API contract, migration, dead-code candidate, security surface, performance regression, configuration scope, or release candidate.
+  zh-CN: 仅显式调用的全仓库诊断，覆盖架构、正确性、安全、性能、依赖、测试和一般发布风险。不得因单个文件、明确报错、Diff 或简单请求而触发。单一依赖升级、API 契约、迁移、死代码候选、安全边界、性能回归、配置范围或候选版本应使用对应专项 Skill。
 triggers:
   en:
     - project health check
@@ -35,6 +35,10 @@ permissions:
   destructive_actions_allowed: false
 risk_level:
   default: read_only
+execution:
+  classification: heavyweight
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema:
   type: health_check_report
 localization:

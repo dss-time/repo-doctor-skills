@@ -37,6 +37,10 @@ permissions:
   destructive_actions_allowed: false
 risk_level:
   default: safe_edit
+execution:
+  classification: lightweight
+  default_mode: fast
+  allow_implicit_invocation: true
 output_schema:
   type: documentation_sync_report
 localization:

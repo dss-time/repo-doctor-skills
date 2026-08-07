@@ -2,3 +2,5 @@ interface:
   display_name: "Configuration Audit（配置审计）"
   short_description: "审计配置来源、优先级、环境漂移、危险默认值与凭据风险"
   default_prompt: "使用 $configuration-audit 审计配置来源、优先级和漂移，不显示凭据值或修改配置。"
+policy:
+  allow_implicit_invocation: false

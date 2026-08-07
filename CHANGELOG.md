@@ -8,6 +8,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-07
+
+> Stable execution-efficiency release. The optimized runtime contract completed 30/30 paired live cases with no correctness, safety, or permission regression; measured simple-case latency and tool-call counts did not improve and are reported without a 30% performance claim.
+
+### Added
+
+- Added bilingual `fast`, `standard`, and `audit` execution-mode guidance, Simple Request Bypass, progressive reference loading, and 30 performance contracts covering 20 simple and 10 elevated scenarios.
+- Added bilingual runtime-efficiency analysis and performance baseline/validation reports.
+
+### Changed
+
+- Added machine-readable execution classification and default mode to all 27 Repo Doctor Skills.
+- Generated Codex/ChatGPT `policy.allow_implicit_invocation` from canonical metadata; heavyweight, specialist, Router, prototype, ADR, and handoff entrypoints now require explicit invocation.
+- Made one primary Skill, focused validation, compact fast output, and no automatic Skill chaining the default execution contract.
+- Advanced the project release to 0.5.0, Repo Doctor Pack/plugin to 0.8.0, and `safe-fix-implementation` to 0.2.0; all other component versions and all maturity statuses remain unchanged.
+
+### Fixed
+
+- Corrected explicit low-risk edit activation and benchmark evidence capture without weakening test-only, documentation-only, shell-command, or destructive-action boundaries.
+
+### Security
+
+- Preserved every declared permission and destructive-action gate; `fast` cannot bypass write authorization, command preflight, production-data boundaries, or evidence requirements.
+
+### Validation
+
+- Completed 30/30 matched baseline/optimized live cases: baseline correctness 27/30, optimized correctness 30/30, with a 27 PASS/PASS, 3 FAIL/PASS, 0 PASS/FAIL, 0 FAIL/FAIL matrix.
+- Passed bilingual, permission, safety, simple-execution, and explicit-heavy-invocation gates. Simple-case median latency changed by +2.89%, P75 latency by +4.13%, median tool calls by +33.33%, and P75 output size by -6.00%.
+- Recorded final report transport outcomes of 2 baseline and 8 optimized retries/timeouts with zero exhausted cases. Two resumed optimized cases used a disclosed 300-second recovery timeout ceiling while prompts, model, reasoning, concurrency, retries, and assertions remained unchanged.
+
+### Documentation
+
+- Added bilingual execution-mode guidance, runtime-efficiency research, truthful benchmark reports, v0.5.0 Release Notes, and version-pinned asset-selection instructions.
+
 ## [0.4.1] - 2026-08-06
 
 > Stable documentation and release-verification patch. The public Skill inventory and behavior are unchanged from v0.4.0.
@@ -198,7 +232,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0-rc.1...v0.3.0

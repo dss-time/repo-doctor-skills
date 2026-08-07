@@ -4,8 +4,8 @@ Independent review axes prevent a clean result in one concern from hiding a fail
 
 ## Output modes
 
-- `fast`: conclusion and only evidence-backed P0/P1/P2 findings, plus blockers and the next action.
-- `standard` (default): all actionable findings, explicit no-finding axes, evidence gaps, and residual risks.
+- `fast` (default): conclusion and only evidence-backed P0/P1/P2 findings, plus blockers and the next action.
+- `standard`: all actionable findings, explicit no-finding axes, evidence gaps, and residual risks.
 - `audit`: `standard` plus complete scope, source ledger, commands, skipped checks, axis-local evidence, and permission record.
 
 ## Boundary and Evidence

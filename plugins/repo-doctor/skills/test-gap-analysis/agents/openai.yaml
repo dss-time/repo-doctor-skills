@@ -2,3 +2,5 @@ interface:
   display_name: "Test Gap Analysis（测试缺口分析）"
   short_description: "映射需求或 Diff 到现有测试并排序覆盖缺口"
   default_prompt: "使用 $test-gap-analysis 映射现有测试并分析优先级缺口，不要编写测试。"
+policy:
+  allow_implicit_invocation: true

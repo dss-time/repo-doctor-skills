@@ -2,3 +2,5 @@ interface:
   display_name: "Dependency Upgrade Analysis（依赖升级分析）"
   short_description: "分析依赖升级的破坏性变化、生态兼容性与分阶段回滚方案"
   default_prompt: "使用 $dependency-upgrade-analysis 分析这次依赖升级的兼容性、验证与回滚方案，不修改依赖。"
+policy:
+  allow_implicit_invocation: false

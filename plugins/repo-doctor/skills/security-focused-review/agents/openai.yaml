@@ -2,3 +2,5 @@ interface:
   display_name: "Security Focused Review（安全专项审查）"
   short_description: "基于威胁模型执行安全专项审查并区分漏洞、风险与未知项"
   default_prompt: "使用 $security-focused-review 对指定范围执行安全专项审查，不攻击系统或直接修复。"
+policy:
+  allow_implicit_invocation: false

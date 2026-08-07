@@ -2,7 +2,12 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSyn
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { copyDirectoryContents } from "./deterministic-files.mjs";
-import { discoverActivePackSkills, discoverPackRoots } from "./sync-pack-plugin.mjs";
+import {
+  discoverActivePackSkills,
+  discoverPackRoots,
+  executionContract,
+} from "./sync-pack-plugin.mjs";
+import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 
 const root = process.cwd();
 const packsDir = path.join(root, "packs");
@@ -43,6 +48,7 @@ function copyFlatResources(skillDir, outDir) {
 
 function renderSkill(skillDir, locale, target) {
   const yaml = readFileSync(path.join(skillDir, "skill.yaml"), "utf8");
+  const metadata = parseYamlSubset(yaml);
   const name = field(yaml, "name", locale) || path.basename(skillDir);
   const description = field(yaml, "description", locale);
   const descriptionEn = field(yaml, "description", "en");
@@ -60,6 +66,9 @@ function renderSkill(skillDir, locale, target) {
       .replaceAll("assets/", `assets/${skillName}/`)
       .replaceAll("scripts/", `scripts/${skillName}/`)
       .replaceAll("__PACK_REFERENCE__", "references/");
+  }
+  if (metadata.execution) {
+    instructions = `${executionContract(metadata.execution, locale)}\n\n${instructions}`;
   }
   const output = readFileSync(path.join(skillDir, `output.${locale}.md`), "utf8");
 
@@ -80,13 +89,18 @@ function renderSkill(skillDir, locale, target) {
 
 function renderCodexSkill(skillDir) {
   const yaml = readFileSync(path.join(skillDir, "skill.yaml"), "utf8");
+  const metadata = parseYamlSubset(yaml);
   const skillName = path.basename(skillDir);
   const descriptionEn = field(yaml, "description", "en");
   const descriptionZh = field(yaml, "description", "zh-CN");
-  const instructionsEn = readFileSync(path.join(skillDir, "instructions.en.md"), "utf8")
+  let instructionsEn = readFileSync(path.join(skillDir, "instructions.en.md"), "utf8")
     .replaceAll("../../references/", "references/");
-  const instructionsZh = readFileSync(path.join(skillDir, "instructions.zh-CN.md"), "utf8")
+  let instructionsZh = readFileSync(path.join(skillDir, "instructions.zh-CN.md"), "utf8")
     .replaceAll("../../references/", "references/");
+  if (metadata.execution) {
+    instructionsEn = `${executionContract(metadata.execution, "en")}\n\n${instructionsEn}`;
+    instructionsZh = `${executionContract(metadata.execution, "zh-CN")}\n\n${instructionsZh}`;
+  }
   const outputEn = readFileSync(path.join(skillDir, "output.en.md"), "utf8");
   const outputZh = readFileSync(path.join(skillDir, "output.zh-CN.md"), "utf8");
   return [
@@ -106,6 +120,25 @@ function renderCodexSkill(skillDir) {
     instructionsZh.trim(),
     "",
     outputZh.trim(),
+    "",
+  ].join("\n");
+}
+
+function renderCodexInterface(skillDir) {
+  const metadata = parseYamlSubset(readFileSync(path.join(skillDir, "skill.yaml"), "utf8"));
+  if (!metadata.execution) return null;
+  const skillName = path.basename(skillDir);
+  const displayName = `${metadata.name.en}（${metadata.name["zh-CN"]}）`;
+  const shortDescription = `${metadata.name["zh-CN"]}；默认 ${metadata.execution.default_mode}，${
+    metadata.execution.allow_implicit_invocation ? "允许隐式调用" : "仅显式调用"
+  }`;
+  return [
+    "interface:",
+    `  display_name: ${JSON.stringify(displayName)}`,
+    `  short_description: ${JSON.stringify(shortDescription)}`,
+    `  default_prompt: ${JSON.stringify(`使用 $${skillName} 执行这个有边界的 Repo Doctor 任务。`)}`,
+    "policy:",
+    `  allow_implicit_invocation: ${metadata.execution.allow_implicit_invocation}`,
     "",
   ].join("\n");
 }
@@ -158,6 +191,12 @@ function buildTarget(target) {
       const skillOutDir = path.join(outDir, "skills", skillName);
       mkdirSync(skillOutDir, { recursive: true });
       writeFileSync(path.join(skillOutDir, "SKILL.md"), renderCodexSkill(skillDir));
+      const codexInterface = renderCodexInterface(skillDir);
+      if (codexInterface) {
+        const agentsDir = path.join(skillOutDir, "agents");
+        mkdirSync(agentsDir, { recursive: true });
+        writeFileSync(path.join(agentsDir, "openai.yaml"), codexInterface);
+      }
       const packRoot = path.dirname(path.dirname(skillDir));
       copyDirectoryContents(path.join(packRoot, "references"), path.join(skillOutDir, "references"));
       copyDirectoryContents(path.join(skillDir, "references"), path.join(skillOutDir, "references"));

@@ -7,14 +7,21 @@ description: Review a concrete diff or PR through three independent axes: reposi
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Execution Contract
+
+Default to `fast`; bounded natural-language invocation is allowed.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+
 # Safe Code Review
 
 Independent review axes prevent a clean result in one concern from hiding a failure in another.
 
 ## Output modes
 
-- `fast`: conclusion and only evidence-backed P0/P1/P2 findings, plus blockers and the next action.
-- `standard` (default): all actionable findings, explicit no-finding axes, evidence gaps, and residual risks.
+- `fast` (default): conclusion and only evidence-backed P0/P1/P2 findings, plus blockers and the next action.
+- `standard`: all actionable findings, explicit no-finding axes, evidence gaps, and residual risks.
 - `audit`: `standard` plus complete scope, source ledger, commands, skipped checks, axis-local evidence, and permission record.
 
 ## Boundary and Evidence
@@ -58,14 +65,21 @@ Every deduplicated finding must include: severity, contributing axis or axes, fi
 
 ---
 
+## 执行契约
+
+默认使用 `fast`；允许边界明确的自然语言隐式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+
 # 安全代码审查
 
 独立审查轴可以防止一个维度的干净结论掩盖另一个维度的失败。
 
 ## 输出模式
 
-- `fast`：结论、仅有证据的 P0/P1/P2 问题、阻塞和下一动作。
-- `standard`（默认）：全部可操作问题、明确的无发现轴、证据缺口和剩余风险。
+- `fast`（默认）：结论、仅有证据的 P0/P1/P2 问题、阻塞和下一动作。
+- `standard`：全部可操作问题、明确的无发现轴、证据缺口和剩余风险。
 - `audit`：在 `standard` 基础上增加完整范围、来源账本、命令、跳过检查、各轴独立证据和权限记录。
 
 ## 边界与证据

@@ -4,7 +4,7 @@ name:
   zh-CN: Repo Doctor / 仓库医生
 category: engineering
 visibility: public
-version: 0.7.0
+version: 0.8.0
 status: beta
 default_locale: zh-CN
 supported_locales:

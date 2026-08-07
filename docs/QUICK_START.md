@@ -7,6 +7,7 @@ This guide is for first-time users.
 - Stay here for a 5-minute build-oriented start.
 - Read the [User Manual](USER_MANUAL.md) for installation, invocation syntax, permissions, and troubleshooting.
 - Open the [Complete Skill Catalog](SKILL_CATALOG.md) when you know the task but not the Skill name.
+- Read [Execution Modes](guides/execution-modes.md) to keep simple work fast and require explicit invocation for heavyweight audits.
 - Open [Quick Skill Entrypoints](guides/quick-skill-entrypoints.md) when you want one short example for your problem.
 - Follow the [Workflow Cookbook](WORKFLOW_COOKBOOK.md) when a task needs several Skills.
 - Read [Versioning and Lifecycle Policy](VERSIONING.md) when checking a release, Pack/plugin version, or Skill maturity status.
@@ -14,7 +15,7 @@ This guide is for first-time users.
 
 ## Release Note
 
-The current stable release is **v0.4.1**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The unchanged Skill corpus has 317/317 PASS evidence from real Codex calls across core routing, bilingual workflows, modes, prototype verdicts, and permission boundaries.
+The current stable release is **v0.5.0**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The v0.5.0 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates.
 
 ## What You Are Looking At
 
@@ -40,6 +41,8 @@ npm test
 ```
 
 These commands check required files, metadata, locale coverage, permissions, public-safe boundaries, activation contracts, maintainer fixtures, synchronization, and deterministic builds.
+
+For normal usage, Repo Doctor chooses `fast` for clear local requests, `standard` for related-module work, and `audit` only for high-risk or explicitly complete audits. A request activates one primary Skill by default; multi-Skill workflows do not continue automatically. See [Execution Modes](guides/execution-modes.md).
 
 ## Build All Outputs
 

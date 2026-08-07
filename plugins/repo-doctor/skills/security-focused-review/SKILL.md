@@ -1,11 +1,18 @@
 ---
 name: security-focused-review
-description: Perform a scoped security review by establishing assets, trust boundaries, attacker prerequisites, and evidence-backed findings across authentication, authorization, validation, injection, path handling, SSRF, XSS, CSRF, deserialization, credential handling, logging, and dependencies. Use for security depth; do not replace general code review, run attacks, access production, reveal credentials, or implement fixes. 通过建立资产、信任边界和攻击前提，对鉴权、授权、校验、注入、路径、SSRF、XSS、CSRF、反序列化、凭证、日志和依赖执行有证据的范围化安全审查。用于安全深度审查；不替代普通代码审查，不执行攻击、不访问生产、不显示密钥，也不实施修复。
+description: Explicit-invocation scoped security review that establishes assets, trust boundaries, attacker prerequisites, and evidence-backed findings across the named security surface. Do not trigger for general code review, run attacks, access production, reveal credentials, or implement fixes. 仅显式调用：针对指定安全边界建立资产、信任边界和攻击前提，并输出有证据的专项发现。不得因普通代码审查而触发，不执行攻击、不访问生产、不显示凭据，也不实施修复。
 ---
 
 # Security Focused Review（安全专项审查）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `standard`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Security Focused Review
 
@@ -34,6 +41,13 @@ Perform a defensive, scoped security review. Do not attack systems, access produ
 6. Unknowns and excluded attack surfaces
 
 ---
+
+## 执行契约
+
+默认使用 `standard`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # 安全专项审查
 

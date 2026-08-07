@@ -7,6 +7,7 @@
 - 想在 5 分钟内完成构建：继续阅读本页。
 - 想了解安装、调用语法、权限和故障排查：看[完整用户手册](USER_MANUAL.zh-CN.md)。
 - 知道任务但不知道 Skill 名：查[Skill 完整目录](SKILL_CATALOG.zh-CN.md)。
+- 想让简单任务快速完成并了解重型审计的显式调用方式：看[执行模式](guides/execution-modes.zh-CN.md)。
 - 想按问题直接复制一个最短示例：看[Skill 快速入口](guides/quick-skill-entrypoints.zh-CN.md)。
 - 一个任务需要串联多个 Skill：看[工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
 - 需要核对发布、Pack/插件版本或 Skill 成熟度：看[版本与生命周期策略](VERSIONING.zh-CN.md)。
@@ -14,7 +15,7 @@
 
 ## 发布说明
 
-当前正式版是 **v0.4.1**。项目版本、组件版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。未变化的 Skill 集合具有 317/317 次真实 Codex 调用 PASS 证据，覆盖核心路由、双语工作流、模式、原型三态判定和权限边界。
+当前正式版是 **v0.5.0**。项目版本、组件版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。v0.5.0 性能对比完成 30/30 组配对案例，正确率由 27/30 提升至 30/30，并保持安全与权限门禁通过。
 
 ## 你正在看的是什么
 
@@ -40,6 +41,8 @@ npm test
 ```
 
 这些命令会检查必需文件、元数据、语言覆盖、权限、公开安全边界、activation 契约、维护工具 fixture、同步和确定性构建。
+
+日常使用时，明确的局部请求默认走 `fast`，相关模块工作走 `standard`，只有高风险或用户明确要求完整审计时才走 `audit`。每个请求默认只激活一个主 Skill，多 Skill workflow 不会自动继续。详见[执行模式](guides/execution-modes.zh-CN.md)。
 
 ## 构建所有输出
 

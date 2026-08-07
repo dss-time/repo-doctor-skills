@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Perform an evidence-backed, read-only release gate for a specific candidate version and return GO, GO WITH CONDITIONS, or NO-GO after checking workspace state, versioning, changes, validation, compatibility, rollback, documentation, and sensitive artifacts. Use for release candidates; do not use as a broad project health check or execute release, commit, tag, push, or version changes.
-  zh-CN: 针对具体候选版本执行有证据的只读发布门禁，检查工作区、版本、变更、验证、兼容性、回滚、文档和敏感产物后给出 GO、GO WITH CONDITIONS 或 NO-GO。用于候选版本；不作为广泛项目体检，也不执行发布、提交、tag、push 或版本修改。
+  en: Explicit-invocation, evidence-backed, read-only release gate for a specific candidate version, returning GO, GO WITH CONDITIONS, or NO-GO after full release checks. Do not trigger for ordinary validation or project health, and never execute release, commit, tag, push, or version changes.
+  zh-CN: 仅显式调用：针对具体候选版本执行有证据的只读发布门禁，完成发布检查后给出 GO、GO WITH CONDITIONS 或 NO-GO。不得因普通验证或项目体检而触发，也不执行发布、提交、tag、push 或版本修改。
 triggers:
   en:
     - check whether this release candidate is ready
@@ -37,6 +37,10 @@ permissions:
   destructive_actions_allowed: false
 risk_level:
   default: advisory
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema:
   type: release_readiness_report
 localization:

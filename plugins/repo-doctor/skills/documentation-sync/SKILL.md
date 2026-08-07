@@ -7,6 +7,13 @@ description: Synchronize documentation with a confirmed code, configuration, API
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Execution Contract
+
+Default to `fast`; bounded natural-language invocation is allowed.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+
 # Documentation Sync
 
 Synchronize affected documentation with confirmed implementation, configuration, API, or behavior changes. Modify documentation only.
@@ -14,6 +21,7 @@ Synchronize affected documentation with confirmed implementation, configuration,
 ## Boundary
 
 - Require confirmed implementation evidence, configuration, specification, or diff. Do not document planned behavior as shipped behavior.
+- For a user-identified typo in one named document, the visible text and exact correction are sufficient evidence: edit only that file, run at most one targeted check, and stop without a broader documentation inventory.
 - Modify only documentation and documentation-owned examples by default. Do not change production code, tests, configuration, dependencies, or behavior.
 - If implementation appears wrong or contradicts the confirmed specification, report a blocker instead of changing business code.
 - Preserve each document's language, structure, terminology, links, formatting, and local style.
@@ -45,6 +53,13 @@ Separate confirmed documentation changes from assumptions. List only commands ac
 
 ---
 
+## 执行契约
+
+默认使用 `fast`；允许边界明确的自然语言隐式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+
 # 文档同步维护
 
 根据已确认的实现、配置、API 或行为变更同步受影响文档。只修改文档。
@@ -52,6 +67,7 @@ Separate confirmed documentation changes from assumptions. List only commands ac
 ## 职责边界
 
 - 需要已确认实现证据、配置、规格或 diff；不得把计划行为写成已发布行为。
+- 用户已指出单个命名文档中的 typo 时，可见文本和精确更正就是充分证据：只修改该文件，最多运行一个定向检查，不做更广的文档盘点并立即停止。
 - 默认只修改文档和归属文档的示例，不改生产代码、测试、配置、依赖或行为。
 - 发现实现错误或与已确认规格冲突时，报告阻塞项，不修改业务代码。
 - 保留各文档原有语言、结构、术语、链接、格式和局部风格。

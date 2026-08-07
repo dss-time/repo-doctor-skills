@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Create a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Use automatically when a long repository conversation must move to a fresh session. Save to an operating-system temporary directory by default; project-directory writes require explicit authorization. Never modify business files, Git state, or external systems.
-  zh-CN: 创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。长仓库对话需要切换到新会话时可自动调用。默认保存到操作系统临时目录；写入项目目录必须明确授权。绝不修改业务文件、Git 状态或外部系统。
+  en: Explicit-invocation Skill that creates a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Save to an operating-system temporary directory by default; project-directory writes require authorization. Never modify business files, Git state, or external systems.
+  zh-CN: 仅显式调用：创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。默认保存到操作系统临时目录；写入项目目录必须授权。绝不修改业务文件、Git 状态或外部系统。
 triggers:
   en:
     - prepare this session for another agent
@@ -37,6 +37,10 @@ permissions:
   destructive_actions_allowed: false
 risk_level:
   default: safe_edit
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema:
   type: session_handoff_brief
 localization:

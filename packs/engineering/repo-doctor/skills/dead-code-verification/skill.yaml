@@ -28,6 +28,10 @@ permissions:
   access_network: false
   destructive_actions_allowed: false
 risk_level: {default: read_only}
+execution:
+  classification: standard
+  default_mode: fast
+  allow_implicit_invocation: true
 output_schema: {type: dead_code_verification_report}
 localization:
   en: {status: complete}

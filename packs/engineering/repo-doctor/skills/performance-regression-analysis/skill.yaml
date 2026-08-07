@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Analyze a specific performance regression against a defined baseline and workload using profiles, benchmarks, traces, logs, or reproducible experiments, covering algorithms, I/O, N+1, caching, memory, concurrency, network, database, and rendering. Use for measured regression depth; do not replace general code review, infer slowness from appearance alone, or optimize code.
-  zh-CN: 针对明确基线和工作负载，使用 profile、benchmark、trace、日志或可复现实验分析具体性能回归，覆盖算法、I/O、N+1、缓存、内存、并发、网络、数据库和渲染。用于有测量依据的性能深度分析；不替代普通代码审查，不凭代码外观断言变慢，也不优化代码。
+  en: Explicit-invocation analysis of one measured performance regression against a defined baseline and workload using profiles, benchmarks, traces, logs, or reproducible experiments. Do not trigger for ordinary slowness guesses, replace general code review, or optimize code.
+  zh-CN: 仅显式调用：针对明确基线和工作负载，使用 profile、benchmark、trace、日志或可复现实验分析一个已测量的性能回归。不得因普通性能猜测而触发，不替代代码审查，也不优化代码。
 triggers:
   en: [analyze this performance regression, compare this benchmark to baseline, performance regression analysis]
   zh-CN: [分析这个性能回归, 对比基线和 benchmark, 性能回归分析]
@@ -28,6 +28,10 @@ permissions:
   access_network: false
   destructive_actions_allowed: false
 risk_level: {default: read_only}
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema: {type: performance_regression_report}
 localization:
   en: {status: complete}

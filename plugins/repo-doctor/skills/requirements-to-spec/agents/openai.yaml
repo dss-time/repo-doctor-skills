@@ -2,3 +2,5 @@ interface:
   display_name: "Requirements Specification（需求规格化）"
   short_description: "把重大决策已闭合的需求整理为可实施、可验证规格"
   default_prompt: "使用 $requirements-to-spec 将重大决策已闭合的需求整理为可验证规格；若仍有重大选择则停止并转交澄清。"
+policy:
+  allow_implicit_invocation: true

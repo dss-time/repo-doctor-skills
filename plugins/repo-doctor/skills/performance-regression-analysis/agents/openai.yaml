@@ -2,3 +2,5 @@ interface:
   display_name: "Performance Regression Analysis（性能回归分析）"
   short_description: "基于基线和测量证据定位性能回归并设计验证实验"
   default_prompt: "使用 $performance-regression-analysis 基于基线和测量证据分析性能回归，不直接优化代码。"
+policy:
+  allow_implicit_invocation: false

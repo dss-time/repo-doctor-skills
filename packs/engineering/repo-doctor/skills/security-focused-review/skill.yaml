@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Perform a scoped security review by establishing assets, trust boundaries, attacker prerequisites, and evidence-backed findings across authentication, authorization, validation, injection, path handling, SSRF, XSS, CSRF, deserialization, credential handling, logging, and dependencies. Use for security depth; do not replace general code review, run attacks, access production, reveal credentials, or implement fixes.
-  zh-CN: 通过建立资产、信任边界和攻击前提，对鉴权、授权、校验、注入、路径、SSRF、XSS、CSRF、反序列化、凭证、日志和依赖执行有证据的范围化安全审查。用于安全深度审查；不替代普通代码审查，不执行攻击、不访问生产、不显示密钥，也不实施修复。
+  en: Explicit-invocation scoped security review that establishes assets, trust boundaries, attacker prerequisites, and evidence-backed findings across the named security surface. Do not trigger for general code review, run attacks, access production, reveal credentials, or implement fixes.
+  zh-CN: 仅显式调用：针对指定安全边界建立资产、信任边界和攻击前提，并输出有证据的专项发现。不得因普通代码审查而触发，不执行攻击、不访问生产、不显示凭据，也不实施修复。
 triggers:
   en: [perform a security focused review, review this authentication boundary for vulnerabilities, security focused review]
   zh-CN: [执行安全专项审查, 审查这个认证边界的漏洞, 安全专项审查]
@@ -28,6 +28,10 @@ permissions:
   access_network: false
   destructive_actions_allowed: false
 risk_level: {default: read_only}
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema: {type: security_review_report}
 localization:
   en: {status: complete}

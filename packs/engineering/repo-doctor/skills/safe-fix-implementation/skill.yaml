@@ -4,15 +4,15 @@ name:
   zh-CN: 最小安全修复
 category: engineering
 visibility: public
-version: 0.1.0
+version: 0.2.0
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Implement one small, safe, verified production fix after a clear diagnosis. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes.
-  zh-CN: 在明确诊断后实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。
+  en: Implement one small, safe, verified production fix after a clear diagnosis or for an exact, low-risk edit with an explicit target and desired result. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes.
+  zh-CN: 在明确诊断后，或针对目标与期望结果清楚的精确低风险编辑，实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。
 triggers:
   en:
     - fix the highest priority issue
@@ -35,6 +35,10 @@ permissions:
   destructive_actions_allowed: false
 risk_level:
   default: safe_edit
+execution:
+  classification: standard
+  default_mode: fast
+  allow_implicit_invocation: true
 output_schema:
   type: fix_implementation_report
 localization:

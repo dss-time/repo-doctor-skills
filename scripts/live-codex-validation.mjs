@@ -40,6 +40,10 @@ const inventory = JSON.parse(readFileSync(inventoryPath, "utf8"));
 const activationCases = JSON.parse(readFileSync(activationPath, "utf8"));
 export const activeSkills = inventory.active_skills.map((skill) => skill.slug);
 const skillSet = new Set(activeSkills);
+const implicitPolicy = new Map(inventory.active_skills.map((skill) => [
+  skill.slug,
+  skill.execution?.allow_implicit_invocation !== false,
+]));
 const installedRoot = realpathSync(path.join(codexHome, "skills"));
 
 export function sha256(filename) {
@@ -185,6 +189,7 @@ function buildCoreCases() {
     const en = selectPositive(slug, "en");
     const zh = selectPositive(slug, "zh-CN");
     const negative = selectNegative(slug);
+    const allowsImplicit = implicitPolicy.get(slug);
     return [
       {
         case_id: `${slug}--explicit-en`,
@@ -210,8 +215,9 @@ function buildCoreCases() {
         language: "en",
         invocation: "implicit",
         input: en.input,
-        expected_skill: slug,
-        must_not_trigger: en.must_not_trigger ?? [],
+        expected_skill: allowsImplicit ? slug : null,
+        must_not_trigger: allowsImplicit ? (en.must_not_trigger ?? []) : [slug],
+        expected_implicit_policy: allowsImplicit ? "allowed" : "explicit_only",
       },
       {
         case_id: `${slug}--implicit-zh-CN`,
@@ -219,8 +225,9 @@ function buildCoreCases() {
         language: "zh-CN",
         invocation: "implicit",
         input: zh.input,
-        expected_skill: slug,
-        must_not_trigger: zh.must_not_trigger ?? [],
+        expected_skill: allowsImplicit ? slug : null,
+        must_not_trigger: allowsImplicit ? (zh.must_not_trigger ?? []) : [slug],
+        expected_implicit_policy: allowsImplicit ? "allowed" : "explicit_only",
       },
       {
         case_id: `${slug}--negative-${negative.locale}`,

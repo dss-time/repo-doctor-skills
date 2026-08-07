@@ -11,8 +11,8 @@ supported_locales:
   - en
   - zh-CN
 description:
-  en: Analyze a specific dependency upgrade using manifests, lockfiles, repository usage, and verified official release evidence, including breaking changes, runtime requirements, security, licensing, ecosystem compatibility, validation, and rollback. Use before changing dependency versions; do not perform general impact analysis or modify manifests or lockfiles.
-  zh-CN: 基于 manifest、锁文件、仓库用法和已验证官方发布资料分析具体依赖升级，覆盖破坏性变更、运行时要求、安全、许可证、生态兼容、验证和回滚。用于修改依赖版本前；不替代通用影响分析，也不修改 manifest 或锁文件。
+  en: Explicit-invocation analysis of one defined dependency upgrade using manifests, lockfiles, repository usage, and verified official release evidence, covering compatibility, security, licensing, validation, and rollback. Do not trigger for ordinary code changes or modify manifests or lockfiles.
+  zh-CN: 仅显式调用：基于 manifest、锁文件、仓库用法和已验证官方发布资料分析一个已定义的依赖升级，覆盖兼容、安全、许可证、验证和回滚。不得因普通代码变更而触发，也不修改 manifest 或锁文件。
 triggers:
   en:
     - analyze this dependency upgrade
@@ -35,6 +35,10 @@ permissions:
   destructive_actions_allowed: false
 risk_level:
   default: read_only
+execution:
+  classification: explicit-only-candidate
+  default_mode: standard
+  allow_implicit_invocation: false
 output_schema:
   type: dependency_upgrade_report
 localization:

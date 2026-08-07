@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "baseline_date": "2026-08-07",
+  "source_commit": "6bccaa68cb982fdf78c68408284f7e4443d9543d",
+  "source": {
+    "deterministic_commands": [
+      {
+        "command": "npm run validate",
+        "exit_code": 0
+      },
+      {
+        "command": "npm test",
+        "exit_code": 0
+      }
+    ],
+    "live_codex_report": "tests/reports/live-codex-skill-validation.json",
+    "live_codex_report_generated_at": "2026-08-06T02:17:52.602Z",
+    "live_codex_project_version": "0.4.0"
+  },
+  "inventory": {
+    "repo_doctor_skills": 27,
+    "activation_contracts": 300,
+    "workflows": 13
+  },
+  "pre_change_contract": {
+    "skills_with_machine_readable_execution_profile": 0,
+    "skills_with_generated_implicit_invocation_policy": 0,
+    "simple_performance_contracts": 0,
+    "elevated_performance_contracts": 0,
+    "one_primary_skill_rule_machine_verified": false,
+    "fast_file_budget_machine_verified": false,
+    "fast_command_budget_machine_verified": false,
+    "full_suite_prohibition_machine_verified": false,
+    "automatic_skill_chaining_prohibition_machine_verified": false,
+    "live_harness_expected_implicit_invocation_for_every_skill": true
+  },
+  "existing_live_correctness": {
+    "calls": 317,
+    "passed": 317,
+    "failed": 0,
+    "pass_rate": "100.00%",
+    "permission_cases": 12,
+    "permission_passed": 12
+  },
+  "simple_task_performance": {
+    "primary_skill_count": "not_measured",
+    "files_read": "not_measured",
+    "commands": "not_measured",
+    "full_test_suite_triggers": "not_measured",
+    "full_build_triggers": "not_measured",
+    "tool_calls": "not_measured",
+    "wall_time_ms": "not_measured",
+    "output_characters": "not_measured",
+    "reason": "The pre-change live report tested routing and safety but did not capture these performance fields for the requested simple scenarios."
+  },
+  "live_performance_benchmark": {
+    "tag": "v0.4.1",
+    "commit": "6bccaa68cb982fdf78c68408284f7e4443d9543d",
+    "skills_count": 40,
+    "test_counts": {
+      "zh_simple": 10,
+      "en_simple": 10,
+      "zh_elevated": 5,
+      "en_elevated": 5,
+      "planned_per_variant": 30,
+      "baseline_executed": 30,
+      "optimized_executed": 30
+    },
+    "result": "AVAILABLE",
+    "metrics": {
+      "cases_available": 20,
+      "correctness": "19/20",
+      "permission_violations": 0,
+      "primary_skills_median": 1,
+      "primary_skills_p75": 1,
+      "files_read_median": 1,
+      "files_read_p75": 2,
+      "commands_median": 3,
+      "commands_p75": 4,
+      "tool_calls_median": 3,
+      "tool_calls_p75": 4,
+      "elapsed_ms_median": 151413,
+      "elapsed_ms_p75": 157856,
+      "output_length_median": 343,
+      "output_length_p75": 467,
+      "full_test_triggers": 0,
+      "full_build_triggers": 0,
+      "auto_chaining": 0
+    },
+    "reason": null
+  }
+}

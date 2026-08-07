@@ -13,7 +13,7 @@ import {
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const model = collectCatalogModel(root);
 
-assert.equal(model.projectVersion, "0.4.1", "expected stable project version 0.4.1");
+assert.equal(model.projectVersion, "0.5.0", "expected stable project version 0.5.0");
 assert.equal(model.counts.packs, 4, "expected four active Packs");
 assert.equal(model.counts.skills, 40, "expected 40 active Skills");
 assert.equal(model.counts.pluginSkills, 37, "expected 37 plugin/ChatGPT-distributed Skills");

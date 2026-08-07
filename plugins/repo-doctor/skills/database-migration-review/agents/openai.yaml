@@ -2,3 +2,5 @@ interface:
   display_name: "Database Migration Review（数据库迁移审查）"
   short_description: "审查迁移可逆性、数据安全、锁表风险与零停机发布顺序"
   default_prompt: "使用 $database-migration-review 审查迁移安全性和发布顺序，不执行迁移。"
+policy:
+  allow_implicit_invocation: false

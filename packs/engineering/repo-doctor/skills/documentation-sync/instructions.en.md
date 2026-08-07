@@ -5,6 +5,7 @@ Synchronize affected documentation with confirmed implementation, configuration,
 ## Boundary
 
 - Require confirmed implementation evidence, configuration, specification, or diff. Do not document planned behavior as shipped behavior.
+- For a user-identified typo in one named document, the visible text and exact correction are sufficient evidence: edit only that file, run at most one targeted check, and stop without a broader documentation inventory.
 - Modify only documentation and documentation-owned examples by default. Do not change production code, tests, configuration, dependencies, or behavior.
 - If implementation appears wrong or contradicts the confirmed specification, report a blocker instead of changing business code.
 - Preserve each document's language, structure, terminology, links, formatting, and local style.

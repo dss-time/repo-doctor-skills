@@ -2,3 +2,5 @@ interface:
   display_name: "Change Impact Analysis（改代码看影响）"
   short_description: "修改共享代码前分析依赖、兼容性、风险与测试影响"
   default_prompt: "使用 $change-impact-analysis 分析这项代码变更会影响什么，不要直接修改文件。"
+policy:
+  allow_implicit_invocation: true

@@ -7,14 +7,21 @@ description: Close consequential product, behavior, data, permission, compatibil
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Execution Contract
+
+Default to `fast`; bounded natural-language invocation is allowed.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+
 # Requirements Clarification
 
 Every question must close a named decision; repository facts are discovered, while product choices are decided by the user.
 
 ## Modes
 
-- `fast`: ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
-- `standard` (default): close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
+- `fast` (default): ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
+- `standard`: close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
 - `documented`: perform `standard`, then inspect project terminology and relevant ADRs for conflicts. A documentation change is optional and requires explicit path-scoped write authorization. Record why each edit is necessary and which evidence supports it.
 
 Do not silently change mode. Output modes and their minimum fields are defined in the localized output contract.
@@ -57,14 +64,21 @@ All modes finish with a compact handoff to `requirements-to-spec`. Keep the curr
 
 ---
 
+## 执行契约
+
+默认使用 `fast`；允许边界明确的自然语言隐式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+
 # Requirements Clarification（需求决策澄清）
 
 每个问题都必须关闭一个明确决策：仓库事实由探索获得，产品选择由用户决定。
 
 ## 模式
 
-- `fast`：只问信息增益最高的 3～5 个未决问题，优先处理会改变方案方向的选择；输出简短，绝不创建或修改文件。
-- `standard`（默认）：完整关闭目标、非目标、用户、当前与期望行为、业务规则、数据边界、异常路径、兼容性、验收条件和未决决策。
+- `fast`（默认）：只问信息增益最高的 3～5 个未决问题，优先处理会改变方案方向的选择；输出简短，绝不创建或修改文件。
+- `standard`：完整关闭目标、非目标、用户、当前与期望行为、业务规则、数据边界、异常路径、兼容性、验收条件和未决决策。
 - `documented`：在 `standard` 基础上检查项目术语和相关 ADR 的冲突。只有获得精确到路径的明确写权限后，才可选择性修改领域文档；每项改动必须记录原因和证据。
 
 不得静默切换模式。各模式最小输出字段见本地化输出契约。

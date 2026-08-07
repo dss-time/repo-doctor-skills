@@ -1,11 +1,18 @@
 ---
 name: project-health-check
-description: Diagnose broad repository health across architecture, correctness, security, performance, dependencies, tests, and general release risk. Use a specialized review for one bounded dependency upgrade, API contract, database migration, dead-code candidate, security surface, performance regression, or configuration scope; use release-readiness-check for a specific release gate. 从架构、正确性、安全、性能、依赖、测试和一般发布风险等方面广泛诊断项目健康度。单一依赖升级、API 契约、数据库迁移、死代码候选、安全边界、性能回归或配置范围应交给相应专项审查；具体候选版本门禁使用 release-readiness-check。
+description: Explicit-invocation broad repository diagnosis across architecture, correctness, security, performance, dependencies, tests, and general release risk. Do not trigger for a bounded file, error, diff, or simple request. Use a specialized review for one dependency upgrade, API contract, migration, dead-code candidate, security surface, performance regression, configuration scope, or release candidate. 仅显式调用的全仓库诊断，覆盖架构、正确性、安全、性能、依赖、测试和一般发布风险。不得因单个文件、明确报错、Diff 或简单请求而触发。单一依赖升级、API 契约、迁移、死代码候选、安全边界、性能回归、配置范围或候选版本应使用对应专项 Skill。
 ---
 
 # Project Health Check（项目体检）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `standard`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Project Health Check
 
@@ -47,6 +54,13 @@ Use this skill for a broad repository diagnosis. Do not start by rewriting code.
 11. Final recommendation
 
 ---
+
+## 执行契约
+
+默认使用 `standard`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
 
 # 项目体检
 

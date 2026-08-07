@@ -1,11 +1,18 @@
 ---
 name: repo-doctor-router
-description: Recommend one verified Repo Doctor Skill and fast, standard, or audit mode from the current repository state, or return a registered workflow when detailed routing is requested. Use automatically only when the user asks which Skill or next safe step fits. Do not execute the recommendation, route ordinary factual questions, invent aliases, or bypass permission gates. 根据当前仓库状态推荐一个已核验 Repo Doctor Skill 及 fast、standard 或 audit 模式；用户要求详细路由时再返回注册工作流。只有用户询问该用哪个 Skill 或下一安全步骤时适合自动调用。不得执行推荐、路由普通知识问答、编造别名或绕过权限门禁。
+description: Explicit routing entrypoint that recommends one verified Repo Doctor Skill and fast, standard, or audit mode from the current repository state, or returns a registered workflow when detailed routing is requested. Use only when the user explicitly invokes the Router or asks for Repo Doctor routing. Do not execute the recommendation, route ordinary factual questions, invent aliases, or bypass permission gates. 显式路由入口：根据当前仓库状态推荐一个已核验 Repo Doctor Skill 及 fast、standard 或 audit 模式；用户要求详细路由时再返回注册工作流。仅在用户显式调用 Router 或明确要求 Repo Doctor 路由时使用。不得执行推荐、路由普通知识问答、编造别名或绕过权限门禁。
 ---
 
 # Repo Doctor Router（工作流路由）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
+
+## Execution Contract
+
+Default to `fast`; explicit invocation is required.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
 
 # Repo Doctor Router
 
@@ -18,6 +25,7 @@ The best route is the smallest verified next capability that matches the current
 - `audit`: add registry version, active-inventory evidence, rejected routes, platform capability, and unresolved routing uncertainty.
 
 Do not display detailed workflow fields unless the user requests detail or ambiguity cannot be explained safely in the compact form.
+Read `references/execution-modes.en.md` only when the requested mode, fast budget, or escalation boundary is unclear.
 
 ## Boundary
 
@@ -74,6 +82,13 @@ Do not execute the recommendation or name an unverified Skill as available.
 
 ---
 
+## 执行契约
+
+默认使用 `fast`；仅允许用户显式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+
 # Repo Doctor Router（工作流路由）
 
 最佳路由是与当前产物和权限状态匹配的最小已核验下一能力。
@@ -85,6 +100,7 @@ Do not execute the recommendation or name an unverified Skill as available.
 - `audit`：增加注册表版本、active 清单证据、被拒绝路由、平台能力和未解决路由不确定性。
 
 用户没有要求详细信息，且简洁形式足以安全解释时，不展开完整工作流字段。
+只有请求模式、fast 预算或升级边界不明确时，才读取 `references/execution-modes.zh-CN.md`。
 
 ## 职责边界
 

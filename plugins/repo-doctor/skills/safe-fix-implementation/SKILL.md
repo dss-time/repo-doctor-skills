@@ -1,15 +1,23 @@
 ---
 name: safe-fix-implementation
-description: Implement one small, safe, verified production fix after a clear diagnosis. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes. 在明确诊断后实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。
+description: Implement one small, safe, verified production fix after a clear diagnosis or for an exact, low-risk edit with an explicit target and desired result. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes. 在明确诊断后，或针对目标与期望结果清楚的精确低风险编辑，实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。
 ---
 
 # Safe Fix Implementation（最小安全修复）
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Execution Contract
+
+Default to `fast`; bounded natural-language invocation is allowed.
+Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
+Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
+For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+
 # Safe Fix Implementation
 
 Use this skill only after a clear diagnosis from a health check, code review, impact analysis, build failure, type error, or test failure.
+A clear, exact, low-risk edit request that names the target and desired result is also sufficiently confirmed; do not require a separate diagnosis or clarification before making that bounded fix.
 
 ## Safety Boundary
 
@@ -44,9 +52,17 @@ Use this skill only after a clear diagnosis from a health check, code review, im
 
 ---
 
+## 执行契约
+
+默认使用 `fast`；允许边界明确的自然语言隐式调用。
+清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
+只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
+模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+
 # 最小安全修复
 
 仅在已有明确诊断后使用，例如项目体检、代码审查、影响分析、构建失败、类型错误或测试失败。
+已明确给出目标和期望结果的精确、低风险修改请求也视为已确认；不得在这种有边界的修复前另行要求诊断或澄清。
 
 ## 安全边界
 
