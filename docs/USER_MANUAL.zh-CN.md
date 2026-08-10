@@ -68,7 +68,7 @@ $repo-onboarding
 
 ### 发布版本与成熟度
 
-当前正式版是 **v0.5.0**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。v0.5.0 性能对比完成 30/30 组配对案例，正确率由 27/30 提升至 30/30，并保持安全与权限门禁通过。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
+当前正式版是 **v0.5.1**。项目版本、Pack/插件组件版本、单个 Skill 版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。v0.5.1 性能对比完成 30/30 组配对案例，正确率由 27/30 提升至 30/30，并保持安全与权限门禁通过。详见[版本与生命周期策略](VERSIONING.zh-CN.md)。
 
 ### 常见选择
 
@@ -138,7 +138,7 @@ Document Data Doctor 的 3 个 Basic Skill 当前没有独立 ChatGPT ZIP。不�
 如果使用 Codex CLI，稳定版安装必须固定到 Release tag：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.1
 ```
 
 只有明确测试最新开发内容时才使用 `main`：

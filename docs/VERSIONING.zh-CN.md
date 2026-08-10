@@ -6,7 +6,9 @@ Repo Doctor Skills 将项目发布版本、组件版本和成熟度状态分开�
 
 项目发布版本描述整个仓库级发布。`package.json` 是项目版本的权威元数据；Git tag、GitHub Release、`CHANGELOG.md` 正式版本段和发布说明必须使用相同版本。
 
-当前项目发布版本是 **0.5.0 stable**。本次 30 案例真实性能对比完成全部 baseline/optimized 配对：baseline 正确率为 27/30，optimized 为 30/30，双语、安全、权限与回归门禁均通过。机器可读报告披露了两个长耗时 optimized 案例使用的恢复超时覆盖。独立的 317/317 调用报告仍是 v0.4.0 历史证据，不冒充为 v0.5.0 新执行全集。
+当前项目发布版本是 **0.5.1 stable**。本次 30 案例真实性能对比完成全部 baseline/optimized 配对：baseline 正确率为 27/30，optimized 为 30/30，双语、安全、权限与回归门禁均通过。机器可读报告披露了两个长耗时 optimized 案例使用的恢复超时覆盖。独立的 317/317 调用报告仍是 v0.4.0 历史证据，不冒充为 v0.5.1 新执行全集。
+
+不可变的 `v0.5.0` tag 指向原定执行效率候选版本，但该 tag 的 clean-checkout CI 暴露出 build-integrity 测试依赖被忽略的 `dist/` 产物，因此 v0.5.0 没有创建 GitHub Release。该 tag 原样保留，不删除也不移动。v0.5.1 保持相同 Skill 行为，只增加测试侧 clean-build 隔离修复。
 
 后续发布必须：
 
@@ -24,7 +26,7 @@ Pack、插件和 Skill 使用独立于项目发布版本的组件版本：
 - 项目发布可以包含未发生契约变化的组件，而不提升其组件版本；
 - marketplace 条目和 ChatGPT ZIP 当前没有独立的内嵌版本字段。
 
-0.5.0 项目正式稳定版使用以下组件基线：
+0.5.1 项目正式稳定版使用以下组件基线：
 
 | 组件 | 版本 | 分发规则 |
 |---|---:|---|
@@ -36,7 +38,7 @@ Pack、插件和 Skill 使用独立于项目发布版本的组件版本：
 
 不要把所有组件版本机械替换成项目版本。只有组件自身契约变化时才更新其版本，并始终从 `packs/` 重新生成插件和平台产物。
 
-v0.5.0 改变 Repo Doctor 的执行与 activation 契约，因此其 Pack/插件配对同步提升到 0.8.0。`safe-fix-implementation` 的公开 activation 描述现在覆盖目标与期望结果明确的精确低风险编辑，因此提升到 0.2.0；其他组件版本保持不变。
+v0.5.0 候选版本引入的执行与 activation 契约使 Repo Doctor Pack/插件配对同步提升到 0.8.0。`safe-fix-implementation` 的公开 activation 描述覆盖目标与期望结果明确的精确低风险编辑，因此提升到 0.2.0。v0.5.1 不改变 Skill 行为或组件契约，所以这些组件版本保持不变。
 
 ## 3. 成熟度状态
 
@@ -49,9 +51,9 @@ v0.5.0 改变 Repo Doctor 的执行与 activation 契约，因此其 Pack/插件
 
 Pack 的成熟度不得高于其中成熟度最低的主要 active Skill。模板 Pack 和模板 Skill 保持 `draft`，不计入 active 数量，也不生成插件或独立 ZIP。
 
-0.5.0 项目正式稳定版中，4 个 active Pack 和 40 个 active Skill 仍全部为 `beta`。模板 Pack 及其中的模板 Skill 继续保持 `draft`；项目通道 stable 也不会自动提升组件成熟度。
+0.5.1 项目正式稳定版中，4 个 active Pack 和 40 个 active Skill 仍全部为 `beta`。模板 Pack 及其中的模板 Skill 继续保持 `draft`；项目通道 stable 也不会自动提升组件成熟度。
 
-仓库校验、activation contract、确定性构建和真实模型测试分别提供不同证据。v0.5.0 对比完成 30/30 组 baseline/optimized 案例，矩阵为 27 PASS/PASS、3 FAIL/PASS、0 PASS/FAIL、0 FAIL/FAIL；此前 317/317 的 Live-model 全集仍是 v0.4.0 历史证据。v0.5.0 还重新运行确定性与远程 Release 门禁，并在发布后执行路由和权限 smoke tests。
+仓库校验、activation contract、确定性构建和真实模型测试分别提供不同证据。v0.5.1 使用的对比证据完成 30/30 组 baseline/optimized 案例，矩阵为 27 PASS/PASS、3 FAIL/PASS、0 PASS/FAIL、0 FAIL/FAIL；此前 317/317 的 Live-model 全集仍是 v0.4.0 历史证据。v0.5.1 还重新运行确定性与远程 Release 门禁，并执行当前 HEAD 与发布后的路由和权限 smoke tests。
 
 ## Semantic Versioning 决策
 
@@ -61,7 +63,7 @@ Pack 的成熟度不得高于其中成熟度最低的主要 active Skill。模�
 - minor：向后兼容地增加 Skill、Pack、平台产物或用户能力；
 - major：公开调用名、Schema、Pack 格式或组件契约发生不兼容变化。
 
-Repo Doctor Skills 仍处于 1.0 之前。0.4.1 是文档与 Release 验证 patch。0.5.0 是 minor：向后兼容地增加执行模式、Simple Request Bypass、渐进式参考加载和生成式隐式调用策略，且未删除或重命名 canonical Skill slug。1.0.0 必须是明确的产品决策。
+Repo Doctor Skills 仍处于 1.0 之前。0.4.1 是此前的稳定文档与 Release 验证 patch。v0.5.0 候选版本向后兼容地增加执行模式、Simple Request Bypass、渐进式参考加载和生成式隐式调用策略，且未删除或重命名 canonical Skill slug，但没有形成 GitHub Release。0.5.1 是该候选版本的稳定 patch，只增加 clean-checkout CI 的 build-integrity 测试隔离。1.0.0 必须是明确的产品决策。
 
 ## 历史版本标签例外
 

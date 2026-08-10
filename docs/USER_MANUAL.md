@@ -68,7 +68,7 @@ The canonical source currently contains four active Packs. The latest counts, pe
 
 ### Release version and maturity
 
-The current stable release is **v0.5.0**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The v0.5.0 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates. See [Versioning and Lifecycle Policy](VERSIONING.md).
+The current stable release is **v0.5.1**. Project version, Pack/plugin component versions, individual Skill versions, and maturity status are separate. All 4 active Packs and 40 active Skills remain `beta`. The v0.5.1 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates. See [Versioning and Lifecycle Policy](VERSIONING.md).
 
 ### Common choices
 
@@ -138,7 +138,7 @@ The official plugin interface can appear under Work in ChatGPT or under Work/Cod
 With Codex CLI, pin stable installation to the release tag:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.1
 ```
 
 Use `main` only when intentionally testing the latest development version:

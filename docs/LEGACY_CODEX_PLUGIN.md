@@ -85,7 +85,7 @@ In a Codex host that supports plugin marketplace sources, add this repository. H
 For the reproducible stable release, use:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.1
 ```
 
 Use the development branch only when you intentionally want the latest development content:
@@ -94,7 +94,7 @@ Use the development branch only when you intentionally want the latest developme
 codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 ```
 
-The current Codex CLI supports `--ref` for Git marketplace sources. In a graphical host, use source `dss-time/repo-doctor-skills` or its full Git URL, set the Git ref to `v0.5.0` for stable use, leave the sparse path empty, and then install the `Repo Doctor` plugin.
+The current Codex CLI supports `--ref` for Git marketplace sources. In a graphical host, use source `dss-time/repo-doctor-skills` or its full Git URL, set the Git ref to `v0.5.1` for stable use, leave the sparse path empty, and then install the `Repo Doctor` plugin.
 
 ## Local Marketplace Configuration
 

@@ -43,7 +43,7 @@ Choose the shortest guide for your goal:
 - [Quick Skill Entrypoints](docs/guides/quick-skill-entrypoints.md) when you know the problem but not the Skill name.
 - [Workflow Cookbook](docs/WORKFLOW_COOKBOOK.md) for chaining Skills into real tasks.
 - [Testing and Evaluation](docs/TESTING_AND_EVALUATION.md)
-- [v0.5.0 Release Notes](docs/RELEASE_NOTES_0.5.0.md)
+- [v0.5.1 Release Notes](docs/RELEASE_NOTES_0.5.1.md)
 - [v0.4.0 Release Notes](docs/RELEASE_NOTES_0.4.0.md)
 - [Release Asset Selection Guide](docs/guides/release-asset-selection.md) for choosing and verifying published ZIPs.
 - [Historical 0.3.0 Release Preparation Recommendation](docs/RELEASE_PREPARATION_0.3.0.md)
@@ -347,9 +347,9 @@ Use `npm run validate`, `npm test`, `npm run build`, `npm run docs:check`, `npm 
 
 ## Release Status
 
-The current stable project release is **v0.5.0**. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 40 active Skills remain `beta`.
+The current stable project release is **v0.5.1**. Project release version, component versions, and maturity status are separate layers. All 4 active Packs and 40 active Skills remain `beta`.
 
-The v0.5.0 performance comparison matched all 30 baseline/optimized cases: baseline correctness was 27/30 and optimized correctness was 30/30, with safety and permission checks passing. The earlier 317/317 live-model corpus remains historical v0.4.0 evidence. See [Versioning and Lifecycle Policy](docs/VERSIONING.md), [v0.5.0 release notes](docs/RELEASE_NOTES_0.5.0.md), and [CHANGELOG.md](CHANGELOG.md).
+The v0.5.1 performance comparison matched all 30 baseline/optimized cases: baseline correctness was 27/30 and optimized correctness was 30/30, with safety and permission checks passing. The earlier 317/317 live-model corpus remains historical v0.4.0 evidence. See [Versioning and Lifecycle Policy](docs/VERSIONING.md), [v0.5.1 release notes](docs/RELEASE_NOTES_0.5.1.md), and [CHANGELOG.md](CHANGELOG.md).
 
 ## Related Docs
 

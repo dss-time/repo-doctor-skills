@@ -1,6 +1,6 @@
-# Repo Doctor Skills v0.5.0 Stable Release
+# Repo Doctor Skills v0.5.0 Unreleased Tagged Candidate
 
-> Release date: 2026-08-07. This stable non-prerelease uses tag `v0.5.0` and introduces a backward-compatible execution-efficiency contract for Repo Doctor Skills.
+> Historical status: the immutable `v0.5.0` tag was created on 2026-08-07, but clean-checkout tag CI failed because the build-integrity test depended on ignored `dist/` output. No GitHub Release or release assets were published for v0.5.0. The tag is preserved without deletion or movement; use v0.5.1 instead.
 
 ## What changed
 

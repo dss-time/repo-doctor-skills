@@ -1,6 +1,6 @@
-# Repo Doctor Skills v0.5.0 正式稳定版
+# Repo Doctor Skills v0.5.0 未发布标签候选版
 
-> 发布日期：2026-08-07。该正式非预发布版本使用 `v0.5.0` tag，为 Repo Doctor Skill 引入向后兼容的执行效率契约。
+> 历史状态：不可变的 `v0.5.0` tag 创建于 2026-08-07，但 clean-checkout tag CI 因 build-integrity 测试依赖被忽略的 `dist/` 产物而失败。v0.5.0 没有发布 GitHub Release 或任何正式资产；该 tag 原样保留，不删除也不移动。请改用 v0.5.1。
 
 ## 主要变化
 

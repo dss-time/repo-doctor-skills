@@ -15,7 +15,7 @@ This guide is for first-time users.
 
 ## Release Note
 
-The current stable release is **v0.5.0**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The v0.5.0 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates.
+The current stable release is **v0.5.1**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The v0.5.1 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates.
 
 ## What You Are Looking At
 

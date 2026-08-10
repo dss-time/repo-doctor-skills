@@ -41,7 +41,7 @@ Repo Doctor Skills 是一个双语、跨平台的 AI Skills 工程化框架，�
 - [Skill 快速入口](docs/guides/quick-skill-entrypoints.zh-CN.md)：知道问题但不知道 Skill 名时使用。
 - [工作流实战手册](docs/WORKFLOW_COOKBOOK.zh-CN.md)：把多个 Skill 串成真实任务流程。
 - [测试与评测说明](docs/TESTING_AND_EVALUATION.zh-CN.md)
-- [v0.5.0 发布说明](docs/RELEASE_NOTES_0.5.0.zh-CN.md)
+- [v0.5.1 发布说明](docs/RELEASE_NOTES_0.5.1.zh-CN.md)
 - [v0.4.0 发布说明](docs/RELEASE_NOTES_0.4.0.md)
 - [Release 资产选择指南](docs/guides/release-asset-selection.zh-CN.md)：选择并校验已发布的 ZIP。
 - [历史 0.3.0 发布准备建议](docs/RELEASE_PREPARATION_0.3.0.md)
@@ -345,9 +345,9 @@ npm run build
 
 ## 发布状态
 
-当前项目正式版是 **v0.5.0**。项目发布版本、组件版本和成熟度状态彼此独立；4 个 active Pack 和 40 个 active Skill 仍标记为 `beta`。
+当前项目正式版是 **v0.5.1**。项目发布版本、组件版本和成熟度状态彼此独立；4 个 active Pack 和 40 个 active Skill 仍标记为 `beta`。
 
-v0.5.0 性能对比的 30 组 baseline/optimized 案例全部配对完成：baseline 正确率为 27/30，optimized 为 30/30，安全与权限检查通过。此前 317/317 的真实模型全集仍作为 v0.4.0 历史证据保留。详见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)、[v0.5.0 发布说明](docs/RELEASE_NOTES_0.5.0.zh-CN.md)和 [CHANGELOG.md](CHANGELOG.md)。
+v0.5.1 性能对比的 30 组 baseline/optimized 案例全部配对完成：baseline 正确率为 27/30，optimized 为 30/30，安全与权限检查通过。此前 317/317 的真实模型全集仍作为 v0.4.0 历史证据保留。详见[版本与生命周期策略](docs/VERSIONING.zh-CN.md)、[v0.5.1 发布说明](docs/RELEASE_NOTES_0.5.1.zh-CN.md)和 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 相关文档
 

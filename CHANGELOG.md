@@ -8,9 +8,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-08-10
+
+> Stable release of the Repo Doctor execution-efficiency work. The immutable v0.5.0 tag did not form a GitHub Release because its clean-checkout tag CI exposed a test dependency on ignored `dist/` output; v0.5.1 preserves the same Skill behavior and adds the test-only isolation fix.
+
+### Added
+
+- Published the v0.5.0 candidate capabilities under the actual v0.5.1 release: execution profiles, Simple Request Bypass, generated implicit-invocation policy, single-primary-Skill behavior, progressive references, Router optimization, performance contracts, and the resumable Benchmark harness.
+
+### Changed
+
+- Advanced only the project release layer to 0.5.1. Repo Doctor Pack/plugin remains 0.8.0, `safe-fix-implementation` remains 0.2.0, and all other component versions and maturity statuses are unchanged.
+
+### Fixed
+
+- Made build-integrity tests self-contained by generating canonical Codex output in a temporary directory instead of depending on ignored local `dist/` state.
+
+### Security
+
+- Preserved every declared permission and destructive-action boundary; current-HEAD smoke confirmed no tool or file activity for an unauthorized write request.
+
+### Documentation
+
+- Added bilingual v0.5.1 Release Notes, immutable v0.5.0 tag history, stable installation guidance, and versioned asset-selection instructions.
+
+### Validation
+
+- Reconfirmed 30/30 matched performance pairs: baseline correctness 27/30, optimized correctness 30/30, 27 PASS/PASS, 3 FAIL/PASS, and zero PASS/FAIL or FAIL/FAIL cases.
+- Recorded the actual simple-case measurements without a speedup claim: median latency +2.89%, P75 latency +4.13%, and median tool calls +33.33%.
+- Passed no-`dist` build-integrity, clean-checkout install/validate/test/build, 40-Skill discovery, bilingual fast/implicit, explicit architecture and release gates, database safety, and permission-denial smoke checks.
+
 ## [0.5.0] - 2026-08-07
 
-> Stable execution-efficiency release. The optimized runtime contract completed 30/30 paired live cases with no correctness, safety, or permission regression; measured simple-case latency and tool-call counts did not improve and are reported without a 30% performance claim.
+> Immutable tagged candidate only; no GitHub Release was created because clean-checkout tag CI failed before publication. The tag is preserved without deletion or movement and is superseded by v0.5.1.
 
 ### Added
 
@@ -232,7 +262,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.3.0...v0.4.0
