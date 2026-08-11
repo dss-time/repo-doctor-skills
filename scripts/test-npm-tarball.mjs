@@ -8,8 +8,20 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tempRoot = mkdtempSync(path.join(tmpdir(), "repo-doctor-npm-tarball-"));
 
+function runNpm(args, options) {
+  if (process.env.npm_execpath) return spawnSync(process.execPath, [process.env.npm_execpath, ...args], options);
+  return spawnSync("npm", args, options);
+}
+
+function parsePackReport(output) {
+  const lines = output.split(/\r?\n/);
+  const jsonStart = lines.findIndex((line) => line.trim() === "[");
+  assert.notEqual(jsonStart, -1, `npm pack did not emit a JSON report:\n${output}`);
+  return JSON.parse(lines.slice(jsonStart).join("\n"));
+}
+
 function runNpx(tarball, args, env = {}) {
-  return spawnSync("npm", ["exec", "--yes", `--package=${tarball}`, "--", "repo-doctor-skills", ...args], {
+  return runNpm(["exec", "--yes", `--package=${tarball}`, "--", "repo-doctor-skills", ...args], {
     cwd: tempRoot,
     encoding: "utf8",
     timeout: 30000,
@@ -30,14 +42,14 @@ function installedCount(target) {
 }
 
 try {
-  const packed = spawnSync("npm", ["pack", "--json", "--pack-destination", tempRoot], {
+  const packed = runNpm(["pack", "--json", "--pack-destination", tempRoot], {
     cwd: root,
     encoding: "utf8",
     timeout: 30000,
     env: { ...process.env, npm_config_cache: path.join(tempRoot, "pack-cache"), npm_config_update_notifier: "false" },
   });
   assert.equal(packed.status, 0, packed.stderr || packed.stdout);
-  const packReport = JSON.parse(packed.stdout);
+  const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
   assert.equal(packReport[0].version, "0.6.0");
