@@ -15,7 +15,7 @@ This guide is for first-time users.
 
 ## Release Note
 
-The current stable release is **v0.5.1**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. The v0.5.1 performance comparison completed 30/30 matched cases, improving correctness from 27/30 to 30/30 while preserving safety and permission gates.
+The current stable release is **v0.6.0**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. v0.6.0 adds the public one-command npm installer while preserving the existing Skill behavior, safety, and permission gates.
 
 ## What You Are Looking At
 
@@ -126,7 +126,7 @@ No. `dist/*` is ignored. Keep only `dist/.gitkeep`.
 
 ### Do I need dependencies?
 
-No npm package installation is currently required; the scripts use Node built-in modules. The full ChatGPT packaging step also requires a `zip` executable on `PATH`.
+No third-party npm dependencies are required; the scripts and public CLI use Node built-in modules. The full ChatGPT packaging step also requires a `zip` executable on `PATH`.
 
 ### Where do I add a new skill?
 

@@ -87,7 +87,7 @@ function renderSkill(skillDir, locale, target) {
   return `# ${name}\n\n- ID: ${id}\n- Visibility: ${visibility}\n\n${description}\n\n${instructions}\n\n${output}\n`;
 }
 
-function renderCodexSkill(skillDir) {
+export function renderCodexSkill(skillDir) {
   const yaml = readFileSync(path.join(skillDir, "skill.yaml"), "utf8");
   const metadata = parseYamlSubset(yaml);
   const skillName = path.basename(skillDir);
@@ -124,7 +124,7 @@ function renderCodexSkill(skillDir) {
   ].join("\n");
 }
 
-function renderCodexInterface(skillDir) {
+export function renderCodexInterface(skillDir) {
   const metadata = parseYamlSubset(readFileSync(path.join(skillDir, "skill.yaml"), "utf8"));
   if (!metadata.execution) return null;
   const skillName = path.basename(skillDir);
@@ -147,6 +147,22 @@ export function discoverCanonicalSkillDirs(directory = packsDir) {
   return discoverPackRoots(directory).flatMap((packRoot) =>
     discoverActivePackSkills(packRoot).map((slug) => path.join(packRoot, "skills", slug)),
   );
+}
+
+export function writeInstallableCodexSkill(skillDir, skillOutDir) {
+  mkdirSync(skillOutDir, { recursive: true });
+  writeFileSync(path.join(skillOutDir, "SKILL.md"), renderCodexSkill(skillDir));
+  const codexInterface = renderCodexInterface(skillDir);
+  if (codexInterface) {
+    const agentsDir = path.join(skillOutDir, "agents");
+    mkdirSync(agentsDir, { recursive: true });
+    writeFileSync(path.join(agentsDir, "openai.yaml"), codexInterface);
+  }
+  const packRoot = path.dirname(path.dirname(skillDir));
+  copyDirectoryContents(path.join(packRoot, "references"), path.join(skillOutDir, "references"));
+  copyDirectoryContents(path.join(skillDir, "references"), path.join(skillOutDir, "references"));
+  copyDirectoryContents(path.join(skillDir, "assets"), path.join(skillOutDir, "assets"));
+  copyDirectoryContents(path.join(skillDir, "scripts"), path.join(skillOutDir, "scripts"));
 }
 
 function buildTarget(target) {
@@ -189,19 +205,7 @@ function buildTarget(target) {
     for (const skillDir of skillDirs) {
       const skillName = path.basename(skillDir);
       const skillOutDir = path.join(outDir, "skills", skillName);
-      mkdirSync(skillOutDir, { recursive: true });
-      writeFileSync(path.join(skillOutDir, "SKILL.md"), renderCodexSkill(skillDir));
-      const codexInterface = renderCodexInterface(skillDir);
-      if (codexInterface) {
-        const agentsDir = path.join(skillOutDir, "agents");
-        mkdirSync(agentsDir, { recursive: true });
-        writeFileSync(path.join(agentsDir, "openai.yaml"), codexInterface);
-      }
-      const packRoot = path.dirname(path.dirname(skillDir));
-      copyDirectoryContents(path.join(packRoot, "references"), path.join(skillOutDir, "references"));
-      copyDirectoryContents(path.join(skillDir, "references"), path.join(skillOutDir, "references"));
-      copyDirectoryContents(path.join(skillDir, "assets"), path.join(skillOutDir, "assets"));
-      copyDirectoryContents(path.join(skillDir, "scripts"), path.join(skillOutDir, "scripts"));
+      writeInstallableCodexSkill(skillDir, skillOutDir);
     }
   } else {
     for (const skillDir of skillDirs) {

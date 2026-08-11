@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-10T01:20:14.899Z",
-  "project_version": "0.5.1",
+  "generated_at": "2026-08-11T07:27:42.112Z",
+  "project_version": "0.6.0",
   "packs": [
     {
       "id": "engineering.repo-doctor",

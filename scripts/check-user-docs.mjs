@@ -21,6 +21,13 @@ const entryDocuments = [
   "docs/QUICK_START.zh-CN.md",
 ];
 
+const supplementalUserDocuments = [
+  "docs/ADVANCED_USAGE.md",
+  "docs/ADVANCED_USAGE.zh-CN.md",
+  "docs/guides/problem-to-skill.md",
+  "docs/guides/problem-to-skill.zh-CN.md",
+];
+
 const releaseDocuments = [
   "docs/VERSIONING.md",
   "docs/VERSIONING.zh-CN.md",
@@ -33,6 +40,8 @@ const releaseDocuments = [
   "docs/RELEASE_NOTES_0.5.0.zh-CN.md",
   "docs/RELEASE_NOTES_0.5.1.md",
   "docs/RELEASE_NOTES_0.5.1.zh-CN.md",
+  "docs/RELEASE_NOTES_0.6.0.md",
+  "docs/RELEASE_NOTES_0.6.0.zh-CN.md",
   "docs/RELEASE_PREPARATION_0.3.0.md",
   "docs/guides/release-asset-selection.md",
   "docs/guides/release-asset-selection.zh-CN.md",
@@ -93,6 +102,16 @@ function checkLinks(relativePath, content) {
 function checkEntryLinks(relativePath, content) {
   const suffix = relativePath.endsWith("zh-CN.md") ? ".zh-CN.md" : ".md";
   const prefix = relativePath.startsWith("docs/") ? "" : "docs/";
+  if (relativePath.startsWith("README")) {
+    for (const basename of ["USER_MANUAL", "SKILL_CATALOG", "ADVANCED_USAGE"]) {
+      const expected = `${prefix}${basename}${suffix}`;
+      if (!content.includes(expected)) fail(`${relativePath}: missing user-facing entry link to ${expected}`);
+    }
+    if (!content.includes("CONTRIBUTING.md")) {
+      fail(`${relativePath}: missing user-facing entry link to CONTRIBUTING.md`);
+    }
+    return;
+  }
   for (const basename of ["USER_MANUAL", "SKILL_CATALOG", "WORKFLOW_COOKBOOK"]) {
     const expected = `${prefix}${basename}${suffix}`;
     if (!content.includes(expected)) fail(`${relativePath}: missing user-facing entry link to ${expected}`);
@@ -100,10 +119,34 @@ function checkEntryLinks(relativePath, content) {
 }
 
 function checkVersionPolicyEntry(relativePath, content) {
+  if (relativePath.startsWith("README")) return;
   const suffix = relativePath.endsWith("zh-CN.md") ? ".zh-CN.md" : ".md";
   const prefix = relativePath.startsWith("docs/") ? "" : "docs/";
   const expected = `${prefix}VERSIONING${suffix}`;
   if (!content.includes(expected)) fail(`${relativePath}: missing version-policy entry link to ${expected}`);
+}
+
+function checkReadmeFirstScreen(relativePath, content) {
+  const firstThirtyLines = content.split(/\r?\n/).slice(0, 30).join("\n");
+  const forbiddenTerms = [
+    "canonical",
+    "packs",
+    "adapters",
+    "dist",
+    "generated compatibility output",
+    "plugin-backed distribution",
+    "schema-driven pack",
+  ];
+  for (const term of forbiddenTerms) {
+    if (firstThirtyLines.toLowerCase().includes(term)) {
+      fail(`${relativePath}: first 30 lines contain maintainer term ${term}`);
+    }
+  }
+  for (const required of ["repo-doctor-router", "npx repo-doctor-skills install"]) {
+    if (!firstThirtyLines.toLowerCase().includes(required)) {
+      fail(`${relativePath}: first 30 lines are missing ${required}`);
+    }
+  }
 }
 
 function checkManualCoverage(relativePath, content) {
@@ -161,6 +204,13 @@ for (const relativePath of entryDocuments) {
   checkLinks(relativePath, content);
   checkEntryLinks(relativePath, content);
   checkVersionPolicyEntry(relativePath, content);
+  if (relativePath.startsWith("README")) checkReadmeFirstScreen(relativePath, content);
+}
+
+for (const relativePath of supplementalUserDocuments) {
+  const content = read(relativePath);
+  checkLinks(relativePath, content);
+  checkMachineSpecificContent(relativePath, content);
 }
 
 for (const relativePath of [
@@ -215,9 +265,16 @@ for (const relativePath of ["docs/RELEASE_NOTES_0.5.1.md", "docs/RELEASE_NOTES_0
   }
 }
 
+for (const relativePath of ["docs/RELEASE_NOTES_0.6.0.md", "docs/RELEASE_NOTES_0.6.0.zh-CN.md"]) {
+  const content = read(relativePath);
+  for (const term of ["0.6.0", "v0.6.0", "npx repo-doctor-skills install", "7", "40", "PASS"]) {
+    if (!content.includes(term)) fail(`${relativePath}: missing v0.6.0 release term ${term}`);
+  }
+}
+
 for (const relativePath of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", "docs/LEGACY_CODEX_PLUGIN.md", "docs/LEGACY_CODEX_PLUGIN.zh-CN.md"]) {
   const content = read(relativePath);
-  if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.5.1")) {
+  if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.0")) {
     fail(`${relativePath}: missing stable marketplace tag installation`);
   }
   if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref main")) {
@@ -226,13 +283,13 @@ for (const relativePath of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", 
 }
 
 const changelog = read("CHANGELOG.md");
-for (const heading of ["## [Unreleased]", "## [0.5.1] - 2026-08-10", "## [0.5.0] - 2026-08-07", "## [0.4.1] - 2026-08-06", "## [0.4.0] - 2026-08-06", "## [0.3.0] - 2026-07-17", "## [0.3.0-rc.1] - 2026-07-17", "## [0.2.0] - 2026-07-15", "## [0.1.0] - 2026-07-09"]) {
+for (const heading of ["## [Unreleased]", "## [0.6.0] - 2026-08-11", "## [0.5.1] - 2026-08-10", "## [0.5.0] - 2026-08-07", "## [0.4.1] - 2026-08-06", "## [0.4.0] - 2026-08-06", "## [0.3.0] - 2026-07-17", "## [0.3.0-rc.1] - 2026-07-17", "## [0.2.0] - 2026-07-15", "## [0.1.0] - 2026-07-09"]) {
   if (!changelog.includes(heading)) fail(`CHANGELOG.md: missing heading ${heading}`);
 }
 
 for (const relativePath of ["docs/VERSIONING.md", "docs/VERSIONING.zh-CN.md"]) {
   const content = read(relativePath);
-  for (const term of ["0.1.0", "0.2.0", "0.3.0", "0.3.0-rc.1", "0.4.0", "0.4.1", "0.5.0", "0.5.1", "v0.0.1", "beta", "stable", "deprecated", "draft"]) {
+  for (const term of ["0.1.0", "0.2.0", "0.3.0", "0.3.0-rc.1", "0.4.0", "0.4.1", "0.5.0", "0.5.1", "0.6.0", "v0.0.1", "beta", "stable", "deprecated", "draft"]) {
     if (!content.includes(term)) fail(`${relativePath}: missing version-policy term ${term}`);
   }
 }

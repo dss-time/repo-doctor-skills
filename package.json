@@ -1,10 +1,39 @@
 {
   "name": "repo-doctor-skills",
-  "version": "0.5.1",
-  "private": true,
+  "version": "0.6.0",
   "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, document review, and safe agent workflows.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dss-time/repo-doctor-skills.git"
+  },
+  "homepage": "https://github.com/dss-time/repo-doctor-skills#readme",
+  "bugs": {
+    "url": "https://github.com/dss-time/repo-doctor-skills/issues"
+  },
+  "keywords": [
+    "ai",
+    "agent-skills",
+    "codex",
+    "code-review",
+    "developer-tools",
+    "repository"
+  ],
+  "bin": {
+    "repo-doctor-skills": "./bin/repo-doctor-skills.mjs"
+  },
+  "files": [
+    "bin/",
+    "scripts/install.mjs",
+    "package-assets/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "validate:schema": "node scripts/validate-yaml-schemas.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
@@ -22,7 +51,9 @@
     "test:release": "node scripts/test-release-metadata.mjs && node scripts/test-verify-release-assets.mjs",
     "test:eval": "node scripts/test-eval-tools.mjs",
     "test:doctor": "node scripts/test-doctor.mjs",
-    "test": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor",
+    "test:ux": "node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs",
+    "test:npm": "node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs",
+    "test": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor && npm run test:ux && npm run test:npm",
     "build": "node scripts/build-skills.mjs && node scripts/sync-productivity-toolkit-plugin.mjs && node scripts/sync-skill-maintainer-plugin.mjs && node scripts/build-chatgpt-skills.mjs",
     "build:chatgpt": "node scripts/build-chatgpt-skills.mjs",
     "sync:plugin": "node scripts/sync-repo-doctor-plugin.mjs",
@@ -41,6 +72,8 @@
     "eval:validate": "node scripts/eval-validate.mjs",
     "eval:report": "node scripts/eval-report.mjs",
     "doctor": "node scripts/doctor.mjs",
+    "install:skills": "node scripts/install.mjs",
+    "prepack": "node scripts/prepare-npm-package.mjs",
     "create:skill": "node scripts/create-skill.mjs"
   },
   "engines": {

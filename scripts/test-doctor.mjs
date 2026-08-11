@@ -22,7 +22,7 @@ assert.equal(result.inventory.repo_doctor_skills, 27);
 assert.equal(result.inventory.plugin_skills, 37);
 assert.equal(result.inventory.expected_chatgpt_zips, 37);
 assert.equal(result.workflow.count, 13);
-assert.equal(result.release.current_project_version, "0.5.1");
+assert.equal(result.release.current_project_version, "0.6.0");
 assert.equal(result.release.release_channel, "stable");
 assert.equal(result.release.live_model_status, "PASS");
 assert.equal(result.release.maintainer_waiver, null);

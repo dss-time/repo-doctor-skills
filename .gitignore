@@ -1,5 +1,6 @@
 node_modules/
 dist/*
 !dist/.gitkeep
+package-assets/
 .DS_Store
 **/.DS_Store

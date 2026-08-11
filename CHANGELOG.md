@@ -8,6 +8,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-11
+
+> Stable public CLI release adding one-command npm installation without changing Skill behavior or component contracts.
+
+### Added
+
+- Added the public `repo-doctor-skills` npm CLI with `npx repo-doctor-skills install` as the zero-decision Recommended path.
+- Added Recommended (7 Skills), Full (40 Skills), explicit Codex/shared targets, custom targets, safe replacement, and concise post-install guidance.
+- Added minimal-package, executable-bin, tarball-content, isolated-npx, collision, ambiguous-target, and cleanup tests to the default test gate.
+
+### Changed
+
+- Advanced only the project release layer to 0.6.0. Pack, plugin, Skill, permission, security, workflow, and execution-profile versions and behavior remain unchanged.
+- Simplified bilingual new-user documentation around Recommended, Full, Individual, and `$repo-doctor-router`.
+
+### Fixed
+
+- Removed the source-checkout dependency from the user-facing installer by packaging generated runtime Skill assets and executing the same installer from the npm tarball.
+
+### Security
+
+- Kept conflicting explicit Agent homes as a zero-write error, refused implicit replacement of existing Skills, scanned the npm tarball for sensitive files and machine paths, and published only a strict runtime file whitelist.
+
+### Documentation
+
+- Updated bilingual README, User Manual, Advanced Usage, Quick Start, version policy, problem navigation, and release guidance for the public npm path.
+
+### Validation
+
+- Verified the packed tarball outside the Git checkout with Recommended 7/7 and Full 40/40 installations, CLI help/version/options, isolated HOME, exact completion output, and temporary-directory cleanup.
+
 ## [0.5.1] - 2026-08-10
 
 > Stable release of the Repo Doctor execution-efficiency work. The immutable v0.5.0 tag did not form a GitHub Release because its clean-checkout tag CI exposed a test dependency on ignored `dist/` output; v0.5.1 preserves the same Skill behavior and adds the test-only isolation fix.
@@ -262,7 +293,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.0...v0.4.1
