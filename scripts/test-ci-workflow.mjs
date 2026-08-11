@@ -9,7 +9,9 @@ const required = [
   /actions\/setup-node@v6/,
   /node-version:\s*["']?lts\/\*/,
   /npm run validate/,
-  /npm test/,
+  /npm run test:core/,
+  /npm run test:ux/,
+  /npm run test:npm/,
   /npm run build/,
   /npm run docs:check/,
   /npm run quality:check/,
@@ -17,7 +19,16 @@ const required = [
   /git diff --exit-code/
 ];
 for (const pattern of required) assert.match(content, pattern, `CI missing ${pattern}`);
-const order = ["npm run validate", "npm test", "npm run build", "npm run docs:check", "npm run quality:check", "npm run release:check"];
+const order = [
+  "npm run validate",
+  "npm run test:core",
+  "npm run test:ux",
+  "npm run test:npm",
+  "npm run build",
+  "npm run docs:check",
+  "npm run quality:check",
+  "npm run release:check",
+];
 let previous = -1;
 for (const command of order) {
   const index = content.indexOf(command);

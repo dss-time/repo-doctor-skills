@@ -89,7 +89,17 @@ export function inspectDoctor(root = scriptRoot) {
 
   const ciPath = path.join(root, ".github", "workflows", "ci.yml");
   const ci = existsSync(ciPath) ? readFileSync(ciPath, "utf8") : "";
-  const ciCommands = ["npm run validate", "npm test", "npm run build", "npm run docs:check", "npm run quality:check", "npm run release:check", "git diff --exit-code"];
+  const ciCommands = [
+    "npm run validate",
+    "npm run test:core",
+    "npm run test:ux",
+    "npm run test:npm",
+    "npm run build",
+    "npm run docs:check",
+    "npm run quality:check",
+    "npm run release:check",
+    "git diff --exit-code",
+  ];
   record("ci-quality-gates", ciCommands.every((command) => ci.includes(command)), `required gates: ${ciCommands.join(", ")}`);
 
   const release = inspectReleaseMetadata(root);

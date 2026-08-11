@@ -35,8 +35,14 @@ jobs:
       - name: Validate schemas, Skills, and workflow registry
         run: npm run validate
 
-      - name: Run activation, workflow, build-integrity, plugin-sync, documentation, and release tests
-        run: npm test
+      - name: Run core tests
+        run: npm run test:core
+
+      - name: Run new-user UX tests
+        run: npm run test:ux
+
+      - name: Run public npm tarball tests
+        run: npm run test:npm
 
       - name: Build all generated outputs
         run: npm run build
