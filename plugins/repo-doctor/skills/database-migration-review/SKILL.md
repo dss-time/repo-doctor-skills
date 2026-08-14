@@ -1,6 +1,6 @@
 ---
 name: database-migration-review
-description: Explicit-invocation review of one concrete database schema or data migration for reversibility, data safety, locking, backfill, replication, compatibility, rollout, validation, and rollback. Never execute migrations, connect to production, or modify migration files. 仅显式调用：审查一个具体数据库 Schema 或数据迁移的可逆性、数据安全、锁、回填、复制、兼容、发布、验证和回滚。绝不执行迁移、不连接生产，也不修改迁移文件。
+description: "Explicit-invocation review of one concrete database schema or data migration for reversibility, data safety, locking, backfill, replication, compatibility, rollout, validation, and rollback. Never execute migrations, connect to production, or modify migration files. 仅显式调用：审查一个具体数据库 Schema 或数据迁移的可逆性、数据安全、锁、回填、复制、兼容、发布、验证和回滚。绝不执行迁移、不连接生产，也不修改迁移文件。"
 ---
 
 # Database Migration Review（数据库迁移审查）

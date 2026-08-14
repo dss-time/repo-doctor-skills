@@ -1,0 +1,6 @@
+interface:
+  display_name: "Project Health Check（项目体检）"
+  short_description: "项目体检；默认 standard，仅显式调用"
+  default_prompt: "使用 $project-health-check 执行这个有边界的 Repo Doctor 任务。"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Session Handoff（会话交接）"
+  short_description: "会话交接；默认 standard，仅显式调用"
+  default_prompt: "使用 $session-handoff 执行这个有边界的 Repo Doctor 任务。"
+policy:
+  allow_implicit_invocation: false

@@ -1,6 +1,6 @@
 ---
 name: repo-doctor-router
-description: Explicit routing entrypoint that recommends one verified Repo Doctor Skill and fast, standard, or audit mode from the current repository state, or returns a registered workflow when detailed routing is requested. Use only when the user explicitly invokes the Router or asks for Repo Doctor routing. Do not execute the recommendation, route ordinary factual questions, invent aliases, or bypass permission gates. 显式路由入口：根据当前仓库状态推荐一个已核验 Repo Doctor Skill 及 fast、standard 或 audit 模式；用户要求详细路由时再返回注册工作流。仅在用户显式调用 Router 或明确要求 Repo Doctor 路由时使用。不得执行推荐、路由普通知识问答、编造别名或绕过权限门禁。
+description: "Explicit routing entrypoint that recommends one verified Repo Doctor Skill and fast, standard, or audit mode from the current repository state, or returns a registered workflow when detailed routing is requested. Use only when the user explicitly invokes the Router or asks for Repo Doctor routing. Do not execute the recommendation, route ordinary factual questions, invent aliases, or bypass permission gates. 显式路由入口：根据当前仓库状态推荐一个已核验 Repo Doctor Skill 及 fast、standard 或 audit 模式；用户要求详细路由时再返回注册工作流。仅在用户显式调用 Router 或明确要求 Repo Doctor 路由时使用。不得执行推荐、路由普通知识问答、编造别名或绕过权限门禁。"
 ---
 
 # Repo Doctor Router（工作流路由）

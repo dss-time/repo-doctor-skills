@@ -1,6 +1,6 @@
 ---
 name: pdf-review
-description: Default to this Skill for an unqualified PDF review and for checks involving searchable text, structure, tables, page-located claims, numeric consistency, citations, scanned pages, OCR, rendering, completeness, or visual layout. Detect available capabilities and degrade within this Skill when tools are unavailable; do not modify the source PDF or claim unsupported verification. Do not use when the user explicitly requests pdf-review-basic or a lightweight, text-only check without OCR, rendering, or complex layout review. 未限定范围的通用 PDF 审查，以及涉及可搜索文字、结构、表格、页码定位、数字一致性、引用、扫描页、OCR、渲染、完整性或视觉版式的检查，默认使用本 Skill。检测可用能力，工具不可用时仍在本 Skill 内降级；不得修改原 PDF 或声称完成不受支持的验证。用户明确指定 pdf-review-basic，或明确要求不做 OCR、渲染和复杂版式检查的轻量纯文本任务时不使用本 Skill。
+description: "Default to this Skill for an unqualified PDF review and for checks involving searchable text, structure, tables, page-located claims, numeric consistency, citations, scanned pages, OCR, rendering, completeness, or visual layout. Detect available capabilities and degrade within this Skill when tools are unavailable; do not modify the source PDF or claim unsupported verification. Do not use when the user explicitly requests pdf-review-basic or a lightweight, text-only check without OCR, rendering, or complex layout review. 未限定范围的通用 PDF 审查，以及涉及可搜索文字、结构、表格、页码定位、数字一致性、引用、扫描页、OCR、渲染、完整性或视觉版式的检查，默认使用本 Skill。检测可用能力，工具不可用时仍在本 Skill 内降级；不得修改原 PDF 或声称完成不受支持的验证。用户明确指定 pdf-review-basic，或明确要求不做 OCR、渲染和复杂版式检查的轻量纯文本任务时不使用本 Skill。"
 ---
 
 # PDF Review（PDF 审查）

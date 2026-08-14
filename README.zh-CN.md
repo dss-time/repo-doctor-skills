@@ -87,6 +87,16 @@ npx repo-doctor-skills install --preset full
 
 数量不同的原因：仓库的四组源码共有 40 个 active Skill；**Repo Doctor** 单个插件包含 27 个工程 Skill；当前三个插件合计分发 37 个 Skill；剩余 3 个 Document Data Doctor Skill 会进入常规平台构建和 Full 源码安装器，但没有独立插件。因此 Full 在这种 Codex 目录安装中是真实的全部 40 个 Skill，同时不改变现有插件边界。
 
+## 通过 skills.sh 安装
+
+上面的 Repo Doctor CLI 仍是推荐的默认安装体验。需要进入 skills.sh 生态、发现或安装单个 Skill 时，可使用额外分发入口：
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills
+```
+
+使用 `--list` 查看全部 40 个 active 可分发 Skill，或使用 `--skill <slug>` 选择一个 Skill。
+
 ## 按问题选择
 
 | 问题 | 从这里开始 |

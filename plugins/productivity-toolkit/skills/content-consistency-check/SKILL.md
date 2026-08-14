@@ -1,6 +1,6 @@
 ---
 name: content-consistency-check
-description: Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; use document-review for holistic quality of one document, and do not select a correct value without authoritative evidence or claim unsupported file-format checks. 对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；单份文档整体质量应使用 document-review；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。
+description: "Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; use document-review for holistic quality of one document, and do not select a correct value without authoritative evidence or claim unsupported file-format checks. 对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；单份文档整体质量应使用 document-review；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。"
 ---
 
 # Content Consistency Check（内容一致性检查）

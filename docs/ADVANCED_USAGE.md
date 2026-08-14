@@ -19,7 +19,7 @@ The public npm CLI is the shortest installation path. Advanced users can still u
 Add the stable source:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
 ```
 
 Open `/plugins`, install the required plugin, and start a new task. This repository distributes three plugins:
@@ -149,6 +149,7 @@ The source and distribution layers have different responsibilities:
 | `packs/` | Canonical Skill logic, metadata, localization, permissions, risk, examples, and tests | Edit here first |
 | `plugins/` | Synchronized plugin compatibility and distribution output | Regenerate; do not maintain Skill logic here |
 | `adapters/` | Platform rendering guidance | Edit only when platform behavior changes |
+| `skills/` | Generated skills.sh compatibility output for all active Skills | Regenerate; never edit directly |
 | `dist/` | Generated cross-platform and ZIP output | Never edit directly |
 
 The repository keeps canonical slugs, permissions, security gates, execution profiles, workflows, schemas, Pack/Plugin/Adapter/Build architecture, bilingual parity, and release machinery aligned through validation and generation.

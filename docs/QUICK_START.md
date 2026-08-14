@@ -15,7 +15,7 @@ This guide is for first-time users.
 
 ## Release Note
 
-The current stable release is **v0.6.0**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. v0.6.0 adds the public one-command npm installer while preserving the existing Skill behavior, safety, and permission gates.
+The current stable release is **v0.6.1**. Project, component, and maturity versions are separate, and all 4 active Packs and 40 active Skills remain `beta`. v0.6.1 fixes skills.sh compatibility while preserving the existing Skill behavior, npm installer, safety, and permission gates.
 
 ## What You Are Looking At
 

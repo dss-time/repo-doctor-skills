@@ -1,6 +1,6 @@
 ---
 name: research-brief
-description: Define and answer a bounded research question with a source plan, evidence ledger, cross-checking, conclusions, unknowns, and next steps. Use when gathering or synthesizing evidence is the primary task; use report-writer when supplied material only needs a polished report, and never claim current research without accessible sources or network capability. 围绕有边界的研究问题制定来源计划、建立证据台账、交叉验证并输出结论、未知项和下一步。主要任务是搜集或综合证据时使用；已有材料只需形成正式报告时使用 report-writer；无法访问资料或网络时不得声称完成实时研究。
+description: "Define and answer a bounded research question with a source plan, evidence ledger, cross-checking, conclusions, unknowns, and next steps. Use when gathering or synthesizing evidence is the primary task; use report-writer when supplied material only needs a polished report, and never claim current research without accessible sources or network capability. 围绕有边界的研究问题制定来源计划、建立证据台账、交叉验证并输出结论、未知项和下一步。主要任务是搜集或综合证据时使用；已有材料只需形成正式报告时使用 report-writer；无法访问资料或网络时不得声称完成实时研究。"
 ---
 
 # Research Brief（研究简报）

@@ -1,6 +1,6 @@
 {
   "name": "repo-doctor-skills",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, document review, and safe agent workflows.",
   "type": "module",
   "license": "MIT",
@@ -46,6 +46,7 @@
     "test:workflow": "node scripts/test-repo-doctor-workflows.mjs && node scripts/test-workflow-registry.mjs && node scripts/test-golden-workflows.mjs",
     "test:maintainer": "node scripts/test-maintainer-tools.mjs",
     "test:build-integrity": "node scripts/test-build-integrity.mjs",
+    "test:skills-sh": "node scripts/test-skills-sh-compatibility.mjs",
     "test:plugin-sync": "node scripts/test-repo-doctor-sync.mjs",
     "test:docs": "node scripts/test-user-docs.mjs",
     "test:release": "node scripts/test-release-metadata.mjs && node scripts/test-verify-release-assets.mjs",
@@ -53,7 +54,7 @@
     "test:doctor": "node scripts/test-doctor.mjs",
     "test:ux": "node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs",
     "test:npm": "node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs",
-    "test:core": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor",
+    "test:core": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:skills-sh && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor",
     "test": "npm run test:core && npm run test:ux && npm run test:npm",
     "build": "node scripts/build-skills.mjs && node scripts/sync-productivity-toolkit-plugin.mjs && node scripts/sync-skill-maintainer-plugin.mjs && node scripts/build-chatgpt-skills.mjs",
     "build:chatgpt": "node scripts/build-chatgpt-skills.mjs",
@@ -79,5 +80,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "yaml": "^2.8.1"
   }
 }

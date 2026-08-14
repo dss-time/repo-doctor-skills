@@ -1,6 +1,6 @@
 ---
 name: configuration-audit
-description: Explicit-invocation audit of configuration sources, precedence, overrides, defaults, validation, drift, dangerous settings, undocumented variables, and credential-commit risk using repository evidence. Do not trigger for one settled config edit, read sensitive values, connect to external environments, or modify configuration. 仅显式调用：基于仓库证据审计配置来源、优先级、覆盖、默认值、校验、漂移、危险设置、未文档化变量和凭据误提交风险。不得因一个已确定配置修改而触发，不读取敏感值、不连接外部环境，也不修改配置。
+description: "Explicit-invocation audit of configuration sources, precedence, overrides, defaults, validation, drift, dangerous settings, undocumented variables, and credential-commit risk using repository evidence. Do not trigger for one settled config edit, read sensitive values, connect to external environments, or modify configuration. 仅显式调用：基于仓库证据审计配置来源、优先级、覆盖、默认值、校验、漂移、危险设置、未文档化变量和凭据误提交风险。不得因一个已确定配置修改而触发，不读取敏感值、不连接外部环境，也不修改配置。"
 ---
 
 # Configuration Audit（配置审计）

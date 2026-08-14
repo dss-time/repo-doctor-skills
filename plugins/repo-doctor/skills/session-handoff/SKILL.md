@@ -1,6 +1,6 @@
 ---
 name: session-handoff
-description: Explicit-invocation Skill that creates a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Save to an operating-system temporary directory by default; project-directory writes require authorization. Never modify business files, Git state, or external systems. 仅显式调用：创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。默认保存到操作系统临时目录；写入项目目录必须授权。绝不修改业务文件、Git 状态或外部系统。
+description: "Explicit-invocation Skill that creates a sanitized continuation brief tailored to the next-session goal, referencing specifications, ADRs, issues, commits, and diffs instead of copying them. Save to an operating-system temporary directory by default; project-directory writes require authorization. Never modify business files, Git state, or external systems. 仅显式调用：创建面向下一会话目标的脱敏续接摘要，通过路径、ADR、Issue、Commit 和 Diff 引用既有产物而不重复全文。默认保存到操作系统临时目录；写入项目目录必须授权。绝不修改业务文件、Git 状态或外部系统。"
 ---
 
 # Session Handoff（会话交接）

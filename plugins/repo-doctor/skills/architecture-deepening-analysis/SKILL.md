@@ -1,6 +1,6 @@
 ---
 name: architecture-deepening-analysis
-description: Explicit-invocation, read-only analysis of evidence-backed architecture friction and migratable, reversible deepening options after concrete caller or change evidence exists. Do not trigger for a simple refactor, judge by file size, create speculative abstractions, or write files. 仅显式调用：在已有具体调用方或变更证据后，只读分析架构摩擦并比较可迁移、可回滚的深化方案。不得因简单重构而触发、按文件大小下结论、创建推测性抽象或写入文件。
+description: "Explicit-invocation, read-only analysis of evidence-backed architecture friction and migratable, reversible deepening options after concrete caller or change evidence exists. Do not trigger for a simple refactor, judge by file size, create speculative abstractions, or write files. 仅显式调用：在已有具体调用方或变更证据后，只读分析架构摩擦并比较可迁移、可回滚的深化方案。不得因简单重构而触发、按文件大小下结论、创建推测性抽象或写入文件。"
 ---
 
 # Architecture Deepening Analysis（架构深化分析）

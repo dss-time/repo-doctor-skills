@@ -1,6 +1,6 @@
 ---
 name: ci-failure-diagnosis
-description: Diagnose a CI-specific failure from workflow definitions and logs by locating the failed workflow, job, step, and first trustworthy error, then comparing CI and local environments. Use for CI pipeline context; do not use as a general local bug analysis or implement fixes, reveal credential values, or recommend weakening security controls. 根据 workflow 定义和日志定位失败的 workflow、job、step 与第一个可信错误，并对比 CI 和本地环境以诊断 CI 特定失败。用于 CI 流水线上下文；不作为普通本地 Bug 分析，不实施修复、不泄露密钥，也不建议降低安全控制。
+description: "Diagnose a CI-specific failure from workflow definitions and logs by locating the failed workflow, job, step, and first trustworthy error, then comparing CI and local environments. Use for CI pipeline context; do not use as a general local bug analysis or implement fixes, reveal credential values, or recommend weakening security controls. 根据 workflow 定义和日志定位失败的 workflow、job、step 与第一个可信错误，并对比 CI 和本地环境以诊断 CI 特定失败。用于 CI 流水线上下文；不作为普通本地 Bug 分析，不实施修复、不泄露密钥，也不建议降低安全控制。"
 ---
 
 # CI Failure Diagnosis（CI 失败诊断）

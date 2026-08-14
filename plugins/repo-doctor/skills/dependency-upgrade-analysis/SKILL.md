@@ -1,6 +1,6 @@
 ---
 name: dependency-upgrade-analysis
-description: Explicit-invocation analysis of one defined dependency upgrade using manifests, lockfiles, repository usage, and verified official release evidence, covering compatibility, security, licensing, validation, and rollback. Do not trigger for ordinary code changes or modify manifests or lockfiles. 仅显式调用：基于 manifest、锁文件、仓库用法和已验证官方发布资料分析一个已定义的依赖升级，覆盖兼容、安全、许可证、验证和回滚。不得因普通代码变更而触发，也不修改 manifest 或锁文件。
+description: "Explicit-invocation analysis of one defined dependency upgrade using manifests, lockfiles, repository usage, and verified official release evidence, covering compatibility, security, licensing, validation, and rollback. Do not trigger for ordinary code changes or modify manifests or lockfiles. 仅显式调用：基于 manifest、锁文件、仓库用法和已验证官方发布资料分析一个已定义的依赖升级，覆盖兼容、安全、许可证、验证和回滚。不得因普通代码变更而触发，也不修改 manifest 或锁文件。"
 ---
 
 # Dependency Upgrade Analysis（依赖升级分析）

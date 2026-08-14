@@ -1,6 +1,6 @@
 ---
 name: bug-root-cause-analysis
-description: Diagnose a specific non-CI runtime bug by first qualifying a repeatable success/failure signal, then using minimal reproduction, boundary isolation, and falsifiable experiments to separate trigger, direct cause, and systemic root cause. Use automatically only when a concrete runtime symptom exists. Do not use for CI failures, broad review, test writing, or fix implementation; the Skill is read-only and defaults to concise output. 针对具体非 CI 运行时 Bug，先确认可重复且能区分成败的观测信号，再通过最小复现、故障边界和可证伪实验区分触发条件、直接原因与系统性根因。只有存在具体运行症状时适合自动调用；CI 故障、广泛审查、编写测试或实施修复不使用。本 Skill 只读且默认简洁输出。
+description: "Diagnose a specific non-CI runtime bug by first qualifying a repeatable success/failure signal, then using minimal reproduction, boundary isolation, and falsifiable experiments to separate trigger, direct cause, and systemic root cause. Use automatically only when a concrete runtime symptom exists. Do not use for CI failures, broad review, test writing, or fix implementation; the Skill is read-only and defaults to concise output. 针对具体非 CI 运行时 Bug，先确认可重复且能区分成败的观测信号，再通过最小复现、故障边界和可证伪实验区分触发条件、直接原因与系统性根因。只有存在具体运行症状时适合自动调用；CI 故障、广泛审查、编写测试或实施修复不使用。本 Skill 只读且默认简洁输出。"
 ---
 
 # Bug Root Cause Analysis（Bug 根因分析）

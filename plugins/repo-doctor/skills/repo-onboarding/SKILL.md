@@ -1,6 +1,6 @@
 ---
 name: repo-onboarding
-description: Understand an unfamiliar software repository before making changes. 在修改代码前理解一个陌生软件仓库。
+description: "Understand an unfamiliar software repository before making changes. 在修改代码前理解一个陌生软件仓库。"
 ---
 
 # Repo Onboarding（仓库理解）

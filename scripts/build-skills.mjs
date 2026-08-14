@@ -12,6 +12,7 @@ import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 const root = process.cwd();
 const packsDir = path.join(root, "packs");
 const distDir = path.join(root, "dist");
+const skillsCompatibilityDir = path.join(root, "skills");
 const requestedTarget = process.argv.includes("--target")
   ? process.argv[process.argv.indexOf("--target") + 1]
   : null;
@@ -165,6 +166,17 @@ export function writeInstallableCodexSkill(skillDir, skillOutDir) {
   copyDirectoryContents(path.join(skillDir, "scripts"), path.join(skillOutDir, "scripts"));
 }
 
+export function buildSkillsCompatibilityOutput(directory = skillsCompatibilityDir) {
+  rmSync(directory, { recursive: true, force: true });
+  mkdirSync(directory, { recursive: true });
+  const skillDirs = discoverCanonicalSkillDirs(packsDir);
+  for (const skillDir of skillDirs) {
+    writeInstallableCodexSkill(skillDir, path.join(directory, path.basename(skillDir)));
+  }
+  console.log(`Built skills.sh compatibility output with ${skillDirs.length} skills.`);
+  return skillDirs;
+}
+
 function buildTarget(target) {
   const locale = target.endsWith("en") ? "en" : "zh-CN";
   const outDir = path.join(distDir, target);
@@ -225,4 +237,5 @@ function buildTarget(target) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   mkdirSync(distDir, { recursive: true });
   for (const target of targets) buildTarget(target);
+  buildSkillsCompatibilityOutput();
 }

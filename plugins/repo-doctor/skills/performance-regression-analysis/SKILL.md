@@ -1,6 +1,6 @@
 ---
 name: performance-regression-analysis
-description: Explicit-invocation analysis of one measured performance regression against a defined baseline and workload using profiles, benchmarks, traces, logs, or reproducible experiments. Do not trigger for ordinary slowness guesses, replace general code review, or optimize code. 仅显式调用：针对明确基线和工作负载，使用 profile、benchmark、trace、日志或可复现实验分析一个已测量的性能回归。不得因普通性能猜测而触发，不替代代码审查，也不优化代码。
+description: "Explicit-invocation analysis of one measured performance regression against a defined baseline and workload using profiles, benchmarks, traces, logs, or reproducible experiments. Do not trigger for ordinary slowness guesses, replace general code review, or optimize code. 仅显式调用：针对明确基线和工作负载，使用 profile、benchmark、trace、日志或可复现实验分析一个已测量的性能回归。不得因普通性能猜测而触发，不替代代码审查，也不优化代码。"
 ---
 
 # Performance Regression Analysis（性能回归分析）

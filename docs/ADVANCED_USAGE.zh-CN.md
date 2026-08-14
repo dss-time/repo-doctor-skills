@@ -19,7 +19,7 @@
 添加稳定版 source：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
 ```
 
 打开 `/plugins`，安装需要的插件，然后新建任务。本仓库分发三个插件：
@@ -149,6 +149,7 @@ npx repo-doctor-skills install --force
 | `packs/` | canonical Skill 逻辑、元数据、本地化、权限、风险、示例和测试 | 优先在这里修改 |
 | `plugins/` | 同步的插件兼容与分发产物 | 重新生成，不在这里维护 Skill 逻辑 |
 | `adapters/` | 平台渲染说明 | 仅在平台行为变化时修改 |
+| `skills/` | 全部 active Skill 的 skills.sh 生成式兼容输出 | 重新生成，绝不直接维护 |
 | `dist/` | 生成的跨平台和 ZIP 产物 | 绝不直接修改 |
 
 仓库通过校验与生成保持 canonical slug、权限、安全门禁、execution profiles、workflows、Schema、Pack / Plugin / Adapter / Build 架构、双语同步和发布体系一致。

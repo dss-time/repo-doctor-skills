@@ -1,0 +1,6 @@
+interface:
+  display_name: "Security Focused Review（安全专项审查）"
+  short_description: "安全专项审查；默认 standard，仅显式调用"
+  default_prompt: "使用 $security-focused-review 执行这个有边界的 Repo Doctor 任务。"
+policy:
+  allow_implicit_invocation: false

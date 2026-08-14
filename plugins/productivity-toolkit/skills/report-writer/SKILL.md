@@ -1,6 +1,6 @@
 ---
 name: report-writer
-description: Draft or revise a structured report from user-provided goals, audience, evidence, and format, separating facts, quotations, inferences, recommendations, and unknowns. Use when the deliverable is a report; use research-brief when the main task is gathering and synthesizing evidence, and do not invent missing facts or claim DOCX/PDF generation without available tools and explicit authorization. 根据用户提供的目标、读者、证据和格式撰写或修订结构化报告，并区分事实、引用、推断、建议和未知项。交付物是报告时使用；主要任务是搜集和综合证据时使用 research-brief；不得补造事实，也不得在缺少工具或未获明确授权时声称生成 DOCX/PDF。
+description: "Draft or revise a structured report from user-provided goals, audience, evidence, and format, separating facts, quotations, inferences, recommendations, and unknowns. Use when the deliverable is a report; use research-brief when the main task is gathering and synthesizing evidence, and do not invent missing facts or claim DOCX/PDF generation without available tools and explicit authorization. 根据用户提供的目标、读者、证据和格式撰写或修订结构化报告，并区分事实、引用、推断、建议和未知项。交付物是报告时使用；主要任务是搜集和综合证据时使用 research-brief；不得补造事实，也不得在缺少工具或未获明确授权时声称生成 DOCX/PDF。"
 ---
 
 # Report Writer（报告撰写）

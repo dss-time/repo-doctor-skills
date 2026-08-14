@@ -169,7 +169,7 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
 
     writeFileSync(
       path.join(destination, "SKILL.md"),
-      `---\nname: ${slug}\ndescription: ${descriptionEn} ${descriptionZh}\n---\n\n# ${nameEn}（${nameZh}）\n\nUse the section matching the user's language. 使用与用户输入语言一致的章节。\n\n${execution ? `${executionContract(execution, "en")}\n\n` : ""}${instructionsEn}\n\n${outputEn}\n\n---\n\n${execution ? `${executionContract(execution, "zh-CN")}\n\n` : ""}${instructionsZh}\n\n${outputZh}\n`,
+      `---\nname: ${slug}\ndescription: ${yamlString(`${descriptionEn} ${descriptionZh}`)}\n---\n\n# ${nameEn}（${nameZh}）\n\nUse the section matching the user's language. 使用与用户输入语言一致的章节。\n\n${execution ? `${executionContract(execution, "en")}\n\n` : ""}${instructionsEn}\n\n${outputEn}\n\n---\n\n${execution ? `${executionContract(execution, "zh-CN")}\n\n` : ""}${instructionsZh}\n\n${outputZh}\n`,
     );
     writeFileSync(
       path.join(agents, "openai.yaml"),

@@ -8,6 +8,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-08-14
+
+> Compatibility patch providing exact skills.sh discovery without changing canonical Skill behavior or existing npm installation.
+
+### Added
+
+- Added a generated root `skills/` distribution containing exactly the 40 active canonical Skills and a deterministic slug-parity/frontmatter test.
+- Added bilingual skills.sh installation guidance while keeping `npx repo-doctor-skills install` as the default.
+
+### Changed
+
+- Advanced only the project release layer to 0.6.1; Pack, plugin, and Skill component versions remain unchanged.
+
+### Fixed
+
+- Quoted generated YAML descriptions so `safe-code-review` and every peer output parse with standard YAML tooling.
+- Excluded test fixtures from skills.sh discovery through the generated compatibility boundary and included all three Document Data Doctor Skills.
+
+### Security
+
+- Preserved the existing permission, safety, npm package allowlist, plugin, and canonical-source boundaries.
+
+### Documentation
+
+- Added synchronized English and Simplified Chinese skills.sh guidance, release notes, and version policy updates.
+
+### Validation
+
+- Verified exact 40/40 skills.sh discovery, zero extras, fixtures, duplicates, or YAML errors, isolated skills.sh installs, Recommended 7/7, Full 40/40, and generated drift.
+
 ## [0.6.0] - 2026-08-11
 
 > Stable public CLI release adding one-command npm installation without changing Skill behavior or component contracts.
@@ -293,7 +323,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.4.1...v0.5.0

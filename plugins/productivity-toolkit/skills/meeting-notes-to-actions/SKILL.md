@@ -1,6 +1,6 @@
 ---
 name: meeting-notes-to-actions
-description: Convert supplied meeting notes or transcripts into a summary, decisions, action items, owners, due dates, dependencies, and open questions while distinguishing discussion, proposals, decisions, and commitments. Use when the source is meeting material; do not invent owners, dates, decisions, or task-system updates, and mark missing fields TBD. 将给定会议记录或转写整理为摘要、决定、行动项、负责人、截止日期、依赖和待确认问题，并区分讨论、建议、决定和承诺。来源是会议材料时使用；不得虚构负责人、日期、决定或任务系统更新，缺失字段标记 TBD。
+description: "Convert supplied meeting notes or transcripts into a summary, decisions, action items, owners, due dates, dependencies, and open questions while distinguishing discussion, proposals, decisions, and commitments. Use when the source is meeting material; do not invent owners, dates, decisions, or task-system updates, and mark missing fields TBD. 将给定会议记录或转写整理为摘要、决定、行动项、负责人、截止日期、依赖和待确认问题，并区分讨论、建议、决定和承诺。来源是会议材料时使用；不得虚构负责人、日期、决定或任务系统更新，缺失字段标记 TBD。"
 ---
 
 # Meeting Notes to Actions（会议纪要转行动项）

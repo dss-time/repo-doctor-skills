@@ -1,6 +1,6 @@
 ---
 name: dead-code-verification
-description: Verify whether a specific symbol, file, route, configuration path, or feature is safely removable by checking static and dynamic usage, registries, build entries, templates, plugins, scripts, and external contracts. Use for evidence of unused code; do not perform general impact analysis, assume absence from text search proves safety, or delete code. 通过检查静态与动态使用、注册器、构建入口、模板、插件、脚本和外部契约，验证具体符号、文件、路由、配置路径或功能是否可安全删除。用于无用代码证据；不替代通用影响分析，不把文本搜索无结果当安全证明，也不删除代码。
+description: "Verify whether a specific symbol, file, route, configuration path, or feature is safely removable by checking static and dynamic usage, registries, build entries, templates, plugins, scripts, and external contracts. Use for evidence of unused code; do not perform general impact analysis, assume absence from text search proves safety, or delete code. 通过检查静态与动态使用、注册器、构建入口、模板、插件、脚本和外部契约，验证具体符号、文件、路由、配置路径或功能是否可安全删除。用于无用代码证据；不替代通用影响分析，不把文本搜索无结果当安全证明，也不删除代码。"
 ---
 
 # Dead Code Verification（死代码验证）

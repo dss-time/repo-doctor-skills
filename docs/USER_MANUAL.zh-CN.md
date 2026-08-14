@@ -100,7 +100,7 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 
 ### 先理解两个版本层级
 
-- **Project Release Version（项目发布版本）**标识一个经过测试的仓库发布快照，例如 GitHub Release `v0.6.0`。
+- **Project Release Version（项目发布版本）**标识一个经过测试的仓库发布快照，例如 GitHub Release `v0.6.1`。
 - **Plugin / Pack Component Version（插件 / Pack 组件版本）**标识单独分发的组件，例如 Repo Doctor `0.8.0`。
 
 两者描述不同层级，因此不要求相同。一次项目发布可以包含自身契约没有变化的组件。
@@ -113,7 +113,7 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 2. 刷新或替换已配置的 marketplace source，使它指向该 tag。当前稳定版经过核验的命令是：
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

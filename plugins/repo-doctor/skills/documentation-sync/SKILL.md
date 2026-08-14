@@ -1,6 +1,6 @@
 ---
 name: documentation-sync
-description: Synchronize documentation with a confirmed code, configuration, API, or behavior change by updating only evidence-backed README, API, configuration, example, migration, and changelog content while preserving style and language. Use for documentation-only edits; do not modify production behavior, invent undocumented facts, or use as a general code fix. 根据已确认的代码、配置、API 或行为变更，只更新有证据支持的 README、API、配置、示例、迁移和 CHANGELOG 内容，并保留原有风格与语言。用于仅文档修改；不得改变生产行为、编造未证实内容，也不作为通用代码修复。
+description: "Synchronize documentation with a confirmed code, configuration, API, or behavior change by updating only evidence-backed README, API, configuration, example, migration, and changelog content while preserving style and language. Use for documentation-only edits; do not modify production behavior, invent undocumented facts, or use as a general code fix. 根据已确认的代码、配置、API 或行为变更，只更新有证据支持的 README、API、配置、示例、迁移和 CHANGELOG 内容，并保留原有风格与语言。用于仅文档修改；不得改变生产行为、编造未证实内容，也不作为通用代码修复。"
 ---
 
 # Documentation Sync（文档同步维护）

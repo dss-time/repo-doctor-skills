@@ -1,6 +1,6 @@
 ---
 name: skill-authoring
-description: Engineer one new or updated AI Skill in this Skills repository from concrete use cases through canonical source, minimal resources, bilingual metadata, UI integration, activation contracts, validation, and cross-platform build inspection. Use when a maintainer explicitly wants a reusable Skill artifact, not for a one-off prompt, using an existing business Skill, empty plugin scaffolding, ordinary code changes, or silently creating multiple Skills. 在当前 Skills 仓库中，根据具体用例工程化创建或更新一个 AI Skill，覆盖 canonical 源、最少资源、双语元数据、UI 集成、activation 契约、验证和跨平台构建检查。维护者明确需要可复用 Skill 产物时使用；不用于一次性 Prompt、调用现有业务 Skill、只创建空插件、普通代码修改或未经确认批量创建多个 Skill。
+description: "Engineer one new or updated AI Skill in this Skills repository from concrete use cases through canonical source, minimal resources, bilingual metadata, UI integration, activation contracts, validation, and cross-platform build inspection. Use when a maintainer explicitly wants a reusable Skill artifact, not for a one-off prompt, using an existing business Skill, empty plugin scaffolding, ordinary code changes, or silently creating multiple Skills. 在当前 Skills 仓库中，根据具体用例工程化创建或更新一个 AI Skill，覆盖 canonical 源、最少资源、双语元数据、UI 集成、activation 契约、验证和跨平台构建检查。维护者明确需要可复用 Skill 产物时使用；不用于一次性 Prompt、调用现有业务 Skill、只创建空插件、普通代码修改或未经确认批量创建多个 Skill。"
 ---
 
 # Skill Authoring（Skill 工程化创建）

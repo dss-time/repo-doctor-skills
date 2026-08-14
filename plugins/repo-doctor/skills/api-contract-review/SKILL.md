@@ -1,6 +1,6 @@
 ---
 name: api-contract-review
-description: Review a specific REST, GraphQL, RPC, event, SDK, or internal-module contract across server, client, schema, documentation, and tests, classifying breaking, non-breaking, and behavioral changes. Use for API contract compatibility; do not perform a general code review, generic impact analysis, or modify the interface. 审查具体 REST、GraphQL、RPC、事件、SDK 或内部模块契约在服务端、客户端、Schema、文档和测试间的一致性，并分类破坏性、非破坏性和行为变化。用于 API 契约兼容性；不替代普通代码审查或通用影响分析，也不修改接口。
+description: "Review a specific REST, GraphQL, RPC, event, SDK, or internal-module contract across server, client, schema, documentation, and tests, classifying breaking, non-breaking, and behavioral changes. Use for API contract compatibility; do not perform a general code review, generic impact analysis, or modify the interface. 审查具体 REST、GraphQL、RPC、事件、SDK 或内部模块契约在服务端、客户端、Schema、文档和测试间的一致性，并分类破坏性、非破坏性和行为变化。用于 API 契约兼容性；不替代普通代码审查或通用影响分析，也不修改接口。"
 ---
 
 # API Contract Review（API 契约审查）

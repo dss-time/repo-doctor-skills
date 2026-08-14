@@ -1,0 +1,6 @@
+interface:
+  display_name: "Repo Doctor Router（工作流路由）"
+  short_description: "工作流路由；默认 fast，仅显式调用"
+  default_prompt: "使用 $repo-doctor-router 执行这个有边界的 Repo Doctor 任务。"
+policy:
+  allow_implicit_invocation: false

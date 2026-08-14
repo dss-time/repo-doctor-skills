@@ -1,6 +1,6 @@
 ---
 name: presentation-outline
-description: Design an audience-specific presentation story and slide-by-slide outline with each slide's purpose, title, key points, evidence, and suggested visual. Use when the default deliverable is an outline; generate PPTX only when the user explicitly requests it and capable presentation tools are available, and do not invent missing data or turn a report into dense slides. 针对受众设计演示故事线和逐页大纲，包含每页目的、标题、要点、证据和建议视觉。默认交付物是大纲时使用；仅在用户明确要求且平台具备演示工具时生成 PPTX；不得编造缺失数据，也不得把报告机械切成高密度幻灯片。
+description: "Design an audience-specific presentation story and slide-by-slide outline with each slide's purpose, title, key points, evidence, and suggested visual. Use when the default deliverable is an outline; generate PPTX only when the user explicitly requests it and capable presentation tools are available, and do not invent missing data or turn a report into dense slides. 针对受众设计演示故事线和逐页大纲，包含每页目的、标题、要点、证据和建议视觉。默认交付物是大纲时使用；仅在用户明确要求且平台具备演示工具时生成 PPTX；不得编造缺失数据，也不得把报告机械切成高密度幻灯片。"
 ---
 
 # Presentation Outline（演示文稿大纲）

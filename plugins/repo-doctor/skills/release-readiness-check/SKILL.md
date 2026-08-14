@@ -1,6 +1,6 @@
 ---
 name: release-readiness-check
-description: Explicit-invocation, evidence-backed, read-only release gate for a specific candidate version, returning GO, GO WITH CONDITIONS, or NO-GO after full release checks. Do not trigger for ordinary validation or project health, and never execute release, commit, tag, push, or version changes. 仅显式调用：针对具体候选版本执行有证据的只读发布门禁，完成发布检查后给出 GO、GO WITH CONDITIONS 或 NO-GO。不得因普通验证或项目体检而触发，也不执行发布、提交、tag、push 或版本修改。
+description: "Explicit-invocation, evidence-backed, read-only release gate for a specific candidate version, returning GO, GO WITH CONDITIONS, or NO-GO after full release checks. Do not trigger for ordinary validation or project health, and never execute release, commit, tag, push, or version changes. 仅显式调用：针对具体候选版本执行有证据的只读发布门禁，完成发布检查后给出 GO、GO WITH CONDITIONS 或 NO-GO。不得因普通验证或项目体检而触发，也不执行发布、提交、tag、push 或版本修改。"
 ---
 
 # Release Readiness Check（发布就绪检查）

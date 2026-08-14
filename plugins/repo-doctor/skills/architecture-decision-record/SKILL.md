@@ -1,6 +1,6 @@
 ---
 name: architecture-decision-record
-description: Explicit-invocation Skill to create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting repository conventions. Requires authorized ADR scope; do not fabricate consensus, plan implementation, or modify business code. 仅显式调用：根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库约定。必须获得 ADR 范围授权；不虚构共识、不生成实施计划，也不修改业务代码。
+description: "Explicit-invocation Skill to create or update an ADR from a real architectural problem, evidence, alternatives, tradeoffs, and an explicit decision state while respecting repository conventions. Requires authorized ADR scope; do not fabricate consensus, plan implementation, or modify business code. 仅显式调用：根据真实架构问题、证据、候选方案、权衡和明确决策状态创建或更新 ADR，并遵循仓库约定。必须获得 ADR 范围授权；不虚构共识、不生成实施计划，也不修改业务代码。"
 ---
 
 # Architecture Decision Record（架构决策记录）

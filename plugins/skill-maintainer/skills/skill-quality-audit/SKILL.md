@@ -1,6 +1,6 @@
 ---
 name: skill-quality-audit
-description: Perform a strictly read-only, pre-release quality audit of one AI Skill, a Pack, a plugin, or a Skills repository across structure, triggering, workflow, progressive resources, bilingual cross-platform output, safety, and publishing integration. Use when maintainers want findings, severity, evidence, and a release recommendation; do not audit ordinary application code or PRs, run a broad project health check, gate a product release candidate, or automatically fix files. 对一个 AI Skill、Pack、插件或 Skills 仓库执行严格只读的发布前质量审计，覆盖结构、触发、工作流、渐进资源、双语跨平台产物、安全和发布集成。维护者需要发现、严重度、证据和发布建议时使用；不用于普通应用代码或 PR 审查、广泛项目体检、产品候选版本门禁，也不自动修复文件。
+description: "Perform a strictly read-only, pre-release quality audit of one AI Skill, a Pack, a plugin, or a Skills repository across structure, triggering, workflow, progressive resources, bilingual cross-platform output, safety, and publishing integration. Use when maintainers want findings, severity, evidence, and a release recommendation; do not audit ordinary application code or PRs, run a broad project health check, gate a product release candidate, or automatically fix files. 对一个 AI Skill、Pack、插件或 Skills 仓库执行严格只读的发布前质量审计，覆盖结构、触发、工作流、渐进资源、双语跨平台产物、安全和发布集成。维护者需要发现、严重度、证据和发布建议时使用；不用于普通应用代码或 PR 审查、广泛项目体检、产品候选版本门禁，也不自动修复文件。"
 ---
 
 # Skill Quality Audit（Skill 质量审计）

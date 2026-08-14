@@ -100,7 +100,7 @@ Fast never means skipping safety. Audit is not imposed on every small problem. A
 
 ### Understand the two version layers
 
-- **Project Release Version** identifies a tested repository snapshot, such as GitHub Release `v0.6.0`.
+- **Project Release Version** identifies a tested repository snapshot, such as GitHub Release `v0.6.1`.
 - **Plugin / Pack Component Version** identifies the individual distributed component, such as Repo Doctor `0.8.0`.
 
 These versions describe different layers and do not have to match. A project release can include a component whose own contract did not change.
@@ -113,7 +113,7 @@ There is no automatic-update capability promised by this project.
 2. Refresh or replace the configured marketplace source so it points to that tag. For the current stable release, the verified source command is:
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

@@ -1,6 +1,6 @@
 ---
 name: decision-prototype
-description: Explicit-invocation Skill for building the smallest disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready. 仅显式调用：构建最小且可丢弃的逻辑或 UI 原型，回答一个设计、交互、状态或业务规则问题，并给出成立、否定或仍不确定的结论。用于正式实施前需要可运行证据的场景；写文件和运行命令必须明确授权。绝不连接生产系统，也不把原型代码视为生产完成。
+description: "Explicit-invocation Skill for building the smallest disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready. 仅显式调用：构建最小且可丢弃的逻辑或 UI 原型，回答一个设计、交互、状态或业务规则问题，并给出成立、否定或仍不确定的结论。用于正式实施前需要可运行证据的场景；写文件和运行命令必须明确授权。绝不连接生产系统，也不把原型代码视为生产完成。"
 ---
 
 # Decision Prototype（决策原型验证）

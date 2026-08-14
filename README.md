@@ -87,6 +87,16 @@ npx repo-doctor-skills install --preset full
 
 Why the counts differ: this repository has 40 active Skills across four source collections. The **Repo Doctor** plugin contains its 27 engineering Skills; the three current plugins contain 37 Skills in total; the remaining three Document Data Doctor Skills are available in regular platform builds and the Full source installer, but not in a standalone plugin. Full therefore means all 40 Skills supported by this Codex directory installation, without changing the existing plugin boundaries.
 
+## Install via skills.sh
+
+The Repo Doctor CLI above remains the recommended default installation experience. For skills.sh ecosystem discovery or installing an individual Skill, use the additional distribution entrypoint:
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills
+```
+
+List the 40 active distributable Skills with `--list`, or select one with `--skill <slug>`.
+
 ## Choose by problem
 
 | Problem | Start with |

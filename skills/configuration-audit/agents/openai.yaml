@@ -1,0 +1,6 @@
+interface:
+  display_name: "Configuration Audit（配置审计）"
+  short_description: "配置审计；默认 standard，仅显式调用"
+  default_prompt: "使用 $configuration-audit 执行这个有边界的 Repo Doctor 任务。"
+policy:
+  allow_implicit_invocation: false
