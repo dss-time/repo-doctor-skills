@@ -52,7 +52,7 @@ try {
   const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
-  assert.equal(packReport[0].version, "0.6.1");
+  assert.equal(packReport[0].version, "0.7.0");
   const tarball = path.join(tempRoot, packReport[0].filename);
   assert.ok(existsSync(tarball));
 
@@ -83,7 +83,7 @@ try {
 
   const version = runNpx(tarball, ["--version"]);
   assert.equal(version.status, 0, version.stderr || version.stdout);
-  assert.equal(version.stdout.trim(), "0.6.1");
+  assert.equal(version.stdout.trim(), "0.7.0");
 
   const help = runNpx(tarball, ["--help"]);
   assert.equal(help.status, 0, help.stderr || help.stdout);
@@ -105,8 +105,8 @@ try {
   assert.match(full.stdout, /Preset: Full/);
 
   const collision = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
-  assert.equal(collision.status, 1);
-  assert.match(collision.stderr, /already contains 7 selected Skill/);
+  assert.equal(collision.status, 0, collision.stderr);
+  assert.match(collision.stdout, /unchanged: 7/);
   const forced = runNpx(tarball, ["install", "--target-dir", recommendedTarget, "--force"]);
   assert.equal(forced.status, 0, forced.stderr || forced.stdout);
 

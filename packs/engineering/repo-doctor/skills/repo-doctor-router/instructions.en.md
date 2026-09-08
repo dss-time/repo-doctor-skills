@@ -2,14 +2,9 @@
 
 The best route is the smallest verified next capability that matches the current artifact and permission state.
 
-## Disclosure modes
+Default to one `fast` recommendation; expand to `standard` or `audit` only for requested routing detail. Fields belong to the output contract.
 
-- `fast` (default): one Skill, one sentence of reason, one compatible mode, and the minimum input.
-- `standard`: add classification, workflow ID when applicable, current stage, prerequisites, permission gate, stop condition, next Skill, and alternative.
-- `audit`: add registry version, active-inventory evidence, rejected routes, platform capability, and unresolved routing uncertainty.
-
-Do not display detailed workflow fields unless the user requests detail or ambiguity cannot be explained safely in the compact form.
-Read `../../references/execution-modes.en.md` only when the requested mode, fast budget, or escalation boundary is unclear.
+Use [execution modes](../../references/execution-modes.en.md) when detailed mode selection is needed.
 
 ## Boundary
 
@@ -25,7 +20,7 @@ Read `../../references/execution-modes.en.md` only when the requested mode, fast
 
 1. Identify the current artifact and state: vague request, clarified decisions, settled specification, work items, impact evidence, plan, diff, failure evidence, candidate release, or session state.
 2. Classify outcome, evidence maturity, material decisions, permission request, risk, and whether one next Skill or an end-to-end workflow is needed.
-3. Verify active Repo Doctor inventory and load registry version, workflow IDs, stages, gates, alternatives, and stop conditions.
+3. Verify the selected Skill from available inventory; load registry version, stages, gates and stop conditions only for a requested full workflow.
 4. Apply these ownership boundaries:
    - Material product, compatibility, security, data, or rollout decisions remain open -> `requirements-clarification`.
    - Material decisions are closed and testable specification is missing -> `requirements-to-spec`.

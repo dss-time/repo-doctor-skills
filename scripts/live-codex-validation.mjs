@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { spawn } from "node:child_process";
 import {
   existsSync,
+  mkdirSync,
   readFileSync,
   realpathSync,
   writeFileSync,
@@ -17,7 +18,8 @@ function option(name, fallback = null) {
 }
 
 export const workspace = path.resolve(option("--workspace", process.cwd()));
-export const codexHome = path.resolve(process.env.CODEX_HOME ?? "");
+const isolatedSkillHome = option("--skill-home");
+export const codexHome = path.resolve(isolatedSkillHome ?? process.env.CODEX_HOME ?? "");
 const outputPath = path.resolve(option(
   "--output",
   path.join(root, "tests", "reports", "live-codex-skill-validation.json"),
@@ -29,8 +31,8 @@ const timeoutMs = Number(option("--timeout-ms", "120000"));
 const inventoryPath = path.join(root, "tests", "reports", "active-skills-inventory.json");
 const activationPath = path.join(root, "tests", "skill-quality", "activation-cases.json");
 
-if (!process.env.CODEX_HOME || !existsSync(codexHome)) {
-  throw new Error("CODEX_HOME must point to the isolated live-validation installation");
+if ((!isolatedSkillHome && !process.env.CODEX_HOME) || !existsSync(codexHome)) {
+  throw new Error("--skill-home or CODEX_HOME must point to the isolated live-validation installation");
 }
 if (!existsSync(inventoryPath)) {
   throw new Error("Run npm run release:inventory before live validation");
@@ -281,7 +283,7 @@ const validationInstructions = [
   "This is an isolated, read-only Skill routing validation.",
   "Do not run commands, call tools, inspect files, access networks, or modify anything.",
   "For explicit Skill input, selected_skill must be the supplied Skill whose instructions govern the response.",
-  "For text-only input, selected_skill must be the one installed Skill you select or clearly recommend; use null only when none applies.",
+  "For text-only input, distinguish selecting a Skill to govern this turn from recommending a future handoff. Follow the invocation contract supplied for the turn.",
   "Do not infer an expected answer from test naming because none is provided.",
   "Use the requested response language naturally.",
   "In answer, give a compact but useful response that preserves the selected Skill's safety boundary and output contract.",
@@ -330,9 +332,10 @@ export class AppServer {
       "-c",
       'model_verbosity="low"',
     ];
+    if (isolatedSkillHome) mkdirSync(path.join(codexHome, "sqlite"), { recursive: true });
     this.child = spawn("codex", args, {
       cwd: workspace,
-      env: process.env,
+      env: isolatedSkillHome ? { ...process.env, CODEX_SQLITE_HOME: path.join(codexHome, "sqlite") } : process.env,
       stdio: ["pipe", "pipe", "pipe"],
     });
     this.child.stdout.on("data", (chunk) => this.onStdout(chunk));
@@ -407,6 +410,7 @@ export class AppServer {
       capabilities: { experimentalApi: true },
     });
     this.child.stdin.write(`${JSON.stringify({ method: "initialized" })}\n`);
+    if (isolatedSkillHome) await this.request("skills/extraRoots/set", { extraRoots: [installedRoot] });
   }
 
   async skills() {
@@ -420,7 +424,19 @@ export class AppServer {
   async run(testCase) {
     const threadId = await this.startThread({
       sandbox: "read-only",
-      developerInstructions: validationInstructions,
+      developerInstructions: [
+        validationInstructions,
+        testCase.invocation === "implicit"
+          ? testCase.expected_implicit_policy === "explicit_only"
+            ? `This turn tests host enforcement of an explicit-only Skill. The host did not activate ${testCase.skill}; selected_skill must be null. You may recommend it in handoff, but must not report it or an unrelated Skill as active.`
+            : "This turn tests implicit activation. selected_skill is the applicable implicit Skill; do not substitute an adjacent capability."
+          : testCase.invocation === "negative"
+            ? "This turn tests adjacent-capability recommendation, not activation. selected_skill is the best matching recommendation, including explicit-only capabilities; do not execute it."
+            : "This turn tests explicit invocation.",
+        testCase.invocation === "negative"
+          ? "Verified public capability catalog (metadata only, not activation or permission to execute): " + JSON.stringify(inventory.active_skills.map(({ slug, description }) => ({ slug, description })))
+          : "Use only the Skill activation state supplied by the host for this turn.",
+      ].join(" "),
     });
     return this.runTurn(threadId, {
       testCase,
@@ -733,11 +749,14 @@ async function main() {
     throw new Error(`Isolated discovery failed: ${[...first.issues, ...second.issues].join("; ")}`);
   }
   process.stdout.write(`DISCOVERY PASS ${second.discovered_count}/${second.expected_count}\n`);
+  let serviceBlocker = null;
   const results = await pool(selectedCases, async (testCase, index) => {
     const began = Date.now();
     try {
+      if (serviceBlocker) throw new Error(`Not attempted after external service block: ${serviceBlocker}`);
       const run = await server.run(testCase);
       const result = evaluate(testCase, run);
+      if (result.result === "BLOCKED" && result.notes.includes("usageLimitExceeded")) serviceBlocker = "usageLimitExceeded";
       process.stdout.write(
         `[${index + 1}/${selectedCases.length}] ${result.result} ${testCase.case_id} ${Date.now() - began}ms${result.notes ? ` — ${result.notes}` : ""}\n`,
       );
@@ -770,10 +789,10 @@ async function main() {
     project_version: inventory.project_version,
     source_commit: null,
     source_worktree: "current uncommitted release candidate",
-    codex_cli_version: process.env.CODEX_CLI_VERSION ?? "codex-cli 0.147.0-alpha.1.2",
+    codex_cli_version: process.env.CODEX_CLI_VERSION ?? "unrecorded",
     isolation: {
-      home: "temporary and redacted",
-      codex_home: "temporary and redacted",
+      home: isolatedSkillHome ? "host authentication; isolated Skill roots and SQLite state" : "temporary and redacted",
+      codex_home: isolatedSkillHome ? "host authentication context; Skill installation temporary and redacted" : "temporary and redacted",
       workspace: "temporary empty Git repository",
       source: "dist/codex-zh-CN/skills",
       path_redacted: true,
@@ -786,7 +805,7 @@ async function main() {
     coverage: {
       inventory_skills: activeSkills.length,
       required_core_calls: activeSkills.length * 5,
-      executed_core_calls: results.length,
+      executed_core_calls: results.filter((entry) => !entry.notes?.startsWith("Not attempted after external service block:")).length,
       probe_limit: limit || null,
       requested_case: requestedCase,
     },

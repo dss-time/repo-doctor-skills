@@ -95,6 +95,7 @@ dist/cursor-zh-CN/.cursor/rules/<skill-name>.mdc
 ```bash
 git clone https://github.com/dss-time/repo-doctor-skills.git
 cd repo-doctor-skills
+npm ci
 npm run install:skills -- --agent codex
 npm run validate
 npm test
@@ -120,7 +121,7 @@ node scripts/build-skills.mjs --target kimi-zh-CN
 - `--agent codex` 使用 `CODEX_HOME/skills`；没有配置 `CODEX_HOME` 时使用标准 Codex home；
 - `--agent shared` 使用 `AGENTS_HOME/skills`；没有配置时使用共享 `.agents/skills` home；
 - `--target-dir` 用于隔离或自定义目标；
-- 没有显式参数时，必须且只能存在一个已配置的 `CODEX_HOME` 或 `AGENTS_HOME`；
+- 没有显式参数时，使用唯一已配置的 home；未配置时使用共享 `.agents/skills`；
 - 同时检测到多个 home 时，在写入前安全退出；绝不会只凭目录存在判断 Agent。
 
 安装器默认使用 Recommended，完成后核验安装集合；除非显式传入 `--force`，否则不会替换目标中已有的同名 Skill。公开 CLI 的对应命令包括：
@@ -181,3 +182,14 @@ npm run quality:check
 - [工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)：明确需要多步骤的任务
 - [Release 资产选择](guides/release-asset-selection.zh-CN.md)：下载并核验发布产物
 - [版本与生命周期](VERSIONING.zh-CN.md)：项目版本与组件版本
+
+## 单 Skill、语言和重复安装
+
+```bash
+npx repo-doctor-skills install --skill safe-code-review
+npx repo-doctor-skills install --language zh-CN
+```
+
+`--skill` 与 `--preset` 互斥。语言可选 en、zh-CN、bilingual（默认）；只选择正文语言，保留资源。相同内容跳过，不同内容明确提示，`--force` 仅替换选中项。
+
+Project Release Version（项目发布版本）与 Plugin / Pack Component Version（组件版本）独立管理，详见[版本策略](VERSIONING.zh-CN.md)。

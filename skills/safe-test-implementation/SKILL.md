@@ -8,21 +8,16 @@ description: "Protect one externally observable behavior through a gated red–g
 ## Execution Contract
 
 Default to `fast`; bounded natural-language invocation is allowed.
-Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
-Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
-For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Safe Test Implementation
 
 One behavior slice earns one trustworthy red signal, one green result, and only then any organization.
 
-## Output modes
+Output mode and test_mode are independent. Never switch either silently.
 
-- `fast` (default): status, protected behavior, test mode, changed test files, focused command, result, and next step.
-- `standard`: full behavior-cycle record and bounded regression result.
-- `audit`: `standard` plus permission decisions, command preflight, exact working directories, exit codes, evidence status, mock rationale, and skipped/blocked checks.
-
-Output mode is independent from `test_mode`. Never switch either silently.
+Default output is `fast`; use `standard` or `audit` for detailed evidence, following the output contract.
 
 ## Permission and command boundary
 
@@ -66,36 +61,30 @@ If ambiguity changes evidence or authorization, stop. Otherwise infer the narrow
 - Return `Blocked` for missing write authorization, unsafe/unknown commands, unavailable tooling, production-only changes, or a red signal unrelated to the target behavior.
 - Use `not_run`, `unexpected_failure`, `flaky`, or `sensitivity_unverified` rather than turning missing evidence into a pass.
 
+Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.
+
 # Output Contract
 
-Lead with `status`, protected behavior, current cycle state, and next action.
-
-- `fast`: `output_mode`, `test_mode`, `observable_behavior`, `test_boundary`, `changed_test_files`, focused command/result, `production_change_required`, and `next_recommended_skill`.
-- `standard`: add test basis, red evidence, expected failure reason or sensitivity evidence, green evidence, organization result, regression result, limitations, and evidence status.
-- `audit`: add write-authorization scope, command preflight, mock rationale, and a command ledger with exact command, working directory, exit code, result, and evidence state.
-
-Only `test_first` requires an observed expected failure. Do not claim red, green, regression, or sensitivity without the corresponding evidence. Use `Blocked` when the permission or command gate fails.
+Default `fast`: protected behavior, selected test_mode and actual test command/result. Explain limits when production changes, failures or unverified evidence matter.
+`standard` adds observable_behavior, test_boundary, red/green or sensitivity evidence, regression results and, when applicable, production_change_required and next_recommended_skill.
+`audit` adds command preflight, permissions, mock rationale and the full command ledger.
+Only test_first requires an observed expected failure; never invent red, green or sensitivity. Omit empty fields.
 
 # 简体中文
 
 ## 执行契约
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
-清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
-只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
-模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # Safe Test Implementation（安全补充测试）
 
 一个行为切片只对应一个可信红灯、一个绿灯结果，全部通过后才能整理。
 
-## 输出模式
+输出模式与 test_mode 独立，二者都不得静默切换。
 
-- `fast`（默认）：状态、受保护行为、测试模式、测试侧改动、定向命令、结果和下一步。
-- `standard`：完整行为循环记录及有边界的回归结果。
-- `audit`：在 `standard` 基础上增加权限判断、命令预检、准确工作目录、退出码、证据状态、Mock 理由和跳过/阻塞项。
-
-输出模式与 `test_mode` 相互独立，二者都不得静默切换。
+输出默认 `fast`；需要详细证据时使用 `standard` 或 `audit`，字段以输出契约为准。
 
 ## 权限与命令边界
 
@@ -139,12 +128,11 @@ Only `test_first` requires an observed expected failure. Do not claim red, green
 - 缺少写权限、命令不安全或未知、工具不可用、只能修改生产代码，或红灯与目标行为无关时返回 `Blocked`。
 - 适时使用 `not_run`、`unexpected_failure`、`flaky` 或 `sensitivity_unverified`，不得把缺失证据包装成通过。
 
+用户请求已明确授权本 Skill 范围时直接完成，不重复索取授权。完整流程需要其他职责时，仅在已有流程授权下交给对应 Skill；本 Skill 自身权限不扩大。
+
 # 输出契约
 
-先给 `status`、受保护行为、当前循环状态和下一动作。
-
-- `fast`：`output_mode`、`test_mode`、`observable_behavior`、`test_boundary`、`changed_test_files`、定向命令/结果、`production_change_required` 和 `next_recommended_skill`。
-- `standard`：增加测试依据、红灯证据、预期失败原因或敏感性证据、绿灯证据、整理结果、回归结果、限制和证据状态。
-- `audit`：增加写权限范围、命令预检、Mock 理由，以及包含准确命令、工作目录、退出码、结果和证据状态的命令账本。
-
-只有 `test_first` 要求观察到预期失败。没有相应证据时不得声称红灯、绿灯、回归或敏感性。权限或命令门禁失败时使用 `Blocked`。
+默认 `fast`：受保护行为、选择的 test_mode 和实际测试命令/结果。只在需要生产修改或存在失败、未验证项时解释限制。
+`standard` 增加 observable_behavior、test_boundary、红/绿或敏感性证据、回归结果，以及适用时的 production_change_required、next_recommended_skill。
+`audit` 增加命令预检、权限、Mock 理由和完整命令账本。
+只有 test_first 要求实际预期失败；不得编造 red、green 或敏感性。无需输出空字段。

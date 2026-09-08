@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync, symlinkSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -45,7 +45,7 @@ try {
   assert.match(result.stdout, /Installed: 7 Skills/);
   assert.match(result.stdout, /Preset: Recommended/);
   assert.match(result.stdout, /\$repo-doctor-router/);
-  assert.match(result.stdout, /I don't know which Skill to use\./);
+  assert.match(result.stdout, /unchanged: 0/);
 
   const fullTarget = path.join(tempRoot, "full-skills");
   const full = spawnSync(process.execPath, [
@@ -59,6 +59,54 @@ try {
   assert.equal(readdirSync(fullTarget, { withFileTypes: true }).filter((entry) => entry.isDirectory()).length, 40);
   assert.match(full.stdout, /Installed: 40 Skills/);
   assert.match(full.stdout, /Preset: Full/);
+
+  const cli = (args) => spawnSync(process.execPath, [path.join(root, "scripts/install.mjs"), ...args], {
+    cwd: root, encoding: "utf8", env: { ...process.env, CODEX_HOME: "", AGENTS_HOME: "" }, timeout: 15000,
+  });
+  const repeated = cli(["--target-dir", target]);
+  assert.equal(repeated.status, 0, repeated.stderr);
+  assert.match(repeated.stdout, /Installed: 0 Skills; unchanged: 7/);
+  const expansion = cli(["--preset", "full", "--target-dir", target]);
+  assert.equal(expansion.status, 0, expansion.stderr);
+  assert.match(expansion.stdout, /Installed: 33 Skills; unchanged: 7/);
+  assert.equal(readdirSync(target).length, 40);
+
+  for (const language of ["en", "zh-CN", "bilingual"]) {
+    const individual = path.join(tempRoot, `individual-${language}`);
+    const selected = cli(["--skill", "safe-code-review", "--language", language, "--target-dir", individual]);
+    assert.equal(selected.status, 0, selected.stderr);
+    assert.deepEqual(readdirSync(individual), ["safe-code-review"]);
+    const body = readFileSync(path.join(individual, "safe-code-review/SKILL.md"), "utf8");
+    assert.equal(body.includes("# English\n"), language !== "zh-CN");
+    assert.equal(body.includes("# 简体中文\n"), language !== "en");
+    assert.ok(existsSync(path.join(individual, "safe-code-review/agents/openai.yaml")));
+    assert.ok(existsSync(path.join(individual, "safe-code-review/references/execution-modes.en.md")));
+    assert.ok(existsSync(path.join(individual, "safe-code-review/references/execution-modes.zh-CN.md")));
+    assert.match(selected.stdout, /Try: \$safe-code-review/);
+  }
+
+  const changedFile = path.join(target, "safe-code-review/SKILL.md");
+  writeFileSync(changedFile, "user-owned edit\n");
+  const conflict = cli(["--target-dir", target]);
+  assert.equal(conflict.status, 1);
+  assert.match(conflict.stderr, /Different existing Skills: safe-code-review/);
+  assert.equal(readFileSync(changedFile, "utf8"), "user-owned edit\n");
+  const replace = cli(["--skill", "safe-code-review", "--target-dir", target, "--force"]);
+  assert.equal(replace.status, 0, replace.stderr);
+  assert.notEqual(readFileSync(changedFile, "utf8"), "user-owned edit\n");
+
+  const linked = path.join(target, "safe-code-review/user-link");
+  symlinkSync(changedFile, linked);
+  const linkConflict = cli(["--skill", "safe-code-review", "--target-dir", target]);
+  assert.equal(linkConflict.status, 1);
+  assert.ok(existsSync(linked));
+
+  for (const args of [["--skill", "../escape"], ["--skill", "missing"], ["--language", "xx"], ["--force", "--force"], ["--skill"], ["--unknown"], ["--preset", "full", "--skill", "safe-code-review"]]) {
+    const absent = path.join(tempRoot, "must-stay-absent");
+    const invalid = cli(["--target-dir", absent, ...args]);
+    assert.notEqual(invalid.status, 0, JSON.stringify(args));
+    assert.ok(!existsSync(absent), "invalid request wrote its destination");
+  }
 
   const codexHome = path.join(tempRoot, "codex-home");
   const explicitCodex = spawnSync(process.execPath, [

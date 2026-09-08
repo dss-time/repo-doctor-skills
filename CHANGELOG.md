@@ -8,6 +8,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-09-08
+
+### Added
+
+- Individual npm installation with `--skill` and optional `--language en|zh-CN|bilingual` bodies, retaining supporting resources.
+- Content-aware repeated installation and Recommended-to-Full expansion without replacing identical Skills.
+
+### Changed
+
+- Simplified onboarding and default high-frequency Skill answers; consolidated duplicated prompt rules and honored already-authorized workflows within each Skill's permissions.
+- Advanced the project to 0.7.0 and Repo Doctor Pack/plugin to 0.9.0. Other Pack/plugin versions and all maturity statuses remain unchanged.
+
+### Fixed
+
+- Reject unknown, repeated, missing-value and conflicting installer options before installing.
+- Preserve modified Skill directories unless replacement is explicit; report exact conflicts.
+- Correct source development dependency instructions and consolidate quick-entry documentation.
+
+### Security
+
+- Preserve permission metadata, read-only specialist boundaries, truthful evidence, 40 active Skills and deterministic distribution checks.
+
+### Documentation
+
+- Distinguish historical Live-model evidence from verification of this changed candidate.
+
 ## [0.6.1] - 2026-08-14
 
 > Compatibility patch providing exact skills.sh discovery without changing canonical Skill behavior or existing npm installation.
@@ -323,7 +349,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.0...v0.5.1

@@ -22,14 +22,20 @@ assert.equal(result.inventory.repo_doctor_skills, 27);
 assert.equal(result.inventory.plugin_skills, 37);
 assert.equal(result.inventory.expected_chatgpt_zips, 37);
 assert.equal(result.workflow.count, 13);
-assert.equal(result.release.current_project_version, "0.6.1");
+assert.equal(result.release.current_project_version, JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version);
 assert.equal(result.release.release_channel, "stable");
 assert.equal(result.release.live_model_status, "PASS");
 assert.equal(result.release.maintainer_waiver, null);
-assert.ok(["PASS", "PASS_WITH_CONDITIONS"].includes(result.status));
-assert.ok(!result.errors.some((error) => error.includes("Live-model status")));
+const liveReport = path.join(root, "tests", "reports", "live-codex-skill-validation-0.7.0.json");
+if (existsSync(liveReport)) {
+  assert.ok(["PASS", "PASS_WITH_CONDITIONS"].includes(result.status));
+  assert.ok(!result.errors.some((error) => error.includes("Live-model")));
+} else {
+  assert.equal(result.status, "FAIL");
+  assert.ok(result.errors.some((error) => error.includes("live-codex-skill-validation-0.7.0.json: missing")));
+}
 assert.equal(fingerprint(), before, "doctor must not modify inspected files");
 const cli = spawnSync(process.execPath, ["scripts/doctor.mjs", "--json"], { cwd: root, encoding: "utf8" });
-assert.equal(cli.status, 0, cli.stderr);
+assert.equal(cli.status, existsSync(liveReport) ? 0 : 1, cli.stderr);
 assert.equal(JSON.parse(cli.stdout).read_only, true);
 console.log("Doctor tests passed for read-only inspection and JSON output.");

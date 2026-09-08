@@ -2,13 +2,9 @@
 
 One behavior slice earns one trustworthy red signal, one green result, and only then any organization.
 
-## Output modes
+Output mode and test_mode are independent. Never switch either silently.
 
-- `fast` (default): status, protected behavior, test mode, changed test files, focused command, result, and next step.
-- `standard`: full behavior-cycle record and bounded regression result.
-- `audit`: `standard` plus permission decisions, command preflight, exact working directories, exit codes, evidence status, mock rationale, and skipped/blocked checks.
-
-Output mode is independent from `test_mode`. Never switch either silently.
+Default output is `fast`; use `standard` or `audit` for detailed evidence, following the output contract.
 
 ## Permission and command boundary
 
@@ -51,3 +47,5 @@ If ambiguity changes evidence or authorization, stop. Otherwise infer the narrow
 - In a project without tests, first identify the smallest safe seam and existing runnable toolchain. Do not install a framework or expose a private API.
 - Return `Blocked` for missing write authorization, unsafe/unknown commands, unavailable tooling, production-only changes, or a red signal unrelated to the target behavior.
 - Use `not_run`, `unexpected_failure`, `flaky`, or `sensitivity_unverified` rather than turning missing evidence into a pass.
+
+Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.

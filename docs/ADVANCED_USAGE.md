@@ -95,6 +95,7 @@ Requirements: Node.js 18 or later; ChatGPT ZIP creation also needs `zip` on `PAT
 ```bash
 git clone https://github.com/dss-time/repo-doctor-skills.git
 cd repo-doctor-skills
+npm ci
 npm run install:skills -- --agent codex
 npm run validate
 npm test
@@ -181,3 +182,14 @@ npm run quality:check
 - [Workflow Cookbook](WORKFLOW_COOKBOOK.md) for deliberate multi-step tasks
 - [Release Asset Selection](guides/release-asset-selection.md) for downloading and verifying published artifacts
 - [Versioning and Lifecycle](VERSIONING.md) for project and component versions
+
+## Individual Skills, language and reinstalling
+
+```bash
+npx repo-doctor-skills install --skill safe-code-review
+npx repo-doctor-skills install --language en
+```
+
+`--skill` and `--preset` are mutually exclusive. Choose en, zh-CN, or bilingual (default) for the body; resources remain available. Identical content is skipped, different content is reported, and `--force` replaces only selected Skills.
+
+Project Release Version and Plugin / Pack Component Version are independent; see [version policy](VERSIONING.md).

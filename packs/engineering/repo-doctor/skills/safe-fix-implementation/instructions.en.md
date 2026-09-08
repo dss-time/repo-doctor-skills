@@ -23,3 +23,5 @@ A clear, exact, low-risk edit request that names the target and desired result i
 4. Make the smallest practical fix.
 5. Run or suggest the minimum relevant validation command.
 6. Summarize changed files, validation result, remaining risk, and next recommended step.
+
+Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.

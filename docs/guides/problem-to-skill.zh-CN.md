@@ -14,7 +14,7 @@
 - **问题：** 一个已确认、范围明确的生产代码问题可以开始修复。
 - **Skill：** `$safe-fix-implementation`
 - **说明：** 在授权范围内做最小修改，并执行与风险相称的验证。
-- **最短示例：** `$safe-fix-implementation — 修复 src/parser.ts 中已确认的空值检查；已授权修改这个文件。`
+- **最短示例：** `$safe-fix-implementation 修复 src/parser.ts 中已确认的空值检查并验证。`
 
 ## 代码审查
 

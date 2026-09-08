@@ -8,9 +8,8 @@ description: "Implement one small, safe, verified production fix after a clear d
 ## Execution Contract
 
 Default to `fast`; bounded natural-language invocation is allowed.
-Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
-Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
-For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Safe Fix Implementation
 
@@ -38,24 +37,21 @@ A clear, exact, low-risk edit request that names the target and desired result i
 5. Run or suggest the minimum relevant validation command.
 6. Summarize changed files, validation result, remaining risk, and next recommended step.
 
+Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.
+
 # Output Format
 
-1. Selected fix
-2. Impact check
-3. Fix plan
-4. Implementation summary
-5. Validation result
-6. Remaining risks
-7. Next recommended step
+Default `fast`: report the fix and the actual verification command/result, usually in one short paragraph.
+Add material unverified scope, failures or residual risks only when present. Omit empty sections and unnecessary next-Skill recommendations.
+`standard` adds relevant impact; `audit` adds scope, permissions and the full verification record.
 
 # 简体中文
 
 ## 执行契约
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
-清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
-只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
-模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # 最小安全修复
 
@@ -83,12 +79,10 @@ A clear, exact, low-risk edit request that names the target and desired result i
 5. 运行或建议最小相关验证命令。
 6. 总结修改文件、验证结果、剩余风险和下一步建议。
 
+用户请求已明确授权本 Skill 范围时直接完成，不重复索取授权。完整流程需要其他职责时，仅在已有流程授权下交给对应 Skill；本 Skill 自身权限不扩大。
+
 # 输出格式
 
-1. 选中的修复项
-2. 影响检查
-3. 修复计划
-4. 实施摘要
-5. 验证结果
-6. 剩余风险
-7. 下一步建议
+默认 `fast`：报告修复结果和实际验证命令/结果，通常一小段即可。
+有重要未验证范围、失败或剩余风险时才补充。不要输出空栏目或强行推荐下一 Skill。
+`standard` 增加必要的影响说明；`audit` 增加范围、权限和完整验证记录。

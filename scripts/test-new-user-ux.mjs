@@ -88,7 +88,7 @@ for (const relative of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", "doc
   for (const count of ["40", "37", "27"]) assert.ok(content.includes(count), `${relative}: missing distribution count ${count}`);
 }
 
-for (const relative of ["README.md", "README.zh-CN.md", "docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md"]) {
+for (const relative of ["docs/ADVANCED_USAGE.md", "docs/ADVANCED_USAGE.zh-CN.md"]) {
   const content = read(relative);
   assert.match(content, /Project Release Version/i);
   assert.match(content, /Plugin \/ Pack Component Version/i);

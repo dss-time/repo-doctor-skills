@@ -6,7 +6,7 @@ Repo Doctor Skills keeps release versions, component versions, and maturity stat
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release notes.
 
-The current project release is **0.6.1 stable**. It fixes skills.sh compatibility and exact 40/40 distribution without changing Skill behavior or the existing npm installer. The preserved 30-case performance comparison and 317/317 Live-model report remain the applicable behavioral evidence; v0.6.0 added the public npm CLI and v0.6.1 adds distribution compatibility rather than claiming a new routing corpus.
+The current published project release is **0.6.1 stable**. The next candidate is **0.7.0**, which improves installer selection, language handling, idempotence, prompt clarity, and user documentation while preserving the 40-Skill inventory and stable slugs. v0.7.0 requires its own Live-model validation report; the historical v0.4.0 report cannot satisfy this release gate.
 
 The immutable `v0.5.0` tag points to the intended execution-efficiency candidate, but that tag's clean-checkout CI exposed a build-integrity test dependency on ignored `dist/` output. No GitHub Release was created for v0.5.0, and the tag is preserved without deletion or movement. v0.5.1 contains the same Skill behavior plus the test-only clean-build isolation fix.
 
@@ -26,11 +26,11 @@ Packs, plugins, and Skills have component versions independent of the project re
 - a project release may include unchanged components without changing their component versions;
 - marketplace entries and ChatGPT ZIPs currently have no independent embedded version field.
 
-For the 0.6.1 stable project release, the component baselines are:
+For the 0.7.0 release candidate, the component baselines are:
 
 | Component | Version | Distribution rule |
 |---|---:|---|
-| Repo Doctor Pack / plugin | 0.8.0 | Pack and generated plugin must match. |
+| Repo Doctor Pack / plugin | 0.9.0 | Pack and generated plugin must match. |
 | Productivity Toolkit Pack / plugin | 0.1.0 | Pack and generated plugin must match. |
 | Skill Maintainer Pack / plugin | 0.2.0 | Pack and generated plugin must match. |
 | Document Data Doctor Pack | 0.1.0 | No standalone plugin or ChatGPT ZIP. |
@@ -38,7 +38,7 @@ For the 0.6.1 stable project release, the component baselines are:
 
 Do not mechanically replace every component version with the project version. Update a component version only when its own contract changes, and regenerate plugin and platform outputs from `packs/`.
 
-The execution and activation contract introduced by the v0.5.0 candidate advanced the Repo Doctor Pack/plugin pair together to 0.8.0. `safe-fix-implementation` advanced to 0.2.0 because its public activation description covers exact, low-risk edits with an explicit target and desired result. v0.6.0 and v0.6.1 change only project distribution layers, so these component versions remain unchanged.
+The execution and activation contract introduced by the v0.5.0 candidate advanced the Repo Doctor Pack/plugin pair together to 0.8.0. `safe-fix-implementation` advanced to 0.2.0 because its public activation description covers exact, low-risk edits with an explicit target and desired result. v0.7.0 advances the Repo Doctor Pack/plugin pair to 0.9.0 for its prompt and execution-contract improvements; other component lines remain independently versioned.
 
 ## 3. Maturity status
 
@@ -51,9 +51,9 @@ Maturity status is independent of both version layers:
 
 A Pack's maturity must not be higher than the least mature active Skill it contains. Template Packs and template Skills remain `draft`, are excluded from active counts, and are not released as plugins or standalone ZIPs.
 
-For the 0.6.1 stable project release, all 4 active Packs and all 40 active Skills remain `beta`. The template Pack and its template Skill remain `draft`; project-channel stability does not automatically promote component maturity.
+For the 0.7.0 release candidate, all 4 active Packs and all 40 active Skills remain `beta`. The template Pack and its template Skill remain `draft`; project-channel stability does not automatically promote component maturity.
 
-Repository validation, activation contracts, deterministic builds, npm tarball smoke, skills.sh discovery/install smoke, and live-model tests provide different evidence. The preserved v0.5.1 comparison matched 30/30 baseline/optimized cases and produced a 27 PASS/PASS, 3 FAIL/PASS, 0 PASS/FAIL, 0 FAIL/FAIL matrix. The 317/317 Live-model corpus remains historical v0.4.0 evidence. v0.6.0 added isolated public-package Recommended 7/7 and Full 40/40 installation evidence; v0.6.1 adds exact skills.sh 40/40 parity evidence.
+Repository validation, activation contracts, deterministic builds, npm tarball smoke, skills.sh discovery/install smoke, and Live-model tests provide different evidence. The preserved v0.5.1 comparison matched 30/30 baseline/optimized cases and produced a 27 PASS/PASS, 3 FAIL/PASS, 0 PASS/FAIL, 0 FAIL/FAIL matrix. The 317/317 v0.4.0 corpus remains historical evidence only. v0.7.0 requires fresh version-scoped Live-model evidence and adds isolated installer checks for idempotence, Recommended-to-Full expansion, individual selection, and language selection.
 
 ## Semantic Versioning decisions
 
@@ -63,7 +63,7 @@ Use [Semantic Versioning](https://semver.org/) independently at the appropriate 
 - minor: backward-compatible Skills, Packs, platform outputs, or user capabilities;
 - major: incompatible public invocation, schema, Pack-format, or component-contract changes.
 
-Repo Doctor Skills is still pre-1.0. Version 0.4.1 was an earlier documentation and Release-verification patch. Version 0.6.0 was a backward-compatible minor release adding the public npm CLI, one-command installation, and Recommended/Full presets. Version 0.6.1 is a backward-compatible patch because it fixes skills.sh YAML compatibility and generated distribution parity without removing or renaming canonical Skill slugs or changing component behavior. A 1.0.0 release requires an explicit product decision.
+Repo Doctor Skills is still pre-1.0. Version 0.4.1 was an earlier documentation and Release-verification patch. Version 0.6.0 added the public npm CLI, one-command installation, and Recommended/Full presets; v0.6.1 fixed skills.sh compatibility. Version 0.7.0 is a backward-compatible minor release because it adds installer options and changes public prompt behavior without removing or renaming canonical Skill slugs. A 1.0.0 release requires an explicit product decision.
 
 ## Historical version-label exception
 

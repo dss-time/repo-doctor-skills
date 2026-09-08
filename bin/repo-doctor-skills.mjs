@@ -18,6 +18,8 @@ if (args.length === 0 || args.includes("--help")) {
     "",
     "Install options:",
     "  --preset recommended|full",
+    "  --skill <slug>",
+    "  --language en|zh-CN|bilingual",
     "  --agent codex|shared",
     "  --target-dir <path>",
     "  --force",

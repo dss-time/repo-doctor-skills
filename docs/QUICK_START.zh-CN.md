@@ -1,133 +1,32 @@
-# 新手快速开始
+# 快速开始
 
-这份文档面向第一次看到这个项目的用户。
-
-## 选择适合你的入口
-
-- 想在 5 分钟内完成构建：继续阅读本页。
-- 想了解安装、调用语法、权限和故障排查：看[完整用户手册](USER_MANUAL.zh-CN.md)。
-- 知道任务但不知道 Skill 名：查[Skill 完整目录](SKILL_CATALOG.zh-CN.md)。
-- 想让简单任务快速完成并了解重型审计的显式调用方式：看[执行模式](guides/execution-modes.zh-CN.md)。
-- 想按问题直接复制一个最短示例：看[Skill 快速入口](guides/quick-skill-entrypoints.zh-CN.md)。
-- 一个任务需要串联多个 Skill：看[工作流实战手册](WORKFLOW_COOKBOOK.zh-CN.md)。
-- 需要核对发布、Pack/插件版本或 Skill 成熟度：看[版本与生命周期策略](VERSIONING.zh-CN.md)。
-- 需要新增或维护 Skill：继续看[新增 Skills 指南](ADDING_SKILLS.zh-CN.md)。
-
-## 发布说明
-
-当前正式版是 **v0.6.1**。项目版本、组件版本和成熟度状态彼此独立，4 个 active Pack 和 40 个 active Skill 仍为 `beta`。v0.6.1 修复 skills.sh 兼容性，同时保持现有 Skill 行为、npm 安装器、安全与权限门禁不变。
-
-## 你正在看的是什么
-
-Repo Doctor Skills 有两条实际入口：
-
-1. 使用 `plugins/` 下同步生成的 Repo Doctor、Productivity Toolkit 或 Skill Maintainer 兼容分发。
-2. 把 `packs/` 作为跨平台 AI Skill 的唯一 canonical 来源，再生成 `plugins/` 和 `dist/` 产物。
-
-如果你只是想试用已有 Codex 插件，请看 [LEGACY_CODEX_PLUGIN.zh-CN.md](LEGACY_CODEX_PLUGIN.zh-CN.md)。如果你想构建多平台输出，继续看本页。
-
-## 克隆仓库
+## 1. 安装
 
 ```bash
-git clone https://github.com/dss-time/repo-doctor-skills.git
-cd repo-doctor-skills
+npx repo-doctor-skills install
 ```
 
-## 运行校验
+默认安装 7 个常用 Skill。安装完成后查看打印的目标路径，在支持 Skills 的助手中新建任务。
 
-```bash
-npm run validate
-npm test
-```
-
-这些命令会检查必需文件、元数据、语言覆盖、权限、公开安全边界、activation 契约、维护工具 fixture、同步和确定性构建。
-
-日常使用时，明确的局部请求默认走 `fast`，相关模块工作走 `standard`，只有高风险或用户明确要求完整审计时才走 `audit`。每个请求默认只激活一个主 Skill，多 Skill workflow 不会自动继续。详见[执行模式](guides/execution-modes.zh-CN.md)。
-
-## 构建所有输出
-
-```bash
-npm run build
-```
-
-该命令会同步插件分发，在 `dist/` 下生成 7 个常规平台目标，并在 `dist/chatgpt-skills/` 中生成插件支持的 ChatGPT 上传包。
-
-## ChatGPT ZIP 上传包
-
-每个包都有一个 ZIP 和一个用于检查的同名展开目录。文件名前缀表示来源插件，其余部分映射到 canonical Skill slug。
-
-| 前缀 | 插件 | 当前数量 |
-|---|---|---:|
-| `rd-*` | Repo Doctor | 27 |
-| `pt-*` | Productivity Toolkit | 8 |
-| `sm-*` | Skill Maintainer | 2 |
-
-Document Data Doctor 的 3 个 Basic Skill 会进入 7 个常规跨平台目标，但没有独立插件或 ChatGPT ZIP。经过核验的 ChatGPT 上传步骤、包名前缀，以及“单个上传 Skill”和“插件”的区别，见[完整用户手册](USER_MANUAL.zh-CN.md)。
-
-## 生成中文通用 Prompt Pack
-
-```bash
-node scripts/build-skills.mjs --target generic-zh-CN
-```
-
-输出目录：
+## 2. 提出请求
 
 ```text
-dist/generic-zh-CN/
+$safe-code-review 审查当前修改。
 ```
 
-每个文件都是可复制使用的 Markdown prompt。若文件引用同级 `references/`、`assets/` 或 `scripts/`，请复制整个目标目录，避免资源丢失。
+直接描述任务即可，无需指定执行模式。不知道选哪个时使用 `$repo-doctor-router`。
 
-## 生成 Codex / CodeX 中文输出
+## 3. 查看结果
 
-```bash
-node scripts/build-skills.mjs --target codex-zh-CN
-```
+审查会报告有证据的问题和相关限制；修复请求会报告实际修改与验证结果。需要完整证据时再要求详细输出。
 
-输出文件：
+## 需要更多
 
-```text
-dist/codex-zh-CN/AGENTS.md
-```
+- [按问题选 Skill](guides/problem-to-skill.zh-CN.md)
+- [用户手册](USER_MANUAL.zh-CN.md)
+- [全部能力](SKILL_CATALOG.zh-CN.md)
+- [明确需要多步骤时](WORKFLOW_COOKBOOK.zh-CN.md)
+- [源码构建与其他平台](ADVANCED_USAGE.zh-CN.md)
+- [版本与生命周期](VERSIONING.zh-CN.md)
 
-在支持 agent instruction 文件的 Codex / CodeX 风格项目中，可以复制或引用生成的整个目标目录；请让 `AGENTS.md` 与同级资源目录保持在一起。
-
-## 生成 Claude Code 中文输出
-
-```bash
-node scripts/build-skills.mjs --target claude-code-zh-CN
-```
-
-输出结构：
-
-```text
-dist/claude-code-zh-CN/.claude/skills/<skill-name>/SKILL.md
-```
-
-使用时，把生成的 `.claude/skills/` 目录复制到目标 Claude Code 环境。
-
-## 查看 dist 输出
-
-```bash
-find dist -maxdepth 4 -type f | sort
-```
-
-生成文件会被 Git 忽略。不要直接修改 `dist/`。请修改 `packs/`，然后重新构建。
-
-## 常见问题
-
-### 我应该改 `plugins/` 还是 `packs/`？
-
-修改 `packs/`。`plugins/` 是同步生成的兼容和分发产物，不应在其中维护第二份 Skill 业务逻辑。
-
-### 需要提交 `dist/` 里的生成文件吗？
-
-不需要。`dist/*` 被忽略，只保留 `dist/.gitkeep`。
-
-### 需要安装依赖吗？
-
-当前不需要第三方 npm 依赖，脚本与公开 CLI 使用 Node 内置模块。完整 ChatGPT 打包步骤还要求 `PATH` 中存在可用的 `zip` 命令。
-
-### 新增 skill 从哪里开始？
-
-先看 [ADDING_SKILLS.zh-CN.md](ADDING_SKILLS.zh-CN.md)，再使用仓库的 `npm run create:skill -- ...` 脚手架。`packs/_template/` 只是参考模板，不是第二套创建流程。
+源码维护需要先安装开发依赖；普通 npm 用户不需要克隆或构建仓库。

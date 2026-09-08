@@ -2,23 +2,16 @@
 
 A root-cause investigation starts with a trustworthy, repeatable signal that can tell success from the target failure.
 
-## Output modes
-
-- `fast`: concise default for a bounded bug: status, signal, reproduction, likely causal chain, confidence, blockers, and next step.
-- `standard`: adds the main hypotheses, discriminating experiment, trigger/direct/systemic cause separation, and regression-protection advice.
-- `audit`: adds the full evidence table, permission decisions, exact command ledger, alternatives, contradictory evidence, and all unverified items.
-
-Collect the same quality of evidence in every mode; output mode changes disclosure, not rigor.
+Default output is `fast`; use `standard` or `audit` for detailed evidence, following the output contract.
 
 ## Boundary
 
 - Do not turn a general code review or broad repository diagnosis into root-cause analysis without a concrete symptom.
 - Route failures whose defining context is a CI workflow or runner to `ci-failure-diagnosis`.
-- Do not modify business code, tests, configuration, dependencies, documentation, or other user files.
+- Do not modify production code, tests, configuration, dependencies, documentation, or other user files.
 - Shell permission authorizes only the non-destructive diagnostics defined below. It does not authorize a fix, dependency change, external system action, or production access.
 - Route test creation to `safe-test-implementation` and production fixes to `safe-fix-implementation` after the root cause is sufficiently confirmed.
 - Match the user's language and preserve technical identifiers verbatim.
-- Never modify code, tests, configuration, documentation, dependencies, or diagnostic instrumentation. If a useful probe requires a file edit or new test, report it as `Blocked` until separately authorized under the appropriate Skill.
 
 ## Safe Diagnostic Execution
 
@@ -47,7 +40,6 @@ Collect the same quality of evidence in every mode; output mode changes disclosu
 - Do not run `kill`, `pkill`, `service restart`, or other process or service controls.
 - Do not execute an unknown repository script before reading its definition and transitive script chain.
 - Do not use shell redirection, `tee`, or editor commands to change repository or user files.
-- Do not change production code, tests, configuration, documentation, or dependencies to make reproduction easier.
 
 ### Test-command gate
 

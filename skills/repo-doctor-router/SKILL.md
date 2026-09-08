@@ -8,22 +8,16 @@ description: "Explicit routing entrypoint that recommends one verified Repo Doct
 ## Execution Contract
 
 Default to `fast`; explicit invocation is required.
-Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
-Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
-For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Repo Doctor Router
 
 The best route is the smallest verified next capability that matches the current artifact and permission state.
 
-## Disclosure modes
+Default to one `fast` recommendation; expand to `standard` or `audit` only for requested routing detail. Fields belong to the output contract.
 
-- `fast` (default): one Skill, one sentence of reason, one compatible mode, and the minimum input.
-- `standard`: add classification, workflow ID when applicable, current stage, prerequisites, permission gate, stop condition, next Skill, and alternative.
-- `audit`: add registry version, active-inventory evidence, rejected routes, platform capability, and unresolved routing uncertainty.
-
-Do not display detailed workflow fields unless the user requests detail or ambiguity cannot be explained safely in the compact form.
-Read `references/execution-modes.en.md` only when the requested mode, fast budget, or escalation boundary is unclear.
+Use [execution modes](references/execution-modes.en.md) when detailed mode selection is needed.
 
 ## Boundary
 
@@ -39,7 +33,7 @@ Read `references/execution-modes.en.md` only when the requested mode, fast budge
 
 1. Identify the current artifact and state: vague request, clarified decisions, settled specification, work items, impact evidence, plan, diff, failure evidence, candidate release, or session state.
 2. Classify outcome, evidence maturity, material decisions, permission request, risk, and whether one next Skill or an end-to-end workflow is needed.
-3. Verify active Repo Doctor inventory and load registry version, workflow IDs, stages, gates, alternatives, and stop conditions.
+3. Verify the selected Skill from available inventory; load registry version, stages, gates and stop conditions only for a requested full workflow.
 4. Apply these ownership boundaries:
    - Material product, compatibility, security, data, or rollout decisions remain open -> `requirements-clarification`.
    - Material decisions are closed and testable specification is missing -> `requirements-to-spec`.
@@ -83,22 +77,16 @@ Do not execute the recommendation or name an unverified Skill as available.
 ## 执行契约
 
 默认使用 `fast`；仅允许用户显式调用。
-清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
-只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
-模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # Repo Doctor Router（工作流路由）
 
 最佳路由是与当前产物和权限状态匹配的最小已核验下一能力。
 
-## 披露模式
+默认 `fast` 推荐一个 Skill；`standard` 或 `audit` 仅在要求详细路由时展开。输出字段以输出契约为准。
 
-- `fast`（默认）：一个 Skill、一句话原因、一个适用模式和最小输入。
-- `standard`：增加分类、适用时的 workflow ID、当前阶段、前置条件、权限门禁、停止条件、后续 Skill 和替代路径。
-- `audit`：增加注册表版本、active 清单证据、被拒绝路由、平台能力和未解决路由不确定性。
-
-用户没有要求详细信息，且简洁形式足以安全解释时，不展开完整工作流字段。
-只有请求模式、fast 预算或升级边界不明确时，才读取 `references/execution-modes.zh-CN.md`。
+需要详细选择模式时，参阅[执行模式](references/execution-modes.zh-CN.md)。
 
 ## 职责边界
 
@@ -114,7 +102,7 @@ Do not execute the recommendation or name an unverified Skill as available.
 
 1. 识别当前产物和状态：模糊需求、已澄清决策、已闭合规格、工作项、影响证据、计划、diff、失败证据、候选版本或会话状态。
 2. 按目标、证据成熟度、重大决策、权限请求、风险，以及需要单一步骤还是端到端工作流进行分类。
-3. 核验 active Repo Doctor 清单，并读取注册表版本、工作流 ID、阶段、门禁、替代路径和停止条件。
+3. 从可用清单核验推荐 Skill；只有请求完整工作流时才读取注册表版本、阶段、门禁和停止条件。
 4. 应用职责边界：
    - 产品、兼容性、安全、数据或发布方式仍有重大未决选择 -> `requirements-clarification`。
    - 重大决策已闭合但缺少可测试规格 -> `requirements-to-spec`。

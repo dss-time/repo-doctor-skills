@@ -245,15 +245,15 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.6.1");
+assert.equal(releaseContract.projectVersion, "0.7.0");
 assert.equal(releaseContract.releaseChannel, "stable");
 assert.equal(releaseContract.liveModelStatus, "PASS");
 assert.equal(releaseContract.liveModelWaiver, null);
-assert.equal(releaseContract.liveModelEvidenceVersion, "0.4.0");
+assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion);
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.8.0",
+    "engineering.repo-doctor": "0.9.0",
     "productivity.productivity-toolkit": "0.1.0",
     "engineering.skill-maintainer": "0.2.0",
     "office.document-data-doctor": "0.1.0",

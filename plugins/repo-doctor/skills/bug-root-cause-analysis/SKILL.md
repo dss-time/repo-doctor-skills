@@ -10,31 +10,23 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 ## Execution Contract
 
 Default to `fast`; bounded natural-language invocation is allowed.
-Use the Simple Request Bypass for clear, local, low-risk work. Activate one primary Skill by default; a next Skill may be recommended but never executed automatically.
-Escalate to `audit` only for security, permissions, production data, migrations, releases, public-contract breakage, dependency upgrades, large architecture change, or an explicit full-audit request.
-For mode selection, fast soft budgets, tiered validation, stop conditions, and progressive reference loading, read `references/execution-modes.en.md` only when the mode or escalation boundary is unclear; never preload every reference.
+Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Bug Root Cause Analysis
 
 A root-cause investigation starts with a trustworthy, repeatable signal that can tell success from the target failure.
 
-## Output modes
-
-- `fast`: concise default for a bounded bug: status, signal, reproduction, likely causal chain, confidence, blockers, and next step.
-- `standard`: adds the main hypotheses, discriminating experiment, trigger/direct/systemic cause separation, and regression-protection advice.
-- `audit`: adds the full evidence table, permission decisions, exact command ledger, alternatives, contradictory evidence, and all unverified items.
-
-Collect the same quality of evidence in every mode; output mode changes disclosure, not rigor.
+Default output is `fast`; use `standard` or `audit` for detailed evidence, following the output contract.
 
 ## Boundary
 
 - Do not turn a general code review or broad repository diagnosis into root-cause analysis without a concrete symptom.
 - Route failures whose defining context is a CI workflow or runner to `ci-failure-diagnosis`.
-- Do not modify business code, tests, configuration, dependencies, documentation, or other user files.
+- Do not modify production code, tests, configuration, dependencies, documentation, or other user files.
 - Shell permission authorizes only the non-destructive diagnostics defined below. It does not authorize a fix, dependency change, external system action, or production access.
 - Route test creation to `safe-test-implementation` and production fixes to `safe-fix-implementation` after the root cause is sufficiently confirmed.
 - Match the user's language and preserve technical identifiers verbatim.
-- Never modify code, tests, configuration, documentation, dependencies, or diagnostic instrumentation. If a useful probe requires a file edit or new test, report it as `Blocked` until separately authorized under the appropriate Skill.
 
 ## Safe Diagnostic Execution
 
@@ -63,7 +55,6 @@ Collect the same quality of evidence in every mode; output mode changes disclosu
 - Do not run `kill`, `pkill`, `service restart`, or other process or service controls.
 - Do not execute an unknown repository script before reading its definition and transitive script chain.
 - Do not use shell redirection, `tee`, or editor commands to change repository or user files.
-- Do not change production code, tests, configuration, documentation, or dependencies to make reproduction easier.
 
 ### Test-command gate
 
@@ -118,36 +109,25 @@ Record every executed diagnostic with its exact command, working directory, exit
 
 # Output Contract
 
-Lead with `status`, current conclusion, confidence, and next diagnostic action.
-
-- `fast` (default): symptom, qualified signal or fallback, reproduction status, trigger/direct/systemic cause summary, confidence, blockers, regression protection, and next step.
-- `standard`: add environment, minimum reproduction, fault boundary, causal chain, ranked falsifiable hypotheses, distinguishing result, impact, and repair direction.
-- `audit`: add the complete evidence table and command ledger with command, working directory, exit code, result, permission decision, and `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` status.
-
-When diagnostic commands are used, include `Executed diagnostic commands` and `Command results` as separate fields. Always include `Unverified and blocked items`, even when the value is `none`.
-
-Without a qualified signal, root-cause status remains `Inferred` or `Unverified`. Never claim `Reproduced`, a confirmed cause, or a passing test unless the corresponding evidence exists.
+Default `fast`: conclusion, decisive signal/evidence and confidence. Add a next diagnostic or regression recommendation only when useful.
+`standard` adds minimum reproduction, leading falsifiable hypotheses and trigger/direct/systemic cause separation.
+`audit` adds Executed diagnostic commands, Command results, working directories, exit codes and permission decisions, using `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked`.
+Include Unverified and blocked items only when present and material; omit empty sections.
+Without a qualified signal retain `Inferred` or `Unverified`; never invent reproduction, confirmed causes or passing tests.
 
 ---
 
 ## 执行契约
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
-清晰、局部、低风险请求使用简单请求快速通道；默认只激活一个主 Skill，下一 Skill 只能推荐，不能自动执行。
-只有安全、权限、生产数据、迁移、发布、公共契约破坏、依赖升级、大型架构变更或用户明确要求完整审计时才升级为 `audit`。
-模式选择、fast 软预算、分级验证、停止条件和按需 reference 规则见 `references/execution-modes.zh-CN.md`；仅在模式或升级边界不明确时读取，不得预读全部 references。
+默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # Bug 根因分析
 
 根因调查首先需要一个可信、可重复、能够区分成功与目标故障的观测信号。
 
-## 输出模式
-
-- `fast`：有边界 Bug 的默认简洁输出，包括状态、信号、复现、可能因果链、置信度、阻塞和下一步。
-- `standard`：增加主要假设、区分实验、触发条件/直接原因/系统性根因，以及回归保护建议。
-- `audit`：增加完整证据表、权限判断、准确命令账本、替代假设、矛盾证据和所有未验证项。
-
-所有模式收集同等质量的证据；输出模式只改变披露深度，不降低严谨性。
+输出默认 `fast`；需要详细证据时使用 `standard` 或 `audit`，字段以输出契约为准。
 
 ## 职责边界
 
@@ -157,7 +137,6 @@ Without a qualified signal, root-cause status remains `Inferred` or `Unverified`
 - Shell 权限只允许执行下述非破坏性诊断，不授权修复、依赖变更、外部系统操作或生产环境访问。
 - 根因充分确认后，新增测试交给 `safe-test-implementation`，生产代码修复交给 `safe-fix-implementation`。
 - 输出语言跟随用户输入，技术标识符保持原样。
-- 不得修改代码、测试、配置、文档、依赖或诊断插桩。有效探针若需要改文件或新增测试，应标为 `Blocked`，等待相应 Skill 的独立授权。
 
 ## 安全诊断执行
 
@@ -241,12 +220,8 @@ Without a qualified signal, root-cause status remains `Inferred` or `Unverified`
 
 # 输出契约
 
-先给 `status`、当前结论、置信度和下一诊断动作。
-
-- `fast`（默认）：症状、合格信号或替代步骤、复现状态、触发条件/直接原因/系统性根因摘要、置信度、阻塞、回归保护和下一步。
-- `standard`：增加环境、最小复现、故障边界、因果链、有排序可证伪假设、区分结果、影响和修复方向。
-- `audit`：增加完整证据表和命令账本，包含命令、工作目录、退出码、结果、权限判断，以及 `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` 状态。
-
-使用诊断命令时，把“已执行的诊断命令”和“命令结果”作为独立字段。始终包含“未验证和阻塞项”，没有时填写 `none`。
-
-没有合格信号时，根因状态必须保持 `Inferred` 或 `Unverified`。缺少对应证据时，不得声称 `Reproduced`、根因已确认或测试通过。
+默认 `fast`：结论、决定性信号/证据和置信度。确有必要时补充下一诊断动作或回归建议。
+`standard` 增加最小复现、主要可证伪假设和触发/直接/系统性原因的区别。
+`audit` 增加“已执行的诊断命令”“命令结果”以及工作目录、退出码和权限判断，使用 `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` 状态。
+“未验证和阻塞项”仅在存在且影响结论时输出；不要填写空栏目。
+没有合格信号时保持 `Inferred` 或 `Unverified`；不得编造复现、确认根因或测试通过。

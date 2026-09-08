@@ -1,11 +1,7 @@
 # Output Contract
 
-Lead with `status`, current conclusion, confidence, and next diagnostic action.
-
-- `fast` (default): symptom, qualified signal or fallback, reproduction status, trigger/direct/systemic cause summary, confidence, blockers, regression protection, and next step.
-- `standard`: add environment, minimum reproduction, fault boundary, causal chain, ranked falsifiable hypotheses, distinguishing result, impact, and repair direction.
-- `audit`: add the complete evidence table and command ledger with command, working directory, exit code, result, permission decision, and `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked` status.
-
-When diagnostic commands are used, include `Executed diagnostic commands` and `Command results` as separate fields. Always include `Unverified and blocked items`, even when the value is `none`.
-
-Without a qualified signal, root-cause status remains `Inferred` or `Unverified`. Never claim `Reproduced`, a confirmed cause, or a passing test unless the corresponding evidence exists.
+Default `fast`: conclusion, decisive signal/evidence and confidence. Add a next diagnostic or regression recommendation only when useful.
+`standard` adds minimum reproduction, leading falsifiable hypotheses and trigger/direct/systemic cause separation.
+`audit` adds Executed diagnostic commands, Command results, working directories, exit codes and permission decisions, using `Observed` / `Reproduced` / `Inferred` / `Unverified` / `Blocked`.
+Include Unverified and blocked items only when present and material; omit empty sections.
+Without a qualified signal retain `Inferred` or `Unverified`; never invent reproduction, confirmed causes or passing tests.

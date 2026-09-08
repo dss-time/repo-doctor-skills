@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-11T07:27:42.112Z",
-  "project_version": "0.6.0",
+  "generated_at": "2026-09-08T05:28:51.684Z",
+  "project_version": "0.7.0",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.8.0",
+      "version": "0.9.0",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -97,7 +97,7 @@
       "id": "repo.repo-doctor-router",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "beta",
       "name": {
         "en": "Repo Doctor Router",
@@ -135,7 +135,7 @@
       "id": "repo.repo-onboarding",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-onboarding",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Repo Onboarding",
@@ -173,7 +173,7 @@
       "id": "repo.requirements-clarification",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/requirements-clarification",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "beta",
       "name": {
         "en": "Requirements Clarification",
@@ -211,7 +211,7 @@
       "id": "repo.requirements-to-spec",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/requirements-to-spec",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Requirements Specification",
@@ -249,7 +249,7 @@
       "id": "repo.spec-to-work-items",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/spec-to-work-items",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Spec to Work Items",
@@ -287,7 +287,7 @@
       "id": "repo.decision-prototype",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/decision-prototype",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Decision Prototype",
@@ -325,7 +325,7 @@
       "id": "repo.bug-root-cause-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/bug-root-cause-analysis",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "status": "beta",
       "name": {
         "en": "Bug Root Cause Analysis",
@@ -363,7 +363,7 @@
       "id": "repo.project-health-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/project-health-check",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Project Health Check",
@@ -401,7 +401,7 @@
       "id": "repo.safe-code-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-code-review",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "status": "beta",
       "name": {
         "en": "Safe Code Review",
@@ -439,7 +439,7 @@
       "id": "repo.change-impact-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/change-impact-analysis",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Change Impact Analysis",
@@ -477,7 +477,7 @@
       "id": "repo.safe-change-plan",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Safe Change Plan",
@@ -515,7 +515,7 @@
       "id": "repo.test-gap-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/test-gap-analysis",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Test Gap Analysis",
@@ -553,7 +553,7 @@
       "id": "repo.safe-test-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-test-implementation",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "status": "beta",
       "name": {
         "en": "Safe Test Implementation",
@@ -591,7 +591,7 @@
       "id": "repo.ci-failure-diagnosis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/ci-failure-diagnosis",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "CI Failure Diagnosis",
@@ -629,7 +629,7 @@
       "id": "repo.documentation-sync",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/documentation-sync",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Documentation Sync",
@@ -667,7 +667,7 @@
       "id": "repo.release-readiness-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/release-readiness-check",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Release Readiness Check",
@@ -705,7 +705,7 @@
       "id": "repo.dependency-upgrade-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/dependency-upgrade-analysis",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Dependency Upgrade Analysis",
@@ -743,7 +743,7 @@
       "id": "repo.api-contract-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/api-contract-review",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "API Contract Review",
@@ -781,7 +781,7 @@
       "id": "repo.database-migration-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/database-migration-review",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Database Migration Review",
@@ -819,7 +819,7 @@
       "id": "repo.dead-code-verification",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/dead-code-verification",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Dead Code Verification",
@@ -857,7 +857,7 @@
       "id": "repo.security-focused-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/security-focused-review",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Security Focused Review",
@@ -895,7 +895,7 @@
       "id": "repo.performance-regression-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/performance-regression-analysis",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Performance Regression Analysis",
@@ -933,7 +933,7 @@
       "id": "repo.architecture-deepening-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/architecture-deepening-analysis",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Architecture Deepening Analysis",
@@ -971,7 +971,7 @@
       "id": "repo.architecture-decision-record",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/architecture-decision-record",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Architecture Decision Record",
@@ -1009,7 +1009,7 @@
       "id": "repo.configuration-audit",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/configuration-audit",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Configuration Audit",
@@ -1047,7 +1047,7 @@
       "id": "repo.session-handoff",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/session-handoff",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "beta",
       "name": {
         "en": "Session Handoff",
@@ -1085,7 +1085,7 @@
       "id": "repo.safe-fix-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-fix-implementation",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "beta",
       "name": {
         "en": "Safe Fix Implementation",
