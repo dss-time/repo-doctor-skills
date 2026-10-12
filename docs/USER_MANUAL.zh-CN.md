@@ -6,6 +6,25 @@
 
 ## 1. 安装
 
+### 选择 Skill 和 Agent
+
+在你的项目目录运行：
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills
+```
+
+按提示选择 Skill 和目标 Agent。这个入口可发现全部 40 个 active Skill，默认安装到当前项目，无需源码构建。加 `-g` 可在所有项目使用。单项安装加 `--skill safe-code-review`；为 Codex 完整安装加 `--skill '*' -a codex`。复制安装的 Skills 使用 `npx skills@latest check` 和 `npx skills@latest update` 检查和更新；新增 Skill 再运行 `add` 选择。
+
+也可以安装完整 Codex 工程插件（27 个 Skill）：
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills
+codex plugin add repo-doctor@repo-doctor-marketplace
+```
+
+同一 Agent 选择插件或复制 Skills 其中一种，避免重复发现；安装后新建任务。下方 preset 安装器适合固定安装 7 个常用 Skill 或选择单语言正文。
+
 ### 推荐安装：7 个入门 Skill
 
 运行：
@@ -28,7 +47,7 @@ npx repo-doctor-skills install --preset full
 
 ### Individual
 
-单 Skill 安装属于高级用法，因为正确产物和资源目录取决于宿主。详见[高级用法](ADVANCED_USAGE.zh-CN.md#6-individual-单-skill-安装)。它不会成为新用户第一次使用时的额外选择题。
+使用 `npx skills@latest add dss-time/repo-doctor-skills --skill safe-code-review` 直接安装单个 Skill。单语言正文可使用 `npx repo-doctor-skills install --skill safe-code-review --language zh-CN`，配套资源仍保留。特定宿主产物参见[高级用法](ADVANCED_USAGE.zh-CN.md#6-individual-单-skill-安装)。
 
 ## 2. 先试这一条
 

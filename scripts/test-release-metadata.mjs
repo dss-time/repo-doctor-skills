@@ -245,11 +245,11 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.7.0");
+assert.equal(releaseContract.projectVersion, "0.7.1");
 assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "PASS");
+assert.equal(releaseContract.liveModelStatus, "BLOCKED");
 assert.equal(releaseContract.liveModelWaiver, null);
-assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion);
+assert.equal(releaseContract.liveModelEvidenceVersion, "0.7.0", "installation-only patch retains the unchanged Skill behavior evidence target");
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {

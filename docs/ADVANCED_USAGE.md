@@ -4,7 +4,7 @@ This guide collects installation alternatives, platform-specific behavior, sourc
 
 ## 1. Recommended / Full / Individual
 
-These are the only three installation concepts exposed to users:
+The standard skills CLI lets users select Skills and their agent. The optional preset installer offers these three selections:
 
 | Concept | Use it when | Source command |
 |---|---|---|
@@ -12,7 +12,7 @@ These are the only three installation concepts exposed to users:
 | **Full** | You need every active Skill supported by the Skills directory format | `npx repo-doctor-skills install --preset full` |
 | **Individual** | You know the exact Skill and platform artifact you need | See section 6 |
 
-The public npm CLI is the shortest installation path. Advanced users can still use plugins, source builds, platform outputs, and individual assets.
+Start with `npx skills@latest add dss-time/repo-doctor-skills` for interactive selection. The preset installer is useful for fixed selections and single-language bodies. Users can also choose plugins, source builds, platform outputs, and individual assets.
 
 ## 2. Plugin installation
 
@@ -20,13 +20,16 @@ Add the stable source:
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
+codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-Open `/plugins`, install the required plugin, and start a new task. This repository distributes three plugins:
+This example pins the historical v0.6.1 release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
 
 - **Repo Doctor** for repository engineering;
 - **Productivity Toolkit** for reports, research, spreadsheets, documents, meetings, and presentations;
 - **Skill Maintainer** for creating or auditing Skills.
+
+Install the other collections directly with `codex plugin add productivity-toolkit@repo-doctor-marketplace` or `codex plugin add skill-maintainer@repo-doctor-marketplace`. Use `codex plugin marketplace upgrade repo-doctor-marketplace` to refresh an unpinned Git source. Choose a plugin or copied Skills for the same agent to avoid duplicate discovery.
 
 Use `--ref main` only for intentional development testing:
 

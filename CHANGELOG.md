@@ -8,6 +8,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-10-12
+
+> Prepared release; publication remains blocked by missing complete Live-model evidence and npm authentication.
+
+### Added
+
+- Complete-resource parity checks for the standard skills CLI distribution.
+
+### Changed
+
+- Lead bilingual installation guides with the standard skills CLI selection flow and direct Codex plugin commands; keep preset/language installation as an optional path.
+- Explain project/global scope, updates, and duplicate-installation avoidance.
+
+### Fixed
+
+- Correct stale user-manual guidance that described individual Skill installation as an advanced artifact-selection workflow.
+- Verify complete skills.sh resource and invocation-policy parity, and document the current external installer's Node LTS requirement.
+
+### Documentation
+
+- Updated bilingual README, quick start, user manual, and advanced installation commands.
+
+### Security
+
+- Preserve invocation policies and report blocked Live-model evidence honestly; no release gate waiver applies.
+
 ## [0.7.0] - 2026-09-08
 
 ### Added
@@ -350,6 +376,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
 [Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...HEAD
+[0.7.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.5.1...v0.6.0

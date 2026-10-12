@@ -7,8 +7,10 @@
 ## 30 秒开始
 
 ```bash
-npx repo-doctor-skills install
+npx skills@latest add dss-time/repo-doctor-skills
 ```
+
+使用当前 Node.js LTS（已测试 Node 24）。在你的项目目录运行，按安装器提示选择 Skill 和 Agent，然后新建任务即可使用。无需克隆或构建仓库。默认安装到当前项目；加 `-g` 可在所有项目使用。
 
 ## 最小示例
 
@@ -18,9 +20,20 @@ $safe-code-review 审查当前修改。
 
 不知道选哪个时，使用 `$repo-doctor-router`。它只推荐；知道 Skill 名时直接调用。
 
+## Codex 插件
+
+安装完整工程能力（27 个 Skill）：
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills
+codex plugin add repo-doctor@repo-doctor-marketplace
+```
+
+同一 Agent 选择插件或复制 Skills 其中一种，避免重复。其他两个插件参见[高级用法](docs/ADVANCED_USAGE.zh-CN.md)。
+
 ## 推荐安装
 
-默认安装 7 个高频 Skill：
+建议先选择这 7 个高频 Skill：
 
 | 任务 | Skill |
 |---|---|
@@ -32,32 +45,39 @@ $safe-code-review 审查当前修改。
 | 审查代码 | `$safe-code-review` |
 | 验证方案 | `$decision-prototype` |
 
-安装器打印实际目标。重复安装跳过相同内容；不同内容需要显式使用 `--force` 才替换。
+直接为 Codex 安装这组选项：
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills --skill repo-doctor-router requirements-clarification bug-root-cause-analysis safe-fix-implementation safe-test-implementation safe-code-review decision-prototype -a codex
+```
 
 ## 完整安装
 
-安装全部 40 个 Skill，也可从 Recommended 原目录升级：
+为 Codex 安装全部 40 个 Skill：
 
 ```bash
-npx repo-doctor-skills install --preset full
+npx skills@latest add dss-time/repo-doctor-skills --skill '*' -a codex
 ```
 
-## 单个 Skill 与语言
+## 单个 Skill 与更新
 
 ```bash
-npx repo-doctor-skills install --skill safe-code-review
+npx skills@latest add dss-time/repo-doctor-skills --skill safe-code-review
+npx skills@latest check
+npx skills@latest update
+```
+
+正文双语，包含配套资源。新增 Skill 可再次运行 `add` 选择安装。调用语法以 Agent 为准，上方示例使用 Codex 语法。
+
+## 可选的 preset 与语言安装器
+
+```bash
+npx repo-doctor-skills install
+npx repo-doctor-skills install --preset full
 npx repo-doctor-skills install --language zh-CN
 ```
 
-正文默认双语，可选 `en`、`zh-CN`、`bilingual`；单语言安装仍保留全部配套资源。
-
-## skills.sh
-
-```bash
-npx skills@latest add dss-time/repo-doctor-skills
-```
-
-使用 `--list` 查看 40 个 Skill。该外部 CLI 的 Node 要求由其自身版本决定。
+这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。它打印安装目标、跳过相同内容，替换不同内容需要 `--force`。外部 skills CLI 的 Node 要求由其自身版本决定。
 
 ## 文档
 

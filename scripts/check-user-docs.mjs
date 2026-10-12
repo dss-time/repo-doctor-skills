@@ -144,7 +144,7 @@ function checkReadmeFirstScreen(relativePath, content) {
       fail(`${relativePath}: first 30 lines contain maintainer term ${term}`);
     }
   }
-  for (const required of ["repo-doctor-router", "npx repo-doctor-skills install"]) {
+  for (const required of ["repo-doctor-router", "npx skills@latest add dss-time/repo-doctor-skills"]) {
     if (!firstThirtyLines.toLowerCase().includes(required)) {
       fail(`${relativePath}: first 30 lines are missing ${required}`);
     }

@@ -2,11 +2,22 @@
 
 ## 1. 安装
 
+使用当前 Node.js LTS（已测试 Node 24）；最新外部 skills CLI 无法在本仓库最低支持的 Node 18 环境运行。
+
 ```bash
-npx repo-doctor-skills install
+npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-默认安装 7 个常用 Skill。安装完成后查看打印的目标路径，在支持 Skills 的助手中新建任务。
+在项目目录运行，选择 Agent 和 Skill。可以先选择 `safe-code-review`，或 README 列出的 7 个常用 Skill。加 `-g` 可安装到用户目录供所有项目使用。
+
+也可以选择 Codex 工程插件：
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills
+codex plugin add repo-doctor@repo-doctor-marketplace
+```
+
+同一 Agent 的同一组 Skill 选择一种安装方式，安装后新建任务。
 
 ## 2. 提出请求
 
@@ -29,4 +40,4 @@ $safe-code-review 审查当前修改。
 - [源码构建与其他平台](ADVANCED_USAGE.zh-CN.md)
 - [版本与生命周期](VERSIONING.zh-CN.md)
 
-源码维护需要先安装开发依赖；普通 npm 用户不需要克隆或构建仓库。
+复制安装的 Skills 使用 `npx skills@latest update` 更新；新增 Skill 再运行 `add` 选择。需要 preset 或单语言正文时，仍可使用 `npx repo-doctor-skills install`。用户无需克隆或构建仓库。

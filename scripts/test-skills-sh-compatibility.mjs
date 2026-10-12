@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
-import { discoverCanonicalSkillDirs, renderCodexSkill } from "./build-skills.mjs";
+import { discoverCanonicalSkillDirs, renderCodexSkill, writeInstallableCodexSkill } from "./build-skills.mjs";
 import { compareNames, walkFiles } from "./deterministic-files.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -43,6 +44,25 @@ for (const slug of distributableDirs) {
   assert.equal(readFileSync(filename, "utf8"), renderCodexSkill(canonicalDir), `${slug}: generated SKILL.md drift`);
 }
 assert.equal(new Set(names).size, names.length, "skills.sh compatibility output contains duplicate Skill names");
+
+// The standard installer copies the whole directory, so prompt-only parity is insufficient.
+const expectedRoot = mkdtempSync(path.join(tmpdir(), "repo-doctor-skills-parity-"));
+try {
+  for (const canonicalDir of canonicalDirs) {
+    const slug = path.basename(canonicalDir);
+    const expectedDir = path.join(expectedRoot, slug);
+    const actualDir = path.join(compatibilityRoot, slug);
+    writeInstallableCodexSkill(canonicalDir, expectedDir);
+    const expectedFiles = walkFiles(expectedDir).map((filename) => path.relative(expectedDir, filename));
+    const actualFiles = walkFiles(actualDir).map((filename) => path.relative(actualDir, filename));
+    assert.deepEqual(actualFiles, expectedFiles, `${slug}: missing or extra installable resources`);
+    for (const relative of expectedFiles) {
+      assert.deepEqual(readFileSync(path.join(actualDir, relative)), readFileSync(path.join(expectedDir, relative)), `${slug}/${relative}: resource or invocation-policy drift`);
+    }
+  }
+} finally {
+  rmSync(expectedRoot, { recursive: true, force: true });
+}
 
 const generatedFrontmatterFiles = [
   ...walkFiles(compatibilityRoot, (filename) => path.basename(filename) === "SKILL.md"),

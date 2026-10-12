@@ -24,18 +24,12 @@ assert.equal(result.inventory.expected_chatgpt_zips, 37);
 assert.equal(result.workflow.count, 13);
 assert.equal(result.release.current_project_version, JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version);
 assert.equal(result.release.release_channel, "stable");
-assert.equal(result.release.live_model_status, "PASS");
+assert.equal(result.release.live_model_status, "BLOCKED");
 assert.equal(result.release.maintainer_waiver, null);
-const liveReport = path.join(root, "tests", "reports", "live-codex-skill-validation-0.7.0.json");
-if (existsSync(liveReport)) {
-  assert.ok(["PASS", "PASS_WITH_CONDITIONS"].includes(result.status));
-  assert.ok(!result.errors.some((error) => error.includes("Live-model")));
-} else {
-  assert.equal(result.status, "FAIL");
-  assert.ok(result.errors.some((error) => error.includes("live-codex-skill-validation-0.7.0.json: missing")));
-}
+assert.equal(result.status, "FAIL", "Doctor must reject a stable release with blocked model evidence");
+assert.ok(result.errors.some((error) => error.includes("Live-model status BLOCKED is not release-eligible")));
 assert.equal(fingerprint(), before, "doctor must not modify inspected files");
 const cli = spawnSync(process.execPath, ["scripts/doctor.mjs", "--json"], { cwd: root, encoding: "utf8" });
-assert.equal(cli.status, existsSync(liveReport) ? 0 : 1, cli.stderr);
+assert.equal(cli.status, 1, "Doctor CLI must preserve NO_GO exit status");
 assert.equal(JSON.parse(cli.stdout).read_only, true);
 console.log("Doctor tests passed for read-only inspection and JSON output.");

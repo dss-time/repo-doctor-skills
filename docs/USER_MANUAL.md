@@ -6,6 +6,25 @@ This manual starts with the shortest supported path for a new Repo Doctor user. 
 
 ## 1. Install
 
+### Select Skills and your agent
+
+From your project directory:
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills
+```
+
+Choose the Skills and target agent in the installer. This path exposes all 40 active Skills, installs into the current project by default, and needs no source build. Add `-g` for user-wide use. Install one Skill with `--skill safe-code-review`, or all Skills for Codex with `--skill '*' -a codex`. Use `npx skills@latest check` and `npx skills@latest update` for installed copies; re-run `add` to select newly added Skills.
+
+For the complete Codex engineering plugin (27 Skills):
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills
+codex plugin add repo-doctor@repo-doctor-marketplace
+```
+
+Choose the plugin or copied Skills for the same agent to avoid duplicate discovery. Start a new task after installation. The following preset installer is an alternative when you want a fixed seven-Skill selection or single-language bodies.
+
 ### Recommended: seven starter Skills
 
 Run:
@@ -28,7 +47,7 @@ The source repository has 40 active Skills. The Repo Doctor plugin shows 27 beca
 
 ### Individual
 
-Installing one Skill is an advanced workflow because the correct artifact and resource layout depend on the host. See [Advanced Usage](ADVANCED_USAGE.md#6-individual-skill-installation). It is intentionally not another first-run decision.
+Use `npx skills@latest add dss-time/repo-doctor-skills --skill safe-code-review` to install one Skill. For a single-language body, use `npx repo-doctor-skills install --skill safe-code-review --language en`. Resources remain included. Host-specific artifacts are covered in [Advanced Usage](ADVANCED_USAGE.md#6-individual-skill-installation).
 
 ## 2. Try this first
 

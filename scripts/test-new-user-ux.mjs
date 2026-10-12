@@ -44,13 +44,17 @@ for (const relative of ["README.md", "README.zh-CN.md"]) {
   const content = read(relative);
   const firstThirty = content.split(/\r?\n/).slice(0, 30).join("\n");
   assert.match(firstThirty, /Repo Doctor Skills/);
-  assert.match(firstThirty, /npx repo-doctor-skills install/);
+  assert.match(firstThirty, /npx skills@latest add dss-time\/repo-doctor-skills/);
   assert.match(firstThirty, /repo-doctor-router/);
   assert.match(firstThirty, /(?:Minimal example|最小示例)/);
   for (const forbidden of ["canonical", "adapters", "dist", "generated compatibility output", "plugin-backed distribution"]) {
     assert.ok(!firstThirty.toLowerCase().includes(forbidden), `${relative}: first 30 lines contain ${forbidden}`);
   }
   assert.match(content, /^npx repo-doctor-skills install$/m);
+  const marketplace = JSON.parse(read(".agents/plugins/marketplace.json"));
+  assert.ok(content.includes(`codex plugin add repo-doctor@${marketplace.name}`), `${relative}: plugin selector must resolve to the real marketplace`);
+  assert.match(content, /npx skills@latest update/);
+  assert.match(content, /--skill '\*' -a codex/);
   assert.ok(!/(?:npx repo-doctor-skills install|codex plugin marketplace add)[^\n]*[<{][^\n]*[>}]/.test(content), `${relative}: install command contains a placeholder`);
 }
 

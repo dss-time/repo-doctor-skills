@@ -4,7 +4,7 @@
 
 ## 1. Recommended / Full / Individual
 
-用户层只保留三个安装概念：
+标准 skills CLI 让用户选择 Skill 和 Agent；可选的 preset 安装器提供以下三组选项：
 
 | 概念 | 适用情况 | 源码命令 |
 |---|---|---|
@@ -12,7 +12,7 @@
 | **Full** | 需要 Skills 目录格式支持的全部 active Skill | `npx repo-doctor-skills install --preset full` |
 | **Individual** | 已经知道准确 Skill 和平台产物 | 见第 6 节 |
 
-公开 npm CLI 是最短安装路径。高级用户仍可使用插件、源码构建、平台产物和单 Skill 资产。
+使用 `npx skills@latest add dss-time/repo-doctor-skills` 进行交互选择。preset 安装器适合固定选项和单语言正文；也可选择插件、源码构建、平台产物和单 Skill 资产。
 
 ## 2. 插件安装
 
@@ -20,13 +20,16 @@
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
+codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-打开 `/plugins`，安装需要的插件，然后新建任务。本仓库分发三个插件：
+此示例固定到历史 v0.6.1 发布。省略 `--ref` 可使用 marketplace 当前默认分支；安装后新建任务。本仓库分发三个插件：
 
 - **Repo Doctor**：仓库工程任务；
 - **Productivity Toolkit**：报告、研究、表格、文档、会议和演示；
 - **Skill Maintainer**：创建或审计 Skill。
+
+其他合集可直接使用 `codex plugin add productivity-toolkit@repo-doctor-marketplace` 或 `codex plugin add skill-maintainer@repo-doctor-marketplace`。使用 `codex plugin marketplace upgrade repo-doctor-marketplace` 刷新未固定版本的 Git source。同一 Agent 选择插件或复制 Skills 其中一种，避免重复发现。
 
 只有明确测试开发内容时才使用 `--ref main`：
 
