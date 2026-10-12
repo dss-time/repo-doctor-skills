@@ -6,7 +6,7 @@ Repo Doctor Skills keeps release versions, component versions, and maturity stat
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release notes.
 
-The current published project release is **0.6.1 stable**. The next candidate is **0.7.0**, which improves installer selection, language handling, idempotence, prompt clarity, and user documentation while preserving the 40-Skill inventory and stable slugs. v0.7.0 requires its own Live-model validation report; the historical v0.4.0 report cannot satisfy this release gate.
+The project release version is **0.7.1**. It simplifies installation while preserving the 40-Skill inventory, stable slugs, and v0.7.0 Skill behavior. Its fresh version-scoped Live-model report passed 317/317 cases. The historical v0.4.0 report cannot satisfy this release gate. v0.7.0 was published with failed release-check CI; its immutable tag and history remain preserved.
 
 The immutable `v0.5.0` tag points to the intended execution-efficiency candidate, but that tag's clean-checkout CI exposed a build-integrity test dependency on ignored `dist/` output. No GitHub Release was created for v0.5.0, and the tag is preserved without deletion or movement. v0.5.1 contains the same Skill behavior plus the test-only clean-build isolation fix.
 

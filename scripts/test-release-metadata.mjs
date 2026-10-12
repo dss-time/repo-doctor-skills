@@ -247,9 +247,9 @@ assert.deepEqual(
 );
 assert.equal(releaseContract.projectVersion, "0.7.1");
 assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "BLOCKED");
+assert.equal(releaseContract.liveModelStatus, "PASS");
 assert.equal(releaseContract.liveModelWaiver, null);
-assert.equal(releaseContract.liveModelEvidenceVersion, "0.7.0", "installation-only patch retains the unchanged Skill behavior evidence target");
+assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion, "stable publication requires version-scoped model evidence");
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {

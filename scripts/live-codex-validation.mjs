@@ -103,6 +103,7 @@ function compactTextEvidence(value, limit) {
 
 function compactCaseEvidence(testCase) {
   if (!testCase?.output || typeof testCase.output !== "object") return testCase;
+  if (testCase.output_evidence) return testCase;
   const output = { ...testCase.output };
   for (const [field, limit] of [
     ["answer", 480],
@@ -144,12 +145,12 @@ export function compactEvidenceReport(report) {
           workflow_id: workflow.workflow_id,
           language: workflow.language,
           session_restart_verified: workflow.session_restart_verified,
-          step_case_ids: (workflow.steps ?? []).map((step) => step.case_id),
+          step_case_ids: workflow.step_case_ids ?? (workflow.steps ?? []).map((step) => step.case_id),
           result: workflow.result,
         })),
-        mode_case_ids: modeCases
+        mode_case_ids: report.advanced.mode_case_ids ?? modeCases
           .map((testCase) => testCase.case_id),
-        permission_case_ids: permissionCases
+        permission_case_ids: report.advanced.permission_case_ids ?? permissionCases
           .map((testCase) => testCase.case_id),
       };
       })()
@@ -794,9 +795,10 @@ async function main() {
       home: isolatedSkillHome ? "host authentication; isolated Skill roots and SQLite state" : "temporary and redacted",
       codex_home: isolatedSkillHome ? "host authentication context; Skill installation temporary and redacted" : "temporary and redacted",
       workspace: "temporary empty Git repository",
-      source: "dist/codex-zh-CN/skills",
+      source: "temporary installation of canonical-generated Skills",
       path_redacted: true,
-      real_user_skill_directory_read: false,
+      real_user_skill_directory_read: Boolean(isolatedSkillHome),
+      host_capability_metadata_may_be_visible: Boolean(isolatedSkillHome),
     },
     installation: {
       first_session: first,

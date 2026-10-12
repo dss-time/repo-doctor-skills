@@ -1,8 +1,9 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import {
   AppServer,
   activeSkills,
+  codexHome,
   compactEvidenceReport,
   hasNaturalLanguage,
   markdown,
@@ -594,11 +595,14 @@ async function main() {
   const server = new AppServer();
   await server.initialize();
   const discovery = await server.skills();
+  const isolatedRoot = realpathSync(path.join(codexHome, "skills"));
   const installedNames = discovery.skills
-    .filter((skill) => skill.scope === "user")
+    .filter((skill) => realpathSync(skill.path).startsWith(`${isolatedRoot}${path.sep}`))
     .map((skill) => skill.name)
     .filter((name) => activeSkills.includes(name));
-  if (installedNames.length !== activeSkills.length || discovery.errors.length > 0) {
+  if (JSON.stringify([...installedNames].sort()) !== JSON.stringify([...activeSkills].sort())
+    || discovery.errors.length > 0) {
+    server.close();
     throw new Error("Advanced validation discovery does not match the 40-Skill inventory");
   }
   process.stdout.write(`ADVANCED DISCOVERY PASS ${installedNames.length}/${activeSkills.length}\n`);
@@ -660,10 +664,10 @@ async function main() {
       mode_cases: modeResults.length,
       permission_cases: permissionResults.length,
       required_total_real_calls: allCases.length,
-      verified_completed_real_calls: allCases.length,
-      advanced_blocker_observations: 0,
+      verified_completed_real_calls: allCases.filter((testCase) => testCase.exit_code === 0).length,
+      advanced_blocker_observations: advancedCases.filter((testCase) => testCase.notes?.includes("usageLimitExceeded")).length,
       advanced_run_aborted: false,
-      blocked_advanced_calls: 0,
+      blocked_advanced_calls: advancedSummary.blocked,
       total_real_calls: allCases.length,
     },
     summary,
@@ -677,6 +681,75 @@ async function main() {
   writeFileSync(outputPath, `${JSON.stringify(sanitizedReport, null, 2)}\n`);
   writeFileSync(outputPath.replace(/\.json$/, ".md"), markdown(sanitizedReport));
   process.stdout.write(`ADVANCED RESULT ${report.result} ${summary.passed}/${summary.total}\n`);
+  if (report.result !== "PASS") process.exitCode = 1;
+}
+
+async function retryServiceFailures() {
+  if (baseReport.project_version !== JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version
+    || baseReport.cases.length !== 317
+    || new Set(baseReport.cases.map((testCase) => testCase.case_id)).size !== 317) {
+    throw new Error("Service retry requires a complete current-version report with 317 unique cases");
+  }
+  const installed = baseReport.installation.second_session.skills;
+  if (JSON.stringify(installed.map((skill) => skill.name).sort()) !== JSON.stringify([...activeSkills].sort())
+    || installed.some((skill) => skill.sha256 !== sha256(normalizedSkillPath(skill.name)))) {
+    throw new Error("Skill content changed; previous results cannot be reused");
+  }
+  const fixtures = new Map([
+    ...buildModeCases().map((testCase) => [testCase.id, { testCase, run: runMode }]),
+    ...permissionDefinitions.map((testCase) => [`permission--${testCase.id}`, { testCase, run: runPermission }]),
+  ]);
+  const failed = baseReport.cases.filter((testCase) => testCase.result !== "PASS");
+  for (const previous of failed) {
+    const fixture = fixtures.get(previous.case_id)?.testCase;
+    const documentedSuffix = " Remain in documented mode. If repository terminology or ADR inspection is unavailable, mark only that portion Blocked instead of silently switching to standard.";
+    if (!fixture || !/serverOverloaded|usageLimitExceeded|turn timeout/.test(previous.notes)
+      || previous.skill !== fixture.skill || previous.language !== fixture.language
+      || previous.input !== fixture.input + (fixture.mode === "documented" ? documentedSuffix : "")) {
+      throw new Error(`${previous.case_id}: only unchanged mode/permission cases blocked by the service can be retried`);
+    }
+  }
+  const server = new AppServer();
+  const replacements = new Map();
+  try {
+    await server.initialize();
+    for (const previous of failed) {
+      const { testCase, run } = fixtures.get(previous.case_id);
+      const result = await run(server, testCase);
+      replacements.set(result.case_id, result);
+      process.stdout.write(`[service retry] ${result.result} ${result.case_id}${result.notes ? ` — ${result.notes}` : ""}\n`);
+      if (result.notes.includes("usageLimitExceeded")) break;
+    }
+  } finally {
+    server.close();
+  }
+  const cases = baseReport.cases.map((testCase) => replacements.get(testCase.case_id) ?? testCase);
+  const advancedCases = cases.filter((testCase) => ["workflow", "mode", "permission"].includes(testCase.invocation));
+  const summary = summarize(cases);
+  const report = {
+    ...baseReport,
+    generated_at: new Date().toISOString(),
+    cases,
+    summary,
+    advanced: { ...baseReport.advanced, summary: summarize(advancedCases) },
+    coverage: {
+      ...baseReport.coverage,
+      verified_completed_real_calls: cases.filter((testCase) => testCase.exit_code === 0).length,
+      blocked_advanced_calls: advancedCases.filter((testCase) => testCase.result === "BLOCKED").length,
+    },
+    service_retry: {
+      original_report: path.basename(baseReportPath),
+      original_summary: baseReport.summary,
+      retried_case_ids: [...replacements.keys()],
+      reused_passed_cases: cases.length - failed.length,
+      unchanged_skill_hashes_verified: true,
+    },
+    result: summary.passed === 317 ? "PASS" : "FAIL",
+  };
+  const sanitized = sanitizeEvidence(compactEvidenceReport(report));
+  writeFileSync(outputPath, `${JSON.stringify(sanitized, null, 2)}\n`);
+  writeFileSync(outputPath.replace(/\.json$/, ".md"), markdown(sanitized));
+  process.stdout.write(`SERVICE RETRY RESULT ${report.result} ${summary.passed}/${summary.total}\n`);
   if (report.result !== "PASS") process.exitCode = 1;
 }
 
@@ -774,7 +847,9 @@ function recordEnvironmentBlocker() {
   process.exitCode = 1;
 }
 
-if (process.argv.includes("--sanitize-only")) {
+if (process.argv.includes("--retry-service-failures")) {
+  await retryServiceFailures();
+} else if (process.argv.includes("--sanitize-only")) {
   const sanitizedReport = sanitizeEvidence(compactEvidenceReport(baseReport));
   writeFileSync(outputPath, `${JSON.stringify(sanitizedReport, null, 2)}\n`);
   writeFileSync(outputPath.replace(/\.json$/, ".md"), markdown(sanitizedReport));

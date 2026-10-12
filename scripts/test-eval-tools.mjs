@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -58,6 +59,29 @@ try {
   assert.equal(metrics.top_1_routing_accuracy, 1);
   assert.equal(metrics.permission_violation_rate, 0);
   assert.equal(metrics.workflow_stage_completeness_rate, 1);
+
+  // Reusing compact evidence must retain the original response digest and case links.
+  mkdirSync(path.join(temp, "skills"));
+  const savedArgv = [...process.argv];
+  try {
+    process.argv.push("--skill-home", temp);
+    const { compactEvidenceReport } = await import("./live-codex-validation.mjs");
+    const output = { answer: "Synthetic fixture answer", handoff: "none" };
+    const evidence = {
+      cases: [{ case_id: "fixture", output }],
+      advanced: {
+        workflow_runs: [{ workflow_id: "fixture", steps: [{ case_id: "fixture" }] }],
+        mode_cases: [{ case_id: "fixture-mode" }],
+        permission_cases: [{ case_id: "fixture-permission" }],
+      },
+    };
+    const once = compactEvidenceReport(evidence);
+    const twice = compactEvidenceReport(once);
+    assert.equal(twice.cases[0].output_evidence.sha256, createHash("sha256").update(JSON.stringify(output)).digest("hex"));
+    assert.deepEqual(twice, once, "recompaction must preserve digests and all case links");
+  } finally {
+    process.argv = savedArgv;
+  }
 } finally {
   rmSync(temp, { recursive: true, force: true });
 }

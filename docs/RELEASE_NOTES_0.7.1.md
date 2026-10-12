@@ -1,6 +1,6 @@
-# Repo Doctor Skills v0.7.1 Stable Release Preparation
+# Repo Doctor Skills v0.7.1 Stable Release
 
-Prepared 2026-10-12 for tag `v0.7.1`. This document describes the intended stable release; publication has not occurred.
+Release date: 2026-10-12. Tag: `v0.7.1`.
 
 ## Easier installation
 
@@ -14,4 +14,6 @@ The real external installer successfully installed one Skill and all 40 Skills i
 
 Skill instructions, slugs, permission policies, component versions, and the 37-ZIP / 40-asset contract are unchanged from v0.7.0. This patch introduces no new model-performance claim.
 
-Live-model status: **BLOCKED**. The complete behavioral report required for the unchanged v0.7.0 Skills is still absent; historical v0.4.0 results and partial attempts cannot satisfy the gate. The release metadata now reports that block honestly rather than declaring PASS. No waiver applies to v0.7.1. npm authentication returned E401 during release preparation. Formal publication requires resolving these blocks, passing final Main and Tag CI, and verifying public assets.
+Live-model status: **PASS, 317/317** from the fresh v0.7.1 report: 200 core cases, 44 bilingual workflow steps, 61 execution-mode/verdict cases, and 12 permission-boundary cases. Historical v0.4.0 results were not used to satisfy this gate. A first advanced attempt was blocked by service limits; a later attempt encountered nine capacity errors. These reports are retained, and targeted retries completed every case with unchanged Skill hashes and unchanged assertions. No reset coupon or release waiver was used.
+
+The validator reuses host authentication. The tested Skill files are in a temporary installation; host capability metadata can also be visible during discovery. The corpus checks structured routing, workflow artifacts, modes, and stated permission boundaries; it does not measure production task outcomes, token savings, or latency improvement.

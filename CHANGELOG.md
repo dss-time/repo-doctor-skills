@@ -10,11 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [0.7.1] - 2026-10-12
 
-> Prepared release; publication remains blocked by missing complete Live-model evidence and npm authentication.
-
 ### Added
 
 - Complete-resource parity checks for the standard skills CLI distribution.
+- A fresh version-scoped 317/317 PASS model-validation report, with service-failure attempts retained separately.
 
 ### Changed
 
@@ -32,7 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Security
 
-- Preserve invocation policies and report blocked Live-model evidence honestly; no release gate waiver applies.
+- Preserve invocation policies and require complete model evidence; all 12 permission-boundary cases passed, with no release-gate waiver.
 
 ## [0.7.0] - 2026-09-08
 
