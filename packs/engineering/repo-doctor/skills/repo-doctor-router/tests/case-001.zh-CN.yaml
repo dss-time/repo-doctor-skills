@@ -1,6 +1,7 @@
 input: "这个需求仍然模糊并可能改变兼容性，我该用哪个 Repo Doctor 工作流？"
 expected:
   must_include:
+    - "下一步："
     - "推荐：$requirements-clarification"
     - "原因："
     - "模式：fast"

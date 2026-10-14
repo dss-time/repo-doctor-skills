@@ -25,6 +25,14 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 
 同一 Agent 选择插件或复制 Skills 其中一种，避免重复发现；安装后新建任务。下方 preset 安装器适合固定安装 7 个常用 Skill 或选择单语言正文。
 
+| 安装入口 | 默认位置与作用范围 | 更新方式 |
+|---|---|---|
+| `npx skills@latest add` | 当前项目；加 `-g` 为用户级 | 同一作用范围下使用 `check` / `update` |
+| `npx repo-doctor-skills install` | 用户级；按下方规则选目录，或用 `--target-dir` 指定 | 重跑相同命令；内容不同时先备份自定义修改，再选择是否 `--force` 替换 |
+| Codex 插件 | 由宿主插件管理器控制 | 按第 7 节选择版本并刷新或重装 |
+
+同一 Agent 使用一种安装入口即可；安装成功后新建任务。
+
 ### 推荐安装：7 个入门 Skill
 
 运行：
@@ -33,7 +41,7 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 npx repo-doctor-skills install
 ```
 
-这个无交互安装器只把 7 个 Recommended Skill 写入 Codex Skills 目录，逐个验证 `SKILL.md`，并把 `$repo-doctor-router` 作为第一条调用提示。preset 包含 `repo-doctor-router`、`requirements-clarification`、`bug-root-cause-analysis`、`safe-fix-implementation`、`safe-test-implementation`、`safe-code-review` 和 `decision-prototype`。
+这个无交互安装器把 7 个 Recommended Skill 写入下方规则确定的用户级目录，逐个验证 `SKILL.md`，并把 `$repo-doctor-router` 作为第一条调用提示。preset 包含 `repo-doctor-router`、`requirements-clarification`、`bug-root-cause-analysis`、`safe-fix-implementation`、`safe-test-implementation`、`safe-code-review` 和 `decision-prototype`。
 
 `--agent codex` 会显式选择 Codex。安装器不会仅因为某个目录存在就认定用户正在使用对应 Agent；没有显式参数时，唯一一个已配置的 `CODEX_HOME` 或 `AGENTS_HOME` 会被视为可靠信号。两者同时存在时，安装器在写入前安全退出；两者都不存在时，安全安装到共享 `~/.agents/skills`，并打印准确目标。
 
@@ -66,6 +74,7 @@ $repo-doctor-router
 原因：这是非 CI 的运行时故障，应先核验根因再决定是否修复。
 模式：fast
 需要：报错信息和最小复现。
+下一步：$bug-root-cause-analysis 这个接口偶尔返回 500，请查明根因，不修改文件。报错信息：<请补充>。
 ```
 
 Router 到这里就会停止。如果要继续，请在后续一轮调用推荐的 Skill。
@@ -80,7 +89,7 @@ Router 会：
 - 推荐 `fast`、`standard` 或 `audit`；
 - 保持只读，不运行命令、不修改文件；
 - 绝不递归调用推荐结果；
-- 默认只返回简短的四行答案。
+- 默认返回简短推荐及一条可复制的下一步请求。
 
 它是兜底入口，不是必经步骤。如果已经知道要用 `$safe-code-review`、`$requirements-clarification` 或其他 Skill，直接调用即可。
 
@@ -129,10 +138,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。当前稳定版经过核验的命令是：
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目预发布版本为 `v0.7.2-rc.1`，选择该版本时使用：
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2-rc.1
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

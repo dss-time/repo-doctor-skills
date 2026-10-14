@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { discoverActivePackSkills, discoverPackRoots } from "./sync-pack-plugin.mjs";
+import { inspectSkillInventory } from "./doctor.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -78,18 +78,16 @@ assertLocalLink("README.zh-CN.md", "docs/ADVANCED_USAGE.zh-CN.md");
 assertLocalLink("README.md", "docs/guides/problem-to-skill.md");
 assertLocalLink("README.zh-CN.md", "docs/guides/problem-to-skill.zh-CN.md");
 
-const packRoots = discoverPackRoots(path.join(root, "packs"));
-const activeCount = packRoots.reduce((total, packRoot) => total + discoverActivePackSkills(packRoot).length, 0);
-const pluginCount = ["repo-doctor", "productivity-toolkit", "skill-maintainer"].reduce((total, plugin) => {
-  const skillsRoot = path.join(root, "plugins", plugin, "skills");
-  return total + readdirSync(skillsRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(path.join(skillsRoot, entry.name, "SKILL.md"))).length;
-}, 0);
-assert.equal(activeCount, 40);
-assert.equal(pluginCount, 37);
+const inventory = inspectSkillInventory(root);
+const activeCount = inventory.packs.reduce((total, pack) => total + pack.skills.length, 0);
+const pluginCount = inventory.expectedPlugins.length;
+const repoCount = inventory.packs.find((pack) => pack.id === "engineering.repo-doctor").skills.length;
+assert.ok(activeCount > 0);
+assert.deepEqual(inventory.pluginDiff, { missing: [], unexpected: [] });
+
 for (const relative of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", "docs/ADVANCED_USAGE.md", "docs/ADVANCED_USAGE.zh-CN.md"]) {
   const content = read(relative);
-  for (const count of ["40", "37", "27"]) assert.ok(content.includes(count), `${relative}: missing distribution count ${count}`);
+  for (const count of [activeCount, pluginCount, repoCount].map(String)) assert.ok(content.includes(count), `${relative}: missing distribution count ${count}`);
 }
 
 for (const relative of ["docs/ADVANCED_USAGE.md", "docs/ADVANCED_USAGE.zh-CN.md"]) {

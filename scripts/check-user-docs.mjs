@@ -152,6 +152,13 @@ function checkReadmeFirstScreen(relativePath, content) {
 }
 
 function checkManualCoverage(relativePath, content) {
+  const version = JSON.parse(read("package.json")).version;
+  const updateSection = content.split(/^### (?:Update a Codex plugin installation|更新 Codex 插件安装)\s*$/m)[1]?.split(/^## /m)[0] ?? "";
+  const refs = [...updateSection.matchAll(/codex plugin marketplace add dss-time\/repo-doctor-skills --ref (v[^\s`]+)/g)].map((match) => match[1]);
+  if (refs.length !== 1 || refs[0] !== `v${version}`) {
+    fail(`${relativePath}: plugin update command must target project release v${version}`);
+  }
+
   const requiredTerms = [
     "ChatGPT",
     "Codex",
@@ -283,7 +290,7 @@ for (const relativePath of ["docs/RELEASE_NOTES_0.6.1.md", "docs/RELEASE_NOTES_0
 
 for (const relativePath of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", "docs/LEGACY_CODEX_PLUGIN.md", "docs/LEGACY_CODEX_PLUGIN.zh-CN.md"]) {
   const content = read(relativePath);
-  if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1")) {
+  if (relativePath.includes("LEGACY_CODEX_PLUGIN") && !content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1")) {
     fail(`${relativePath}: missing stable marketplace tag installation`);
   }
   if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref main")) {

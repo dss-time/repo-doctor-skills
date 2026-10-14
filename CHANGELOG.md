@@ -8,6 +8,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.7.2-rc.1] - 2026-10-14
+
+### Fixed
+
+- Preflight release validation scripts, lifecycle hooks and transitive commands before execution; block unsafe gates without skipping independent safe gates.
+- Correct the bilingual plugin update version and explain install scope, target directories and update paths.
+- Compare plugin and ZIP inventory members against canonical manifests instead of fixed daily counts; retain release snapshot checks separately.
+
+### Changed
+
+- Add a copyable next request to Router output and beginner entry points for onboarding, health checks, CI diagnosis and installation troubleshooting.
+- Update Router to 0.2.2 and Release Readiness Check to 0.1.2. The published v0.7.1 live-model evidence does not cover this release candidate; validation is limited to focused local checks.
+
+### Added
+
+- Bilingual unsafe-gate fixtures and count-preserving inventory regression checks.
+
+### Security
+
+- Inspect validation command side effects before executing release gates.
+
+### Documentation
+
+- Synchronize README, installation guidance and candidate release notes. Live-model status is UNKNOWN; validation is limited to focused checks.
+
 ## [0.7.1] - 2026-10-12
 
 ### Added
@@ -374,7 +399,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2-rc.1...HEAD
+[0.7.2-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.2-rc.1
 [0.7.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.0...v0.6.1

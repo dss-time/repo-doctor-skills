@@ -64,3 +64,22 @@
 - **Skill：** `$repo-doctor-router`
 - **说明：** 推荐一个 active Skill 和 `fast`、`standard` 或 `audit`，但不执行。
 - **最短示例：** `$repo-doctor-router — 这个接口偶尔返回 500，我该先排查还是直接修改？`
+
+## 理解新项目
+
+- **Skill：** `$repo-onboarding`
+- **最短请求：** `$repo-onboarding 帮我理解这个项目的入口、目录和文档中的运行命令，不修改文件。`
+
+## 项目体检
+
+- **Skill：** `$project-health-check`
+- **最短请求：** `$project-health-check 检查有证据的优化点，优先方便新手使用，避免大规模重构，只报告问题，不修改文件。`
+
+## CI 失败
+
+- **Skill：** `$ci-failure-diagnosis`
+- **最短请求：** `$ci-failure-diagnosis 根据这份 CI 日志定位第一个可信错误，不修改文件。日志：<粘贴相关日志>。`
+
+## 安装后找不到 Skill
+
+无需新增 Skill。先核对安装器打印的目标目录及项目级/用户级范围，新建任务，再检查宿主的技能列表。插件安装还需确认已安装插件本身，而不只是添加了市场来源。参见[安装与排障说明](../USER_MANUAL.zh-CN.md)。仍无法解决时提供安装命令、目标 Agent 和准确错误，不粘贴凭据。

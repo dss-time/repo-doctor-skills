@@ -11,3 +11,5 @@
 - “认证流程你看着改。” -> 行为和权限仍有重大选择，先澄清。
 - “修复已经合并，请补回归测试。” -> `post-fix-regression-test`，模式为 `regression_after_fix`。
 - 反例：“Semantic Versioning 是什么？”应直接回答。
+
+可复制的下一步：`$bug-root-cause-analysis 这个接口偶尔返回 500，请查明根因，不修改文件。报错信息：<请补充报错>。` 只推荐，不执行。

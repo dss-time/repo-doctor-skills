@@ -1,6 +1,7 @@
 input: "This requirement is vague and may change compatibility. Which Repo Doctor workflow should I use?"
 expected:
   must_include:
+    - "Try:"
     - "Recommend: $requirements-clarification"
     - "Reason:"
     - "Mode: fast"

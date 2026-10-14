@@ -4,7 +4,7 @@ name:
   zh-CN: 工作流路由
 category: engineering
 visibility: public
-version: 0.2.1
+version: 0.2.2
 status: beta
 default_locale: zh-CN
 supported_locales:

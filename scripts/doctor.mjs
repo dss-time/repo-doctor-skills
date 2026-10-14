@@ -7,6 +7,7 @@ import { sortedDirectoryEntries } from "./deterministic-files.mjs";
 import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 import { inspectReleaseMetadata, releaseContract } from "./release-metadata.mjs";
 import { validateWorkflowRegistry } from "./validate-workflows.mjs";
+import { catalogDistributionRegistry } from "./generate-skill-catalog.mjs";
 
 const scriptRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const targets = ["generic-zh-CN", "generic-en", "codex-zh-CN", "claude-code-zh-CN", "cursor-zh-CN", "qwen-zh-CN", "kimi-zh-CN"];
@@ -23,6 +24,38 @@ function runNode(root, script, args = []) {
 }
 function git(root, args) {
   try { return execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim(); } catch { return null; }
+}
+
+// Derive daily inventory from canonical manifests; releaseContract retains version snapshots.
+export function inspectSkillInventory(root = scriptRoot) {
+  const packs = discoverPackRoots(path.join(root, "packs")).map((packRoot) => ({
+    packRoot,
+    id: parseYamlSubset(readFileSync(path.join(packRoot, "pack.yaml"), "utf8")).id,
+    skills: discoverActivePackSkills(packRoot),
+  }));
+  const expectedPlugins = [];
+  const expectedZips = [];
+  for (const pack of packs) {
+    const distribution = catalogDistributionRegistry[pack.id];
+    if (!distribution) continue;
+    for (const slug of pack.skills) {
+      expectedPlugins.push(`${distribution.pluginName}/${slug}`);
+      expectedZips.push(`${distribution.publishPrefix}-${slug}.zip`);
+    }
+  }
+  const actualPlugins = directories(path.join(root, "plugins"), ".codex-plugin/plugin.json")
+    .flatMap((plugin) => directories(path.join(root, "plugins", plugin, "skills"), "SKILL.md")
+      .map((slug) => `${plugin}/${slug}`));
+  const zipRoot = path.join(root, "dist", "chatgpt-skills");
+  const actualZips = existsSync(zipRoot)
+    ? sortedDirectoryEntries(zipRoot).filter((entry) => entry.isFile() && entry.name.endsWith(".zip")).map((entry) => entry.name)
+    : [];
+  const difference = (expected, actual) => ({
+    missing: expected.filter((name) => !actual.includes(name)),
+    unexpected: actual.filter((name) => !expected.includes(name)),
+  });
+  return { packs, expectedPlugins, actualPlugins, expectedZips, actualZips,
+    pluginDiff: difference(expectedPlugins, actualPlugins), zipDiff: difference(expectedZips, actualZips) };
 }
 
 export function inspectDoctor(root = scriptRoot) {
@@ -54,18 +87,21 @@ export function inspectDoctor(root = scriptRoot) {
   record("git-workspace", !workspace, workspace ? "workspace has local changes" : "workspace clean", "warning");
   record("package-version", Boolean(packageJson?.version), packageJson ? `project ${packageJson.name}@${packageJson.version}` : "missing package.json");
 
-  const packRoots = discoverPackRoots(path.join(root, "packs"));
-  const packSkills = packRoots.map((packRoot) => ({ packRoot, skills: discoverActivePackSkills(packRoot) }));
-  const activeSkills = packSkills.reduce((sum, item) => sum + item.skills.length, 0);
-  const repoPackRoot = path.join(root, "packs", "engineering", "repo-doctor");
-  const repoSkills = discoverActivePackSkills(repoPackRoot).length;
-  const pluginRoots = ["repo-doctor", "productivity-toolkit", "skill-maintainer"];
-  const pluginSkills = pluginRoots.reduce((sum, plugin) => sum + directories(path.join(root, "plugins", plugin, "skills"), "SKILL.md").length, 0);
-  const zipRoot = path.join(root, "dist", "chatgpt-skills");
-  const zipCount = existsSync(zipRoot) ? sortedDirectoryEntries(zipRoot).filter((entry) => entry.isFile() && entry.name.endsWith(".zip")).length : 0;
-  record("canonical-inventory", packRoots.length === 4 && activeSkills === 40 && repoSkills === 27, `${packRoots.length} Packs, ${activeSkills} active Skills, ${repoSkills} Repo Doctor Skills`);
-  record("plugin-inventory", pluginSkills === 37, `${pluginSkills} plugin Skills; expected 37`);
-  record("chatgpt-packages", zipCount === 37, String(zipCount) + " ZIPs; expected 37 after build", "warning");
+  const inventory = inspectSkillInventory(root);
+  const packSkills = inventory.packs;
+  const packRoots = packSkills.map((pack) => pack.packRoot);
+  const slugs = packSkills.flatMap((pack) => pack.skills);
+  const activeSkills = slugs.length;
+  const repoSkills = packSkills.find((pack) => pack.id === "engineering.repo-doctor")?.skills.length ?? 0;
+  const pluginSkills = inventory.actualPlugins.length;
+  const zipCount = inventory.actualZips.length;
+  record("canonical-inventory", packRoots.length > 0 && activeSkills > 0 && new Set(slugs).size === activeSkills,
+    `${packRoots.length} Packs, ${activeSkills} active Skills, ${repoSkills} Repo Doctor Skills`);
+  const diffDetail = (diff) => `missing: ${diff.missing.join(", ") || "none"}; unexpected: ${diff.unexpected.join(", ") || "none"}`;
+  record("plugin-inventory", !inventory.pluginDiff.missing.length && !inventory.pluginDiff.unexpected.length,
+    `${pluginSkills} plugin Skills; ${diffDetail(inventory.pluginDiff)}`);
+  record("chatgpt-packages", !inventory.zipDiff.missing.length && !inventory.zipDiff.unexpected.length,
+    `${zipCount} ZIPs; expected ${inventory.expectedZips.length}; ${diffDetail(inventory.zipDiff)}`, "warning");
 
   let localeMissing = 0;
   for (const { packRoot, skills } of packSkills) for (const slug of skills) {
@@ -128,7 +164,7 @@ export function inspectDoctor(root = scriptRoot) {
     read_only: true,
     network_called: false,
     environment: { node: process.versions.node, branch, workspace_clean: workspace === "", head },
-    inventory: { packs: packRoots.length, active_skills: activeSkills, repo_doctor_skills: repoSkills, plugin_skills: pluginSkills, expected_chatgpt_zips: 37, actual_chatgpt_zips: zipCount, platform_targets: targets.length },
+    inventory: { packs: packRoots.length, active_skills: activeSkills, repo_doctor_skills: repoSkills, plugin_skills: pluginSkills, expected_chatgpt_zips: inventory.expectedZips.length, actual_chatgpt_zips: zipCount, platform_targets: targets.length },
     workflow: { registry_id: workflow.registry?.registry_id ?? null, version: workflow.registry?.version ?? null, count: workflow.registry ? Object.keys(workflow.registry.workflows).length : 0 },
     release: {
       current_project_version: packageJson?.version ?? null,

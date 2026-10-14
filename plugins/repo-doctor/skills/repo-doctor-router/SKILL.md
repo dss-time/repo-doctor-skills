@@ -68,11 +68,14 @@ Recommend: $<skill-name>
 Reason: <one sentence>
 Mode: fast | standard | audit
 Needs: <minimum input>
+Try: <copyable invocation preserving the user’s problem and scope>
 ```
 
 For `standard` or requested detail, add classification, workflow ID, current stage, prerequisites, permission gate, stop condition, next Skill, and one alternative. For `audit`, add registry/version verification, active-inventory evidence, rejected candidates, platform alias capability, and unresolved uncertainty.
 
 Do not execute the recommendation or name an unverified Skill as available.
+
+Use host-appropriate invocation syntax or a natural-language prompt. Preserve missing inputs as explicit placeholders; never invent evidence or expand authorization.
 
 ---
 
@@ -137,8 +140,11 @@ Do not execute the recommendation or name an unverified Skill as available.
 原因：<一句话>
 模式：fast | standard | audit
 需要：<最小输入>
+下一步：<保留用户问题和范围的可复制调用>
 ```
 
 `standard` 或用户要求详细信息时，增加分类、workflow ID、当前阶段、前置条件、权限门禁、停止条件、后续 Skill 和一个替代路径。`audit` 再增加注册表/版本核验、active 清单证据、被拒绝候选、平台 alias 能力和未解决不确定性。
 
 不得执行推荐，也不得把未核验 Skill 声称为可用。
+
+使用宿主支持的调用语法或自然语言提示。缺少的输入使用明确占位符，不编造证据、不扩张授权。

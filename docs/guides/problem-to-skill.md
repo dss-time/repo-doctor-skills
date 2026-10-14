@@ -64,3 +64,22 @@ Use one Skill directly when the problem is clear. The Router is only the fallbac
 - **Skill:** `$repo-doctor-router`
 - **Why:** Recommends one active Skill and `fast`, `standard`, or `audit` without executing it.
 - **Shortest example:** `$repo-doctor-router — This API sometimes returns 500; should I investigate or edit first?`
+
+## Understand a new project
+
+- **Skill:** `$repo-onboarding`
+- **Shortest request:** `$repo-onboarding Explain the entry points, directory structure and documented run commands. Do not modify files.`
+
+## Check project health
+
+- **Skill:** `$project-health-check`
+- **Shortest request:** `$project-health-check Check for evidence-backed improvements, prioritize beginner usability, and avoid large refactors. Report findings without editing files.`
+
+## CI fails
+
+- **Skill:** `$ci-failure-diagnosis`
+- **Shortest request:** `$ci-failure-diagnosis Diagnose the first credible failure in this CI log. Do not modify files. Log: <paste the relevant log>.`
+
+## Installed but cannot find a Skill
+
+No extra Skill is needed. Confirm the installer’s printed target and project/user scope, start a new task, then check the host’s Skill list. For plugins, confirm the plugin itself was installed, not only its marketplace source. See [installation and troubleshooting](../USER_MANUAL.md). If unresolved, provide the install command, target agent and exact error; do not paste credentials.

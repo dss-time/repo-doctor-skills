@@ -25,6 +25,14 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 
 Choose the plugin or copied Skills for the same agent to avoid duplicate discovery. Start a new task after installation. The following preset installer is an alternative when you want a fixed seven-Skill selection or single-language bodies.
 
+| Install entry | Default location and scope | Update |
+|---|---|---|
+| `npx skills@latest add` | Current project; `-g` selects user-wide scope | Use `check` / `update` in the same scope |
+| `npx repo-doctor-skills install` | User-wide, selected by the rules below; override with `--target-dir` | Repeat the same command; back up custom edits before choosing `--force` for differing content |
+| Codex plugin | Managed by the host plugin manager | Select a version and refresh or reinstall as described in section 7 |
+
+Choose one install entry per agent and start a new task after installation.
+
 ### Recommended: seven starter Skills
 
 Run:
@@ -33,7 +41,7 @@ Run:
 npx repo-doctor-skills install
 ```
 
-This non-interactive installer writes only the seven Recommended Skills to the Codex Skills directory, verifies every installed `SKILL.md`, and prints `$repo-doctor-router` as the first command. The preset contains `repo-doctor-router`, `requirements-clarification`, `bug-root-cause-analysis`, `safe-fix-implementation`, `safe-test-implementation`, `safe-code-review`, and `decision-prototype`.
+This non-interactive installer writes the seven Recommended Skills to the user-wide directory selected by the rules below, verifies every installed `SKILL.md`, and prints `$repo-doctor-router` as the first command. The preset contains `repo-doctor-router`, `requirements-clarification`, `bug-root-cause-analysis`, `safe-fix-implementation`, `safe-test-implementation`, `safe-code-review`, and `decision-prototype`.
 
 Use `--agent codex` to choose Codex explicitly. The installer does not identify an Agent merely because a directory exists. With no explicit agent, exactly one configured `CODEX_HOME` or `AGENTS_HOME` is treated as a reliable signal. If both are present, it exits without writing; if neither is present, it safely installs to the shared `~/.agents/skills` location and prints that exact target.
 
@@ -66,6 +74,7 @@ Recommend: $bug-root-cause-analysis
 Reason: This is a non-CI runtime failure whose cause should be verified before any fix.
 Mode: fast
 Needs: The error output and a minimal reproduction.
+Try: $bug-root-cause-analysis This API sometimes returns 500. Find the cause without editing files. Error details: <provide the error>.
 ```
 
 The Router stops there. Start a later turn with the recommended Skill if you want to continue.
@@ -80,7 +89,7 @@ The Router:
 - recommends `fast`, `standard`, or `audit`;
 - stays read-only and does not run commands or edit files;
 - never recursively invokes the recommendation;
-- defaults to a short four-line answer.
+- defaults to a short five-line answer.
 
 It is a fallback, not a mandatory gateway. If you already know you need `$safe-code-review`, `$requirements-clarification`, or another Skill, invoke that Skill directly.
 
@@ -129,10 +138,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. For the current stable release, the verified source command is:
+2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project prerelease `v0.7.2-rc.1`; to select that version, use:
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.6.1
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2-rc.1
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

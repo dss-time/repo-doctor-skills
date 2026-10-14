@@ -68,8 +68,8 @@ for (const locale of ["en", "zh-CN"]) {
   requireTerms(
     `packs/engineering/repo-doctor/skills/repo-doctor-router/output.${suffix}.md`,
     locale === "en"
-      ? ["Recommend: $<skill-name>", "Reason:", "Mode:", "Needs:", "workflow ID", "permission gate", "stop condition"]
-      : ["推荐：$<skill-name>", "原因：", "模式：", "需要：", "workflow ID", "权限门禁", "停止条件"],
+      ? ["Recommend: $<skill-name>", "Reason:", "Mode:", "Needs:", "Try:", "workflow ID", "permission gate", "stop condition"]
+      : ["推荐：$<skill-name>", "原因：", "模式：", "需要：", "下一步：", "workflow ID", "权限门禁", "停止条件"],
   );
   requireTerms(
     `packs/engineering/repo-doctor/skills/requirements-clarification/output.${suffix}.md`,
@@ -117,6 +117,15 @@ for (const slug of discoverActivePackSkills(maintainerPack)) {
 const sharedQuality = read("packs/engineering/skill-maintainer/references/skill-maintenance-boundaries.md");
 for (const term of ["multiple authoritative sources", "ineffective", "duplicated", "stale", "router references", "overlaps an existing owner"]) {
   assert.ok(sharedQuality.includes(term), `shared Skill quality model missing ${term}`);
+}
+
+
+for (const locale of ["en", "zh-CN"]) {
+  const instructions = read(`packs/engineering/repo-doctor/skills/release-readiness-check/instructions.${locale}.md`);
+  assert.doesNotMatch(instructions, /Run those scripts before inspecting|先执行这些脚本，再检查/);
+  for (const term of locale === "en" ? ["Before execution", "lifecycle hooks", "transitively invoked", "Blocked", "independent safe gates"] : ["执行前检查", "生命周期钩子", "间接调用", "Blocked", "独立且安全"]) {
+    assert.ok(instructions.includes(term), `release preflight contract missing ${term}`);
+  }
 }
 
 console.log("Repo Doctor workflow contract tests passed for concise routing, decision-tree clarification, prototypes, architecture analysis, handoff, signal-first RCA, three-axis review, test cycles, and Skill quality.");

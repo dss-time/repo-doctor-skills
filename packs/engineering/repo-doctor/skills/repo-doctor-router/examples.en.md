@@ -11,3 +11,5 @@
 - “Change the auth flow however you think best.” -> material behavior and permission choices remain open; clarify first.
 - “The fix is already merged; add its regression test.” -> `post-fix-regression-test` with `regression_after_fix`.
 - Non-trigger: “What does semantic versioning mean?” Answer normally.
+
+Copyable next step: `$bug-root-cause-analysis This API sometimes returns 500. Investigate the cause without editing files. Error details: <provide the error>.` Recommend only; do not execute.

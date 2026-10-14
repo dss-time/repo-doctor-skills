@@ -16,8 +16,8 @@ Validate according to actual risk; security, production, migrations, releases an
 # Release Readiness Check
 
 Evaluate a specific release candidate and return an evidence-backed `GO`, `GO WITH CONDITIONS`, or `NO-GO`. Keep the check read-only.
-When the request explicitly names local gates to run, resolve their repository commands from the nearest manifest, execute that finite gate list before broader audit work, capture every status, and then continue the read-only assessment.
-If the request says to run the full local test, typecheck, or build gates, executing the corresponding full package-manager scripts is mandatory. Run those scripts before inspecting their implementations; reading a script, running a narrower command, or predicting its result never satisfies the gate.
+When the request explicitly names local gates to run, resolve their repository commands from the nearest manifest, preflight and execute that finite gate list before broader audit work, capture every status, and then continue the read-only assessment.
+If the request says to run the full local test, typecheck, or build gates, executing the corresponding full package-manager scripts is mandatory. Before execution, inspect the scripts, package-manager lifecycle hooks and transitively invoked commands for side effects. Run the full requested scripts only after confirming they stay within the authorized local validation scope; reading a script, running a narrower command, or predicting its result never satisfies the gate. If a command includes deployment, publishing, migration, deletion, production access, or unknown side effects, mark that gate `Blocked` and explain the boundary; continue independent safe gates. Do not silently replace or edit the blocked script.
 
 ## Boundary
 
@@ -66,8 +66,8 @@ List unrun checks explicitly. Do not perform release actions.
 # 发布就绪检查
 
 评估具体候选版本，并给出有证据的 `GO`、`GO WITH CONDITIONS` 或 `NO-GO`。保持只读。
-请求明确列出要运行的本地门禁时，先从最近的清单解析仓库命令，在扩展审计前执行这组有限门禁并记录每项状态，然后继续只读评估。
-请求要求运行完整本地测试、类型检查或构建门禁时，必须执行清单中对应的完整包管理器脚本。先执行这些脚本，再检查脚本实现；只读取脚本、运行更窄命令或推测结果都不算完成门禁。
+请求明确列出要运行的本地门禁时，先从最近的清单解析仓库命令，在扩展审计前预检并执行这组有限门禁并记录每项状态，然后继续只读评估。
+请求要求运行完整本地测试、类型检查或构建门禁时，必须执行清单中对应的完整包管理器脚本。执行前检查脚本实现、包管理器生命周期钩子及间接调用命令的副作用。确认属于已授权的本地验证范围后，完整执行所要求的脚本；只读取脚本、运行更窄命令或推测结果都不算完成门禁。命令包含部署、发布、迁移、删除、生产访问或未知副作用时，将该门禁标为 `Blocked` 并说明边界，继续其他独立且安全的门禁。不得静默替换或修改被阻塞的脚本。
 
 ## 职责边界
 

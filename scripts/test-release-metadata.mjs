@@ -245,15 +245,15 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.7.1");
-assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "PASS");
+assert.equal(releaseContract.projectVersion, "0.7.2-rc.1");
+assert.equal(releaseContract.releaseChannel, "candidate");
+assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
 assert.equal(releaseContract.liveModelWaiver, null);
-assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion, "stable publication requires version-scoped model evidence");
+assert.equal(releaseContract.liveModelEvidenceVersion, null, "candidate must not claim historical model evidence");
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.9.0",
+    "engineering.repo-doctor": "0.9.1",
     "productivity.productivity-toolkit": "0.1.0",
     "engineering.skill-maintainer": "0.2.0",
     "office.document-data-doctor": "0.1.0",
@@ -395,6 +395,7 @@ const historicalWaiver = {
 };
 const missingWaiver = inspectReleaseMetadata(repositoryRoot, {
   ...releaseContract,
+  releaseChannel: "stable",
   liveModelStatus: "UNKNOWN",
   liveModelWaiver: null,
 });
@@ -404,6 +405,7 @@ assert.ok(
 );
 const broadWaiver = inspectReleaseMetadata(repositoryRoot, {
   ...releaseContract,
+  releaseChannel: "stable",
   liveModelStatus: "UNKNOWN",
   liveModelWaiver: { ...historicalWaiver, scope: "all-release-gates" },
 });
