@@ -79,18 +79,18 @@ npx repo-doctor-skills install --language zh-CN
 
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。它打印安装目标、跳过相同内容，替换不同内容需要 `--force`。外部 skills CLI 的 Node 要求由其自身版本决定。
 
-## v0.7.2-rc.1 预发布
+## v0.7.2 正式版
 
-本候选版本完善安装指引、为 Router 增加可复制请求、在发布检查前预检脚本，并检查技能包缺失或多余项。仍为 40 个 Skill，没有大规模重构或新增 Skill。仅做定向本地验证，本候选版本的 Live-model 状态为 **UNKNOWN**。
+本版本完善安装指引、为 Router 增加可复制请求、在发布检查前预检脚本，并检查技能包缺失或多余项。仍为 40 个 Skill，没有大规模重构或新增 Skill。仅做定向本地验证，本版本的 Live-model 状态为 **UNKNOWN**，经维护者明确批准，本版豁免这项评测。
 
 在 Codex 中体验这个准确版本：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2-rc.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-可选 npm 安装器默认写入用户级目录，npm 上可能仍为旧版；本次 GitHub 预发布不包含 npm 发布。参见[安装方式对照](docs/USER_MANUAL.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_0.7.2-rc.1.zh-CN.md)。
+可选 npm 安装器默认写入用户级目录，npm 上可能仍为旧版；本次 GitHub 正式发布不包含 npm 发布。参见[安装方式对照](docs/USER_MANUAL.zh-CN.md)和[发布说明](docs/RELEASE_NOTES_0.7.2.zh-CN.md)。
 
 ## 文档
 

@@ -27,11 +27,16 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.7.2-rc.1",
+  projectVersion: "0.7.2",
   releaseDate: "2026-10-14",
-  releaseChannel: "candidate",
+  releaseChannel: "stable",
   liveModelStatus: "UNKNOWN",
-  liveModelWaiver: null,
+  liveModelWaiver: Object.freeze({
+    authorized: true,
+    version: "0.7.2",
+    scope: "live-model-status-only",
+    record: "docs/RELEASE_WAIVER_0.7.2.md",
+  }),
   liveModelReport: null,
   liveModelEvidenceVersion: null,
   historicalProjectVersion: "0.1.0",
@@ -87,7 +92,7 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.7.2-rc.1.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.7.2.md",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 
@@ -560,6 +565,12 @@ function auditLiveModelWaiver(root, contract, errors) {
 
 function auditLiveModelEvidence(root, contract, errors) {
   if (contract.releaseChannel !== "stable") return;
+  // Explicit maintainer exception for this version only; future releases still require PASS.
+  if (contract.projectVersion === "0.7.2" && contract.liveModelStatus === "UNKNOWN") {
+    const waiverErrors = [];
+    auditLiveModelWaiver(root, contract, waiverErrors);
+    if (waiverErrors.length === 0) return;
+  }
   if (contract.liveModelStatus !== "PASS") {
     errors.push(
       `release contract: Live-model status ${contract.liveModelStatus} is not release-eligible; expected PASS`,

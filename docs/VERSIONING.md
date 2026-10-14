@@ -6,7 +6,7 @@ Repo Doctor Skills keeps release versions, component versions, and maturity stat
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release notes.
 
-The project release candidate is **0.7.2-rc.1** (tag `v0.7.2-rc.1`). It retains 40 Skills and updates Repo Doctor Pack/plugin to 0.9.1. Live-model status is **UNKNOWN**: only focused local validation was requested. The 0.7.1 commits exist on main, but remote inspection on 2026-10-14 found no v0.7.1 tag or GitHub Release; the latest stable GitHub Release was v0.7.0. Historical model evidence does not certify this candidate.
+The project release is **0.7.2** (tag `v0.7.2`), promoted from v0.7.2-rc.1 with unchanged Skill content and component versions. Live-model status remains **UNKNOWN** under the explicit [v0.7.2-only maintainer waiver](RELEASE_WAIVER_0.7.2.md). Other release gates remain intact; future versions do not inherit this exception. The prerelease tag is preserved.
 
 The immutable `v0.5.0` tag points to the intended execution-efficiency candidate, but that tag's clean-checkout CI exposed a build-integrity test dependency on ignored `dist/` output. No GitHub Release was created for v0.5.0, and the tag is preserved without deletion or movement. v0.5.1 contains the same Skill behavior plus the test-only clean-build isolation fix.
 

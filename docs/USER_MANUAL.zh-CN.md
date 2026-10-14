@@ -138,10 +138,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目预发布版本为 `v0.7.2-rc.1`，选择该版本时使用：
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.7.2`，选择该版本时使用：
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2-rc.1
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

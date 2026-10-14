@@ -245,11 +245,11 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.7.2-rc.1");
-assert.equal(releaseContract.releaseChannel, "candidate");
+assert.equal(releaseContract.projectVersion, "0.7.2");
+assert.equal(releaseContract.releaseChannel, "stable");
 assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
-assert.equal(releaseContract.liveModelWaiver, null);
-assert.equal(releaseContract.liveModelEvidenceVersion, null, "candidate must not claim historical model evidence");
+assert.equal(releaseContract.liveModelWaiver.version, "0.7.2");
+assert.equal(releaseContract.liveModelEvidenceVersion, null, "waived release must not claim historical model evidence");
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
@@ -413,5 +413,22 @@ assert.ok(
   broadWaiver.errors.some((error) => error.includes("scope must be live-model-status-only")),
   "Live-model waiver must not suppress other release gates",
 );
+
+const authorizedRelease = inspectReleaseMetadata(repositoryRoot);
+assert.deepEqual(authorizedRelease.errors, [], "version-scoped authorization must permit this release only");
+for (const waiver of [
+  { ...releaseContract.liveModelWaiver, authorized: false },
+  { ...releaseContract.liveModelWaiver, version: "0.7.3" },
+  { ...releaseContract.liveModelWaiver, record: "docs/missing-waiver.md" },
+  { ...releaseContract.liveModelWaiver, scope: "all-release-gates" },
+]) {
+  const result = inspectReleaseMetadata(repositoryRoot, { ...releaseContract, liveModelWaiver: waiver });
+  assert.ok(result.errors.some((error) => error.includes("not release-eligible")), "invalid waiver cannot bypass model evidence");
+}
+const futureRelease = inspectReleaseMetadata(repositoryRoot, {
+  ...releaseContract, projectVersion: "0.7.3",
+  liveModelWaiver: { ...releaseContract.liveModelWaiver, version: "0.7.3" },
+});
+assert.ok(futureRelease.errors.some((error) => error.includes("not release-eligible")), "future releases must still require PASS");
 
 console.log("Release metadata tests passed for version contracts, lifecycle rules, stable authorization, templates, deprecations, CHANGELOG, and release documentation.");

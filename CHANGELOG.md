@@ -8,6 +8,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-10-14
+
+### Added
+
+- Explicit, auditable v0.7.2-only maintainer waiver for the 317-call Live-model evaluation.
+
+### Changed
+
+- Promote v0.7.2-rc.1 to a stable release with unchanged Skill content and component versions; Live-model status remains UNKNOWN.
+
+### Fixed
+
+- Honor the validated version-scoped waiver in the v0.7.2 evidence gate; future releases still require PASS.
+
+### Security
+
+- Preserve all non-Live-model release gates and reject missing, invalid, broad or wrong-version waivers.
+
+### Documentation
+
+- Synchronize bilingual README, installation instructions, version policy and stable release notes. Preserve the prerelease tag and release.
+
 ## [0.7.2-rc.1] - 2026-10-14
 
 ### Fixed
@@ -399,7 +421,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2-rc.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2...HEAD
+[0.7.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2-rc.1...v0.7.2
 [0.7.2-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.2-rc.1
 [0.7.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.6.1...v0.7.0
