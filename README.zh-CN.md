@@ -90,7 +90,14 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-40 个 Skill 和组件版本与 v0.7.2 相同。本次仅发布 GitHub Release，不发布 npm；可选 npm 安装器可能仍为旧版。参见[发布说明](docs/RELEASE_NOTES_0.7.3.zh-CN.md)。
+40 个 Skill 和组件版本与 v0.7.2 相同。也可以通过 npm 命令安装这个准确版本：
+
+```bash
+npx repo-doctor-skills@0.7.3 install --agent codex
+npx repo-doctor-skills@0.7.3 install --preset full --agent codex
+```
+
+第一条安装推荐的 7 个 Skill，第二条安装全部 40 个，均写入用户级 Codex Skills 目录。同一 Agent 选择插件或复制 Skills 一种方式即可。参见[发布说明](docs/RELEASE_NOTES_0.7.3.zh-CN.md)。
 
 ## 文档
 

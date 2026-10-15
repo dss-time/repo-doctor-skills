@@ -90,7 +90,14 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-The 40 Skills and component versions are unchanged from v0.7.2. This GitHub release does not publish npm; the optional npm installer may still serve an older version. See [release notes](docs/RELEASE_NOTES_0.7.3.md).
+The 40 Skills and component versions are unchanged from v0.7.2. You can also install this exact version through npm:
+
+```bash
+npx repo-doctor-skills@0.7.3 install --agent codex
+npx repo-doctor-skills@0.7.3 install --preset full --agent codex
+```
+
+The first command installs seven recommended Skills; the second installs all 40. Both target the user-wide Codex Skills directory. Choose either plugins or copied Skills for the same agent. See [release notes](docs/RELEASE_NOTES_0.7.3.md).
 
 ## Documentation
 

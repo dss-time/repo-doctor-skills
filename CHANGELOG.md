@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Documentation
 
-- Synchronize bilingual README, version policy and release notes with the new evaluation evidence. No npm publication is included.
+- Synchronize bilingual README, version policy and release notes with the new evaluation evidence. npm 0.7.3 was subsequently published on 2026-10-15 with exact-version install commands.
 
 ## [0.7.2] - 2026-10-14
 

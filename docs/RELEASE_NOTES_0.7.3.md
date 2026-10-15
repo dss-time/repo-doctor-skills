@@ -17,7 +17,7 @@ The first Astra attempt was stopped following the maintainer's model choice and 
 
 ## Scope and release checks
 
-The suite validates structured routing, workflow artifacts, modes and declared permission boundaries. It does not measure production task effectiveness or prove all model/platform combinations. Skill roots, SQLite state and the Git workspace are isolated; host authentication and capability metadata can remain visible. Deterministic release checks and existing GitHub CI also apply. No npm publication is included.
+The suite validates structured routing, workflow artifacts, modes and declared permission boundaries. It does not measure production task effectiveness or prove all model/platform combinations. Skill roots, SQLite state and the Git workspace are isolated; host authentication and capability metadata can remain visible. Deterministic release checks and existing GitHub CI also apply. The npm package `repo-doctor-skills@0.7.3` was subsequently published on 2026-10-15; the `latest` tag now selects this version.
 
 [Full report](https://github.com/dss-time/repo-doctor-skills/blob/v0.7.3/tests/reports/live-codex-skill-validation-0.7.3.md)
 
@@ -29,3 +29,12 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
 Choose one install method per agent, then start a new task. The Release includes 37 individual ChatGPT ZIPs and three metadata/checksum files.
+
+## npm installation
+
+```bash
+npx repo-doctor-skills@0.7.3 install --agent codex
+npx repo-doctor-skills@0.7.3 install --preset full --agent codex
+```
+
+The first command installs the seven recommended Skills; the second installs all 40 into the user-wide Codex Skills directory. Use one installation method per agent.

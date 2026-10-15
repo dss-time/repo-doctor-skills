@@ -17,7 +17,7 @@ Live-model 状态为 **PASS，317/317**。模型 **GPT-6.1 Sol**，推理强度 
 
 ## 适用范围与发布检查
 
-这组用例验证结构化路由、工作流产物、模式和声明的权限边界，不代表生产任务效果或所有模型/平台组合。隔离了 Skill 根、SQLite 状态和 Git 工作区；宿主认证和能力元数据仍可能可见。确定性发布检查及仓库已有 GitHub CI 同样适用。本次不发布 npm。
+这组用例验证结构化路由、工作流产物、模式和声明的权限边界，不代表生产任务效果或所有模型/平台组合。隔离了 Skill 根、SQLite 状态和 Git 工作区；宿主认证和能力元数据仍可能可见。确定性发布检查及仓库已有 GitHub CI 同样适用。npm 包 `repo-doctor-skills@0.7.3` 已于 2026-10-15 补充发布，`latest` 标签指向该版本。
 
 [完整评测报告](https://github.com/dss-time/repo-doctor-skills/blob/v0.7.3/tests/reports/live-codex-skill-validation-0.7.3.md)
 
@@ -29,3 +29,12 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
 同一 Agent 选择一种安装方式，安装后新建任务。Release 提供 37 个独立 ChatGPT ZIP 和三个元数据/校验文件。
+
+## npm 命令安装
+
+```bash
+npx repo-doctor-skills@0.7.3 install --agent codex
+npx repo-doctor-skills@0.7.3 install --preset full --agent codex
+```
+
+第一条安装推荐的 7 个 Skill，第二条安装全部 40 个，均写入用户级 Codex Skills 目录。同一 Agent 选择一种安装方式即可。
