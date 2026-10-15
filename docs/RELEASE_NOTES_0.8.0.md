@@ -26,6 +26,17 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-Choose one method per agent. The GitHub Release includes 38 individual ZIPs and three metadata/checksum files. This GitHub release does not publish npm 0.8.0; npm 0.7.3 remains the previous package with 40 Skills.
+Choose one method per agent. The GitHub Release includes 38 individual ZIPs and three metadata/checksum files.
+
+## npm installation
+
+npm `repo-doctor-skills@0.8.0` was subsequently published on 2026-10-15; `latest` selects 0.8.0.
+
+```bash
+npx repo-doctor-skills@0.8.0 install --agent codex
+npx repo-doctor-skills@0.8.0 install --preset full --agent codex
+```
+
+The first command installs seven recommended Skills; the second installs all 41. Both use the user-wide Codex Skills directory.
 
 [Real-model report](https://github.com/dss-time/repo-doctor-skills/blob/v0.8.0/tests/reports/live-codex-skill-validation-0.8.0.md)

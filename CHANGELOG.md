@@ -35,7 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Documentation
 
-- Synchronize bilingual installation guidance, worked examples, current inventory and version-specific release evidence. GitHub publication does not imply npm publication.
+- Synchronize bilingual installation guidance, worked examples, current inventory and version-specific release evidence. npm 0.8.0 was subsequently published on 2026-10-15 with exact-version installation commands and latest pointing to 0.8.0.
 
 ## [0.7.3] - 2026-10-15
 

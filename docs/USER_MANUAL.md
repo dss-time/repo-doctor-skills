@@ -1,6 +1,6 @@
 # Repo Doctor Skills User Manual
 
-> v0.8.0 source: 41 Skills / Repo Doctor 28. GitHub release v0.8.0 includes the new feature implementation owner; npm 0.7.3 remains the previous 40-Skill package. [Examples](guides/delivery-examples.md).
+> v0.8.0 source: 41 Skills / Repo Doctor 28. GitHub release v0.8.0 includes the new feature implementation owner; npm 0.8.0 supports Recommended 7 and Full 41. [Examples](guides/delivery-examples.md).
 
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 

@@ -1,6 +1,6 @@
 # Repo Doctor Skills 用户手册
 
-> v0.8.0 源码：41 个 Skill / Repo Doctor 28 个。GitHub v0.8.0 包含新增功能实施入口；npm 0.7.3 仍为旧的 40 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
+> v0.8.0 源码：41 个 Skill / Repo Doctor 28 个。GitHub v0.8.0 包含新增功能实施入口；npm 0.8.0 支持推荐的 7 个及全部 41 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
 
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 

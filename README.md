@@ -89,7 +89,14 @@ Pin the GitHub plugin to `v0.8.0`:
 codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
- npm 0.8.0 is not published by this operation; `npx repo-doctor-skills@0.7.3 install` remains the older 40-Skill package. The official skills CLI installs from the public GitHub source.
+Install the exact npm version (seven recommended Skills, or all 41):
+
+```bash
+npx repo-doctor-skills@0.8.0 install --agent codex
+npx repo-doctor-skills@0.8.0 install --preset full --agent codex
+```
+
+Choose one installation method per agent. The official skills CLI installs from the public GitHub source.
 
 ## Documentation
 

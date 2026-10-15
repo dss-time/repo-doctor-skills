@@ -26,6 +26,17 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-同一 Agent 选择一种方式。GitHub Release 包含 38 个独立 ZIP 和三个元数据/校验文件。本次 GitHub 发布不等于发布 npm 0.8.0；npm 0.7.3 仍为旧版，包含 40 个 Skill。
+同一 Agent 选择一种方式。GitHub Release 包含 38 个独立 ZIP 和三个元数据/校验文件。
+
+## npm 安装
+
+npm 包 `repo-doctor-skills@0.8.0` 已于 2026-10-15 补充发布，`latest` 指向 0.8.0。
+
+```bash
+npx repo-doctor-skills@0.8.0 install --agent codex
+npx repo-doctor-skills@0.8.0 install --preset full --agent codex
+```
+
+第一条安装推荐的 7 个 Skill，第二条安装全部 41 个，均使用用户级 Codex Skills 目录。
 
 [真实模型报告](https://github.com/dss-time/repo-doctor-skills/blob/v0.8.0/tests/reports/live-codex-skill-validation-0.8.0.md)
