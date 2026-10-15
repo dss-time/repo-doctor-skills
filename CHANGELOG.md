@@ -8,6 +8,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-10-15
+
+### Added
+
+- Version-specific real-model evaluation reports for all 317 core, workflow, mode and permission cases (completion recorded in the release notes).
+- Explicit evaluator model selection and per-case model, reasoning-effort, rerouting and token metadata when available.
+
+### Changed
+
+- Restore the normal release evidence requirement for v0.7.3; the v0.7.2 waiver remains historical and is not inherited.
+
+### Fixed
+
+- Pin the evaluation model instead of silently inheriting a different host default.
+
+### Security
+
+- Preserve isolation, read-only evaluation boundaries, stable Skill hashes and the existing permission checks.
+
+### Documentation
+
+- Synchronize bilingual README, version policy and release notes with the new evaluation evidence. No npm publication is included.
+
 ## [0.7.2] - 2026-10-14
 
 ### Added
@@ -421,7 +444,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.3...HEAD
+[0.7.3]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2-rc.1...v0.7.2
 [0.7.2-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.2-rc.1
 [0.7.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.1

@@ -245,11 +245,11 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.7.2");
+assert.equal(releaseContract.projectVersion, "0.7.3");
 assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
-assert.equal(releaseContract.liveModelWaiver.version, "0.7.2");
-assert.equal(releaseContract.liveModelEvidenceVersion, null, "waived release must not claim historical model evidence");
+assert.equal(releaseContract.liveModelStatus, "PASS");
+assert.equal(releaseContract.liveModelWaiver, null);
+assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion);
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
@@ -415,19 +415,19 @@ assert.ok(
 );
 
 const authorizedRelease = inspectReleaseMetadata(repositoryRoot);
-assert.deepEqual(authorizedRelease.errors, [], "version-scoped authorization must permit this release only");
+assert.deepEqual(authorizedRelease.errors, [], "current version must have complete PASS evidence and consistent metadata");
 for (const waiver of [
-  { ...releaseContract.liveModelWaiver, authorized: false },
-  { ...releaseContract.liveModelWaiver, version: "0.7.3" },
-  { ...releaseContract.liveModelWaiver, record: "docs/missing-waiver.md" },
-  { ...releaseContract.liveModelWaiver, scope: "all-release-gates" },
+  { ...historicalWaiver, authorized: false },
+  { ...historicalWaiver, version: "0.7.2" },
+  { ...historicalWaiver, record: "docs/missing-waiver.md" },
+  { ...historicalWaiver, scope: "all-release-gates" },
 ]) {
-  const result = inspectReleaseMetadata(repositoryRoot, { ...releaseContract, liveModelWaiver: waiver });
+  const result = inspectReleaseMetadata(repositoryRoot, { ...releaseContract, liveModelStatus: "UNKNOWN", liveModelWaiver: waiver });
   assert.ok(result.errors.some((error) => error.includes("not release-eligible")), "invalid waiver cannot bypass model evidence");
 }
 const futureRelease = inspectReleaseMetadata(repositoryRoot, {
-  ...releaseContract, projectVersion: "0.7.3",
-  liveModelWaiver: { ...releaseContract.liveModelWaiver, version: "0.7.3" },
+  ...releaseContract, projectVersion: "0.7.4", liveModelStatus: "UNKNOWN",
+  liveModelWaiver: { ...historicalWaiver, version: "0.7.4" },
 });
 assert.ok(futureRelease.errors.some((error) => error.includes("not release-eligible")), "future releases must still require PASS");
 

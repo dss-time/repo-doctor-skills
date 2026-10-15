@@ -44,3 +44,16 @@ npm run eval:report -- --input /safe/local/path/observed.json
 ```
 
 The report computes Top-1 and acceptable routing accuracy, missed and false-trigger rates, forbidden-Skill hits, permission violations, stop-condition compliance, bilingual consistency, workflow completeness, and handoff recovery. Partial runs remain `PARTIAL`.
+
+## Reproduce the 317-case Codex evaluation
+
+These commands make real, metered model calls using the host's existing authentication. Use a temporary empty Git workspace and install Full Skills into `<temporary-skill-home>/skills` first. Generate the current inventory with `npm run release:inventory` before starting. The explicit model must match across both phases:
+
+```bash
+node scripts/live-codex-validation.mjs --workspace <temporary-git-workspace> --skill-home <temporary-skill-home> --model gpt-6.1-sol --output tests/reports/live-codex-core-validation-0.7.3.json
+node scripts/live-codex-advanced-validation.mjs --workspace <temporary-git-workspace> --skill-home <temporary-skill-home> --model gpt-6.1-sol --base-report tests/reports/live-codex-core-validation-0.7.3.json --output tests/reports/live-codex-skill-validation-0.7.3.json
+```
+
+The core phase contains 200 cases; advanced validation adds 44 bilingual workflow steps, 61 mode/verdict cases and 12 permission cases. For quota or service interruptions, preserve the original core report and add `--resume-report <saved-core-report.json>` to the first command. Resume requires identical version, model, fixtures and installed Skill hashes; semantic failures require review. Advanced service-only mode/permission retries use the existing `--retry-service-failures --base-report <saved-317-case-report.json>` option. Preserve original attempts and never report unexecuted cases as passed.
+
+Reports record per-case model and token usage when supplied by the service. These fixtures assess structured routing, workflow artifacts, declared modes and permission boundaries; they do not establish production task effectiveness. Host authentication and capability metadata can remain visible despite isolated Skill roots and SQLite state.

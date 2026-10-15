@@ -12,6 +12,7 @@ import {
   pool,
   redactSkillPath,
   root,
+  requestedModel,
   sanitizeEvidence,
   sha256,
   summarize,
@@ -341,6 +342,7 @@ function explicitInput(skill, text) {
 }
 
 function baseCase({
+  evaluationMetadata,
   caseId,
   skill,
   language,
@@ -353,6 +355,7 @@ function baseCase({
 }) {
   return {
     case_id: caseId,
+    evaluation_metadata: evaluationMetadata,
     skill,
     language,
     invocation,
@@ -443,6 +446,7 @@ async function runWorkflow(server, workflow, language) {
       issues.push("handoff is empty");
     }
     steps.push(baseCase({
+      evaluationMetadata: run.evaluation_metadata,
       caseId: `workflow--${workflow.id}--${language}--${index + 1}--${skill}`,
       skill,
       language,
@@ -521,6 +525,7 @@ async function runMode(server, testCase) {
   const combined = `${parsed?.mode ?? ""}\n${parsed?.answer ?? ""}`;
   if (!combined.includes(testCase.mode)) issues.push(`response does not state ${testCase.mode}`);
   return baseCase({
+    evaluationMetadata: run.evaluation_metadata,
     caseId: testCase.id,
     skill: testCase.skill,
     language: testCase.language,
@@ -570,6 +575,7 @@ async function runPermission(server, testCase) {
   }
   return {
     ...baseCase({
+      evaluationMetadata: run.evaluation_metadata,
       caseId: `permission--${testCase.id}`,
       skill: testCase.skill,
       language: testCase.language,
@@ -589,6 +595,7 @@ async function main() {
   const coreCases = baseReport.cases.filter((testCase) =>
     ["explicit", "implicit", "negative"].includes(testCase.invocation));
   const coreSummary = summarize(coreCases);
+  if (baseReport.requested_model !== requestedModel) throw new Error("Advanced evaluation must use the same explicit model as the core report");
   if (coreSummary.passed !== activeSkills.length * 5 || coreSummary.total !== activeSkills.length * 5) {
     throw new Error("Core 200-call report must be PASS before advanced validation");
   }
@@ -685,6 +692,7 @@ async function main() {
 }
 
 async function retryServiceFailures() {
+  if (baseReport.requested_model !== requestedModel) throw new Error("Service retry must use the report's explicit model");
   if (baseReport.project_version !== JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version
     || baseReport.cases.length !== 317
     || new Set(baseReport.cases.map((testCase) => testCase.case_id)).size !== 317) {

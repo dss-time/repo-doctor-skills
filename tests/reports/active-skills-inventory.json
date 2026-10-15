@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-12T06:36:03.027Z",
-  "project_version": "0.7.1",
+  "generated_at": "2026-10-14T09:33:36.000Z",
+  "project_version": "0.7.3",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.9.0",
+      "version": "0.9.1",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -97,7 +97,7 @@
       "id": "repo.repo-doctor-router",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "status": "beta",
       "name": {
         "en": "Repo Doctor Router",
@@ -667,7 +667,7 @@
       "id": "repo.release-readiness-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/release-readiness-check",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Release Readiness Check",

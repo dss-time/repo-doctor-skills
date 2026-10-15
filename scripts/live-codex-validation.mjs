@@ -27,6 +27,8 @@ const outputPath = path.resolve(option(
 const concurrency = Number(option("--concurrency", "6"));
 const limit = Number(option("--limit", "0"));
 const requestedCase = option("--case");
+const resumeReportPath = option("--resume-report");
+export const requestedModel = option("--model");
 const timeoutMs = Number(option("--timeout-ms", "120000"));
 const inventoryPath = path.join(root, "tests", "reports", "active-skills-inventory.json");
 const activationPath = path.join(root, "tests", "skill-quality", "activation-cases.json");
@@ -298,6 +300,7 @@ export class AppServer {
     this.pending = new Map();
     this.turns = new Map();
     this.stdoutBuffer = "";
+    this.threadModels = new Map();
     this.stderr = "";
     const args = [
       "app-server",
@@ -389,6 +392,13 @@ export class AppServer {
         collector.resolve({
           turn: message.params.turn,
           events: collector.events,
+          evaluation_metadata: {
+            requested_model: requestedModel,
+            observed_model: this.threadModels.get(threadId) ?? null,
+            reasoning_effort: "low",
+            token_usage: collector.events.filter((event) => event.method === "thread/tokenUsage/updated").at(-1)?.params?.tokenUsage?.last ?? null,
+            model_reroutes: collector.events.filter((event) => event.method === "model/rerouted").map((event) => ({ from: event.params.fromModel, to: event.params.toModel, reason: event.params.reason })),
+          },
         });
       }
     }
@@ -453,11 +463,16 @@ export class AppServer {
   } = {}) {
     const threadResult = await this.request("thread/start", {
       cwd: workspace,
+      ...(requestedModel ? { model: requestedModel } : {}),
       sandbox,
       approvalPolicy: "never",
       ephemeral,
       developerInstructions,
     });
+    if (requestedModel && threadResult.model !== requestedModel) {
+      throw new Error(`Requested model ${requestedModel} but server selected ${threadResult.model}`);
+    }
+    this.threadModels.set(threadResult.thread.id, threadResult.model ?? null);
     return threadResult.thread.id;
   }
 
@@ -583,6 +598,7 @@ function evaluate(testCase, run) {
     : (selected && skillSet.has(selected) ? normalizedSkillPath(selected) : null);
   return {
     case_id: testCase.case_id,
+    evaluation_metadata: run.evaluation_metadata,
     skill: testCase.skill,
     language: testCase.language,
     invocation: testCase.invocation,
@@ -670,6 +686,10 @@ export function markdown(report) {
     "# Live Codex Skill Validation",
     "",
     `- Overall: **${report.result}**`,
+    `- Project version: ${report.project_version ?? "unrecorded"}`,
+    `- Requested model: ${report.requested_model ?? "host default (unrecorded)"}`,
+    `- Reasoning effort: ${report.reasoning_effort ?? "unrecorded"}`,
+    `- CLI version: ${report.codex_cli_version ?? "unrecorded"}`,
     `- Installed Skills: ${report.installation.second_session.discovered_count}/${report.installation.second_session.expected_count}`,
     `- Real calls: ${counts.total}`,
     `- Passed: ${counts.passed}`,
@@ -743,6 +763,34 @@ async function main() {
     throw new Error(`Unknown or duplicate live case: ${requestedCase}`);
   }
   const selectedCases = limit > 0 ? filteredCases.slice(0, limit) : filteredCases;
+  const previousResults = new Map();
+  if (resumeReportPath) {
+    if (!requestedModel) throw new Error("Core resume requires an explicit model");
+    if (requestedCase || limit > 0) throw new Error("Resume cannot be combined with case or limit filters");
+    const previous = JSON.parse(readFileSync(path.resolve(resumeReportPath), "utf8"));
+    if (previous.project_version !== inventory.project_version || previous.requested_model !== requestedModel
+      || previous.cases.length !== allCases.length || new Set(previous.cases.map((item) => item.case_id)).size !== allCases.length) {
+      throw new Error("Core resume requires a complete same-version, same-model case inventory");
+    }
+    const installed = previous.installation.second_session.skills;
+    if (installed.length !== activeSkills.length || installed.some((skill) => skill.sha256 !== sha256(normalizedSkillPath(skill.name)))) {
+      throw new Error("Skill content changed; previous core results cannot be reused");
+    }
+    for (const testCase of allCases) {
+      const previousCase = previous.cases.find((item) => item.case_id === testCase.case_id);
+      if (!previousCase || previousCase.input !== testCase.input || previousCase.expected_skill !== testCase.expected_skill) {
+        throw new Error(`${testCase.case_id}: fixture changed; previous results cannot be reused`);
+      }
+      if (previousCase.result === "PASS") {
+        if (requestedModel && previousCase.evaluation_metadata?.observed_model !== requestedModel) {
+          throw new Error(`${testCase.case_id}: previous model is unverified`);
+        }
+        previousResults.set(testCase.case_id, previousCase);
+      } else if (!/usageLimitExceeded|serverOverloaded|turn timeout|Not attempted after external service block/.test(previousCase.notes ?? "")) {
+        throw new Error(`${testCase.case_id}: semantic failures require review, not automatic resume`);
+      }
+    }
+  }
   const startedAt = new Date().toISOString();
   const { first, second, server } = await discoverWithRestart();
   if (first.result !== "PASS" || second.result !== "PASS") {
@@ -753,6 +801,7 @@ async function main() {
   let serviceBlocker = null;
   const results = await pool(selectedCases, async (testCase, index) => {
     const began = Date.now();
+    if (previousResults.has(testCase.case_id)) return previousResults.get(testCase.case_id);
     try {
       if (serviceBlocker) throw new Error(`Not attempted after external service block: ${serviceBlocker}`);
       const run = await server.run(testCase);
@@ -791,6 +840,9 @@ async function main() {
     source_commit: null,
     source_worktree: "current uncommitted release candidate",
     codex_cli_version: process.env.CODEX_CLI_VERSION ?? "unrecorded",
+    requested_model: requestedModel,
+    reasoning_effort: "low",
+    ...(resumeReportPath ? { service_resume: { original_report: path.basename(resumeReportPath), reused_passed_cases: previousResults.size, unchanged_skill_hashes_verified: true } } : {}),
     isolation: {
       home: isolatedSkillHome ? "host authentication; isolated Skill roots and SQLite state" : "temporary and redacted",
       codex_home: isolatedSkillHome ? "host authentication context; Skill installation temporary and redacted" : "temporary and redacted",

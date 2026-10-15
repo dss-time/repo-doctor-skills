@@ -79,18 +79,18 @@ npx repo-doctor-skills install --language en
 
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. It prints the target, skips identical content, and requires `--force` to replace different content. The external skills CLI has its own Node requirements.
 
-## v0.7.2 stable release
+## v0.7.3 stable release
 
-This release improves installation guidance, adds copyable Router requests, preflights release-check scripts, and detects missing or unexpected Skill packages. It contains 40 Skills; no large refactor or new Skill was added. Focused local checks only; Live-model status is **UNKNOWN** for this release under an explicit, version-scoped maintainer waiver.
+Fresh Live-model validation passed **317/317** using **GPT-6.1 Sol, low reasoning**: 200 core cases, 44 bilingual workflow steps, 61 mode/verdict cases and 12 permission cases. No evaluation waiver was used. Quota-interrupted calls were resumed after model, fixture and Skill-hash checks; the original attempts are retained. See the [validation report](tests/reports/live-codex-skill-validation-0.7.3.md).
 
-To try this exact version in Codex:
+Install this exact version in Codex:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.2
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-The optional npm installer is user-wide by default and may still serve an older npm release; this GitHub release does not publish npm. See the [installation comparison](docs/USER_MANUAL.md) and [release notes](docs/RELEASE_NOTES_0.7.2.md).
+The 40 Skills and component versions are unchanged from v0.7.2. This GitHub release does not publish npm; the optional npm installer may still serve an older version. See [release notes](docs/RELEASE_NOTES_0.7.3.md).
 
 ## Documentation
 

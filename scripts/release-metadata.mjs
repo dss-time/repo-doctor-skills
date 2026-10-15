@@ -27,18 +27,13 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.7.2",
-  releaseDate: "2026-10-14",
+  projectVersion: "0.7.3",
+  releaseDate: "2026-10-15",
   releaseChannel: "stable",
-  liveModelStatus: "UNKNOWN",
-  liveModelWaiver: Object.freeze({
-    authorized: true,
-    version: "0.7.2",
-    scope: "live-model-status-only",
-    record: "docs/RELEASE_WAIVER_0.7.2.md",
-  }),
-  liveModelReport: null,
-  liveModelEvidenceVersion: null,
+  liveModelStatus: "PASS",
+  liveModelWaiver: null,
+  liveModelReport: "tests/reports/live-codex-skill-validation-0.7.3.json",
+  liveModelEvidenceVersion: "0.7.3",
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -92,7 +87,7 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.7.2.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.7.3.md",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 

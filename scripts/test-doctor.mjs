@@ -62,8 +62,8 @@ assert.equal(result.inventory.expected_chatgpt_zips, expectedInventory.expectedZ
 assert.ok(result.workflow.count > 0);
 assert.equal(result.release.current_project_version, JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version);
 assert.equal(result.release.release_channel, "stable");
-assert.equal(result.release.live_model_status, "UNKNOWN");
-assert.equal(result.release.maintainer_waiver.version, "0.7.2");
+assert.equal(result.release.live_model_status, "PASS");
+assert.equal(result.release.maintainer_waiver, null);
 assert.ok(["PASS", "PASS_WITH_CONDITIONS"].includes(result.status));
 assert.equal(result.errors.length, 0, "Doctor must report no release errors after completed evidence");
 assert.equal(fingerprint(), before, "doctor must not modify inspected files");
