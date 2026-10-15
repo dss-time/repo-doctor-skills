@@ -9,6 +9,7 @@ description: "Close consequential product, behavior, data, permission, compatibi
 
 Default to `fast`; bounded natural-language invocation is allowed.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Requirements Clarification
@@ -17,7 +18,7 @@ Every question must close a named decision; repository facts are discovered, whi
 
 ## Modes
 
-- `fast` (default): ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
+- `fast` (default): prioritize direction-changing decisions without a minimum question count. Keep the response short and read-only.
 - `standard`: close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
 - `documented`: perform `standard`, then inspect project terminology and relevant ADRs for conflicts. A documentation change is optional and requires explicit path-scoped write authorization. Record why each edit is necessary and which evidence supports it.
 
@@ -36,7 +37,7 @@ Do not silently change mode. Output modes and their minimum fields are defined i
 
 1. Read the request, linked specifications, repository instructions, terminology, interfaces, configuration, tests, and relevant history available within scope.
 2. Create a decision ledger with `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`. Cite sources for facts and the basis and confidence for inferences.
-3. Build a question tree. Each node names the decision it resolves, why it matters, dependencies, answer source (`repository` or `user`), and child branches.
+3. Build a question tree only for actual unresolved decisions. Record each decision, its impact, dependencies, answer source (`repository` or `user`), and applicable branches; do not invent nodes.
 4. Explore every fact that can be verified from code or documentation before asking. Ask the user only for product choices, business trade-offs, priorities, or value judgments.
 5. Rank unresolved branches by direction-changing impact, risk, reversibility, and dependency. In `fast`, select at most five highest-gain branches.
 6. Work one branch at a time. Ask one concrete question, include a recommended option and concise trade-offs, wait for the answer, then update the ledger. Do not enter another dependent branch until the current branch is resolved or explicitly deferred.
@@ -51,13 +52,13 @@ Return `Blocked` when essential evidence is unavailable, the user declines a req
 
 # Output Contract
 
-Lead with `status`, current conclusion, and the next decision.
+Lead with `status`, the current conclusion, and any remaining decision.
 
-- `fast`: mode, status, known repository facts, 3–5 highest-gain decision nodes, current question, and unresolved items. No file changes.
+- `fast`: mode, relevant facts/inferences with evidence, and only the unresolved nodes needed for the current question. Omit resolved branches.
 - `standard`: goal, non-goals, users, current/expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance criteria, decision tree, and ledger (`confirmed`, `inferred`, `open`, `deferred`, `out_of_scope`).
 - `documented`: all `standard` fields plus terminology/ADR evidence, conflicts, write-authorization state, and each authorized document change with reason and evidence.
 
-All modes finish with a compact handoff to `requirements-to-spec`. Keep the current question singular. Do not present an inference as fact or begin implementation.
+When clarification completes, give a compact handoff to `requirements-to-spec`; while waiting or blocked, state the pending decision or missing evidence instead of repeating the handoff. If a material decision remains, ask one question with a recommendation and trade-offs; otherwise finish without a question. Do not present an inference as fact or begin implementation.
 
 # 简体中文
 
@@ -65,6 +66,7 @@ All modes finish with a compact handoff to `requirements-to-spec`. Keep the curr
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # Requirements Clarification（需求决策澄清）
@@ -73,7 +75,7 @@ All modes finish with a compact handoff to `requirements-to-spec`. Keep the curr
 
 ## 模式
 
-- `fast`（默认）：只问信息增益最高的 3～5 个未决问题，优先处理会改变方案方向的选择；输出简短，绝不创建或修改文件。
+- `fast`（默认）：优先关闭会改变方案方向的决策，不设最低问题数量；输出简短，保持只读。
 - `standard`：完整关闭目标、非目标、用户、当前与期望行为、业务规则、数据边界、异常路径、兼容性、验收条件和未决决策。
 - `documented`：在 `standard` 基础上检查项目术语和相关 ADR 的冲突。只有获得精确到路径的明确写权限后，才可选择性修改领域文档；每项改动必须记录原因和证据。
 
@@ -92,7 +94,7 @@ All modes finish with a compact handoff to `requirements-to-spec`. Keep the curr
 
 1. 阅读需求、关联规格、仓库指令、术语、接口、配置、测试，以及范围内可用历史。
 2. 建立五态决策台账：`confirmed`、`inferred`、`open`、`deferred`、`out_of_scope`；事实注明来源，推断注明依据与置信度。
-3. 建立问题树。每个节点写明要关闭的决策、重要性、依赖、答案来源（`repository` 或 `user`）及可能子分支。
+3. 只为真实未决决策建立问题树，记录决策、影响、依赖、答案来源（`repository` 或 `user`）及适用分支；不凑节点。
 4. 先从代码或文档验证所有可验证事实；只把产品选择、业务取舍、优先级和价值判断交给用户。
 5. 按方案影响、风险、可逆性和依赖排列未决分支；`fast` 最多选择五个最高信息增益分支。
 6. 一次只处理一个分支：提出一个具体问题，给出推荐项和简洁取舍，等待回答后更新台账；当前分支未解决或未明确延期前，不进入依赖分支。
@@ -107,10 +109,10 @@ All modes finish with a compact handoff to `requirements-to-spec`. Keep the curr
 
 # 输出契约
 
-先给 `status`、当前结论和下一项决策。
+先给 `status`、当前结论和仍需解决的决策（如有）。
 
-- `fast`：模式、状态、仓库已知事实、3～5 个最高信息增益决策节点、当前问题和未决项；不得修改文件。
+- `fast`：模式、相关事实/推断及证据，只展示理解当前问题所需的未决节点，不重复已解决分支。
 - `standard`：目标、非目标、用户、当前/期望行为、业务规则、数据边界、异常路径、兼容性、验收条件、问题树，以及 `confirmed`、`inferred`、`open`、`deferred`、`out_of_scope` 台账。
 - `documented`：包含全部 `standard` 字段，并增加术语/ADR 证据、冲突、写权限状态，以及每项获授权文档改动的原因和证据。
 
-所有模式最后给出交给 `requirements-to-spec` 的简洁摘要。当前问题必须只有一个。不得把推断写成事实，也不得开始实施。
+澄清完成时给出交给 `requirements-to-spec` 的简洁摘要；等待回答或受阻时只说明待决项或缺失证据，不重复交接。仍有重大未决项时问一个问题并给出推荐和取舍，否则不提问。不得把推断写成事实，也不得开始实施。

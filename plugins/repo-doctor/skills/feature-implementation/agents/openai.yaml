@@ -1,0 +1,6 @@
+interface:
+  display_name: "Feature Implementation（功能实施）"
+  short_description: "按已确认规格逐个交付功能切片并完成定向验证"
+  default_prompt: "使用 $feature-implementation 在已有授权范围内实施已确认功能规格，逐项验证；不提交或发布。"
+policy:
+  allow_implicit_invocation: true

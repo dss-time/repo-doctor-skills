@@ -52,7 +52,7 @@ try {
   const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
-  assert.equal(packReport[0].version, "0.7.3");
+  assert.equal(packReport[0].version, "0.8.0");
   const tarball = path.join(tempRoot, packReport[0].filename);
   assert.ok(existsSync(tarball));
 
@@ -83,7 +83,7 @@ try {
 
   const version = runNpx(tarball, ["--version"]);
   assert.equal(version.status, 0, version.stderr || version.stdout);
-  assert.equal(version.stdout.trim(), "0.7.3");
+  assert.equal(version.stdout.trim(), "0.8.0");
 
   const help = runNpx(tarball, ["--help"]);
   assert.equal(help.status, 0, help.stderr || help.stdout);
@@ -100,8 +100,8 @@ try {
   const fullTarget = path.join(tempRoot, "full");
   const full = runNpx(tarball, ["install", "--preset", "full", "--target-dir", fullTarget]);
   assert.equal(full.status, 0, full.stderr || full.stdout);
-  assert.equal(installedCount(fullTarget), 40);
-  assert.match(full.stdout, /Installed: 40 Skills/);
+  assert.equal(installedCount(fullTarget), 41);
+  assert.match(full.stdout, /Installed: 41 Skills/);
   assert.match(full.stdout, /Preset: Full/);
 
   const collision = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
@@ -140,4 +140,4 @@ try {
 }
 
 assert.ok(!existsSync(tempRoot), "npm tarball test temp directory was not cleaned");
-console.log("npm tarball tests passed: minimal contents, isolated CLI, Recommended 7/7, Full 40/40, options, safety, and cleanup.");
+console.log("npm tarball tests passed: minimal contents, isolated CLI, Recommended 7/7, Full 41/41, options, safety, and cleanup.");

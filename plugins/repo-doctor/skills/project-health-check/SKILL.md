@@ -11,6 +11,7 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 
 Default to `standard`; explicit invocation is required.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Project Health Check
@@ -36,21 +37,17 @@ Use this skill for a broad repository diagnosis. Do not start by rewriting code.
 3. Search references before calling code unused.
 4. Check test coverage signals and release commands when available.
 5. Prioritize by real user or release risk.
-6. Report P0/P1/P2/P3 issues with evidence.
+6. Assess every review dimension; report findings and evidence using the output contract, marking any unassessed dimension.
 
 # Output Format
 
-1. Overall health conclusion
-2. Health score table
-3. P0/P1/P2/P3 issues with evidence
-4. Architecture and module boundary risks
-5. Redundant or possible dead code
-6. Security and stability risks
-7. Performance issues
-8. Test gaps
-9. Release readiness checks
-10. Recommended roadmap
-11. Final recommendation
+Default to three compact parts:
+
+1. Health conclusion, inspected scope, unassessed dimensions and missing evidence.
+2. P0/P1/P2/P3 findings with location/evidence, user or release impact and next action. Merge duplicate causes; omit empty sections.
+3. Test gaps, release uncertainty, proposed validation and one priority next step. Distinguish inspected configuration from executed checks.
+
+Do not repeat conclusions or imply unchecked coverage. If no supported issue is found, limit that conclusion to the inspected scope. On request, expand dimension evidence and a phased roadmap. Requested health tables use evidence-backed qualitative states, including unknowns, not invented scores.
 
 ---
 
@@ -58,6 +55,7 @@ Use this skill for a broad repository diagnosis. Do not start by rewriting code.
 
 默认使用 `standard`；仅允许用户显式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # 项目体检
@@ -83,18 +81,14 @@ Use this skill for a broad repository diagnosis. Do not start by rewriting code.
 3. 在判断代码未使用前先搜索引用。
 4. 检查测试覆盖信号和发布命令。
 5. 按真实用户风险或发布风险排序。
-6. 按 P0/P1/P2/P3 输出问题和证据。
+6. 逐项评估检查维度，按输出契约报告问题和证据，注明未评估维度。
 
 # 输出格式
 
-1. 整体健康结论
-2. 健康评分表
-3. 带证据的 P0/P1/P2/P3 问题
-4. 架构和模块边界风险
-5. 冗余代码或疑似死代码
-6. 安全和稳定性风险
-7. 性能问题
-8. 测试缺口
-9. 发布准备度检查
-10. 推荐路线图
-11. 最终建议
+默认三部分简洁报告：
+
+1. 健康结论、已检查范围、未评估维度和缺失证据。
+2. 按 P0/P1/P2/P3 排序的问题，附位置/证据、用户或发布影响及下一步。合并相同根因，不输出空章节。
+3. 测试缺口、发布不确定性、建议验证和一个优先下一步，区分配置检查与实际执行。
+
+不重复结论，不暗示未检查的覆盖；没有有证据的问题时，结论仅限已检查范围。用户要求时展开各维度证据及分阶段路线图；健康表采用有证据的定性状态并标注未知，不编造评分。

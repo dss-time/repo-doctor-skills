@@ -11,6 +11,7 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 
 Default to `fast`; bounded natural-language invocation is allowed.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Safe Change Plan
@@ -22,7 +23,7 @@ Convert confirmed analysis into a safe, atomic, verifiable, and reversible imple
 - Confirm that the requirement, desired behavior, and blast radius are sufficiently known.
 - If the requirement is ambiguous, recommend `requirements-to-spec`. If dependencies or compatibility impact are unknown, recommend `change-impact-analysis`.
 - Do not modify code, tests, configuration, dependencies, or documentation.
-- Route actual edits to `safe-fix-implementation` or an appropriate implementation skill.
+- Route settled feature delivery to `feature-implementation` and diagnosed local repairs to `safe-fix-implementation`.
 - Reject opportunistic refactors and unrelated cleanup.
 
 ## Workflow
@@ -59,6 +60,7 @@ Label every item as required, recommended, or later optimization. Do not execute
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # 安全变更计划
@@ -70,7 +72,7 @@ Label every item as required, recommended, or later optimization. Do not execute
 - 确认需求、目标行为和影响范围已经足够清楚。
 - 需求模糊时建议使用 `requirements-to-spec`；依赖或兼容性影响未知时建议使用 `change-impact-analysis`。
 - 不得修改代码、测试、配置、依赖或文档。
-- 实际编辑交给 `safe-fix-implementation` 或合适的实现类 Skill。
+- 已确认功能交付交给 `feature-implementation`，已诊断局部修复交给 `safe-fix-implementation`。
 - 拒绝顺手重构和无关清理。
 
 ## 工作流程

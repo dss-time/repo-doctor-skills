@@ -1,0 +1,10 @@
+input: "结束这次 fast 需求澄清：提供的规格已确认目标、CSV 格式、导出范围、权限、兼容性和验收条件，没有重大未决项。"
+expected:
+  must_include:
+    - 闭合结论
+    - requirements-to-spec
+  must_not:
+    - 启动访谈
+    - 重新打开已确认决策
+    - 为凑数量提问
+    - 实施代码

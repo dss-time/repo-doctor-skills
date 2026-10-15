@@ -1,12 +1,10 @@
 # Output Format
 
-1. Project summary
-2. Technology stack
-3. Directory map
-4. Entry points and core flow
-5. How to run and validate
-6. Recommended reading order
-7. Risk areas
-8. Recommended next step
+Default `fast` map:
 
-Use tables where they improve scanability. Include evidence for commands and file roles.
+1. Project summary and stack with evidence.
+2. Entry points, core flow, relevant directories/files and reading order.
+3. Run/validation commands with sources; separate documented commands, executed results and unknowns. State once if nothing ran; a script definition is not a passed check.
+4. Risks, material unknowns and one next step.
+
+Omit exhaustive inventories and empty sections. Without repository evidence, give the limitation and minimum needed input, not a guessed map. Requested detail or `standard`/`audit` expands directory/module roles, flow, reading order and validation evidence within scope; permissions stay unchanged.

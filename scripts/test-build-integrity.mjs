@@ -115,7 +115,7 @@ for (const { packRoot, pluginRoot, prefix } of pluginBuilds) {
     expect(renderedDocument.body === sourceDocument.body, `${prefix}-${slug} should preserve the plugin body`);
   }
 }
-expect(pluginSkillCount === 37, `ChatGPT source coverage should include 37 plugin Skills, received ${pluginSkillCount}`);
+expect(pluginSkillCount === 38, `ChatGPT source coverage should include 38 plugin Skills, received ${pluginSkillCount}`);
 
 const repoDoctorPack = path.join(root, "packs", "engineering", "repo-doctor");
 
@@ -292,4 +292,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Build integrity tests passed for descriptions, 37 plugin Skills, manifest ordering, filesystem perturbation, and ZIP determinism.");
+console.log("Build integrity tests passed for descriptions, 38 plugin Skills, manifest ordering, filesystem perturbation, and ZIP determinism.");

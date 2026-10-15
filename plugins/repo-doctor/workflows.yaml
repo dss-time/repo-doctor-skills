@@ -97,7 +97,7 @@ workflows:
       -
         id: implementation
         type: skill
-        skill: safe-fix-implementation
+        skill: feature-implementation
         optional: false
         condition: write_authorized
         prerequisites: [implementation-approval]

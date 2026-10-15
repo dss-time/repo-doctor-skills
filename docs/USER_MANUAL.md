@@ -1,5 +1,7 @@
 # Repo Doctor Skills User Manual
 
+> v0.8.0 source: 41 Skills / Repo Doctor 28. GitHub release v0.8.0 includes the new feature implementation owner; npm 0.7.3 remains the previous 40-Skill package. [Examples](guides/delivery-examples.md).
+
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 
 > Platform entry points were verified on 2026-07-15. Product interfaces, plans, and workspace policy can change; use the controls exposed by your current host.
@@ -51,7 +53,7 @@ Use `--agent codex` to choose Codex explicitly. The installer does not identify 
 npx repo-doctor-skills install --preset full
 ```
 
-The source repository has 40 active Skills. The Repo Doctor plugin shows 27 because it contains only the engineering collection. The three current plugins contain 37 Skills in total. The remaining three Document Data Doctor Skills participate in regular platform builds and the Full source installer, but do not have a standalone plugin. No Skill is missing from the source inventory.
+Published v0.7.3 contains 40 active Skills, of which 27 are in Repo Doctor and 37 in the three plugins. v0.8.0 adds feature-implementation: 41 total, 28 in Repo Doctor and 38 across plugins. The three Document Data Doctor Skills remain regular-build-only; a Full local source installation includes all 41.
 
 ### Individual
 
@@ -138,10 +140,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.7.3`; to select that version, use:
+2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.8.0`; to select that version, use:
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

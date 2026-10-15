@@ -22,7 +22,7 @@ Use `$repo-doctor-router` when unsure. It recommends a Skill and gives a copyabl
 
 ## Codex plugin
 
-For the complete engineering collection (27 Skills):
+For the complete engineering collection (28 Skills):
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -53,7 +53,7 @@ npx skills@latest add dss-time/repo-doctor-skills --skill repo-doctor-router req
 
 ## Full
 
-Install all 40 Skills for Codex:
+Install all 41 Skills for Codex:
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills --skill '*' -a codex
@@ -79,25 +79,17 @@ npx repo-doctor-skills install --language en
 
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. It prints the target, skips identical content, and requires `--force` to replace different content. The external skills CLI has its own Node requirements.
 
-## v0.7.3 stable release
+## v0.8.0 stable release
 
-Fresh Live-model validation passed **317/317** using **GPT-6.1 Sol, low reasoning**: 200 core cases, 44 bilingual workflow steps, 61 mode/verdict cases and 12 permission cases. No evaluation waiver was used. Quota-interrupted calls were resumed after model, fixture and Skill-hash checks; the original attempts are retained. See the [validation report](tests/reports/live-codex-skill-validation-0.7.3.md).
+The source contains 41 Skills (28 in Repo Doctor) and 38 ChatGPT ZIPs. Fresh GPT-6.1 Sol low validation passed **328/328**: 205 core, 44 workflow steps, 65 mode/verdict and 14 permission cases. [Release notes](docs/RELEASE_NOTES_0.8.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-Install this exact version in Codex:
+Pin the GitHub plugin to `v0.8.0`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
-
-The 40 Skills and component versions are unchanged from v0.7.2. You can also install this exact version through npm:
-
-```bash
-npx repo-doctor-skills@0.7.3 install --agent codex
-npx repo-doctor-skills@0.7.3 install --preset full --agent codex
-```
-
-The first command installs seven recommended Skills; the second installs all 40. Both target the user-wide Codex Skills directory. Choose either plugins or copied Skills for the same agent. See [release notes](docs/RELEASE_NOTES_0.7.3.md).
+ npm 0.8.0 is not published by this operation; `npx repo-doctor-skills@0.7.3 install` remains the older 40-Skill package. The official skills CLI installs from the public GitHub source.
 
 ## Documentation
 

@@ -13,14 +13,14 @@ import {
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const model = collectCatalogModel(root);
 
-assert.equal(model.projectVersion, "0.7.3", "expected prepared project version 0.7.3");
+assert.equal(model.projectVersion, "0.8.0", "expected prepared project version 0.8.0");
 assert.equal(model.counts.packs, 4, "expected four active Packs");
-assert.equal(model.counts.skills, 40, "expected 40 active Skills");
-assert.equal(model.counts.pluginSkills, 37, "expected 37 plugin/ChatGPT-distributed Skills");
+assert.equal(model.counts.skills, 41, "expected 41 active Skills");
+assert.equal(model.counts.pluginSkills, 38, "expected 38 plugin/ChatGPT-distributed Skills");
 assert.equal(model.counts.regularOnlySkills, 3, "expected three regular-build-only Skills");
 
 const expectedPackCounts = new Map([
-  ["engineering.repo-doctor", 27],
+  ["engineering.repo-doctor", 28],
   ["productivity.productivity-toolkit", 8],
   ["engineering.skill-maintainer", 2],
   ["office.document-data-doctor", 3],
@@ -62,7 +62,7 @@ for (const pack of model.packs) {
     publishedSlugs.add(skill.interface.publishedSlug);
   }
 }
-assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 27, pt: 8, sm: 2 });
+assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 28, pt: 8, sm: 2 });
 
 for (const locale of ["en", "zh-CN"]) {
   const first = renderCatalog(model, locale);
@@ -79,4 +79,4 @@ for (const [filename, expected] of Object.entries(generatedCatalogs(model))) {
 }
 assert.deepEqual(checkCatalogs(root), [], "generated catalogs must be current");
 
-console.log("User documentation catalog tests passed (4 Packs, 40 Skills, 37 plugin/ZIP distributions).");
+console.log("User documentation catalog tests passed (4 Packs, 41 Skills, 38 plugin/ZIP distributions).");

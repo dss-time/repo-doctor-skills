@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
+import { permissionRiskIssues } from "./skill-metadata.mjs";
 import { discoverActivePackSkills } from "./sync-pack-plugin.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -119,6 +121,23 @@ for (const term of ["multiple authoritative sources", "ineffective", "duplicated
   assert.ok(sharedQuality.includes(term), `shared Skill quality model missing ${term}`);
 }
 
+
+// A settled feature must not be delegated to the local-defect repair owner.
+const deliveryRegistry = parseYamlSubset(read("packs/engineering/repo-doctor/workflows.yaml"));
+assert.equal(deliveryRegistry.workflows["feature-delivery"].stages.find((stage) => stage.id === "implementation").skill, "feature-implementation");
+const featureMetadata = parseYamlSubset(read("packs/engineering/repo-doctor/skills/feature-implementation/skill.yaml"));
+assert.equal(featureMetadata.permissions.write_files, true);
+assert.equal(featureMetadata.permissions.access_network, false);
+assert.equal(featureMetadata.permissions.destructive_actions_allowed, false);
+assert.deepEqual(permissionRiskIssues(featureMetadata).issues, []);
+
+// Local gate execution must be expressible without granting release or source-edit authority.
+const releaseMetadata = parseYamlSubset(read("packs/engineering/repo-doctor/skills/release-readiness-check/skill.yaml"));
+assert.equal(releaseMetadata.permissions.run_shell_commands, true, "authorized local gates require shell permission");
+for (const permission of ["write_files", "access_network", "destructive_actions_allowed"]) {
+  assert.equal(releaseMetadata.permissions[permission], false, `release validation must not grant ${permission}`);
+}
+assert.deepEqual(permissionRiskIssues(releaseMetadata).issues, [], "release tool permission and risk must agree");
 
 for (const locale of ["en", "zh-CN"]) {
   const instructions = read(`packs/engineering/repo-doctor/skills/release-readiness-check/instructions.${locale}.md`);

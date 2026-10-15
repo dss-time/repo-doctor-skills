@@ -1,15 +1,13 @@
-input: "Use fast mode to clarify this vague feature before specification. Read the repository first and ask only the highest-information decisions."
+input: "Use fast mode. Repository evidence already confirms export scope, permissions, and compatibility; only CSV versus JSON remains a user choice. Clarify that choice without editing files."
 expected:
   must_include:
     - fast
-    - decision tree
-    - 3–5
-    - confirmed
-    - inferred
-    - open
-    - compatibility
+    - CSV
+    - JSON
     - current question
+    - recommended option and trade-offs
   must_not:
+    - invent additional decision nodes to meet a quota
     - ask what the repository answers
     - modify files
     - implement code

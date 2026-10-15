@@ -27,7 +27,8 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
    - A settled large specification needs vertical delivery slices -> `spec-to-work-items`.
    - Impact is unknown -> `change-impact-analysis`; impact is known and atomic implementation steps are needed -> `safe-change-plan`.
    - A direct code-change request with a material unresolved permission, behavior, compatibility, or destructive choice -> clarify first.
-   - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and `safe-fix-implementation`; never treat clarity as permission.
+   - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and implementation owner below; never treat clarity as permission.
+   - Settled new-feature specification/work items with write authority -> `feature-implementation`; a diagnosed local defect remains `safe-fix-implementation`.
    - Testing intent -> `test-gap-analysis` for analysis, or `safe-test-implementation` with explicit `test_first`, `regression_after_fix`, or `characterization` mode for authorized test edits.
    - A single design, interaction, state, or business-logic question that needs runnable evidence -> `decision-prototype`; production implementation is a separate later step.
    - Broad diff review -> `safe-code-review`; pre-change blast-radius analysis -> `change-impact-analysis`.
@@ -38,7 +39,7 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
 5. If a registered workflow fits, return its exact `workflow_id` and ordered applicable stages. Preserve approval gates, forbidden transitions, alternatives, and stop conditions. Do not create a bespoke duplicate.
 6. If no workflow fits, recommend one verified Skill and say why registry routing is not applicable.
 7. Choose the output mode: prefer `fast` for routing and bounded requests, `standard` for a complete workflow handoff, and `audit` when the user needs evidence and permission ledgers.
-8. Return the compact recommendation. Add Codex invocation and a platform-neutral prompt only when useful; invocation syntax is an adapter example, not canonical workflow data.
+8. Return the recommendation using the output contract. Invocation syntax is an adapter example, not canonical workflow data.
 
 ## Completion
 

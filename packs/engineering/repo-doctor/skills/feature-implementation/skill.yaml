@@ -1,0 +1,48 @@
+id: repo.feature-implementation
+name:
+  en: Feature Implementation
+  zh-CN: 功能实施
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales:
+  - en
+  - zh-CN
+description:
+  en: Implement an explicitly authorized feature from a settled specification or dependency-ordered work items, delivering and validating one observable behavior slice at a time. Use for new feature delivery across related production code, tests and docs; not vague requirements, a diagnosed local fix, test-only or docs-only edits, broad refactoring, or release actions.
+  zh-CN: 根据已确认规格或有依赖顺序的工作项，在明确授权范围内逐个交付并验证可观察行为切片。用于涉及相关生产代码、测试和文档的新功能实施；不用于模糊需求、已诊断局部修复、仅测试或仅文档修改、大规模重构及发布动作。
+triggers:
+  en:
+    - implement the approved feature specification
+    - deliver the remaining approved work items
+    - build this settled feature with focused validation
+  zh-CN:
+    - 实施已批准的功能规格
+    - 交付剩余已授权工作项
+    - 按已确认需求实现功能并定向验证
+tool_requirements:
+  filesystem: write
+  git: optional
+  shell: optional
+  web: none
+permissions:
+  read_files: true
+  write_files: true
+  run_shell_commands: true
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: safe_edit
+execution:
+  classification: standard
+  default_mode: standard
+  allow_implicit_invocation: true
+output_schema:
+  type: feature_implementation_report
+localization:
+  en:
+    status: complete
+  zh-CN:
+    status: complete

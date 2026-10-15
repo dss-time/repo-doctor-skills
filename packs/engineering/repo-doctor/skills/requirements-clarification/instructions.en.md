@@ -4,7 +4,7 @@ Every question must close a named decision; repository facts are discovered, whi
 
 ## Modes
 
-- `fast` (default): ask only the 3–5 unresolved questions with the highest information gain. Prefer choices that can change the solution direction. Keep the response short and never create or modify files.
+- `fast` (default): prioritize direction-changing decisions without a minimum question count. Keep the response short and read-only.
 - `standard`: close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
 - `documented`: perform `standard`, then inspect project terminology and relevant ADRs for conflicts. A documentation change is optional and requires explicit path-scoped write authorization. Record why each edit is necessary and which evidence supports it.
 
@@ -23,7 +23,7 @@ Do not silently change mode. Output modes and their minimum fields are defined i
 
 1. Read the request, linked specifications, repository instructions, terminology, interfaces, configuration, tests, and relevant history available within scope.
 2. Create a decision ledger with `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`. Cite sources for facts and the basis and confidence for inferences.
-3. Build a question tree. Each node names the decision it resolves, why it matters, dependencies, answer source (`repository` or `user`), and child branches.
+3. Build a question tree only for actual unresolved decisions. Record each decision, its impact, dependencies, answer source (`repository` or `user`), and applicable branches; do not invent nodes.
 4. Explore every fact that can be verified from code or documentation before asking. Ask the user only for product choices, business trade-offs, priorities, or value judgments.
 5. Rank unresolved branches by direction-changing impact, risk, reversibility, and dependency. In `fast`, select at most five highest-gain branches.
 6. Work one branch at a time. Ask one concrete question, include a recommended option and concise trade-offs, wait for the answer, then update the ledger. Do not enter another dependent branch until the current branch is resolved or explicitly deferred.

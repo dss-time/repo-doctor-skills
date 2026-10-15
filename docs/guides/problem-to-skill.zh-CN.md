@@ -16,6 +16,13 @@
 - **说明：** 在授权范围内做最小修改，并执行与风险相称的验证。
 - **最短示例：** `$safe-fix-implementation 修复 src/parser.ts 中已确认的空值检查并验证。`
 
+## 交付已批准功能
+
+- **问题：** 已确认规格或已授权工作项，需要实施相关代码和测试。
+- **Skill：** `$feature-implementation`（v0.8.0 可用，v0.7.3 不包含）。
+- **最短示例：** `$feature-implementation 在已授权源码/测试/文档范围内实施 CSV 导出规格，逐个验证行为切片。`
+- 参见[完整样例](delivery-examples.zh-CN.md)；已诊断局部修复仍使用 `safe-fix-implementation`。
+
 ## 代码审查
 
 - **问题：** 需要审查一个 diff 或明确代码范围，但不修改文件。

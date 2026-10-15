@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { discoverActivePackSkills, syncPackPlugin } from "./sync-pack-plugin.mjs";
 
 const uiDescriptions = {
+  "feature-implementation": "按已确认规格逐个交付功能切片并完成定向验证",
   "repo-doctor-router": "分析当前工程状态并推荐现有 Repo Doctor Skill 或安全工作流",
   "repo-onboarding": "快速理解陌生项目的结构、技术栈、入口、命令与核心模块",
   "requirements-clarification": "在规格化前逐项关闭会实质改变实现的需求决策",
@@ -32,6 +33,7 @@ const uiDescriptions = {
   "safe-fix-implementation": "一次只实施一个小而安全、可验证的生产代码修复",
 };
 const uiPrompts = {
+  "feature-implementation": "使用 $feature-implementation 在已有授权范围内实施已确认功能规格，逐项验证；不提交或发布。",
   "repo-doctor-router": "使用 $repo-doctor-router 从 canonical 工作流注册表推荐下一 Skill 或 workflow_id，但不要执行推荐。",
   "repo-onboarding": "使用 $repo-onboarding 帮我理解这个陌生仓库的结构、入口和真实命令。",
   "requirements-clarification": "使用 $requirements-clarification 在规格化前关闭关键需求决策，不要实施代码。",

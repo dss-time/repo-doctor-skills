@@ -1,5 +1,7 @@
 # Workflow Cookbook
 
+> `feature-implementation` is included in v0.8.0. See [worked examples](guides/delivery-examples.md).
+
 This guide starts with real tasks instead of assuming that you already know every Skill name. Each workflow explains the sequence, why each Skill belongs there, copyable prompts, permission transitions, stop conditions, and safe handoffs.
 
 These sequences are recipes, not automatic pipelines. Use one primary Skill for a normal request. Continue to another step only when the user explicitly invokes it or asks for an end-to-end flow; every write or high-risk gate still requires its own authorization. See [Execution Modes](guides/execution-modes.md).
@@ -106,7 +108,7 @@ unknowns. Do not implement fixes.
 ## 2. Move from a Vague Requirement to a Release Gate
 
 **Use when:** A user has an incomplete feature request and wants it delivered safely.  
-**Sequence:** **requirements-clarification [R]** → **requirements-to-spec [R]** → optional **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **safe-fix-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → optional **[GATE] safe-test-implementation [W]** → optional **documentation-sync [W]** → **release-readiness-check [A/GATE]**.
+**Sequence:** **requirements-clarification [R]** → **requirements-to-spec [R]** → optional **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **feature-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → optional **[GATE] safe-test-implementation [W]** → optional **documentation-sync [W]** → **release-readiness-check [A/GATE]**.
 
 | Phase | Why it comes here | Main boundary |
 |---|---|---|
@@ -115,7 +117,7 @@ unknowns. Do not implement fixes.
 | Delivery slicing | For a large specification, **spec-to-work-items** creates vertical, independently verifiable items with dependencies, conflicts, tests, and parallel groups. | Does not create external issues or replace the code-level `safe-change-plan`. |
 | Impact analysis | **change-impact-analysis** uses repository evidence to identify affected modules, contracts, tests, and risks. | Does not implement changes. |
 | Implementation plan | **safe-change-plan** turns confirmed inputs into atomic steps with validation and rollback. | Stops and sends work back when requirements are vague or impact is unknown. |
-| Implementation | **safe-fix-implementation** implements one confirmed issue or tightly bounded fix. | The plan and file scope must be approved before code writes or commands. |
+| Implementation | **feature-implementation** implements approved feature slices and supporting tests/docs, validating each before dependent work. | The plan and file scope must be approved before code writes or commands. |
 | Review and tests | **safe-code-review** reviews the change; **test-gap-analysis** identifies gaps; **safe-test-implementation** writes tests only after approval. | Review and gap analysis are not write authorization. |
 | Documentation and gate | Use **documentation-sync** for user-visible behavior, then **release-readiness-check** for GO, GO WITH CONDITIONS, or NO-GO. | The release gate does not release, change versions, create tags, commit, or push. |
 
@@ -156,9 +158,9 @@ recommended work, and later improvements. Do not execute the plan.
 **[GATE] Before implementation:** Approve the files or modules, allowed validation commands, explicitly excluded scope, and stop conditions. Then invoke:
 
 ```text
-Use safe-fix-implementation to execute only this approved plan item:
+Use feature-implementation to deliver only this approved scope:
 
-<one atomic step>
+<approved specification and ordered work items>
 
 Allowed changes:
 Allowed commands:

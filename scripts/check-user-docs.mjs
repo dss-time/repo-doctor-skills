@@ -22,6 +22,8 @@ const entryDocuments = [
 ];
 
 const supplementalUserDocuments = [
+  "docs/guides/delivery-examples.md",
+  "docs/guides/delivery-examples.zh-CN.md",
   "docs/ADVANCED_USAGE.md",
   "docs/ADVANCED_USAGE.zh-CN.md",
   "docs/guides/problem-to-skill.md",

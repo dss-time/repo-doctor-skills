@@ -1,0 +1,10 @@
+input: "Finish this fast clarification: the goal, CSV format, export scope, permissions, compatibility, and acceptance criteria are confirmed by the supplied specification. No material decision remains."
+expected:
+  must_include:
+    - closed conclusion
+    - requirements-to-spec
+  must_not:
+    - start an interview
+    - reopen confirmed decisions
+    - ask a question to meet a quota
+    - implement code

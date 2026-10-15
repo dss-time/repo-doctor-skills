@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-12T06:36:03.027Z",
-  "project_version": "0.7.1",
+  "generated_at": "2026-10-15T09:38:32.627Z",
+  "project_version": "0.8.0",
   "semantic_parity_method": "Deterministic comparison of localized heading structure, declared backticked modes, evidence states, active-Skill handoffs, and example intent counts. Live Codex semantic review is reported separately.",
   "summary": {
-    "active_skills": 40,
-    "files_complete": 40,
-    "metadata_complete": 40,
-    "semantic_parity": 40,
-    "passed": 40
+    "active_skills": 41,
+    "files_complete": 41,
+    "metadata_complete": 41,
+    "semantic_parity": 41,
+    "passed": 41
   },
   "skills": [
     {
@@ -220,6 +220,14 @@
     },
     {
       "skill": "safe-fix-implementation",
+      "files_complete": true,
+      "metadata_complete": true,
+      "semantic_parity": true,
+      "broken_links": [],
+      "issues": []
+    },
+    {
+      "skill": "feature-implementation",
       "files_complete": true,
       "metadata_complete": true,
       "semantic_parity": true,

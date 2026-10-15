@@ -11,6 +11,7 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 
 Default to `fast`; explicit invocation is required.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Repo Doctor Router
@@ -42,7 +43,8 @@ Use [execution modes](references/execution-modes.en.md) when detailed mode selec
    - A settled large specification needs vertical delivery slices -> `spec-to-work-items`.
    - Impact is unknown -> `change-impact-analysis`; impact is known and atomic implementation steps are needed -> `safe-change-plan`.
    - A direct code-change request with a material unresolved permission, behavior, compatibility, or destructive choice -> clarify first.
-   - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and `safe-fix-implementation`; never treat clarity as permission.
+   - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and implementation owner below; never treat clarity as permission.
+   - Settled new-feature specification/work items with write authority -> `feature-implementation`; a diagnosed local defect remains `safe-fix-implementation`.
    - Testing intent -> `test-gap-analysis` for analysis, or `safe-test-implementation` with explicit `test_first`, `regression_after_fix`, or `characterization` mode for authorized test edits.
    - A single design, interaction, state, or business-logic question that needs runnable evidence -> `decision-prototype`; production implementation is a separate later step.
    - Broad diff review -> `safe-code-review`; pre-change blast-radius analysis -> `change-impact-analysis`.
@@ -53,7 +55,7 @@ Use [execution modes](references/execution-modes.en.md) when detailed mode selec
 5. If a registered workflow fits, return its exact `workflow_id` and ordered applicable stages. Preserve approval gates, forbidden transitions, alternatives, and stop conditions. Do not create a bespoke duplicate.
 6. If no workflow fits, recommend one verified Skill and say why registry routing is not applicable.
 7. Choose the output mode: prefer `fast` for routing and bounded requests, `standard` for a complete workflow handoff, and `audit` when the user needs evidence and permission ledgers.
-8. Return the compact recommendation. Add Codex invocation and a platform-neutral prompt only when useful; invocation syntax is an adapter example, not canonical workflow data.
+8. Return the recommendation using the output contract. Invocation syntax is an adapter example, not canonical workflow data.
 
 ## Completion
 
@@ -71,11 +73,9 @@ Needs: <minimum input>
 Try: <copyable invocation preserving the user’s problem and scope>
 ```
 
+Keep `fast` to these fields. Give one host-supported invocation or natural-language request, preserving scope and permissions; use placeholders for missing inputs.
+
 For `standard` or requested detail, add classification, workflow ID, current stage, prerequisites, permission gate, stop condition, next Skill, and one alternative. For `audit`, add registry/version verification, active-inventory evidence, rejected candidates, platform alias capability, and unresolved uncertainty.
-
-Do not execute the recommendation or name an unverified Skill as available.
-
-Use host-appropriate invocation syntax or a natural-language prompt. Preserve missing inputs as explicit placeholders; never invent evidence or expand authorization.
 
 ---
 
@@ -83,6 +83,7 @@ Use host-appropriate invocation syntax or a natural-language prompt. Preserve mi
 
 默认使用 `fast`；仅允许用户显式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # Repo Doctor Router（工作流路由）
@@ -114,7 +115,8 @@ Use host-appropriate invocation syntax or a natural-language prompt. Preserve mi
    - 大型已闭合规格需要垂直交付切片 -> `spec-to-work-items`。
    - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan`。
    - 直接改代码请求仍有重大权限、行为、兼容性或破坏性选择 -> 先澄清。
-   - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和 `safe-fix-implementation`；清晰不等于授权。
+   - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和下述实施承接者；清晰不等于授权。
+   - 已确认新功能规格/工作项且已有写授权 -> `feature-implementation`；已诊断局部缺陷仍交给 `safe-fix-implementation`。
    - 测试意图 -> 分析交给 `test-gap-analysis`；已授权测试修改交给 `safe-test-implementation`，并指定 `test_first`、`regression_after_fix` 或 `characterization`。
    - 单一设计、交互、状态或业务逻辑问题需要可运行证据 -> `decision-prototype`；生产实施属于后续独立步骤。
    - 广泛 diff 审查 -> `safe-code-review`；修改前影响范围分析 -> `change-impact-analysis`。
@@ -125,7 +127,7 @@ Use host-appropriate invocation syntax or a natural-language prompt. Preserve mi
 5. 若注册工作流匹配，返回准确 `workflow_id` 和适用阶段顺序；保留审批门禁、禁止跃迁、替代路径和停止条件，不另造重复流程。
 6. 若没有工作流匹配，只推荐一个已核验 Skill，并说明为何不适用注册工作流。
 7. 选择输出模式：路由和有边界请求优先 `fast`，完整工作流交接使用 `standard`，需要证据与权限账本时使用 `audit`。
-8. 返回简洁推荐；只有有用时再给 Codex 调用和平台无关 Prompt。调用语法属于 adapter 示例，不是 canonical 工作流数据。
+8. 按输出契约返回推荐。调用语法属于 adapter 示例，不是 canonical 工作流数据。
 
 ## 完成条件
 
@@ -143,8 +145,6 @@ Use host-appropriate invocation syntax or a natural-language prompt. Preserve mi
 下一步：<保留用户问题和范围的可复制调用>
 ```
 
+`fast` 只输出上述字段。给一个宿主支持的调用或自然语言请求，保留范围和权限；缺失输入用占位符。
+
 `standard` 或用户要求详细信息时，增加分类、workflow ID、当前阶段、前置条件、权限门禁、停止条件、后续 Skill 和一个替代路径。`audit` 再增加注册表/版本核验、active 清单证据、被拒绝候选、平台 alias 能力和未解决不确定性。
-
-不得执行推荐，也不得把未核验 Skill 声称为可用。
-
-使用宿主支持的调用语法或自然语言提示。缺少的输入使用明确占位符，不编造证据、不扩张授权。

@@ -27,13 +27,14 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.7.3",
+  projectVersion: "0.8.0",
   releaseDate: "2026-10-15",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
-  liveModelReport: "tests/reports/live-codex-skill-validation-0.7.3.json",
-  liveModelEvidenceVersion: "0.7.3",
+  liveModelReport: "tests/reports/live-codex-skill-validation-0.8.0.json",
+  liveModelEvidenceVersion: "0.8.0",
+  expectedLiveModelCases: 328,
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -41,9 +42,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.9.1",
-      activeSkillCount: 27,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.9.1" }),
+      version: "0.10.0",
+      activeSkillCount: 28,
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.10.0" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
@@ -87,7 +88,7 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.7.3.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.8.0.md",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 
@@ -587,11 +588,12 @@ function auditLiveModelEvidence(root, contract, errors) {
   if (report.result !== "PASS") {
     errors.push(`${contract.liveModelReport}: final result must be PASS, found ${report.result}`);
   }
-  if (report.summary?.total !== 317
-    || report.summary?.passed !== 317
+  const expectedCases = contract.expectedLiveModelCases ?? 317;
+  if (report.summary?.total !== expectedCases
+    || report.summary?.passed !== expectedCases
     || report.summary?.failed !== 0
     || report.summary?.blocked !== 0) {
-    errors.push(`${contract.liveModelReport}: expected 317/317 PASS with zero failed or blocked cases`);
+    errors.push(`${contract.liveModelReport}: expected ${expectedCases}/${expectedCases} PASS with zero failed or blocked cases`);
   }
 }
 

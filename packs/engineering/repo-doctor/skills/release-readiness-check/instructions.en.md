@@ -8,7 +8,7 @@ If the request says to run the full local test, typecheck, or build gates, execu
 
 - Require a release object such as a version, branch, commit, tag candidate, build artifact, or explicit change range. Route broad repository diagnosis to `project-health-check`.
 - Do not publish, deploy, commit, tag, push, change versions, edit files, or approve despite unresolved blockers.
-- Read-only prohibits source and configuration edits; it does not prohibit user-authorized local validation commands or their disposable generated outputs.
+- Shell permission covers only user-authorized, preflighted repository-local validation and its disposable outputs. Source/configuration edits, network access, arbitrary commands and release actions remain forbidden.
 - Use only repository-provided validation commands and actual results. Mark checks not run and explain why.
 - When the user authorizes a finite list of independent local gates, run every listed gate even if an earlier gate fails; stop only when a later gate depends on the failed one or would be unsafe.
 - Do not expose credential values or private data when scanning evidence.

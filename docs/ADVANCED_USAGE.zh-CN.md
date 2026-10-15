@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 兼容路径和宿主差异见[历史 Codex 插件说明](LEGACY_CODEX_PLUGIN.zh-CN.md)。
 
-插件数量遵循现有分发边界：Repo Doctor 包含 27 个 Skill；Repo Doctor、Productivity Toolkit 和 Skill Maintainer 合计 37 个；源码清单为 40，是因为还有 3 个 Document Data Doctor Skill 只进入常规构建。源码 Full 安装会安装全部 40 个，而不改变插件边界。
+v0.8.0 共 41 个 Skill：Repo Doctor 为 28 个，三个插件合计 38 个，另有 3 个 Document Data Doctor Skill 只进入常规构建。源码 Full 安装包含全部 41 个。已发布 v0.7.3 对应数量仍为 40 / 27 / 37，其压缩包和 npm 包尚不包含 feature-implementation。
 
 ## 3. ChatGPT 单 Skill ZIP
 

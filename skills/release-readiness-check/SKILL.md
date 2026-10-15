@@ -9,6 +9,7 @@ description: "Explicit-invocation, evidence-backed, read-only release gate for a
 
 Default to `standard`; explicit invocation is required.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Release Readiness Check
@@ -21,7 +22,7 @@ If the request says to run the full local test, typecheck, or build gates, execu
 
 - Require a release object such as a version, branch, commit, tag candidate, build artifact, or explicit change range. Route broad repository diagnosis to `project-health-check`.
 - Do not publish, deploy, commit, tag, push, change versions, edit files, or approve despite unresolved blockers.
-- Read-only prohibits source and configuration edits; it does not prohibit user-authorized local validation commands or their disposable generated outputs.
+- Shell permission covers only user-authorized, preflighted repository-local validation and its disposable outputs. Source/configuration edits, network access, arbitrary commands and release actions remain forbidden.
 - Use only repository-provided validation commands and actual results. Mark checks not run and explain why.
 - When the user authorizes a finite list of independent local gates, run every listed gate even if an earlier gate fails; stop only when a later gate depends on the failed one or would be unsafe.
 - Do not expose credential values or private data when scanning evidence.
@@ -59,6 +60,7 @@ List unrun checks explicitly. Do not perform release actions.
 
 默认使用 `standard`；仅允许用户显式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # 发布就绪检查
@@ -71,7 +73,7 @@ List unrun checks explicitly. Do not perform release actions.
 
 - 需要版本、分支、commit、候选 tag、构建产物或明确变更范围等发布对象；广泛仓库诊断交给 `project-health-check`。
 - 不发布、不部署、不提交、不打 tag、不 push、不修改版本或文件，也不得在阻塞项未解决时批准发布。
-- 只读禁止修改源文件和配置，但不禁止执行用户已授权的本地验证命令及其可丢弃生成物。
+- Shell 权限仅用于用户已授权、经预检的仓库本地验证及其可丢弃生成物；仍禁止修改源文件/配置、联网、任意命令和发布动作。
 - 只使用仓库提供的验证命令和真实结果；未运行项必须标明并解释原因。
 - 用户明确授权一组有限且相互独立的本地门禁时，即使前一项失败，也要执行全部列明门禁；只有后续门禁依赖失败项或继续执行不安全时才停止。
 - 扫描证据时不得暴露密钥或私有数据。

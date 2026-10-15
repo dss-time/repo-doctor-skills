@@ -7,7 +7,7 @@ Convert confirmed analysis into a safe, atomic, verifiable, and reversible imple
 - Confirm that the requirement, desired behavior, and blast radius are sufficiently known.
 - If the requirement is ambiguous, recommend `requirements-to-spec`. If dependencies or compatibility impact are unknown, recommend `change-impact-analysis`.
 - Do not modify code, tests, configuration, dependencies, or documentation.
-- Route actual edits to `safe-fix-implementation` or an appropriate implementation skill.
+- Route settled feature delivery to `feature-implementation` and diagnosed local repairs to `safe-fix-implementation`.
 - Reject opportunistic refactors and unrelated cleanup.
 
 ## Workflow

@@ -1,54 +1,54 @@
 {
-  "generated_at": "2026-10-12T06:36:03.027Z",
-  "project_version": "0.7.1",
-  "expected_active_skills": 40,
+  "generated_at": "2026-10-15T09:38:32.827Z",
+  "project_version": "0.8.0",
+  "expected_active_skills": 41,
   "targets": [
     {
       "target": "generic-zh-CN",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     },
     {
       "target": "generic-en",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     },
     {
       "target": "codex-zh-CN",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     },
     {
       "target": "claude-code-zh-CN",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     },
     {
       "target": "cursor-zh-CN",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     },
     {
       "target": "qwen-zh-CN",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     },
     {
       "target": "kimi-zh-CN",
-      "expected_skill_count": 40,
-      "actual_skill_count": 40,
+      "expected_skill_count": 41,
+      "actual_skill_count": 41,
       "status": "PASS",
       "issues": []
     }
@@ -175,6 +175,12 @@
       "issues": []
     },
     {
+      "zip": "rd-feature-implementation.zip",
+      "entry_count": 4,
+      "status": "PASS",
+      "issues": []
+    },
+    {
       "zip": "rd-performance-regression-analysis.zip",
       "entry_count": 4,
       "status": "PASS",
@@ -280,8 +286,8 @@
   "summary": {
     "target_count": 7,
     "targets_passed": 7,
-    "zip_count": 37,
-    "zips_passed": 37,
+    "zip_count": 38,
+    "zips_passed": 38,
     "status": "PASS"
   }
 }

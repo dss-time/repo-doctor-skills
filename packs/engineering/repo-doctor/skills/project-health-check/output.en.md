@@ -1,13 +1,9 @@
 # Output Format
 
-1. Overall health conclusion
-2. Health score table
-3. P0/P1/P2/P3 issues with evidence
-4. Architecture and module boundary risks
-5. Redundant or possible dead code
-6. Security and stability risks
-7. Performance issues
-8. Test gaps
-9. Release readiness checks
-10. Recommended roadmap
-11. Final recommendation
+Default to three compact parts:
+
+1. Health conclusion, inspected scope, unassessed dimensions and missing evidence.
+2. P0/P1/P2/P3 findings with location/evidence, user or release impact and next action. Merge duplicate causes; omit empty sections.
+3. Test gaps, release uncertainty, proposed validation and one priority next step. Distinguish inspected configuration from executed checks.
+
+Do not repeat conclusions or imply unchecked coverage. If no supported issue is found, limit that conclusion to the inspected scope. On request, expand dimension evidence and a phased roadmap. Requested health tables use evidence-backed qualitative states, including unknowns, not invented scores.

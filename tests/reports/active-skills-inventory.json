@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-14T09:33:36.000Z",
-  "project_version": "0.7.3",
+  "generated_at": "2026-10-15T09:34:10.420Z",
+  "project_version": "0.8.0",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.9.1",
+      "version": "0.10.0",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -38,7 +38,8 @@
         "architecture-decision-record",
         "configuration-audit",
         "session-handoff",
-        "safe-fix-implementation"
+        "safe-fix-implementation",
+        "feature-implementation"
       ]
     },
     {
@@ -97,7 +98,7 @@
       "id": "repo.repo-doctor-router",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "status": "beta",
       "name": {
         "en": "Repo Doctor Router",
@@ -135,7 +136,7 @@
       "id": "repo.repo-onboarding",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-onboarding",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Repo Onboarding",
@@ -173,7 +174,7 @@
       "id": "repo.requirements-clarification",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/requirements-clarification",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "status": "beta",
       "name": {
         "en": "Requirements Clarification",
@@ -363,7 +364,7 @@
       "id": "repo.project-health-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/project-health-check",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Project Health Check",
@@ -477,7 +478,7 @@
       "id": "repo.safe-change-plan",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Safe Change Plan",
@@ -553,7 +554,7 @@
       "id": "repo.safe-test-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-test-implementation",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "status": "beta",
       "name": {
         "en": "Safe Test Implementation",
@@ -667,7 +668,7 @@
       "id": "repo.release-readiness-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/release-readiness-check",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Release Readiness Check",
@@ -684,7 +685,7 @@
       "permissions": {
         "read_files": true,
         "write_files": false,
-        "run_shell_commands": false,
+        "run_shell_commands": true,
         "access_network": false,
         "destructive_actions_allowed": false
       },
@@ -1085,15 +1086,15 @@
       "id": "repo.safe-fix-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-fix-implementation",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "status": "beta",
       "name": {
         "en": "Safe Fix Implementation",
         "zh-CN": "最小安全修复"
       },
       "description": {
-        "en": "Implement one small, safe, verified production fix after a clear diagnosis or for an exact, low-risk edit with an explicit target and desired result. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes.",
-        "zh-CN": "在明确诊断后，或针对目标与期望结果清楚的精确低风险编辑，实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。"
+        "en": "Implement one small, safe, verified production fix after a clear diagnosis or for an exact, low-risk edit with an explicit target and desired result. Use feature-implementation for settled multi-slice feature delivery, safe-test-implementation for test-only changes and documentation-sync for documentation-only changes.",
+        "zh-CN": "在明确诊断后，或针对目标与期望结果清楚的精确低风险编辑，实施一个小范围、可验证的生产代码修复。已确认的多切片功能交付使用 feature-implementation，仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。"
       },
       "supported_locales": [
         "en",
@@ -1115,6 +1116,44 @@
       "execution": {
         "classification": "standard",
         "default_mode": "fast",
+        "allow_implicit_invocation": true
+      }
+    },
+    {
+      "slug": "feature-implementation",
+      "id": "repo.feature-implementation",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/feature-implementation",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Feature Implementation",
+        "zh-CN": "功能实施"
+      },
+      "description": {
+        "en": "Implement an explicitly authorized feature from a settled specification or dependency-ordered work items, delivering and validating one observable behavior slice at a time. Use for new feature delivery across related production code, tests and docs; not vague requirements, a diagnosed local fix, test-only or docs-only edits, broad refactoring, or release actions.",
+        "zh-CN": "根据已确认规格或有依赖顺序的工作项，在明确授权范围内逐个交付并验证可观察行为切片。用于涉及相关生产代码、测试和文档的新功能实施；不用于模糊需求、已诊断局部修复、仅测试或仅文档修改、大规模重构及发布动作。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      },
+      "execution": {
+        "classification": "standard",
+        "default_mode": "standard",
         "allow_implicit_invocation": true
       }
     },
@@ -1588,7 +1627,8 @@
     "architecture-decision-record",
     "configuration-audit",
     "session-handoff",
-    "safe-fix-implementation"
+    "safe-fix-implementation",
+    "feature-implementation"
   ],
   "workflows": [
     "api-contract-change",
@@ -1661,6 +1701,7 @@
     "rd-decision-prototype.zip",
     "rd-dependency-upgrade-analysis.zip",
     "rd-documentation-sync.zip",
+    "rd-feature-implementation.zip",
     "rd-performance-regression-analysis.zip",
     "rd-project-health-check.zip",
     "rd-release-readiness-check.zip",
@@ -1679,7 +1720,7 @@
     "sm-skill-authoring.zip",
     "sm-skill-quality-audit.zip"
   ],
-  "activation_contract_count": 300,
+  "activation_contract_count": 306,
   "activation_contracts": [
     "rdr-zh-positive",
     "rdr-en-positive",
@@ -1980,6 +2021,12 @@
     "rdr-review-only-en",
     "rdr-ci-specific-zh",
     "rdr-runtime-bug-en",
-    "rdr-test-only-zh"
+    "rdr-test-only-zh",
+    "fi-en-positive",
+    "fi-zh-positive",
+    "fi-adjacent",
+    "fi-negative",
+    "fi-assumption",
+    "fi-blocking"
   ]
 }

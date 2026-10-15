@@ -4,7 +4,7 @@ name:
   zh-CN: 安全变更计划
 category: engineering
 visibility: public
-version: 0.1.1
+version: 0.1.2
 status: beta
 default_locale: zh-CN
 supported_locales:

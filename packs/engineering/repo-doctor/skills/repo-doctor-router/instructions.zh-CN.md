@@ -27,7 +27,8 @@
    - 大型已闭合规格需要垂直交付切片 -> `spec-to-work-items`。
    - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan`。
    - 直接改代码请求仍有重大权限、行为、兼容性或破坏性选择 -> 先澄清。
-   - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和 `safe-fix-implementation`；清晰不等于授权。
+   - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和下述实施承接者；清晰不等于授权。
+   - 已确认新功能规格/工作项且已有写授权 -> `feature-implementation`；已诊断局部缺陷仍交给 `safe-fix-implementation`。
    - 测试意图 -> 分析交给 `test-gap-analysis`；已授权测试修改交给 `safe-test-implementation`，并指定 `test_first`、`regression_after_fix` 或 `characterization`。
    - 单一设计、交互、状态或业务逻辑问题需要可运行证据 -> `decision-prototype`；生产实施属于后续独立步骤。
    - 广泛 diff 审查 -> `safe-code-review`；修改前影响范围分析 -> `change-impact-analysis`。
@@ -38,7 +39,7 @@
 5. 若注册工作流匹配，返回准确 `workflow_id` 和适用阶段顺序；保留审批门禁、禁止跃迁、替代路径和停止条件，不另造重复流程。
 6. 若没有工作流匹配，只推荐一个已核验 Skill，并说明为何不适用注册工作流。
 7. 选择输出模式：路由和有边界请求优先 `fast`，完整工作流交接使用 `standard`，需要证据与权限账本时使用 `audit`。
-8. 返回简洁推荐；只有有用时再给 Codex 调用和平台无关 Prompt。调用语法属于 adapter 示例，不是 canonical 工作流数据。
+8. 按输出契约返回推荐。调用语法属于 adapter 示例，不是 canonical 工作流数据。
 
 ## 完成条件
 

@@ -1,6 +1,6 @@
 ---
 name: safe-fix-implementation
-description: "Implement one small, safe, verified production fix after a clear diagnosis or for an exact, low-risk edit with an explicit target and desired result. Use safe-test-implementation for test-only changes and documentation-sync for documentation-only changes. 在明确诊断后，或针对目标与期望结果清楚的精确低风险编辑，实施一个小范围、可验证的生产代码修复。仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。"
+description: "Implement one small, safe, verified production fix after a clear diagnosis or for an exact, low-risk edit with an explicit target and desired result. Use feature-implementation for settled multi-slice feature delivery, safe-test-implementation for test-only changes and documentation-sync for documentation-only changes. 在明确诊断后，或针对目标与期望结果清楚的精确低风险编辑，实施一个小范围、可验证的生产代码修复。已确认的多切片功能交付使用 feature-implementation，仅测试修改使用 safe-test-implementation，仅文档修改使用 documentation-sync。"
 ---
 
 # English
@@ -9,6 +9,7 @@ description: "Implement one small, safe, verified production fix after a clear d
 
 Default to `fast`; bounded natural-language invocation is allowed.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Safe Fix Implementation
@@ -34,7 +35,7 @@ A clear, exact, low-risk edit request that names the target and desired result i
 2. Check impact before editing.
 3. Confirm or identify the smallest test seam or validation method.
 4. Make the smallest practical fix.
-5. Run or suggest the minimum relevant validation command.
+5. Preflight and run the minimum relevant validation when safe, authorized, and available. If blocked by permissions, missing tools or prerequisites, mark the fix unverified, state the reason and pending command; a suggestion is not a passed check.
 6. Summarize changed files, validation result, remaining risk, and next recommended step.
 
 Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.
@@ -51,6 +52,7 @@ Add material unverified scope, failures or residual risks only when present. Omi
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # 最小安全修复
@@ -76,7 +78,7 @@ Add material unverified scope, failures or residual risks only when present. Omi
 2. 修改前检查影响范围。
 3. 确认或识别最小测试切入点或验证方式。
 4. 做最小可行修复。
-5. 运行或建议最小相关验证命令。
+5. 预检最小相关验证；安全、已授权且具备执行条件时必须运行。权限、工具或前置条件阻塞时，明确标记修复尚未验证，说明原因和待运行命令；建议不等于验证通过。
 6. 总结修改文件、验证结果、剩余风险和下一步建议。
 
 用户请求已明确授权本 Skill 范围时直接完成，不重复索取授权。完整流程需要其他职责时，仅在已有流程授权下交给对应 Skill；本 Skill 自身权限不扩大。

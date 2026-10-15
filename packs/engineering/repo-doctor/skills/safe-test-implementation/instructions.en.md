@@ -9,7 +9,7 @@ Default output is `fast`; use `standard` or `audit` for detailed evidence, follo
 ## Permission and command boundary
 
 - Require explicit write authorization before changing tests, fixtures, snapshots, or helpers. Modify only the authorized test-side scope.
-- Production code is outside this Skill. When green requires production changes, stop and route the smallest behavior slice to `safe-fix-implementation`; resume verification only after that separately authorized work completes.
+- Production code is outside this Skill. When green requires production changes, hand the smallest behavior slice to `feature-implementation` for settled feature delivery or `safe-fix-implementation` for a local repair; resume verification after the authorized production work completes. Existing end-to-end authorization need not be requested again.
 - Do not perform general fixes, production refactors, dependency changes, broad cleanup, or permission expansion.
 - Read the repository's command definitions and transitive scripts before execution. Block install, migration, deployment, publication, deletion, production access, credential use, service control, or any uncertain side effect.
 - Record every command, working directory, exit code, concise result, and `Observed`, `Unverified`, or `Blocked` evidence state. Never invent a command, result, or red state.
@@ -35,7 +35,7 @@ If ambiguity changes evidence or authorization, stop. Otherwise infer the narrow
    - `test_first`: run the focused test and require failure for the expected missing behavior. An unrelated failure, unexpected pass, flaky result, or unavailable command is not red.
    - `regression_after_fix`: do not manufacture historical red. Use a safe pre-fix comparison or precise assertion-to-defect mapping; otherwise record `sensitivity_unverified`.
    - `characterization`: the initial test may pass; prove the assertion distinguishes meaningful observable states.
-7. Implement only the smallest test-side change. If behavior requires production code, stop after valid red and hand off to `safe-fix-implementation`; production edits require separate authorization.
+7. Implement only the smallest test-side change. If behavior requires production code, stop test-side work after valid red and hand off to the production owner selected above; production writes must be covered by user authorization.
 8. Verify green by rerunning the same focused command after the authorized implementation state exists. Process no second behavior until this slice is resolved.
 9. Only after all focused checks are green, organize test code without changing behavior. Remove duplication only when it improves the current test; do not refactor production code.
 10. Run the smallest evidence-backed regression scope, then report commands, files, evidence states, limitations, and the next Skill.

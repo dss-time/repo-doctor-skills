@@ -6,7 +6,7 @@ Repo Doctor Skills 将项目发布版本、组件版本和成熟度状态分开�
 
 项目发布版本描述整个仓库级发布。`package.json` 是项目版本的权威元数据；Git tag、GitHub Release、`CHANGELOG.md` 正式版本段和发布说明必须使用相同版本。
 
-项目正式版本为 **0.7.3**（tag `v0.7.3`）。本版专属 Live-model 评测使用 GPT-6.1 Sol、low 推理强度，317/317 通过，不使用豁免。历史 v0.7.2 例外仍仅适用于该版本；Skill 正文和组件版本与 v0.7.2 相同。
+项目发布版本为 **0.8.0**（tag `v0.8.0`）。新的 GPT-6.1 Sol low 版本专属证据 328/328 通过，不复用历史 PASS 或豁免。Repo Doctor Pack/插件升至 0.10.0，含 28 个 Skill，总 active 数为 41。
 
 不可变的 `v0.5.0` tag 指向原定执行效率候选版本，但该 tag 的 clean-checkout CI 暴露出 build-integrity 测试依赖被忽略的 `dist/` 产物，因此 v0.5.0 没有创建 GitHub Release。该 tag 原样保留，不删除也不移动。v0.5.1 保持相同 Skill 行为，只增加测试侧 clean-build 隔离修复。
 

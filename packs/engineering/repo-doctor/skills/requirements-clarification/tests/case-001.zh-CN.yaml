@@ -1,15 +1,13 @@
-input: "使用 fast 模式在规格化前澄清这个模糊功能。先读仓库，只问信息增益最高的决策。"
+input: "使用 fast 模式。仓库证据已确认导出范围、权限和兼容性，只剩 CSV 还是 JSON 需要用户选择。只澄清这一项，不修改文件。"
 expected:
   must_include:
     - fast
-    - 问题树
-    - 3～5
-    - confirmed
-    - inferred
-    - open
-    - 兼容性
+    - CSV
+    - JSON
     - 当前问题
+    - 推荐项和取舍
   must_not:
+    - 为凑数量编造额外决策节点
     - 重复询问仓库已有答案
     - 修改文件
     - 实施代码

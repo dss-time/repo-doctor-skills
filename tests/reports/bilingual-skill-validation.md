@@ -1,8 +1,8 @@
 # Bilingual Skill Validation
 
-Generated: 2026-10-12T06:36:03.027Z
+Generated: 2026-10-15T09:38:32.627Z
 
-Result: 40/40 Skills passed all deterministic bilingual checks.
+Result: 41/41 Skills passed all deterministic bilingual checks.
 
 | Skill | Files | Metadata | Semantic parity | Issues |
 |---|---:|---:|---:|---|
@@ -33,6 +33,7 @@ Result: 40/40 Skills passed all deterministic bilingual checks.
 | `configuration-audit` | PASS | PASS | PASS | none |
 | `session-handoff` | PASS | PASS | PASS | none |
 | `safe-fix-implementation` | PASS | PASS | PASS | none |
+| `feature-implementation` | PASS | PASS | PASS | none |
 | `skill-authoring` | PASS | PASS | PASS | none |
 | `skill-quality-audit` | PASS | PASS | PASS | none |
 | `pdf-review-basic` | PASS | PASS | PASS | none |

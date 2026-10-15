@@ -16,6 +16,13 @@ Use one Skill directly when the problem is clear. The Router is only the fallbac
 - **Why:** Makes the smallest authorized change and runs proportional validation.
 - **Shortest example:** `$safe-fix-implementation — Fix the confirmed null check in src/parser.ts; writes to that file are authorized.`
 
+## Deliver an approved feature
+
+- **Problem:** A settled specification or approved work items need implementation across related code and tests.
+- **Skill:** `$feature-implementation` (available in v0.8.0; not in v0.7.3).
+- **Example:** `$feature-implementation Implement the approved CSV export spec within the authorized source/test/doc scope, validating each behavior slice.`
+- See [worked examples](delivery-examples.md). Use `safe-fix-implementation` for diagnosed local repairs.
+
 ## Review code
 
 - **Problem:** A diff or focused code area needs review without modification.

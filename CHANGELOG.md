@@ -8,6 +8,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-15
+
+### Added
+
+- Fresh v0.8.0 real-model evidence: 328/328 PASS using GPT-6.1 Sol low, including the new feature owner and permission cases.
+- `feature-implementation` for authorized delivery of settled feature slices, with acceptance evidence and focused validation; use it for feature delivery instead of the local-fix Skill.
+- Bilingual worked delivery examples and a shared human-only blocker format: location, action, success signal and resume step, without collecting secrets.
+- Repo Doctor Pack/plugin 0.10.0: 28 engineering Skills, 41 active Skills overall. Published v0.7.3 and its evaluation reports remain unchanged historical evidence.
+
+### Changed
+
+- Align release-check shell permission and tool-execution risk with preflighted, user-authorized local validation; publishing, source edits and network access remain forbidden. Require runnable authorized fix validation, or an explicit unverified result with its blocker.
+- Deduplicate the four entry Skills, keeping presentation rules in output contracts.
+- Reduce repetitive output in Router, requirements clarification, project health checks, and repository onboarding while preserving workflow, evidence, and permission boundaries. Clarification has no minimum question quota; detailed reports remain available on request.
+- Advance the affected Skill patch versions; published v0.7.3 evaluation evidence remains historical and does not validate v0.8.0 edits.
+
+### Fixed
+
+- Route settled feature delivery to its dedicated implementation owner while preserving the local-fix boundary.
+- Align release-check shell permissions with bounded local validation and require actual fix verification when executable.
+
+### Security
+
+- Keep destructive actions, network access and Git/release mutations outside feature implementation; preserve per-Skill authorization and secret-free human handoffs.
+
+### Documentation
+
+- Synchronize bilingual installation guidance, worked examples, current inventory and version-specific release evidence. GitHub publication does not imply npm publication.
+
 ## [0.7.3] - 2026-10-15
 
 ### Added
@@ -444,7 +473,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.3...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.3...v0.8.0
 [0.7.3]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2-rc.1...v0.7.2
 [0.7.2-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.0...v0.7.2-rc.1

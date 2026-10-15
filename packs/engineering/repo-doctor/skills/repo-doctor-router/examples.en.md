@@ -13,3 +13,7 @@
 - Non-trigger: “What does semantic versioning mean?” Answer normally.
 
 Copyable next step: `$bug-root-cause-analysis This API sometimes returns 500. Investigate the cause without editing files. Error details: <provide the error>.` Recommend only; do not execute.
+
+Fast routing: give one verified recommendation and one copyable next request. Do not add a full workflow ledger or duplicate the request in platform-specific and neutral forms.
+
+- “Implement the approved feature specification with its related tests.” -> `feature-implementation`; keep local repairs with `safe-fix-implementation`.

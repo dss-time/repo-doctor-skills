@@ -12,7 +12,7 @@
       "requirements-to-spec",
       "change-impact-analysis",
       "safe-change-plan",
-      "safe-fix-implementation",
+      "feature-implementation",
       "safe-code-review",
       "test-gap-analysis",
       "safe-test-implementation",

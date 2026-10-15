@@ -5,3 +5,4 @@
 - `documented`: “Check our glossary and ADRs while clarifying this term.” Report conflicts; edit only an explicitly authorized documentation path.
 - Clear request: “Change one error-message typo; no behavior or API change.” Return a short closed ledger without interviewing.
 - Non-trigger: “The choices and acceptance criteria are fixed; write the implementation-ready specification.” Use `requirements-to-spec`.
+- One open decision: “The export scope is fixed; only CSV or JSON remains undecided.” Ask that one question with trade-offs, not three to five questions; do not repeat the full ledger each turn.

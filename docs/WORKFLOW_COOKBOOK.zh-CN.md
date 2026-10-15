@@ -1,5 +1,7 @@
 # 工作流实战手册
 
+> `feature-implementation` 包含在 v0.8.0 中。参见[完整样例](guides/delivery-examples.zh-CN.md)。
+
 这份手册按“我要完成什么任务”组织，而不是要求你先记住所有 Skill 名称。每条工作流都说明调用顺序、选择原因、可复制提示词、权限变化、停止条件和安全交接方式。
 
 这些顺序是配方，不是自动流水线。普通请求只使用一个主 Skill；只有用户显式调用下一步或明确要求端到端流程时才继续，并且每个写入或高风险门禁仍需独立授权。详见[执行模式](guides/execution-modes.zh-CN.md)。
@@ -100,7 +102,7 @@
 ## 2. 从模糊需求走到发布门禁
 
 **适合：** 用户提出了一个还不完整的功能需求，希望最终安全落地。  
-**流程：** **requirements-clarification [R]** → **requirements-to-spec [R]** → 可选 **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **safe-fix-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → 可选 **[GATE] safe-test-implementation [W]** → 可选 **documentation-sync [W]** → **release-readiness-check [A/GATE]**。
+**流程：** **requirements-clarification [R]** → **requirements-to-spec [R]** → 可选 **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **feature-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → 可选 **[GATE] safe-test-implementation [W]** → 可选 **documentation-sync [W]** → **release-readiness-check [A/GATE]**。
 
 | 阶段 | 为什么这样排 | 关键边界 |
 |---|---|---|
@@ -109,7 +111,7 @@
 | 交付切片 | 大规格使用 **spec-to-work-items** 创建垂直、可独立验证的工作项，标明依赖、冲突、测试和并行组。 | 不创建外部 Issue，也不替代代码级 `safe-change-plan`。 |
 | 影响分析 | **change-impact-analysis** 用仓库证据识别受影响模块、接口、测试和风险。 | 不实施变更。 |
 | 实施计划 | **safe-change-plan** 将已确认输入拆成原子步骤、验证和回滚。 | 需求仍模糊或影响未知时应停止并退回前一步。 |
-| 实现 | **safe-fix-implementation** 只实施一个已确认问题或范围明确的修复。 | 写代码和运行命令前必须确认计划与文件范围。 |
+| 实现 | **feature-implementation** 逐个实施已批准功能切片和配套测试/文档，验证后才继续依赖项。 | 写代码和运行命令前必须确认计划与文件范围。 |
 | 审查与测试 | **safe-code-review** 审查变更；**test-gap-analysis** 分析缺口；只有用户同意后 **safe-test-implementation** 才写测试。 | 代码审查和缺口分析都不能被当成写入授权。 |
 | 文档与门禁 | 用户可见行为变化时使用 **documentation-sync**；最后由 **release-readiness-check** 给出 GO、GO WITH CONDITIONS 或 NO-GO。 | 发布门禁不发布、不改版本、不打 tag、不提交、不推送。 |
 
@@ -141,9 +143,9 @@
 **[GATE] 实现前确认：** 明确批准要修改的文件或模块、允许运行的验证命令、明确不修改的范围，以及何时停止。然后再调用：
 
 ```text
-请使用 safe-fix-implementation，只执行已批准计划中的这一项：
+请使用 feature-implementation，只交付以下已批准范围：
 
-<单一原子步骤>
+<已批准规格和按依赖排序的工作项>
 
 允许修改：
 允许运行：

@@ -22,7 +22,7 @@ $safe-code-review 审查当前修改。
 
 ## Codex 插件
 
-安装完整工程能力（27 个 Skill）：
+安装完整工程能力（28 个 Skill）：
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -53,7 +53,7 @@ npx skills@latest add dss-time/repo-doctor-skills --skill repo-doctor-router req
 
 ## 完整安装
 
-为 Codex 安装全部 40 个 Skill：
+为 Codex 安装全部 41 个 Skill：
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills --skill '*' -a codex
@@ -79,25 +79,17 @@ npx repo-doctor-skills install --language zh-CN
 
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。它打印安装目标、跳过相同内容，替换不同内容需要 `--force`。外部 skills CLI 的 Node 要求由其自身版本决定。
 
-## v0.7.3 正式版
+## v0.8.0 正式版
 
-使用 **GPT-6.1 Sol、low 推理强度**完成新的真实模型评测，结果 **317/317 通过**：200 项核心用例、44 个双语工作流步骤、61 项模式/判定和 12 项权限用例。本版不使用评测豁免；额度阻塞后核验模型、用例与 Skill 哈希再续跑，原始尝试保留。参见[评测报告](tests/reports/live-codex-skill-validation-0.7.3.md)。
+源码包含 41 个 Skill（Repo Doctor 28 个）和 38 个 ChatGPT ZIP。新的 GPT-6.1 Sol low 评测 **328/328 全部通过**：205 项核心、44 个工作流步骤、65 项模式/判定及 14 项权限用例。[发布说明](docs/RELEASE_NOTES_0.8.0.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
 
-在 Codex 中安装这个准确版本：
+将 GitHub 插件固定到 `v0.8.0`：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
-
-40 个 Skill 和组件版本与 v0.7.2 相同。也可以通过 npm 命令安装这个准确版本：
-
-```bash
-npx repo-doctor-skills@0.7.3 install --agent codex
-npx repo-doctor-skills@0.7.3 install --preset full --agent codex
-```
-
-第一条安装推荐的 7 个 Skill，第二条安装全部 40 个，均写入用户级 Codex Skills 目录。同一 Agent 选择插件或复制 Skills 一种方式即可。参见[发布说明](docs/RELEASE_NOTES_0.7.3.zh-CN.md)。
+本操作不发布 npm 0.8.0；`npx repo-doctor-skills@0.7.3 install` 仍为旧的 40 个 Skill。官方 skills CLI 从公开 GitHub 源码安装。
 
 ## 文档
 

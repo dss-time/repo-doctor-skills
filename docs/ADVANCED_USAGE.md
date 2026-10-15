@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 See [Legacy Codex Plugin](LEGACY_CODEX_PLUGIN.md) for the compatibility path and host-specific notes.
 
-Plugin counts follow distribution boundaries: Repo Doctor contains 27 Skills; Repo Doctor, Productivity Toolkit, and Skill Maintainer contain 37 together. The source inventory is 40 because three Document Data Doctor Skills are regular-build-only. Installing Full from source installs all 40 without changing those plugin boundaries.
+v0.8.0 contains 41 Skills: Repo Doctor has 28, the three plugins contain 38 together, and three Document Data Doctor Skills are regular-build-only. A Full source installation includes all 41. Published v0.7.3 remains at 40 / 27 / 37 respectively; its archives and npm package do not contain feature-implementation yet.
 
 ## 3. ChatGPT single-Skill ZIPs
 

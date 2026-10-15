@@ -13,3 +13,7 @@
 - 反例：“Semantic Versioning 是什么？”应直接回答。
 
 可复制的下一步：`$bug-root-cause-analysis 这个接口偶尔返回 500，请查明根因，不修改文件。报错信息：<请补充报错>。` 只推荐，不执行。
+
+快速路由：给出一个已核验推荐和一个可复制下一步请求，不附完整工作流账本，也不并列重复平台调用与自然语言版本。
+
+- “实施已批准功能规格和相关测试。” -> `feature-implementation`；局部修复仍使用 `safe-fix-implementation`。

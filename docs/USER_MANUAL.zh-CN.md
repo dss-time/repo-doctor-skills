@@ -1,5 +1,7 @@
 # Repo Doctor Skills 用户手册
 
+> v0.8.0 源码：41 个 Skill / Repo Doctor 28 个。GitHub v0.8.0 包含新增功能实施入口；npm 0.7.3 仍为旧的 40 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
+
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 
 > 平台入口核验日期为 2026-07-15。产品界面、订阅方案和工作区策略可能变化，请以当前宿主实际提供的控件为准。
@@ -51,7 +53,7 @@ npx repo-doctor-skills install
 npx repo-doctor-skills install --preset full
 ```
 
-源码仓库共有 40 个 active Skill。Repo Doctor 插件显示 27，是因为它只包含工程能力；当前三个插件合计包含 37 个 Skill；剩余 3 个 Document Data Doctor Skill 会进入常规平台构建和 Full 源码安装器，但没有独立插件。源码清单中没有 Skill 丢失。
+已发布 v0.7.3 共 40 个 active Skill，其中 Repo Doctor 为 27 个、三个插件合计 37 个。v0.8.0 新增 feature-implementation：总数 41、Repo Doctor 28、插件合计 38。另有 3 个 Document Data Doctor Skill 仍只进入常规构建，源码 Full 安装包含全部 41 个。
 
 ### Individual
 
@@ -138,10 +140,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.7.3`，选择该版本时使用：
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.8.0`，选择该版本时使用：
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.7.3
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

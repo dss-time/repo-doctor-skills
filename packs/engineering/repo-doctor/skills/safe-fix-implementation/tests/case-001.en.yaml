@@ -6,3 +6,4 @@ expected:
     - changed files
   must_not:
     - fix unrelated issues
+    - only suggest an available authorized check instead of running it

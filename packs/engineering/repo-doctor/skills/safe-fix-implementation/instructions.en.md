@@ -21,7 +21,7 @@ A clear, exact, low-risk edit request that names the target and desired result i
 2. Check impact before editing.
 3. Confirm or identify the smallest test seam or validation method.
 4. Make the smallest practical fix.
-5. Run or suggest the minimum relevant validation command.
+5. Preflight and run the minimum relevant validation when safe, authorized, and available. If blocked by permissions, missing tools or prerequisites, mark the fix unverified, state the reason and pending command; a suggestion is not a passed check.
 6. Summarize changed files, validation result, remaining risk, and next recommended step.
 
 Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.

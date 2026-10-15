@@ -4,7 +4,7 @@ name:
   zh-CN: 发布就绪检查
 category: engineering
 visibility: public
-version: 0.1.2
+version: 0.1.3
 status: beta
 default_locale: zh-CN
 supported_locales:
@@ -32,11 +32,11 @@ tool_requirements:
 permissions:
   read_files: true
   write_files: false
-  run_shell_commands: false
+  run_shell_commands: true
   access_network: false
   destructive_actions_allowed: false
 risk_level:
-  default: advisory
+  default: tool_execution
 execution:
   classification: explicit-only-candidate
   default_mode: standard

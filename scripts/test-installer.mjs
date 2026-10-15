@@ -56,8 +56,8 @@ try {
     fullTarget,
   ], { cwd: root, encoding: "utf8", env: { ...process.env, HOME: path.join(tempRoot, "isolated-home") }, timeout: 15000 });
   assert.equal(full.status, 0, full.stderr || full.stdout);
-  assert.equal(readdirSync(fullTarget, { withFileTypes: true }).filter((entry) => entry.isDirectory()).length, 40);
-  assert.match(full.stdout, /Installed: 40 Skills/);
+  assert.equal(readdirSync(fullTarget, { withFileTypes: true }).filter((entry) => entry.isDirectory()).length, 41);
+  assert.match(full.stdout, /Installed: 41 Skills/);
   assert.match(full.stdout, /Preset: Full/);
 
   const cli = (args) => spawnSync(process.execPath, [path.join(root, "scripts/install.mjs"), ...args], {
@@ -68,8 +68,16 @@ try {
   assert.match(repeated.stdout, /Installed: 0 Skills; unchanged: 7/);
   const expansion = cli(["--preset", "full", "--target-dir", target]);
   assert.equal(expansion.status, 0, expansion.stderr);
-  assert.match(expansion.stdout, /Installed: 33 Skills; unchanged: 7/);
-  assert.equal(readdirSync(target).length, 40);
+  assert.match(expansion.stdout, /Installed: 34 Skills; unchanged: 7/);
+  assert.equal(readdirSync(target).length, 41);
+
+  const featureTarget = path.join(tempRoot, "feature-only");
+  const featureInstall = cli(["--skill", "feature-implementation", "--language", "zh-CN", "--target-dir", featureTarget]);
+  assert.equal(featureInstall.status, 0, featureInstall.stderr);
+  assert.deepEqual(readdirSync(featureTarget), ["feature-implementation"]);
+  const featureBody = readFileSync(path.join(featureTarget, "feature-implementation", "SKILL.md"), "utf8");
+  assert.ok(featureBody.includes("# 功能实施"));
+  assert.ok(!featureBody.includes("# Feature Implementation"));
 
   for (const language of ["en", "zh-CN", "bilingual"]) {
     const individual = path.join(tempRoot, `individual-${language}`);
@@ -137,4 +145,4 @@ try {
 }
 
 assert.ok(!existsSync(tempRoot), "installer test temp directory was not cleaned");
-console.log("Installer tests passed: Recommended 7/7, Full 40/40, explicit Codex target, ambiguous-target safety, and cleanup.");
+console.log("Installer tests passed: Recommended 7/7, Full 41/41, explicit Codex target, ambiguous-target safety, and cleanup.");

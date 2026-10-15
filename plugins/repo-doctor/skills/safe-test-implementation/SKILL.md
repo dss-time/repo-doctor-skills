@@ -11,6 +11,7 @@ Use the section matching the user's language. 使用与用户输入语言一致�
 
 Default to `fast`; bounded natural-language invocation is allowed.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
 # Safe Test Implementation
@@ -24,7 +25,7 @@ Default output is `fast`; use `standard` or `audit` for detailed evidence, follo
 ## Permission and command boundary
 
 - Require explicit write authorization before changing tests, fixtures, snapshots, or helpers. Modify only the authorized test-side scope.
-- Production code is outside this Skill. When green requires production changes, stop and route the smallest behavior slice to `safe-fix-implementation`; resume verification only after that separately authorized work completes.
+- Production code is outside this Skill. When green requires production changes, hand the smallest behavior slice to `feature-implementation` for settled feature delivery or `safe-fix-implementation` for a local repair; resume verification after the authorized production work completes. Existing end-to-end authorization need not be requested again.
 - Do not perform general fixes, production refactors, dependency changes, broad cleanup, or permission expansion.
 - Read the repository's command definitions and transitive scripts before execution. Block install, migration, deployment, publication, deletion, production access, credential use, service control, or any uncertain side effect.
 - Record every command, working directory, exit code, concise result, and `Observed`, `Unverified`, or `Blocked` evidence state. Never invent a command, result, or red state.
@@ -50,7 +51,7 @@ If ambiguity changes evidence or authorization, stop. Otherwise infer the narrow
    - `test_first`: run the focused test and require failure for the expected missing behavior. An unrelated failure, unexpected pass, flaky result, or unavailable command is not red.
    - `regression_after_fix`: do not manufacture historical red. Use a safe pre-fix comparison or precise assertion-to-defect mapping; otherwise record `sensitivity_unverified`.
    - `characterization`: the initial test may pass; prove the assertion distinguishes meaningful observable states.
-7. Implement only the smallest test-side change. If behavior requires production code, stop after valid red and hand off to `safe-fix-implementation`; production edits require separate authorization.
+7. Implement only the smallest test-side change. If behavior requires production code, stop test-side work after valid red and hand off to the production owner selected above; production writes must be covered by user authorization.
 8. Verify green by rerunning the same focused command after the authorized implementation state exists. Process no second behavior until this slice is resolved.
 9. Only after all focused checks are green, organize test code without changing behavior. Remove duplication only when it improves the current test; do not refactor production code.
 10. Run the smallest evidence-backed regression scope, then report commands, files, evidence states, limitations, and the next Skill.
@@ -78,6 +79,7 @@ Only test_first requires an observed expected failure; never invent red, green o
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
 # Safe Test Implementation（安全补充测试）
@@ -91,7 +93,7 @@ Only test_first requires an observed expected failure; never invent red, green o
 ## 权限与命令边界
 
 - 修改测试、fixture、snapshot 或辅助代码前必须获得明确写权限，只能在已授权的测试侧范围内编辑。
-- 生产代码不属于本 Skill。绿灯需要生产修改时停止，把最小行为切片交给 `safe-fix-implementation`；该独立授权工作完成后再继续验证。
+- 生产代码不属于本 Skill。绿灯需要生产修改时，把最小行为切片交给 `feature-implementation`（已确认功能交付）或 `safe-fix-implementation`（局部修复）；生产修改必须由相应承接者完成，已有完整流程授权不必重复索取。
 - 不做通用修复、生产重构、依赖变更、大范围清理或权限扩张。
 - 执行前读取仓库命令定义及传递脚本；发现安装、迁移、部署、发布、删除、生产访问、凭据、服务控制或不确定副作用时阻塞。
 - 记录每条命令、工作目录、退出码、简洁结果及 `Observed`、`Unverified` 或 `Blocked` 证据状态，不得编造命令、结果或红灯。
@@ -117,7 +119,7 @@ Only test_first requires an observed expected failure; never invent red, green o
    - `test_first`：运行定向测试，必须因目标行为缺失而失败；无关失败、意外通过、flaky 或命令不可用都不是红灯。
    - `regression_after_fix`：不得伪造历史红灯；使用安全的修复前对照或精确断言—缺陷映射，否则记录 `sensitivity_unverified`。
    - `characterization`：初次可以通过，但要证明断言能区分有意义的外部状态。
-7. 只实施最小测试侧改动。行为需要生产代码时，在有效红灯后停止并交给 `safe-fix-implementation`；生产编辑需要独立授权。
+7. 只实施最小测试侧改动。行为需要生产代码时，在有效红灯后停止测试侧工作，交给上文选定的生产实施承接者；生产编辑必须已有用户授权。
 8. 授权实施状态存在后，重跑同一定向命令验证绿灯；当前切片未解决前不处理第二个行为。
 9. 所有定向检查变绿后才整理测试代码；只消除当前测试中有价值的重复，不重构生产代码。
 10. 运行有证据支持的最小回归范围，报告命令、文件、证据状态、限制和下一 Skill。
