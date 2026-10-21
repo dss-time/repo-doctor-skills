@@ -23,7 +23,7 @@ Use [execution modes](references/execution-modes.en.md) when detailed mode selec
 ## Boundary
 
 - Stay read-only. Do not edit files, run commands, access the network, or perform release actions.
-- Use the unique canonical registry at `packs/engineering/repo-doctor/workflows.yaml` when repository access is available; packaged copies are read-only projections. Do not invent or silently extend workflows.
+- Read `references/workflows.yaml` relative to this Skill document. In a distribution this is a bundled read-only projection of the unique canonical registry; no source-repository checkout is required. Do not invent or silently extend workflows.
 - Do not claim the host recursively invokes Skills. A recommendation is guidance for the user or a later turn.
 - Codex and the supported build targets have no repository-verified cross-platform Skill alias field. Do not emit alias frontmatter, duplicate a Skill, or claim `$doctor` exists. Use the stable canonical Skill name.
 - Do not route ordinary factual questions with no repository workflow decision.
@@ -95,7 +95,7 @@ For `standard` or requested detail, add classification, workflow ID, current sta
 ## 职责边界
 
 - 保持只读，不修改文件、不运行命令、不联网，也不执行发布动作。
-- 仓库可读时使用唯一 canonical 注册表 `packs/engineering/repo-doctor/workflows.yaml`；打包副本只是只读投影。不得编造或静默扩展工作流。
+- 相对于本 Skill 文档读取 `references/workflows.yaml`。分发包内附带唯一 canonical 注册表的只读投影，无需克隆源仓库。不得编造或静默扩展工作流。
 - 不声称宿主会递归调用 Skill。推荐只是给用户或后续轮次的指引。
 - Codex 与本仓库支持目标没有经仓库核验的跨平台 Skill alias 字段。不得输出 alias frontmatter、复制 Skill 或声称 `$doctor` 已存在；始终使用稳定 canonical Skill 名。
 - 普通知识问答不涉及仓库工作流决策时不要路由。

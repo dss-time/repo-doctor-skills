@@ -22,14 +22,14 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Pack ID:** `engineering.repo-doctor`
 - **Canonical:** `packs/engineering/repo-doctor/pack.yaml`
 - **Active Skills:** 28
-- **Pack version / status:** `0.10.0` / `beta`
+- **Pack version / status:** `0.10.1` / `beta`
 - **Canonical Pack description:** Public-safe skills for understanding, reviewing, diagnosing, and safely changing software repositories.
 - **Actual active list:** `repo-doctor-router`, `repo-onboarding`, `requirements-clarification`, `requirements-to-spec`, `spec-to-work-items`, `decision-prototype`, `bug-root-cause-analysis`, `project-health-check`, `safe-code-review`, `change-impact-analysis`, `safe-change-plan`, `test-gap-analysis`, `safe-test-implementation`, `ci-failure-diagnosis`, `documentation-sync`, `release-readiness-check`, `dependency-upgrade-analysis`, `api-contract-review`, `database-migration-review`, `dead-code-verification`, `security-focused-review`, `performance-regression-analysis`, `architecture-deepening-analysis`, `architecture-decision-record`, `configuration-audit`, `session-handoff`, `safe-fix-implementation`, `feature-implementation`
 
 ### `repo-doctor-router` — Repo Doctor Router（工作流路由）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/repo-doctor-router/skill.yaml`
-- **Version / status / risk:** `0.2.3` / `beta` / `read_only`
+- **Version / status / risk:** `0.2.4` / `beta` / `read_only`
 - **Invocation identifier:** `repo-doctor-router`
 - **Execution profile:** classification=`router`; default=`fast`; implicit invocation=no
 - **Canonical purpose and boundary:** Explicit routing entrypoint that recommends one verified Repo Doctor Skill and fast, standard, or audit mode from the current repository state, or returns a registered workflow when detailed routing is requested. Use only when the user explicitly invokes the Router or asks for Repo Doctor routing. Do not execute the recommendation, route ordinary factual questions, invent aliases, or bypass permission gates.
@@ -37,7 +37,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Explain what semantic versioning means without analyzing a repository workflow. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=none, shell=none, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Repo Doctor Router（工作流路由）; ChatGPT ZIP: `dist/chatgpt-skills/rd-repo-doctor-router.zip` / RD · Repo Doctor Router（工作流路由） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Repo Doctor Router（工作流路由）; ChatGPT ZIP: `dist/chatgpt-skills/rd-repo-doctor-router.zip` / RD · Repo Doctor Router（工作流路由） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-clarification`, `decision-prototype`, `bug-root-cause-analysis`, `project-health-check`, `safe-code-review`, `test-gap-analysis`, `safe-test-implementation`, `ci-failure-diagnosis`, `architecture-deepening-analysis`, `session-handoff`, `safe-fix-implementation`
 
 ### `repo-onboarding` — Repo Onboarding（仓库理解）
@@ -51,7 +51,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Review this specific authentication file for correctness and security findings; do not survey the whole repository. → route to `safe-code-review`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Repo Onboarding（理解新项目）; ChatGPT ZIP: `dist/chatgpt-skills/rd-repo-onboarding.zip` / RD · Repo Onboarding（理解新项目） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Repo Onboarding（理解新项目）; ChatGPT ZIP: `dist/chatgpt-skills/rd-repo-onboarding.zip` / RD · Repo Onboarding（理解新项目） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-to-spec`, `project-health-check`, `safe-code-review`, `safe-fix-implementation`
 
 ### `requirements-clarification` — Requirements Clarification（需求决策澄清）
@@ -65,7 +65,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Implement this already approved small fix and verify it. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=yes; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=none, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Requirements Clarification（需求决策澄清）; ChatGPT ZIP: `dist/chatgpt-skills/rd-requirements-clarification.zip` / RD · Requirements Clarification（需求决策澄清） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Requirements Clarification（需求决策澄清）; ChatGPT ZIP: `dist/chatgpt-skills/rd-requirements-clarification.zip` / RD · Requirements Clarification（需求决策澄清） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-to-spec`, `safe-fix-implementation`
 
 ### `requirements-to-spec` — Requirements Specification（需求规格化）
@@ -79,7 +79,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Implement the attached complete specification and run the tests. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=none, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Requirements Specification（需求规格化）; ChatGPT ZIP: `dist/chatgpt-skills/rd-requirements-to-spec.zip` / RD · Requirements Specification（需求规格化） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Requirements Specification（需求规格化）; ChatGPT ZIP: `dist/chatgpt-skills/rd-requirements-to-spec.zip` / RD · Requirements Specification（需求规格化） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-clarification`, `change-impact-analysis`, `safe-change-plan`, `api-contract-review`, `safe-fix-implementation`
 
 ### `spec-to-work-items` — Spec to Work Items（规格拆分工作项）
@@ -93,13 +93,13 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Create GitHub issues from this plan now without asking for external authorization. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=none, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Spec to Work Items（规格拆分工作项）; ChatGPT ZIP: `dist/chatgpt-skills/rd-spec-to-work-items.zip` / RD · Spec to Work Items（规格拆分工作项） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Spec to Work Items（规格拆分工作项）; ChatGPT ZIP: `dist/chatgpt-skills/rd-spec-to-work-items.zip` / RD · Spec to Work Items（规格拆分工作项） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-clarification`, `safe-change-plan`, `safe-fix-implementation`
 
 ### `decision-prototype` — Decision Prototype（决策原型验证）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/decision-prototype/skill.yaml`
-- **Version / status / risk:** `0.1.1` / `beta` / `safe_edit`
+- **Version / status / risk:** `0.1.2` / `beta` / `safe_edit`
 - **Invocation identifier:** `decision-prototype`
 - **Execution profile:** classification=`standard`; default=`standard`; implicit invocation=no
 - **Canonical purpose and boundary:** Explicit-invocation Skill for building the smallest disposable logic or UI prototype that answers one design, interaction, state, or business-rule question and returns a supported, rejected, or uncertain verdict. Use when runnable evidence is needed before formal implementation; file writes and commands require explicit authorization. Never connect production systems or treat prototype code as production-ready.
@@ -107,7 +107,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** The UI direction is approved and specified; implement the production version with tests and release safeguards. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=yes; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Decision Prototype（决策原型验证）; ChatGPT ZIP: `dist/chatgpt-skills/rd-decision-prototype.zip` / RD · Decision Prototype（决策原型验证） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Decision Prototype（决策原型验证）; ChatGPT ZIP: `dist/chatgpt-skills/rd-decision-prototype.zip` / RD · Decision Prototype（决策原型验证） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-clarification`, `requirements-to-spec`, `safe-code-review`, `safe-fix-implementation`
 
 ### `bug-root-cause-analysis` — Bug Root Cause Analysis（Bug 根因分析）
@@ -121,7 +121,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Fix the confirmed null dereference and add its regression test. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Bug Root Cause Analysis（Bug 根因分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-bug-root-cause-analysis.zip` / RD · Bug Root Cause Analysis（Bug 根因分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Bug Root Cause Analysis（Bug 根因分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-bug-root-cause-analysis.zip` / RD · Bug Root Cause Analysis（Bug 根因分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `safe-code-review`, `safe-test-implementation`, `dependency-upgrade-analysis`, `database-migration-review`, `safe-fix-implementation`
 
 ### `project-health-check` — Project Health Check（项目体检）
@@ -135,7 +135,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Review this pull request for bugs, compatibility risks, and missing tests; do not audit the whole repository. → route to `safe-code-review`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Project Health Check（项目健康检查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-project-health-check.zip` / RD · Project Health Check（项目健康检查） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Project Health Check（项目健康检查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-project-health-check.zip` / RD · Project Health Check（项目健康检查） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `repo-onboarding`, `safe-code-review`, `test-gap-analysis`, `release-readiness-check`, `security-focused-review`, `safe-fix-implementation`
 
 ### `safe-code-review` — Safe Code Review（安全代码审查）
@@ -149,7 +149,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Perform only a scoped security assessment of this upload trust boundary, including exploit prerequisites and severity. → route to `security-focused-review`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Safe Code Review（安全审查代码）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-code-review.zip` / RD · Safe Code Review（安全审查代码） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Safe Code Review（安全审查代码）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-code-review.zip` / RD · Safe Code Review（安全审查代码） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `api-contract-review`, `security-focused-review`, `safe-fix-implementation`
 
 ### `change-impact-analysis` — Change Impact Analysis（变更影响分析）
@@ -163,7 +163,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Verify whether this file is truly dead across dynamic imports, registries, build entries, and external consumers before recommending deletion. → route to `dead-code-verification`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Change Impact Analysis（改代码看影响）; ChatGPT ZIP: `dist/chatgpt-skills/rd-change-impact-analysis.zip` / RD · Change Impact Analysis（改代码看影响） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Change Impact Analysis（改代码看影响）; ChatGPT ZIP: `dist/chatgpt-skills/rd-change-impact-analysis.zip` / RD · Change Impact Analysis（改代码看影响） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-to-spec`, `safe-change-plan`, `dependency-upgrade-analysis`, `api-contract-review`, `database-migration-review`, `dead-code-verification`, `safe-fix-implementation`
 
 ### `safe-change-plan` — Safe Change Plan（安全变更计划）
@@ -177,7 +177,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Execute the approved plan and make the smallest verified code change. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Safe Change Plan（安全变更计划）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-change-plan.zip` / RD · Safe Change Plan（安全变更计划） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Safe Change Plan（安全变更计划）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-change-plan.zip` / RD · Safe Change Plan（安全变更计划） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-clarification`, `requirements-to-spec`, `bug-root-cause-analysis`, `change-impact-analysis`, `architecture-decision-record`, `safe-fix-implementation`
 
 ### `test-gap-analysis` — Test Gap Analysis（测试缺口分析）
@@ -191,13 +191,13 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Implement all missing tests for this module now. → route to `safe-test-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Test Gap Analysis（测试缺口分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-test-gap-analysis.zip` / RD · Test Gap Analysis（测试缺口分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Test Gap Analysis（测试缺口分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-test-gap-analysis.zip` / RD · Test Gap Analysis（测试缺口分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `safe-code-review`, `safe-test-implementation`, `safe-fix-implementation`
 
 ### `safe-test-implementation` — Safe Test Implementation（安全补充测试）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/safe-test-implementation/skill.yaml`
-- **Version / status / risk:** `0.4.2` / `beta` / `safe_edit`
+- **Version / status / risk:** `0.4.3` / `beta` / `safe_edit`
 - **Invocation identifier:** `safe-test-implementation`
 - **Execution profile:** classification=`standard`; default=`fast`; implicit invocation=yes
 - **Canonical purpose and boundary:** Protect one externally observable behavior through a gated red–green–organize cycle in test_first, regression_after_fix, or characterization mode. Use only for explicitly authorized test, fixture, and necessary test-helper edits; inspect real commands and public test boundaries first. Do not auto-invoke for production fixes, modify production code, install dependencies, or write coverage-only assertions.
@@ -205,7 +205,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Fix the production race condition and refactor the locking code. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=yes; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Safe Test Implementation（安全补充测试）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-test-implementation.zip` / RD · Safe Test Implementation（安全补充测试） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Safe Test Implementation（安全补充测试）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-test-implementation.zip` / RD · Safe Test Implementation（安全补充测试） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `bug-root-cause-analysis`, `test-gap-analysis`, `safe-fix-implementation`
 
 ### `ci-failure-diagnosis` — CI Failure Diagnosis（CI 失败诊断）
@@ -219,7 +219,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Fix the confirmed CI configuration bug and update the workflow file. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / CI Failure Diagnosis（CI 失败诊断）; ChatGPT ZIP: `dist/chatgpt-skills/rd-ci-failure-diagnosis.zip` / RD · CI Failure Diagnosis（CI 失败诊断） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / CI Failure Diagnosis（CI 失败诊断）; ChatGPT ZIP: `dist/chatgpt-skills/rd-ci-failure-diagnosis.zip` / RD · CI Failure Diagnosis（CI 失败诊断） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `bug-root-cause-analysis`, `project-health-check`, `safe-fix-implementation`
 
 ### `documentation-sync` — Documentation Sync（文档同步维护）
@@ -233,13 +233,13 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Review this documentation-only diff for correctness without changing it. → route to `safe-code-review`
 - **Declared permissions:** read files=yes; write files=yes; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Documentation Sync（文档同步维护）; ChatGPT ZIP: `dist/chatgpt-skills/rd-documentation-sync.zip` / RD · Documentation Sync（文档同步维护） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Documentation Sync（文档同步维护）; ChatGPT ZIP: `dist/chatgpt-skills/rd-documentation-sync.zip` / RD · Documentation Sync（文档同步维护） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-to-spec`, `safe-code-review`, `safe-fix-implementation`
 
 ### `release-readiness-check` — Release Readiness Check（发布就绪检查）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/release-readiness-check/skill.yaml`
-- **Version / status / risk:** `0.1.3` / `beta` / `tool_execution`
+- **Version / status / risk:** `0.1.4` / `beta` / `tool_execution`
 - **Invocation identifier:** `release-readiness-check`
 - **Execution profile:** classification=`explicit-only-candidate`; default=`standard`; implicit invocation=no
 - **Canonical purpose and boundary:** Explicit-invocation, evidence-backed, read-only release gate for a specific candidate version, returning GO, GO WITH CONDITIONS, or NO-GO after full release checks. Do not trigger for ordinary validation or project health, and never execute release, commit, tag, push, or version changes.
@@ -247,7 +247,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Publish this release, create the tag, and push it now. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=no; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Release Readiness Check（发布就绪检查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-release-readiness-check.zip` / RD · Release Readiness Check（发布就绪检查） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Release Readiness Check（发布就绪检查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-release-readiness-check.zip` / RD · Release Readiness Check（发布就绪检查） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `safe-fix-implementation`
 
 ### `dependency-upgrade-analysis` — Dependency Upgrade Analysis（依赖升级分析）
@@ -261,7 +261,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Upgrade the package now and regenerate the lockfile. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=optional
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Dependency Upgrade Analysis（依赖升级分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-dependency-upgrade-analysis.zip` / RD · Dependency Upgrade Analysis（依赖升级分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Dependency Upgrade Analysis（依赖升级分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-dependency-upgrade-analysis.zip` / RD · Dependency Upgrade Analysis（依赖升级分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `change-impact-analysis`, `safe-fix-implementation`
 
 ### `api-contract-review` — API Contract Review（API 契约审查）
@@ -275,7 +275,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Implement the new API field and update the handlers now. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / API Contract Review（API 契约审查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-api-contract-review.zip` / RD · API Contract Review（API 契约审查） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / API Contract Review（API 契约审查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-api-contract-review.zip` / RD · API Contract Review（API 契约审查） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `safe-code-review`, `change-impact-analysis`, `safe-fix-implementation`
 
 ### `database-migration-review` — Database Migration Review（数据库迁移审查）
@@ -289,7 +289,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Run this migration against production and verify the rows. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Database Migration Review（数据库迁移审查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-database-migration-review.zip` / RD · Database Migration Review（数据库迁移审查） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Database Migration Review（数据库迁移审查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-database-migration-review.zip` / RD · Database Migration Review（数据库迁移审查） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `change-impact-analysis`, `safe-change-plan`, `safe-fix-implementation`
 
 ### `dead-code-verification` — Dead Code Verification（死代码验证）
@@ -303,7 +303,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Delete the confirmed unused module and update all imports. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Dead Code Verification（死代码验证）; ChatGPT ZIP: `dist/chatgpt-skills/rd-dead-code-verification.zip` / RD · Dead Code Verification（死代码验证） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Dead Code Verification（死代码验证）; ChatGPT ZIP: `dist/chatgpt-skills/rd-dead-code-verification.zip` / RD · Dead Code Verification（死代码验证） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `safe-code-review`, `change-impact-analysis`, `safe-fix-implementation`
 
 ### `security-focused-review` — Security Focused Review（安全专项审查）
@@ -317,7 +317,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Exploit the production endpoint and dump any credentials you find. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=optional
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Security Focused Review（安全专项审查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-security-focused-review.zip` / RD · Security Focused Review（安全专项审查） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Security Focused Review（安全专项审查）; ChatGPT ZIP: `dist/chatgpt-skills/rd-security-focused-review.zip` / RD · Security Focused Review（安全专项审查） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `safe-code-review`, `safe-fix-implementation`
 
 ### `performance-regression-analysis` — Performance Regression Analysis（性能回归分析）
@@ -331,7 +331,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Optimize the query loop and add caching now. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Performance Regression Analysis（性能回归分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-performance-regression-analysis.zip` / RD · Performance Regression Analysis（性能回归分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Performance Regression Analysis（性能回归分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-performance-regression-analysis.zip` / RD · Performance Regression Analysis（性能回归分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `safe-code-review`, `safe-fix-implementation`
 
 ### `architecture-deepening-analysis` — Architecture Deepening Analysis（架构深化分析）
@@ -345,7 +345,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** The architecture decision and impact are settled; create the atomic rollback-ready implementation plan without re-analyzing candidates. → route to `safe-change-plan`
 - **Declared permissions:** read files=yes; write files=no; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Architecture Deepening Analysis（架构深化分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-architecture-deepening-analysis.zip` / RD · Architecture Deepening Analysis（架构深化分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Architecture Deepening Analysis（架构深化分析）; ChatGPT ZIP: `dist/chatgpt-skills/rd-architecture-deepening-analysis.zip` / RD · Architecture Deepening Analysis（架构深化分析） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `safe-code-review`, `change-impact-analysis`, `safe-change-plan`, `safe-fix-implementation`
 
 ### `architecture-decision-record` — Architecture Decision Record（架构决策记录）
@@ -359,7 +359,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Implement the chosen architecture across the production modules. → route to `safe-fix-implementation`
 - **Declared permissions:** read files=yes; write files=yes; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=none, web=optional
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Architecture Decision Record（架构决策记录）; ChatGPT ZIP: `dist/chatgpt-skills/rd-architecture-decision-record.zip` / RD · Architecture Decision Record（架构决策记录） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Architecture Decision Record（架构决策记录）; ChatGPT ZIP: `dist/chatgpt-skills/rd-architecture-decision-record.zip` / RD · Architecture Decision Record（架构决策记录） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `requirements-to-spec`, `safe-change-plan`, `documentation-sync`, `safe-fix-implementation`
 
 ### `configuration-audit` — Configuration Audit（配置审计）
@@ -373,7 +373,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Change the production configuration and rotate every credential now. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=no; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=read, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Configuration Audit（配置审计）; ChatGPT ZIP: `dist/chatgpt-skills/rd-configuration-audit.zip` / RD · Configuration Audit（配置审计） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Configuration Audit（配置审计）; ChatGPT ZIP: `dist/chatgpt-skills/rd-configuration-audit.zip` / RD · Configuration Audit（配置审计） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `project-health-check`, `change-impact-analysis`, `safe-fix-implementation`
 
 ### `session-handoff` — Session Handoff（会话交接）
@@ -387,7 +387,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Commit and push these changes so another developer can continue. → route to no matching repository Skill; stop and state the boundary
 - **Declared permissions:** read files=yes; write files=yes; run shell=no; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=none, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Session Handoff（会话交接）; ChatGPT ZIP: `dist/chatgpt-skills/rd-session-handoff.zip` / RD · Session Handoff（会话交接） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Session Handoff（会话交接）; ChatGPT ZIP: `dist/chatgpt-skills/rd-session-handoff.zip` / RD · Session Handoff（会话交接） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `safe-code-review`, `documentation-sync`
 
 ### `safe-fix-implementation` — Safe Fix Implementation（最小安全修复）
@@ -401,13 +401,13 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Create an atomic, rollback-ready implementation plan for the confirmed change, but do not execute it. → route to `safe-change-plan`
 - **Declared permissions:** read files=yes; write files=yes; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Safe Fix Implementation（只修一个问题）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-fix-implementation.zip` / RD · Safe Fix Implementation（只修一个问题） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Safe Fix Implementation（只修一个问题）; ChatGPT ZIP: `dist/chatgpt-skills/rd-safe-fix-implementation.zip` / RD · Safe Fix Implementation（只修一个问题） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `bug-root-cause-analysis`, `safe-code-review`, `safe-change-plan`, `safe-test-implementation`, `documentation-sync`, `feature-implementation`
 
 ### `feature-implementation` — Feature Implementation（功能实施）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/feature-implementation/skill.yaml`
-- **Version / status / risk:** `0.1.0` / `beta` / `safe_edit`
+- **Version / status / risk:** `0.1.1` / `beta` / `safe_edit`
 - **Invocation identifier:** `feature-implementation`
 - **Execution profile:** classification=`standard`; default=`standard`; implicit invocation=yes
 - **Canonical purpose and boundary:** Implement an explicitly authorized feature from a settled specification or dependency-ordered work items, delivering and validating one observable behavior slice at a time. Use for new feature delivery across related production code, tests and docs; not vague requirements, a diagnosed local fix, test-only or docs-only edits, broad refactoring, or release actions.
@@ -415,7 +415,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 - **Do-not-use example:** Only add tests for the verified export implementation; do not change production code. → route to `safe-test-implementation`
 - **Declared permissions:** read files=yes; write files=yes; run shell=yes; access network=no; destructive actions=no
 - **Tool requirements:** filesystem=write, git=optional, shell=optional, web=none
-- **Distribution:** Plugin: `repo-doctor` v0.10.0 / Feature Implementation（功能实施）; ChatGPT ZIP: `dist/chatgpt-skills/rd-feature-implementation.zip` / RD · Feature Implementation（功能实施） (the ZIP does not embed version/status; source and drift checks establish consistency)
+- **Distribution:** Plugin: `repo-doctor` v0.10.1 / Feature Implementation（功能实施）; ChatGPT ZIP: `dist/chatgpt-skills/rd-feature-implementation.zip` / RD · Feature Implementation（功能实施） (the ZIP does not embed version/status; source and drift checks establish consistency)
 - **Activation-contract neighbors:** `safe-test-implementation`, `safe-fix-implementation`
 
 ## 2. Productivity Toolkit（通用办公与研究生产力工具包）

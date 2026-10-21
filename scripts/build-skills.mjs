@@ -6,6 +6,7 @@ import {
   discoverActivePackSkills,
   discoverPackRoots,
   executionContract,
+  copyPackReferences,
 } from "./sync-pack-plugin.mjs";
 import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 
@@ -40,8 +41,7 @@ function scalar(yaml, key) {
 
 function copyFlatResources(skillDir, outDir) {
   const skillName = path.basename(skillDir);
-  const packRoot = path.dirname(path.dirname(skillDir));
-  copyDirectoryContents(path.join(packRoot, "references"), path.join(outDir, "references"));
+  copyPackReferences(skillDir, path.join(outDir, "references"), path.join(outDir, "references", skillName));
   copyDirectoryContents(path.join(skillDir, "references"), path.join(outDir, "references", skillName));
   copyDirectoryContents(path.join(skillDir, "assets"), path.join(outDir, "assets", skillName));
   copyDirectoryContents(path.join(skillDir, "scripts"), path.join(outDir, "scripts", skillName));
@@ -68,6 +68,8 @@ function renderSkill(skillDir, locale, target) {
       .replaceAll("scripts/", `scripts/${skillName}/`)
       .replaceAll("__PACK_REFERENCE__", "references/");
   }
+  instructions = instructions.replaceAll("../../workflows.yaml", target.startsWith("claude-code")
+    ? "references/workflows.yaml" : `references/${skillName}/workflows.yaml`);
   if (metadata.execution) {
     instructions = `${executionContract(metadata.execution, locale)}\n\n${instructions}`;
   }
@@ -95,9 +97,11 @@ export function renderCodexSkill(skillDir) {
   const descriptionEn = field(yaml, "description", "en");
   const descriptionZh = field(yaml, "description", "zh-CN");
   let instructionsEn = readFileSync(path.join(skillDir, "instructions.en.md"), "utf8")
-    .replaceAll("../../references/", "references/");
+    .replaceAll("../../references/", "references/")
+    .replaceAll("../../workflows.yaml", "references/workflows.yaml");
   let instructionsZh = readFileSync(path.join(skillDir, "instructions.zh-CN.md"), "utf8")
-    .replaceAll("../../references/", "references/");
+    .replaceAll("../../references/", "references/")
+    .replaceAll("../../workflows.yaml", "references/workflows.yaml");
   if (metadata.execution) {
     instructionsEn = `${executionContract(metadata.execution, "en")}\n\n${instructionsEn}`;
     instructionsZh = `${executionContract(metadata.execution, "zh-CN")}\n\n${instructionsZh}`;
@@ -159,8 +163,7 @@ export function writeInstallableCodexSkill(skillDir, skillOutDir) {
     mkdirSync(agentsDir, { recursive: true });
     writeFileSync(path.join(agentsDir, "openai.yaml"), codexInterface);
   }
-  const packRoot = path.dirname(path.dirname(skillDir));
-  copyDirectoryContents(path.join(packRoot, "references"), path.join(skillOutDir, "references"));
+  copyPackReferences(skillDir, path.join(skillOutDir, "references"));
   copyDirectoryContents(path.join(skillDir, "references"), path.join(skillOutDir, "references"));
   copyDirectoryContents(path.join(skillDir, "assets"), path.join(skillOutDir, "assets"));
   copyDirectoryContents(path.join(skillDir, "scripts"), path.join(skillOutDir, "scripts"));
@@ -194,8 +197,7 @@ function buildTarget(target) {
       const skillOutDir = path.join(outDir, ".claude", "skills", skillName);
       mkdirSync(skillOutDir, { recursive: true });
       writeFileSync(path.join(skillOutDir, "SKILL.md"), renderSkill(skillDir, locale, target));
-      const packRoot = path.dirname(path.dirname(skillDir));
-      copyDirectoryContents(path.join(packRoot, "references"), path.join(skillOutDir, "references"));
+      copyPackReferences(skillDir, path.join(skillOutDir, "references"));
       copyDirectoryContents(path.join(skillDir, "references"), path.join(skillOutDir, "references"));
       copyDirectoryContents(path.join(skillDir, "assets"), path.join(skillOutDir, "assets"));
       copyDirectoryContents(path.join(skillDir, "scripts"), path.join(skillOutDir, "scripts"));
@@ -218,6 +220,7 @@ function buildTarget(target) {
       const skillName = path.basename(skillDir);
       const skillOutDir = path.join(outDir, "skills", skillName);
       writeInstallableCodexSkill(skillDir, skillOutDir);
+      copyFlatResources(skillDir, outDir);
     }
   } else {
     for (const skillDir of skillDirs) {

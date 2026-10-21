@@ -12,7 +12,7 @@ Deliver a settled feature within the user's authorized scope, one verifiable beh
 ## Workflow
 
 1. Map acceptance criteria to dependency-ordered behavior slices, affected files and focused checks. Reuse an adequate existing plan; do not expand a small feature into a mandatory planning pipeline.
-2. For the next slice, inspect existing code and tests. Read `safe-test-implementation` only when authoring tests; retain its real red evidence for `test_first`, regression sensitivity and public-behavior rules. That Skill still owns test-side changes only; this Skill owns authorized production changes in the cycle. If those instructions are unavailable, report test authoring blocked rather than inventing specialist coverage. Apply the discipline without claiming automatic cross-Skill execution.
+2. For the next slice, inspect existing code and tests. When authoring tests, read `../../references/testing-contract.en.md` bundled with this Skill; no separate Skill installation is required. This Skill owns authorized production and supporting test changes in the cycle.
 3. Implement the smallest complete behavior and its authorized supporting tests/docs. Honor the selected test mode; do not create all future tests or speculative abstractions first.
 4. Run the focused check and record its actual result. Resolve in-scope failures before the next dependent slice. Mark missing tools, unsafe commands and unrun checks as unverified or blocked, not passed; continue independent authorized work when useful.
 5. Repeat until all in-scope acceptance criteria are implemented and verified, or a named blocker prevents completion. Pause for new material decisions, scope expansion or human-only prerequisites; preserve completed slices for resumption.

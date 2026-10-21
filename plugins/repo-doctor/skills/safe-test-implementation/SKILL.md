@@ -16,7 +16,7 @@ Validate according to actual risk; security, production, migrations, releases an
 
 # Safe Test Implementation
 
-One behavior slice earns one trustworthy red signal, one green result, and only then any organization.
+Complete one behavior slice with evidence appropriate to its test mode; organize only after green.
 
 Output mode and test_mode are independent. Never switch either silently.
 
@@ -24,21 +24,19 @@ Default output is `fast`; use `standard` or `audit` for detailed evidence, follo
 
 ## Permission and command boundary
 
+- Cleanup is allowed only for disposable artifacts created by this run in an isolated temporary directory, with ownership and resolved paths verified and no symlink escape. Preserve pre-existing files, user data and unknown paths; otherwise block cleanup. This exception does not authorize general deletion.
+
 - Require explicit write authorization before changing tests, fixtures, snapshots, or helpers. Modify only the authorized test-side scope.
 - Production code is outside this Skill. When green requires production changes, hand the smallest behavior slice to `feature-implementation` for settled feature delivery or `safe-fix-implementation` for a local repair; resume verification after the authorized production work completes. Existing end-to-end authorization need not be requested again.
 - Do not perform general fixes, production refactors, dependency changes, broad cleanup, or permission expansion.
-- Read the repository's command definitions and transitive scripts before execution. Block install, migration, deployment, publication, deletion, production access, credential use, service control, or any uncertain side effect.
+- Read the repository's command definitions and transitive scripts before execution. Block install, migration, deployment, publication, unsafe deletion, production access, credential use, service control, or any uncertain side effect.
 - Record every command, working directory, exit code, concise result, and `Observed`, `Unverified`, or `Blocked` evidence state. Never invent a command, result, or red state.
 - Do not expose private production APIs for tests, bind assertions to private implementation, or use a fragile snapshot instead of observable behavior.
 - Do not install a test framework without explicit authorization.
 
 ## Select One Mode
 
-1. Use `test_first` when behavior is not implemented and the test will drive it. Require the narrow test to fail for the expected behavioral reason before production implementation.
-2. Use `regression_after_fix` when the fix already exists or is verified. Do not require or claim a historical red run. Prove sensitivity with a pre-fix commit, a safely reversible mutation in an isolated copy, or a precise assertion-to-defect mapping. Otherwise report `sensitivity_unverified`.
-3. Use `characterization` to preserve observable legacy behavior before refactoring. The initial run may pass. Record the behavior being frozen and show that assertions distinguish meaningful states.
-
-If ambiguity changes evidence or authorization, stop. Otherwise infer the narrowest mode and report the inference.
+Read `references/testing-contract.en.md` for mode selection, evidence and public-behavior rules. Only `test_first` requires an observed expected failure before implementation. If ambiguity changes evidence or authorization, stop; otherwise choose the narrowest mode and state the inference.
 
 ## Behavior-driven red–green–organize cycle
 
@@ -47,11 +45,8 @@ If ambiguity changes evidence or authorization, stop. Otherwise infer the narrow
 3. Inspect the existing test location, framework, fixtures, helpers, setup, CI conventions, and exact focused and regression commands.
 4. Run command preflight, confirm test-side write authorization, and declare `test_mode`, output mode, mock rationale if any, and the production-code stop boundary.
 5. Add one minimum credible test that can reliably fail for the target behavior. Do not draft all future tests as a horizontal slice.
-6. Establish red evidence:
-   - `test_first`: run the focused test and require failure for the expected missing behavior. An unrelated failure, unexpected pass, flaky result, or unavailable command is not red.
-   - `regression_after_fix`: do not manufacture historical red. Use a safe pre-fix comparison or precise assertion-to-defect mapping; otherwise record `sensitivity_unverified`.
-   - `characterization`: the initial test may pass; prove the assertion distinguishes meaningful observable states.
-7. Implement only the smallest test-side change. If behavior requires production code, stop test-side work after valid red and hand off to the production owner selected above; production writes must be covered by user authorization.
+6. Establish and record the evidence required by the selected mode in the shared test contract; an executed command with an unrelated failure never proves the target behavior.
+7. Implement only the smallest test-side change. If behavior requires production code, stop test-side work after the evidence required by the selected mode and hand off to the production owner selected above; production writes must be covered by user authorization.
 8. Verify green by rerunning the same focused command after the authorized implementation state exists. Process no second behavior until this slice is resolved.
 9. Only after all focused checks are green, organize test code without changing behavior. Remove duplication only when it improves the current test; do not refactor production code.
 10. Run the smallest evidence-backed regression scope, then report commands, files, evidence states, limitations, and the next Skill.
@@ -84,7 +79,7 @@ Only test_first requires an observed expected failure; never invent red, green o
 
 # Safe Test Implementation（安全补充测试）
 
-一个行为切片只对应一个可信红灯、一个绿灯结果，全部通过后才能整理。
+每个行为切片按所选测试模式取得可信证据，绿灯后才能整理。
 
 输出模式与 test_mode 独立，二者都不得静默切换。
 
@@ -92,21 +87,19 @@ Only test_first requires an observed expected failure; never invent red, green o
 
 ## 权限与命令边界
 
+- 仅允许清理本次运行在隔离临时目录创建、归属和解析后路径均已核验且不存在符号链接越界的可丢弃产物。保留已有文件、用户数据和不明路径；无法确认时阻塞清理。本例外不授权一般删除。
+
 - 修改测试、fixture、snapshot 或辅助代码前必须获得明确写权限，只能在已授权的测试侧范围内编辑。
 - 生产代码不属于本 Skill。绿灯需要生产修改时，把最小行为切片交给 `feature-implementation`（已确认功能交付）或 `safe-fix-implementation`（局部修复）；生产修改必须由相应承接者完成，已有完整流程授权不必重复索取。
 - 不做通用修复、生产重构、依赖变更、大范围清理或权限扩张。
-- 执行前读取仓库命令定义及传递脚本；发现安装、迁移、部署、发布、删除、生产访问、凭据、服务控制或不确定副作用时阻塞。
+- 执行前读取仓库命令定义及传递脚本；发现安装、迁移、部署、发布、不安全删除、生产访问、凭据、服务控制或不确定副作用时阻塞。
 - 记录每条命令、工作目录、退出码、简洁结果及 `Observed`、`Unverified` 或 `Blocked` 证据状态，不得编造命令、结果或红灯。
 - 不得只为测试暴露生产私有 API，不绑定私有实现细节，不用脆弱快照替代外部行为断言。
 - 未经明确授权不安装测试框架。
 
 ## 选择一种模式
 
-1. 行为尚未实现且测试用于驱动实现时，使用 `test_first`。生产实现前必须让最小测试因预期行为缺失而真实失败。
-2. 修复已存在或已验证时，使用 `regression_after_fix`。不得要求或声称历史红灯；用修复前提交、隔离副本中的安全可逆变异，或精确的断言—缺陷映射证明敏感性。否则标为 `sensitivity_unverified`。
-3. 在重构前冻结可观察旧行为时，使用 `characterization`。初次运行可以通过；记录被固定的行为，并说明断言如何区分有意义的状态。
-
-歧义会改变证据或授权时停止；否则选择最窄模式并声明该推断。
+读取 `references/testing-contract.zh-CN.md`，遵守模式选择、证据和公共行为规则。只有 `test_first` 要求实施前实际观察预期失败。歧义会改变证据或授权时停止；否则选择最窄模式并声明推断。
 
 ## 行为驱动红—绿—整理循环
 
@@ -115,11 +108,8 @@ Only test_first requires an observed expected failure; never invent red, green o
 3. 检查现有测试位置、框架、fixture、辅助代码、setup、CI 约定，以及准确的定向与回归命令。
 4. 完成命令预检，确认测试侧写权限，并声明 `test_mode`、输出模式、适用时的 Mock 理由和生产代码停止边界。
 5. 新增一个能针对目标行为可靠失败的最小可信测试；不得先写完全部未来测试形成水平切片。
-6. 建立红灯证据：
-   - `test_first`：运行定向测试，必须因目标行为缺失而失败；无关失败、意外通过、flaky 或命令不可用都不是红灯。
-   - `regression_after_fix`：不得伪造历史红灯；使用安全的修复前对照或精确断言—缺陷映射，否则记录 `sensitivity_unverified`。
-   - `characterization`：初次可以通过，但要证明断言能区分有意义的外部状态。
-7. 只实施最小测试侧改动。行为需要生产代码时，在有效红灯后停止测试侧工作，交给上文选定的生产实施承接者；生产编辑必须已有用户授权。
+6. 按共享测试契约建立并记录所选模式要求的证据；执行命令但出现无关失败，不能证明目标行为。
+7. 只实施最小测试侧改动。行为需要生产代码时，在取得所选模式要求的证据后停止测试侧工作，交给上文选定的生产实施承接者；生产编辑必须已有用户授权。
 8. 授权实施状态存在后，重跑同一定向命令验证绿灯；当前切片未解决前不处理第二个行为。
 9. 所有定向检查变绿后才整理测试代码；只消除当前测试中有价值的重复，不重构生产代码。
 10. 运行有证据支持的最小回归范围，报告命令、文件、证据状态、限制和下一 Skill。

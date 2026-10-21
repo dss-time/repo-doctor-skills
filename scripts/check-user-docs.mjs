@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { collectCatalogModel } from "./generate-skill-catalog.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -154,6 +155,13 @@ function checkReadmeFirstScreen(relativePath, content) {
 }
 
 function checkManualCoverage(relativePath, content) {
+  const inventory = collectCatalogModel(root);
+  const repoCount = inventory.packs.find((pack) => pack.metadata.id === "engineering.repo-doctor").skills.length;
+  for (const match of content.matchAll(/(?:all\s+|全部\s*)(\d+)(?:\s+active Skills|\s*个 active Skill)/g)) {
+    if (Number(match[1]) !== inventory.counts.skills) fail(`${relativePath}: current Full installation count must be ${inventory.counts.skills}`);
+  }
+  const pluginCount = content.match(/(?:engineering plugin \(|工程插件（)(\d+)/);
+  if (!pluginCount || Number(pluginCount[1]) !== repoCount) fail(`${relativePath}: current engineering plugin count must be ${repoCount}`);
   const version = JSON.parse(read("package.json")).version;
   const updateSection = content.split(/^### (?:Update a Codex plugin installation|更新 Codex 插件安装)\s*$/m)[1]?.split(/^## /m)[0] ?? "";
   const refs = [...updateSection.matchAll(/codex plugin marketplace add dss-time\/repo-doctor-skills --ref (v[^\s`]+)/g)].map((match) => match[1]);
@@ -298,6 +306,12 @@ for (const relativePath of ["docs/USER_MANUAL.md", "docs/USER_MANUAL.zh-CN.md", 
   if (!content.includes("codex plugin marketplace add dss-time/repo-doctor-skills --ref main")) {
     fail(`${relativePath}: missing explicitly separated development installation`);
   }
+}
+
+for (const filename of ["docs/ADVANCED_USAGE.md", "docs/ADVANCED_USAGE.zh-CN.md"]) {
+  const version = JSON.parse(read("package.json")).version;
+  const firstPinned = read(filename).match(/codex plugin marketplace add dss-time\/repo-doctor-skills --ref (v[^\s`]+)/)?.[1];
+  if (firstPinned !== `v${version}`) fail(`${filename}: first stable installation example must target v${version}`);
 }
 
 const changelog = read("CHANGELOG.md");

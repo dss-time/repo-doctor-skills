@@ -16,9 +16,9 @@ From your project directory:
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-Choose the Skills and target agent in the installer. This path exposes all 40 active Skills, installs into the current project by default, and needs no source build. Add `-g` for user-wide use. Install one Skill with `--skill safe-code-review`, or all Skills for Codex with `--skill '*' -a codex`. Use `npx skills@latest check` and `npx skills@latest update` for installed copies; re-run `add` to select newly added Skills.
+Choose the Skills and target agent in the installer. This path exposes all 41 active Skills, installs into the current project by default, and needs no source build. Add `-g` for user-wide use. Install one Skill with `--skill safe-code-review`, or all Skills for Codex with `--skill '*' -a codex`. Use `npx skills@latest check` and `npx skills@latest update` for installed copies; re-run `add` to select newly added Skills.
 
-For the complete Codex engineering plugin (27 Skills):
+For the complete Codex engineering plugin (28 Skills):
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -47,13 +47,13 @@ This non-interactive installer writes the seven Recommended Skills to the user-w
 
 Use `--agent codex` to choose Codex explicitly. The installer does not identify an Agent merely because a directory exists. With no explicit agent, exactly one configured `CODEX_HOME` or `AGENTS_HOME` is treated as a reliable signal. If both are present, it exits without writing; if neither is present, it safely installs to the shared `~/.agents/skills` location and prints that exact target.
 
-### Full: all 40 active Skills
+### Full: all 41 active Skills
 
 ```bash
 npx repo-doctor-skills install --preset full
 ```
 
-Published v0.7.3 contains 40 active Skills, of which 27 are in Repo Doctor and 37 in the three plugins. v0.8.0 adds feature-implementation: 41 total, 28 in Repo Doctor and 38 across plugins. The three Document Data Doctor Skills remain regular-build-only; a Full local source installation includes all 41.
+v0.8.0 contains 41 active Skills: 28 in Repo Doctor and 38 across the three plugins. The three Document Data Doctor Skills remain regular-build-only. Both npm and source Full installations include all 41, including feature-implementation.
 
 ### Individual
 

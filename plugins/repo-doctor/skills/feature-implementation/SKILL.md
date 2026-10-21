@@ -28,7 +28,7 @@ Deliver a settled feature within the user's authorized scope, one verifiable beh
 ## Workflow
 
 1. Map acceptance criteria to dependency-ordered behavior slices, affected files and focused checks. Reuse an adequate existing plan; do not expand a small feature into a mandatory planning pipeline.
-2. For the next slice, inspect existing code and tests. Read `safe-test-implementation` only when authoring tests; retain its real red evidence for `test_first`, regression sensitivity and public-behavior rules. That Skill still owns test-side changes only; this Skill owns authorized production changes in the cycle. If those instructions are unavailable, report test authoring blocked rather than inventing specialist coverage. Apply the discipline without claiming automatic cross-Skill execution.
+2. For the next slice, inspect existing code and tests. When authoring tests, read `references/testing-contract.en.md` bundled with this Skill; no separate Skill installation is required. This Skill owns authorized production and supporting test changes in the cycle.
 3. Implement the smallest complete behavior and its authorized supporting tests/docs. Honor the selected test mode; do not create all future tests or speculative abstractions first.
 4. Run the focused check and record its actual result. Resolve in-scope failures before the next dependent slice. Mark missing tools, unsafe commands and unrun checks as unverified or blocked, not passed; continue independent authorized work when useful.
 5. Repeat until all in-scope acceptance criteria are implemented and verified, or a named blocker prevents completion. Pause for new material decisions, scope expansion or human-only prerequisites; preserve completed slices for resumption.
@@ -62,7 +62,7 @@ State complete, partial or blocked, then list delivered behavior with changed pa
 ## 工作流程
 
 1. 将验收条件映射为按依赖排序的行为切片、影响文件和定向检查。已有计划足够时直接复用，不把小功能扩展成强制规划流水线。
-2. 检查下一切片的代码和测试。仅在编写测试时读取 `safe-test-implementation`，保留其 `test_first` 真实红灯、回归敏感性和公共行为规则。该 Skill 仍只负责测试侧，本 Skill 负责循环内已授权的生产修改；相关规范不可用时明确标记测试编写受阻，不编造专项覆盖。复用规范，不声称宿主自动跨 Skill 执行。
+2. 检查下一切片的代码和测试。编写测试时读取随本 Skill 分发的 `references/testing-contract.zh-CN.md`，无需另行安装其他 Skill。本 Skill 负责循环内已授权的生产代码与配套测试修改。
 3. 实施最小完整行为及已授权的配套测试/文档，遵守所选测试模式，不先批量编写未来测试或推测性抽象。
 4. 运行定向检查，记录真实结果。下一依赖切片开始前先处理范围内失败。工具缺失、不安全命令或未运行检查标记未验证或阻塞，不写成通过；有用时继续独立且已授权的工作。
 5. 重复至范围内全部验收条件完成验证，或被明确阻塞项挡住。出现新重大决策、范围扩张或必须人工完成的前置步骤时暂停相关工作，保留已完成切片便于续接。

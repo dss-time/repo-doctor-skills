@@ -14,14 +14,14 @@ Read `references/prototype-checklist.en.md` only when designing states, deciding
 
 ## Permission and production boundary
 
-- Require explicit authorization for the prototype file paths and every shell command. A request to explore an idea does not authorize writes.
+- Reuse existing authorization for the prototype location, behavior and local command scope; do not ask again for each preflighted command within that scope. Ask only for missing authorization or scope expansion. A request merely to discuss an idea does not authorize writes.
 - Inspect repository instructions, framework, existing task runner, routing, component system, and safe scratch conventions before choosing a location.
 - Mark every artifact `NON-PRODUCTION PROTOTYPE`. Do not present it as tested, hardened, accessible, secure, maintainable, or complete production code.
 - By default do not connect a production database, use real credentials, send real external requests, mutate production data, deploy, publish, commit, or delete files.
 - Use in-memory state, synthetic public-safe data, and local stubs. If the question genuinely concerns persistence or an external dependency, stop for a separately approved non-production environment and data boundary.
 - Never install a dependency without explicit authorization. Prefer the existing runtime and components.
 - Do not automatically delete prototype files. Recommend deletion, retention as evidence, or formal reimplementation; execute deletion only on a separate explicit request.
-- Production work must move to `requirements-to-spec`, `safe-change-plan`, or `safe-fix-implementation` with appropriate authorization.
+- For production work, route unsettled decisions/specifications to `requirements-to-spec` after clarification, missing sequencing to `safe-change-plan`, settled feature delivery to `feature-implementation`, and local fixes to `safe-fix-implementation`. Reuse existing production authorization; ask only for missing scope.
 
 ## Workflow
 

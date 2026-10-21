@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Bundle the canonical workflow registry with Router across installable distributions, and ship a shared test contract only with feature/test implementation Skills so individual installation remains usable.
+- Allow verified cleanup of run-owned isolated temporary artifacts during test and release checks; retain protection for existing files and unknown paths.
+- Reuse authorized prototype command scope, route settled production features to feature implementation, and require initial red evidence only in test-first mode.
+- Correct current installation counts and stable-version examples in both user manuals, with inventory-backed documentation checks.
+- Bump the five changed Skill patch versions and Repo Doctor Pack/plugin to 0.10.1. These changes are unreleased; v0.8.0 model results remain historical evidence, not validation of this revision.
+
 ## [0.8.0] - 2026-10-15
 
 ### Added

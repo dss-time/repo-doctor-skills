@@ -28,14 +28,14 @@ Read `references/prototype-checklist.en.md` only when designing states, deciding
 
 ## Permission and production boundary
 
-- Require explicit authorization for the prototype file paths and every shell command. A request to explore an idea does not authorize writes.
+- Reuse existing authorization for the prototype location, behavior and local command scope; do not ask again for each preflighted command within that scope. Ask only for missing authorization or scope expansion. A request merely to discuss an idea does not authorize writes.
 - Inspect repository instructions, framework, existing task runner, routing, component system, and safe scratch conventions before choosing a location.
 - Mark every artifact `NON-PRODUCTION PROTOTYPE`. Do not present it as tested, hardened, accessible, secure, maintainable, or complete production code.
 - By default do not connect a production database, use real credentials, send real external requests, mutate production data, deploy, publish, commit, or delete files.
 - Use in-memory state, synthetic public-safe data, and local stubs. If the question genuinely concerns persistence or an external dependency, stop for a separately approved non-production environment and data boundary.
 - Never install a dependency without explicit authorization. Prefer the existing runtime and components.
 - Do not automatically delete prototype files. Recommend deletion, retention as evidence, or formal reimplementation; execute deletion only on a separate explicit request.
-- Production work must move to `requirements-to-spec`, `safe-change-plan`, or `safe-fix-implementation` with appropriate authorization.
+- For production work, route unsettled decisions/specifications to `requirements-to-spec` after clarification, missing sequencing to `safe-change-plan`, settled feature delivery to `feature-implementation`, and local fixes to `safe-fix-implementation`. Reuse existing production authorization; ask only for missing scope.
 
 ## Workflow
 
@@ -97,14 +97,14 @@ Audit mode also includes exact permission and command ledgers. Never describe th
 
 ## 权限与生产边界
 
-- 原型文件路径和每条 Shell 命令都需要明确授权；“探索这个想法”本身不等于写权限。
+- 复用已有原型位置、行为和本地命令范围的授权，范围内已预检命令不逐条重复询问。仅在缺少授权或扩大范围时询问；仅讨论想法不等于写权限。
 - 选择位置前检查仓库指令、框架、现有任务运行器、路由、组件体系和安全 scratch 约定。
 - 每个产物都标记 `NON-PRODUCTION PROTOTYPE`。不得声称原型已经达到生产所需的测试、加固、无障碍、安全、可维护或完成状态。
 - 默认不连接生产数据库、不使用真实凭证、不发送真实外部请求、不修改生产数据，也不部署、发布、commit 或删除文件。
 - 使用内存状态、公开安全的合成数据和本地 stub。问题确实涉及持久化或外部依赖时，停止并要求单独批准非生产环境和数据边界。
 - 未经明确授权不安装依赖，优先复用现有运行时与组件。
 - 不自动删除原型文件。只建议删除、作为证据保留或正式重写；删除必须另行明确授权。
-- 进入生产实施必须转给 `requirements-to-spec`、`safe-change-plan` 或 `safe-fix-implementation` 并重新确认权限。
+- 进入生产工作时，未闭合决策先澄清，缺少规格交给 `requirements-to-spec`，缺少实施顺序交给 `safe-change-plan`，已确认功能交给 `feature-implementation`，局部修复交给 `safe-fix-implementation`。复用已有生产授权，仅对缺失范围询问。
 
 ## 工作流程
 

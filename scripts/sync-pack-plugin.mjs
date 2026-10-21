@@ -53,6 +53,28 @@ export function executionContract(execution, locale) {
   ].join("\n");
 }
 
+// Ship only referenced Pack resources; each installed Skill remains self-contained.
+export function copyPackReferences(skillDir, destination, workflowDestination = destination) {
+  const packRoot = path.dirname(path.dirname(skillDir));
+  const metadata = parseYamlSubset(readFileSync(path.join(skillDir, "skill.yaml"), "utf8"));
+  const instructions = ["en", "zh-CN"].map((locale) =>
+    readFileSync(path.join(skillDir, `instructions.${locale}.md`), "utf8")
+    + executionContract(metadata.execution, locale),
+  ).join("\n");
+  const references = path.join(packRoot, "references");
+  if (existsSync(references)) {
+    for (const entry of sortedDirectoryEntries(references)) {
+      if (!entry.isFile() || !instructions.includes(`references/${entry.name}`)) continue;
+      mkdirSync(destination, { recursive: true });
+      copyFileSync(path.join(references, entry.name), path.join(destination, entry.name));
+    }
+  }
+  if (instructions.includes("../../workflows.yaml")) {
+    mkdirSync(workflowDestination, { recursive: true });
+    copyFileSync(path.join(packRoot, "workflows.yaml"), path.join(workflowDestination, "workflows.yaml"));
+  }
+}
+
 export function discoverActivePackSkills(packRoot) {
   const packPath = path.join(packRoot, "pack.yaml");
   const pack = parseYamlSubset(readFileSync(packPath, "utf8"));
@@ -120,7 +142,7 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
     const source = path.join(packSkills, slug);
     const metadataSource = readFileSync(path.join(source, "skill.yaml"), "utf8");
     const metadata = parseYamlSubset(metadataSource);
-    const normalizeReferences = (content) => content.replaceAll("../../references/", "references/");
+    const normalizeReferences = (content) => content.replaceAll("../../references/", "references/").replaceAll("../../workflows.yaml", "references/workflows.yaml");
     return {
       slug,
       source,
@@ -191,7 +213,8 @@ export function syncPackPlugin({ packRoot, pluginRoot, skills, interfaces, prune
     for (const resourceName of ["references", "assets", "scripts"]) {
       const destinationResource = path.join(destination, resourceName);
       rmSync(destinationResource, { recursive: true, force: true });
-      copyDirectoryContents(path.join(packRoot, resourceName), destinationResource);
+      if (resourceName === "references") copyPackReferences(source, destinationResource);
+      else copyDirectoryContents(path.join(packRoot, resourceName), destinationResource);
       copyDirectoryContents(path.join(source, resourceName), destinationResource);
     }
     if (log) console.log(`Synced ${path.relative(process.cwd(), destination)}`);

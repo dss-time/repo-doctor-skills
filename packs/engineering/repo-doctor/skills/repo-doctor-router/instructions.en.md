@@ -9,7 +9,7 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
 ## Boundary
 
 - Stay read-only. Do not edit files, run commands, access the network, or perform release actions.
-- Use the unique canonical registry at `packs/engineering/repo-doctor/workflows.yaml` when repository access is available; packaged copies are read-only projections. Do not invent or silently extend workflows.
+- Read `../../workflows.yaml` relative to this Skill document. In a distribution this is a bundled read-only projection of the unique canonical registry; no source-repository checkout is required. Do not invent or silently extend workflows.
 - Do not claim the host recursively invokes Skills. A recommendation is guidance for the user or a later turn.
 - Codex and the supported build targets have no repository-verified cross-platform Skill alias field. Do not emit alias frontmatter, duplicate a Skill, or claim `$doctor` exists. Use the stable canonical Skill name.
 - Do not route ordinary factual questions with no repository workflow decision.

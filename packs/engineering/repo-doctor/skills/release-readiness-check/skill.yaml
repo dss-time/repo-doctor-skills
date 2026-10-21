@@ -4,7 +4,7 @@ name:
   zh-CN: 发布就绪检查
 category: engineering
 visibility: public
-version: 0.1.3
+version: 0.1.4
 status: beta
 default_locale: zh-CN
 supported_locales:

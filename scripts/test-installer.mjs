@@ -78,6 +78,28 @@ try {
   const featureBody = readFileSync(path.join(featureTarget, "feature-implementation", "SKILL.md"), "utf8");
   assert.ok(featureBody.includes("# 功能实施"));
   assert.ok(!featureBody.includes("# Feature Implementation"));
+  assert.ok(!featureBody.includes("report test authoring blocked"));
+  assert.match(featureBody, /references\/testing-contract.zh-CN.md/);
+  assert.deepEqual(
+    readFileSync(path.join(featureTarget, "feature-implementation/references/testing-contract.zh-CN.md")),
+    readFileSync(path.join(root, "packs/engineering/repo-doctor/references/testing-contract.zh-CN.md")),
+    "individual feature installation must include its canonical test discipline",
+  );
+  assert.ok(!existsSync(path.join(featureTarget, "safe-test-implementation")), "feature installation needs no second Skill");
+
+  const routerTarget = path.join(tempRoot, "router-only");
+  const routerInstall = cli(["--skill", "repo-doctor-router", "--target-dir", routerTarget]);
+  assert.equal(routerInstall.status, 0, routerInstall.stderr);
+  assert.deepEqual(readdirSync(routerTarget), ["repo-doctor-router"]);
+  assert.deepEqual(
+    readFileSync(path.join(routerTarget, "repo-doctor-router/references/workflows.yaml")),
+    readFileSync(path.join(root, "packs/engineering/repo-doctor/workflows.yaml")),
+    "standalone Router must carry the canonical registry without needing the source repository",
+  );
+  assert.match(readFileSync(path.join(routerTarget, "repo-doctor-router/SKILL.md"), "utf8"), /references\/workflows.yaml/);
+  assert.ok(!existsSync(path.join(routerTarget, "repo-doctor-router/references/testing-contract.en.md")));
+  assert.ok(!existsSync(path.join(fullTarget, "safe-code-review/references/workflows.yaml")));
+  assert.ok(!existsSync(path.join(fullTarget, "safe-code-review/references/testing-contract.en.md")));
 
   for (const language of ["en", "zh-CN", "bilingual"]) {
     const individual = path.join(tempRoot, `individual-${language}`);

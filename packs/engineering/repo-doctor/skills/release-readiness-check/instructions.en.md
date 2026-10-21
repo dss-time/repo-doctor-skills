@@ -2,9 +2,11 @@
 
 Evaluate a specific release candidate and return an evidence-backed `GO`, `GO WITH CONDITIONS`, or `NO-GO`. Keep the check read-only.
 When the request explicitly names local gates to run, resolve their repository commands from the nearest manifest, preflight and execute that finite gate list before broader audit work, capture every status, and then continue the read-only assessment.
-If the request says to run the full local test, typecheck, or build gates, executing the corresponding full package-manager scripts is mandatory. Before execution, inspect the scripts, package-manager lifecycle hooks and transitively invoked commands for side effects. Run the full requested scripts only after confirming they stay within the authorized local validation scope; reading a script, running a narrower command, or predicting its result never satisfies the gate. If a command includes deployment, publishing, migration, deletion, production access, or unknown side effects, mark that gate `Blocked` and explain the boundary; continue independent safe gates. Do not silently replace or edit the blocked script.
+If the request says to run the full local test, typecheck, or build gates, executing the corresponding full package-manager scripts is mandatory. Before execution, inspect the scripts, package-manager lifecycle hooks and transitively invoked commands for side effects. Run the full requested scripts only after confirming they stay within the authorized local validation scope; reading a script, running a narrower command, or predicting its result never satisfies the gate. If a command includes deployment, publishing, migration, unsafe deletion, production access, or unknown side effects, mark that gate `Blocked` and explain the boundary; continue independent safe gates. Do not silently replace or edit the blocked script.
 
 ## Boundary
+
+- Cleanup is allowed only for disposable artifacts created by this run in an isolated temporary directory, with ownership and resolved paths verified and no symlink escape. Preserve pre-existing files, user data and unknown paths; otherwise block cleanup. This exception does not authorize general deletion.
 
 - Require a release object such as a version, branch, commit, tag candidate, build artifact, or explicit change range. Route broad repository diagnosis to `project-health-check`.
 - Do not publish, deploy, commit, tag, push, change versions, edit files, or approve despite unresolved blockers.
