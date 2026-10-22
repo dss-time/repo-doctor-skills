@@ -81,21 +81,21 @@ npx repo-doctor-skills install --language zh-CN
 
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。它打印安装目标、跳过相同内容，替换不同内容需要 `--force`。外部 skills CLI 的 Node 要求由其自身版本决定。
 
-## v0.8.0 正式版
+## v0.8.1 正式版
 
-源码包含 41 个 Skill（Repo Doctor 28 个）和 38 个 ChatGPT ZIP。新的 GPT-6.1 Sol low 评测 **328/328 全部通过**：205 项核心、44 个工作流步骤、65 项模式/判定及 14 项权限用例。[发布说明](docs/RELEASE_NOTES_0.8.0.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
+源码包含 41 个 Skill（Repo Doctor 28 个）和 38 个 ChatGPT ZIP。新的 GPT-6.1 Sol low 评测 **328/328 全部通过**：205 项核心、44 个工作流步骤、65 项模式/判定及 14 项权限用例。[发布说明](docs/RELEASE_NOTES_0.8.1.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
 
-将 GitHub 插件固定到 `v0.8.0`：
+将 GitHub 插件固定到 `v0.8.1`：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 通过 npm 安装准确版本（推荐的 7 个或全部 41 个 Skill）：
 
 ```bash
-npx repo-doctor-skills@0.8.0 install --agent codex
-npx repo-doctor-skills@0.8.0 install --preset full --agent codex
+npx repo-doctor-skills@0.8.1 install --agent codex
+npx repo-doctor-skills@0.8.1 install --preset full --agent codex
 ```
 
 同一 Agent 选择一种安装方式。官方 skills CLI 从公开 GitHub 源码安装。

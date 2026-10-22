@@ -81,21 +81,21 @@ npx repo-doctor-skills install --language en
 
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. It prints the target, skips identical content, and requires `--force` to replace different content. The external skills CLI has its own Node requirements.
 
-## v0.8.0 stable release
+## v0.8.1 stable release
 
-The source contains 41 Skills (28 in Repo Doctor) and 38 ChatGPT ZIPs. Fresh GPT-6.1 Sol low validation passed **328/328**: 205 core, 44 workflow steps, 65 mode/verdict and 14 permission cases. [Release notes](docs/RELEASE_NOTES_0.8.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
+The source contains 41 Skills (28 in Repo Doctor) and 38 ChatGPT ZIPs. Fresh GPT-6.1 Sol low validation passed **328/328**: 205 core, 44 workflow steps, 65 mode/verdict and 14 permission cases. [Release notes](docs/RELEASE_NOTES_0.8.1.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-Pin the GitHub plugin to `v0.8.0`:
+Pin the GitHub plugin to `v0.8.1`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 Install the exact npm version (seven recommended Skills, or all 41):
 
 ```bash
-npx repo-doctor-skills@0.8.0 install --agent codex
-npx repo-doctor-skills@0.8.0 install --preset full --agent codex
+npx repo-doctor-skills@0.8.1 install --agent codex
+npx repo-doctor-skills@0.8.1 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.

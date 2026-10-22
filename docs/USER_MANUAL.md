@@ -1,6 +1,6 @@
 # Repo Doctor Skills User Manual
 
-> v0.8.0 source: 41 Skills / Repo Doctor 28. GitHub release v0.8.0 includes the new feature implementation owner; npm 0.8.0 supports Recommended 7 and Full 41. [Examples](guides/delivery-examples.md).
+> v0.8.1 source: 41 Skills / Repo Doctor 28. GitHub release v0.8.1 includes the new feature implementation owner; npm 0.8.0 supports Recommended 7 and Full 41. [Examples](guides/delivery-examples.md).
 
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 
@@ -53,7 +53,7 @@ Use `--agent codex` to choose Codex explicitly. The installer does not identify 
 npx repo-doctor-skills install --preset full
 ```
 
-v0.8.0 contains 41 active Skills: 28 in Repo Doctor and 38 across the three plugins. The three Document Data Doctor Skills remain regular-build-only. Both npm and source Full installations include all 41, including feature-implementation.
+v0.8.1 contains 41 active Skills: 28 in Repo Doctor and 38 across the three plugins. The three Document Data Doctor Skills remain regular-build-only. Both npm and source Full installations include all 41, including feature-implementation.
 
 ### Individual
 
@@ -140,10 +140,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.8.0`; to select that version, use:
+2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.8.1`; to select that version, use:
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

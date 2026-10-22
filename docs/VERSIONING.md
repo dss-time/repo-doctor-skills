@@ -6,7 +6,7 @@ Repo Doctor Skills keeps release versions, component versions, and maturity stat
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release notes.
 
-The project release version is **0.8.0** (tag `v0.8.0`). Fresh version-scoped GPT-6.1 Sol low evidence passed 328/328; no historical PASS or waiver is reused. Repo Doctor Pack/plugin advances to 0.10.0 with 28 Skills; the total active inventory is 41.
+The project release version is **0.8.1** (tag `v0.8.1`). Fresh version-scoped GPT-6.1 Sol low evaluation passed 328/328; historical evidence is not reused. Repo Doctor Pack/plugin is 0.10.1 with 28 Skills; the total active inventory is 41. Publication requires the new report and all release gates to pass.
 
 The immutable `v0.5.0` tag points to the intended execution-efficiency candidate, but that tag's clean-checkout CI exposed a build-integrity test dependency on ignored `dist/` output. No GitHub Release was created for v0.5.0, and the tag is preserved without deletion or movement. v0.5.1 contains the same Skill behavior plus the test-only clean-build isolation fix.
 

@@ -19,11 +19,11 @@ Start with `npx skills@latest add dss-time/repo-doctor-skills` for interactive s
 Add the stable source:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-This example pins the v0.8.0 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
+This example pins the v0.8.1 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
 
 - **Repo Doctor** for repository engineering;
 - **Productivity Toolkit** for reports, research, spreadsheets, documents, meetings, and presentations;
@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 See [Legacy Codex Plugin](LEGACY_CODEX_PLUGIN.md) for the compatibility path and host-specific notes.
 
-v0.8.0 contains 41 Skills: Repo Doctor has 28, the three plugins contain 38 together, and three Document Data Doctor Skills are regular-build-only. A Full source installation includes all 41. Published v0.7.3 remains at 40 / 27 / 37 respectively; its archives and npm package do not contain feature-implementation yet.
+v0.8.1 contains 41 Skills: Repo Doctor has 28, the three plugins contain 38 together, and three Document Data Doctor Skills are regular-build-only. A Full source installation includes all 41. Published v0.7.3 remains at 40 / 27 / 37 respectively; its archives and npm package do not contain feature-implementation yet.
 
 ## 3. ChatGPT single-Skill ZIPs
 

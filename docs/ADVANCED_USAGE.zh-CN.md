@@ -19,11 +19,11 @@
 添加稳定版 source：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-此示例固定到 v0.8.0 正式版。省略 `--ref` 可使用 marketplace 当前默认分支；安装后新建任务。本仓库分发三个插件：
+此示例固定到 v0.8.1 正式版。省略 `--ref` 可使用 marketplace 当前默认分支；安装后新建任务。本仓库分发三个插件：
 
 - **Repo Doctor**：仓库工程任务；
 - **Productivity Toolkit**：报告、研究、表格、文档、会议和演示；
@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 兼容路径和宿主差异见[历史 Codex 插件说明](LEGACY_CODEX_PLUGIN.zh-CN.md)。
 
-v0.8.0 共 41 个 Skill：Repo Doctor 为 28 个，三个插件合计 38 个，另有 3 个 Document Data Doctor Skill 只进入常规构建。源码 Full 安装包含全部 41 个。已发布 v0.7.3 对应数量仍为 40 / 27 / 37，其压缩包和 npm 包尚不包含 feature-implementation。
+v0.8.1 共 41 个 Skill：Repo Doctor 为 28 个，三个插件合计 38 个，另有 3 个 Document Data Doctor Skill 只进入常规构建。源码 Full 安装包含全部 41 个。已发布 v0.7.3 对应数量仍为 40 / 27 / 37，其压缩包和 npm 包尚不包含 feature-implementation。
 
 ## 3. ChatGPT 单 Skill ZIP
 

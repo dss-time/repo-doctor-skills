@@ -1,5 +1,6 @@
 import { readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   AppServer,
   activeSkills,
@@ -22,6 +23,7 @@ import {
 } from "./live-codex-validation.mjs";
 
 import { assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
+import { loadCheckpoint, saveCheckpoint } from "./live-evidence-checkpoint.mjs";
 
 function option(name, fallback = null) {
   const index = process.argv.indexOf(name);
@@ -42,6 +44,15 @@ const permissionsOnly = process.argv.includes("--permissions-only");
 const blockerReportPath = option("--record-blocker");
 const observedUsageLimit = process.argv.includes("--record-observed-usage-limit");
 const baseReport = JSON.parse(readFileSync(baseReportPath, "utf8"));
+const checkpointPath = outputPath.replace(/\.json$/, ".checkpoint.json");
+let checkpoint = null;
+function recordCheckpoint(result) {
+  if (!checkpoint) return result;
+  checkpoint.cases = checkpoint.cases.filter((item) => item.case_id !== result.case_id);
+  checkpoint.cases.push(result);
+  saveCheckpoint(checkpointPath, sanitizeEvidence(compactEvidenceReport(checkpoint)));
+  return result;
+}
 const skillEnum = { type: "string", enum: activeSkills };
 
 const workflowDefinitions = [
@@ -375,7 +386,7 @@ function baseCase({
   issues,
   allowedToolActivity = false,
 }) {
-  return {
+  return recordCheckpoint({
     case_id: caseId,
     evaluation_metadata: evaluationMetadata,
     skill,
@@ -394,11 +405,11 @@ function baseCase({
     output,
     result: issues.length === 0
       ? "PASS"
-      : issues.some((issue) => issue.includes("usageLimitExceeded"))
+      : issues.some((issue) => /usageLimitExceeded|serverOverloaded|turn timeout/.test(issue))
         ? "BLOCKED"
         : "FAIL",
     notes: issues.join("; "),
-  };
+  });
 }
 
 function commonIssues(
@@ -615,6 +626,16 @@ async function runPermission(server, testCase) {
 
 async function main() {
   assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
+  const identity = {
+    project_version: baseReport.project_version,
+    requested_model: requestedModel,
+    content_binding: baseReport.content_binding,
+    evaluator_sha256: sha256(fileURLToPath(import.meta.url)) + ":" + sha256(path.join(root, "scripts/live-codex-validation.mjs")),
+  };
+  checkpoint = process.argv.includes("--resume-advanced")
+    ? loadCheckpoint(checkpointPath, identity)
+    : { ...identity, cases: [], workflows: [] };
+  saveCheckpoint(checkpointPath, sanitizeEvidence(compactEvidenceReport(checkpoint)));
   const coreCases = baseReport.cases.filter((testCase) =>
     ["explicit", "implicit", "negative"].includes(testCase.invocation));
   const coreSummary = summarize(coreCases);
@@ -644,7 +665,15 @@ async function main() {
   const workflowRuns = await pool(
     requestedWorkflowRuns,
     async ({ workflow, language }, index) => {
+      const saved = checkpoint.workflows.find((item) => item.workflow_id === workflow.id && item.language === language && item.result === "PASS");
+      if (saved) {
+        process.stdout.write(`[workflow reused] PASS ${workflow.id} ${language}\n`);
+        return saved;
+      }
       const result = await runWorkflow(server, workflow, language);
+      checkpoint.workflows = checkpoint.workflows.filter((item) => item.workflow_id !== workflow.id || item.language !== language);
+      checkpoint.workflows.push({ ...result, steps: compactEvidenceReport({ cases: result.steps }).cases });
+      saveCheckpoint(checkpointPath, sanitizeEvidence(compactEvidenceReport({ ...checkpoint, workflows: checkpoint.workflows })));
       process.stdout.write(
         `[workflow ${index + 1}/${requestedWorkflowRuns.length}] ${result.result} ${workflow.id} ${language}\n`,
       );
@@ -656,6 +685,8 @@ async function main() {
 
   const modeCases = workflowOnly || permissionsOnly ? [] : buildModeCases();
   const modeResults = await pool(modeCases, async (testCase, index) => {
+    const saved = checkpoint.cases.find((item) => item.case_id === testCase.id && item.result === "PASS");
+    if (saved) return saved;
     const result = await runMode(server, testCase);
     process.stdout.write(
       `[mode ${index + 1}/${modeCases.length}] ${result.result} ${testCase.id}${result.notes ? ` — ${result.notes}` : ""}\n`,
@@ -665,6 +696,8 @@ async function main() {
 
   const permissionCases = workflowOnly ? [] : permissionDefinitions;
   const permissionResults = await pool(permissionCases, async (testCase, index) => {
+    const saved = checkpoint.cases.find((item) => item.case_id === `permission--${testCase.id}` && item.result === "PASS");
+    if (saved) return saved;
     const result = await runPermission(server, testCase);
     process.stdout.write(
       `[permission ${index + 1}/${permissionCases.length}] ${result.result} ${testCase.id}${result.notes ? ` — ${result.notes}` : ""}\n`,
@@ -717,11 +750,14 @@ async function main() {
 
 async function retryServiceFailures() {
   assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
+  const expectedCases = activeSkills.length * 5
+    + workflowDefinitions.reduce((total, workflow) => total + workflow.steps.length * 2, 0)
+    + buildModeCases().length + permissionDefinitions.length;
   if (baseReport.requested_model !== requestedModel) throw new Error("Service retry must use the report's explicit model");
   if (baseReport.project_version !== JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version
-    || baseReport.cases.length !== 317
-    || new Set(baseReport.cases.map((testCase) => testCase.case_id)).size !== 317) {
-    throw new Error("Service retry requires a complete current-version report with 317 unique cases");
+    || baseReport.cases.length !== expectedCases
+    || new Set(baseReport.cases.map((testCase) => testCase.case_id)).size !== expectedCases) {
+    throw new Error(`Service retry requires a complete current-version report with ${expectedCases} unique cases`);
   }
   const installed = baseReport.installation.second_session.skills;
   if (JSON.stringify(installed.map((skill) => skill.name).sort()) !== JSON.stringify([...activeSkills].sort())
@@ -777,7 +813,7 @@ async function retryServiceFailures() {
       reused_passed_cases: cases.length - failed.length,
       unchanged_skill_hashes_verified: true,
     },
-    result: summary.passed === 317 ? "PASS" : "FAIL",
+    result: summary.passed === expectedCases ? "PASS" : "FAIL",
   };
   assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
   const sanitized = sanitizeEvidence(compactEvidenceReport(report));

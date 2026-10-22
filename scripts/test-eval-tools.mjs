@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync, readFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { loadSuite, validateObservedResult } from "./eval-validate.mjs";
+import { liveEvidenceBinding } from "./live-evidence-binding.mjs";
+import { loadCheckpoint, saveCheckpoint } from "./live-evidence-checkpoint.mjs";
 
 const root = process.cwd();
 const prepared = spawnSync(process.execPath, ["scripts/eval-prepare.mjs"], { cwd: root, encoding: "utf8" });
@@ -52,6 +54,17 @@ assert.ok(validateObservedResult(bad, root).some((error) => error.includes("unkn
 const temp = mkdtempSync(path.join(tmpdir(), "live-eval-test-"));
 try {
   const filename = path.join(temp, "result.json");
+  const checkpointFile = path.join(temp, "checkpoint.json");
+  const identity = { project_version: "fixture", requested_model: "fixture", evaluator_sha256: "fixture", content_binding: liveEvidenceBinding(root) };
+  saveCheckpoint(checkpointFile, { ...identity, cases: [{ case_id: "saved", result: "PASS" }], workflows: [] });
+  assert.equal(loadCheckpoint(checkpointFile, identity).cases[0].case_id, "saved");
+  assert.equal(loadCheckpoint(checkpointFile, identity).result, "INCOMPLETE", "checkpoint must never claim a completed PASS");
+  for (const key of ["project_version", "requested_model", "evaluator_sha256"]) {
+    assert.throws(() => loadCheckpoint(checkpointFile, { ...identity, [key]: "changed" }), /cannot be reused/);
+  }
+  assert.throws(() => loadCheckpoint(checkpointFile, { ...identity, content_binding: { ...identity.content_binding, runtime_sha256: "changed" } }), /missing or stale/);
+  saveCheckpoint(checkpointFile, { ...identity, cases: [{ result: "FAIL" }], workflows: [] });
+  assert.throws(() => loadCheckpoint(checkpointFile, identity), /Semantic failures/);
   writeFileSync(filename, JSON.stringify(result));
   const report = spawnSync(process.execPath, ["scripts/eval-report.mjs", "--input", filename], { cwd: root, encoding: "utf8" });
   assert.equal(report.status, 0, report.stderr);
@@ -85,8 +98,9 @@ try {
   }
   // Resume refusal must happen before launching a model or touching authentication.
   const resume = path.join(temp, "resume.json");
+  cpSync(path.join(root, "skills"), path.join(temp, "skills"), { recursive: true });
   const projectVersion = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version;
-  writeFileSync(resume, JSON.stringify({ project_version: projectVersion, requested_model: "different-model", cases: [] }));
+  writeFileSync(resume, JSON.stringify({ project_version: projectVersion, requested_model: "different-model", cases: [], content_binding: liveEvidenceBinding(root) }));
   for (const [args, message] of [
     [[], "Core resume requires an explicit model"],
     [["--model", "fixture-model"], "Core resume requires a complete same-version, same-model case inventory"],

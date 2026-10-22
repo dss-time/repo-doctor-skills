@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-15T09:34:10.420Z",
-  "project_version": "0.8.0",
+  "generated_at": "2026-10-22T02:34:04.712Z",
+  "project_version": "0.8.1",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.10.0",
+      "version": "0.10.1",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -98,7 +98,7 @@
       "id": "repo.repo-doctor-router",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "status": "beta",
       "name": {
         "en": "Repo Doctor Router",
@@ -212,7 +212,7 @@
       "id": "repo.requirements-to-spec",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/requirements-to-spec",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Requirements Specification",
@@ -288,7 +288,7 @@
       "id": "repo.decision-prototype",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/decision-prototype",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Decision Prototype",
@@ -478,7 +478,7 @@
       "id": "repo.safe-change-plan",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Safe Change Plan",
@@ -554,7 +554,7 @@
       "id": "repo.safe-test-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-test-implementation",
-      "version": "0.4.2",
+      "version": "0.4.3",
       "status": "beta",
       "name": {
         "en": "Safe Test Implementation",
@@ -668,7 +668,7 @@
       "id": "repo.release-readiness-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/release-readiness-check",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "status": "beta",
       "name": {
         "en": "Release Readiness Check",
@@ -1124,7 +1124,7 @@
       "id": "repo.feature-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/feature-implementation",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Feature Implementation",

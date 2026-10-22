@@ -1,0 +1,17 @@
+{
+  "project_version": "0.8.1",
+  "phase": "advanced",
+  "result": "INTERRUPTED_SERVICE_TIMEOUT",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "timeout_ms": 120000,
+  "concurrency": 6,
+  "observed_console_workflow_completions": [
+    "decision-prototype:en",
+    "runtime-bug-investigation:en",
+    "runtime-bug-investigation:zh-CN"
+  ],
+  "per_case_evidence_retained": false,
+  "release_eligible": false,
+  "notes": "The first advanced attempt exited on a turn timeout before writing its report. These observations do not count as validated case evidence. The new 205/205 core report was preserved; advanced evaluation was restarted with checkpoints, concurrency 4 and a 180000 ms timeout after account quota recovery."
+}

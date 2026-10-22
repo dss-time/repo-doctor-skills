@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-15T09:38:32.827Z",
-  "project_version": "0.8.0",
+  "generated_at": "2026-10-22T02:34:04.712Z",
+  "project_version": "0.8.1",
   "expected_active_skills": 41,
   "targets": [
     {
@@ -176,7 +176,7 @@
     },
     {
       "zip": "rd-feature-implementation.zip",
-      "entry_count": 4,
+      "entry_count": 6,
       "status": "PASS",
       "issues": []
     },
@@ -200,7 +200,7 @@
     },
     {
       "zip": "rd-repo-doctor-router.zip",
-      "entry_count": 4,
+      "entry_count": 5,
       "status": "PASS",
       "issues": []
     },
@@ -242,7 +242,7 @@
     },
     {
       "zip": "rd-safe-test-implementation.zip",
-      "entry_count": 4,
+      "entry_count": 6,
       "status": "PASS",
       "issues": []
     },

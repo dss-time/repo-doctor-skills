@@ -8,16 +8,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-10-22
+
+### Added
+
+- Fresh v0.8.1 real-model evidence: 328/328 PASS using GPT-6.1 Sol low, bound to complete canonical and runtime Skill content.
+
+### Changed
+
+- Keep Repo Doctor Pack/plugin at 0.10.1 with independently versioned Skill patches.
+
+### Security
+
+- Bind release evidence and resume eligibility to complete canonical and runtime Skill content; preserve recovery files when installation rollback cannot complete.
+
 ### Fixed
 
 - Separate daily metadata consistency from formal release gates; bind fresh model evidence and resume checks to canonical source and complete Skill runtime trees. Existing v0.8.0 reports remain historical and do not certify these changes.
+- Save incomplete advanced-evaluation checkpoints and verify version, model, evaluator and Skill hashes before reuse; derive service-retry case counts from the current inventory instead of the old 317-case constant.
 - Preserve replaced Skills until installation verification succeeds; roll back the whole attempted batch on failure and retain recovery files if restoration fails.
-- Route test-first feature implementation to `feature-implementation`, retaining `safe-fix-implementation` for diagnosed local repairs; send unresolved material decisions to clarification before specification or planning. Advance requirements-to-spec and safe-change-plan patch versions within the unreleased Repo Doctor 0.10.1 Pack.
+- Route test-first feature implementation to `feature-implementation`, retaining `safe-fix-implementation` for diagnosed local repairs; send unresolved material decisions to clarification before specification or planning. Advance requirements-to-spec and safe-change-plan patch versions within Repo Doctor Pack/plugin 0.10.1.
 - Bundle the canonical workflow registry with Router across installable distributions, and ship a shared test contract only with feature/test implementation Skills so individual installation remains usable.
 - Allow verified cleanup of run-owned isolated temporary artifacts during test and release checks; retain protection for existing files and unknown paths.
 - Reuse authorized prototype command scope, route settled production features to feature implementation, and require initial red evidence only in test-first mode.
 - Correct current installation counts and stable-version examples in both user manuals, with inventory-backed documentation checks.
-- Bump the five changed Skill patch versions and Repo Doctor Pack/plugin to 0.10.1. These changes are unreleased; v0.8.0 model results remain historical evidence, not validation of this revision.
+- Bump the five changed Skill patch versions and Repo Doctor Pack/plugin to 0.10.1. v0.8.0 model results remain historical evidence and are not reused for this revision.
 
 ### Documentation
 
@@ -489,7 +504,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...HEAD
+[0.8.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.3...v0.8.0
 [0.7.3]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2-rc.1...v0.7.2
