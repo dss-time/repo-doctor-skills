@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Separate daily metadata consistency from formal release gates; bind fresh model evidence and resume checks to canonical source and complete Skill runtime trees. Existing v0.8.0 reports remain historical and do not certify these changes.
 - Save incomplete advanced-evaluation checkpoints and verify version, model, evaluator and Skill hashes before reuse; derive service-retry case counts from the current inventory instead of the old 317-case constant.
+- Run local npm tarball smoke tests offline and avoid incidental audit/funding requests during CI dependency setup, so registry service outages do not stall unrelated local package checks.
 - Preserve replaced Skills until installation verification succeeds; roll back the whole attempted batch on failure and retain recovery files if restoration fails.
 - Route test-first feature implementation to `feature-implementation`, retaining `safe-fix-implementation` for diagnosed local repairs; send unresolved material decisions to clarification before specification or planning. Advance requirements-to-spec and safe-change-plan patch versions within Repo Doctor Pack/plugin 0.10.1.
 - Bundle the canonical workflow registry with Router across installable distributions, and ship a shared test contract only with feature/test implementation Skills so individual installation remains usable.

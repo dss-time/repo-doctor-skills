@@ -34,3 +34,7 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 同一 Agent 选择一种安装方式。GitHub Release 包含 38 个独立 ZIP 和 3 个元数据/校验文件。npm 发布状态单独记录，GitHub Release 不会自动更新 npm。
 
 [真实模型报告](https://github.com/dss-time/repo-doctor-skills/blob/v0.8.1/tests/reports/live-codex-skill-validation-0.8.1.md)
+
+## 外部发布状态
+
+本地完整验证及新的 328/328 模型评测已通过。npm 官方于 2026-10-22 02:33 UTC（北京时间 10:33）起报告安装及发布故障，参见[官方状态](https://status.npmjs.org/)。npm 0.8.1 上传两次超时，查询时已发布 latest 仍为 0.8.0。首次 GitHub CI 在 tarball 验证时因 npm exec 超时而失败；本地 tarball 测试现已明确离线运行，CI 安装也避免额外审计/资助请求，参见[当前 Actions 状态](https://github.com/dss-time/repo-doctor-skills/actions)。外部服务状态不改变已记录的本地测试和模型结果；npm 不可用期间可通过 GitHub 插件或本 Release 附带 ZIP 安装。

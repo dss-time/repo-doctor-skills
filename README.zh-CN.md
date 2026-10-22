@@ -91,11 +91,11 @@ npx repo-doctor-skills install --language zh-CN
 codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
-通过 npm 安装准确版本（推荐的 7 个或全部 41 个 Skill）：
+受 [npm 安装及发布服务故障](https://status.npmjs.org/)影响，npm v0.8.1 尚未发布；当前 npm 仍为 v0.8.0。需要 v0.8.1 时使用上方 GitHub 插件方式。
 
 ```bash
-npx repo-doctor-skills@0.8.1 install --agent codex
-npx repo-doctor-skills@0.8.1 install --preset full --agent codex
+npx repo-doctor-skills@0.8.0 install --agent codex
+npx repo-doctor-skills@0.8.0 install --preset full --agent codex
 ```
 
 同一 Agent 选择一种安装方式。官方 skills CLI 从公开 GitHub 源码安装。

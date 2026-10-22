@@ -34,3 +34,7 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 Choose one installation method per agent. The GitHub Release includes 38 individual ZIPs and three metadata/checksum files. npm publication status is recorded separately; do not assume that a GitHub Release updates npm.
 
 [Real-model report](https://github.com/dss-time/repo-doctor-skills/blob/v0.8.1/tests/reports/live-codex-skill-validation-0.8.1.md)
+
+## External publication status
+
+The complete local validation suite and fresh 328/328 model evaluation passed. npm reported an active package installation and publishing incident on 2026-10-22, starting at 02:33 UTC (10:33 Asia/Shanghai): [official status](https://status.npmjs.org/). The npm 0.8.1 upload timed out twice; a registry query still reports 0.8.0 as the published latest version. The initial GitHub CI reached tarball validation but timed out on a registry-dependent npm exec. Local tarball smoke now runs explicitly offline, and CI setup avoids incidental audit/funding requests; see [current Actions status](https://github.com/dss-time/repo-doctor-skills/actions). These external states do not change the recorded local test or model results. Use GitHub plugin installation or the attached ZIPs while npm is unavailable.

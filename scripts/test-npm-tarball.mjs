@@ -30,6 +30,11 @@ function runNpx(tarball, args, env = {}) {
       HOME: path.join(tempRoot, "home"),
       npm_config_cache: path.join(tempRoot, "npm-cache"),
       npm_config_update_notifier: "false",
+      // This test installs the local tarball, including all runtime resources.
+      // Registry availability must not affect package self-containment checks.
+      npm_config_offline: "true",
+      npm_config_audit: "false",
+      npm_config_fund: "false",
       CODEX_HOME: "",
       AGENTS_HOME: "",
       ...env,
