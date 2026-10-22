@@ -71,7 +71,7 @@
 ### `requirements-to-spec` — Requirements Specification（需求规格化）
 
 - **Canonical 元数据：** `packs/engineering/repo-doctor/skills/requirements-to-spec/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.1` / `beta` / `read_only`
+- **版本 / 状态 / 风险：** `0.1.2` / `beta` / `read_only`
 - **调用标识：** `requirements-to-spec`
 - **执行配置：** 分类=`lightweight`；默认=`fast`；允许隐式调用=是
 - **Canonical 用途与边界：** 将产品、数据、安全、权限、兼容性和验收等重大决策已经闭合的需求整理为结构化、可实施、可验证的规格。用于已有澄清摘要或讨论已定稿、只剩非阻塞假设时；发现重大未决决策必须停止并转交 requirements-clarification。不用于拆工作项、制定实施计划、解释代码、修 Bug 或直接修改。
@@ -169,7 +169,7 @@
 ### `safe-change-plan` — Safe Change Plan（安全变更计划）
 
 - **Canonical 元数据：** `packs/engineering/repo-doctor/skills/safe-change-plan/skill.yaml`
-- **版本 / 状态 / 风险：** `0.1.2` / `beta` / `advisory`
+- **版本 / 状态 / 风险：** `0.1.3` / `beta` / `advisory`
 - **调用标识：** `safe-change-plan`
 - **执行配置：** 分类=`lightweight`；默认=`fast`；允许隐式调用=是
 - **Canonical 用途与边界：** 将已确认规格、根因结论或影响分析转为原子化、可验证、可回滚且范围明确的实施计划。仅在重大决策已闭合且影响范围足够明确时使用；未决需求交给 requirements-clarification，已闭合但尚需规格化的需求交给 requirements-to-spec，影响未知交给 change-impact-analysis，架构理由或决策文档交给 architecture-decision-record，执行交给 safe-fix-implementation。

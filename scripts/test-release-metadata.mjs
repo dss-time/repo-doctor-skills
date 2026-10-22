@@ -14,6 +14,7 @@ import {
   inspectReleaseMetadata,
   releaseContract,
 } from "./release-metadata.mjs";
+import { liveEvidenceBinding, assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checker = path.join(repositoryRoot, "scripts", "release-metadata.mjs");
@@ -415,8 +416,55 @@ assert.ok(
   "Live-model waiver must not suppress other release gates",
 );
 
-const authorizedRelease = inspectReleaseMetadata(repositoryRoot);
-assert.deepEqual(authorizedRelease.errors, [], "current version must have complete PASS evidence and consistent metadata");
+const development = inspectReleaseMetadata(repositoryRoot, releaseContract, { development: true });
+assert.deepEqual(development.errors, [], "development must remain consistent without reusing historical release evidence");
+const developmentCli = spawnSync(process.execPath, [checker, "--check", "--development"], { encoding: "utf8" });
+assert.equal(developmentCli.status, 0, developmentCli.stderr);
+assert.match(developmentCli.stdout, /formal release readiness is not checked/);
+
+const evolution = createFixture("development");
+try {
+  replace(evolution, "packs/engineering/demo/pack.yaml", "version: 0.5.0", "version: 0.5.1");
+  replace(evolution, "plugins/demo-plugin/.codex-plugin/plugin.json", '"version": "0.5.0"', '"version": "0.5.1"');
+  assert.deepEqual(inspectReleaseMetadata(evolution, fixtureContract, { development: true }).errors, []);
+  assert.ok(inspectReleaseMetadata(evolution, fixtureContract).errors.some((error) => error.includes("version mismatch")));
+  replace(evolution, "plugins/demo-plugin/.codex-plugin/plugin.json", '"version": "0.5.1"', '"version": "0.5.0"');
+  assert.ok(inspectReleaseMetadata(evolution, fixtureContract, { development: true }).errors.some((error) => error.includes("plugin version")), "daily checks still catch Pack/plugin drift");
+  replace(evolution, "packs/engineering/demo/pack.yaml", "version: 0.5.1", "version: 0.4.0");
+  assert.ok(inspectReleaseMetadata(evolution, fixtureContract, { development: true }).errors.some((error) => error.includes("regresses below")));
+} finally {
+  rmSync(evolution, { recursive: true, force: true });
+}
+
+const evidenceRoot = createFixture("content-binding");
+try {
+  const contract = { ...fixtureContract, releaseChannel: "stable", liveModelStatus: "PASS", liveModelReport: "report.json", expectedLiveModelCases: 3 };
+  write(evidenceRoot, "docs/RELEASE_NOTES_DRAFT.md", "# v0.2.0 stable release\nLive-model PASS\n");
+  const inputs = ["packs/engineering/demo/skills/active/instructions.en.md", "packs/engineering/demo/references/rules.md", "packs/engineering/demo/workflows.yaml", "skills/active/SKILL.md", "skills/active/references/rules.md"];
+  for (const filename of inputs) write(evidenceRoot, filename, "original\n");
+  const binding = liveEvidenceBinding(evidenceRoot);
+  const report = { project_version: "0.2.0", result: "PASS", summary: { total: 3, passed: 3, failed: 0, blocked: 0 }, content_binding: binding };
+  write(evidenceRoot, "report.json", JSON.stringify(report));
+  assert.deepEqual(inspectReleaseMetadata(evidenceRoot, contract).errors, [], "matching complete evidence passes the formal gate");
+  assert.ok(inspectReleaseMetadata(evidenceRoot, { ...contract, projectVersion: "0.3.0", liveModelEvidenceVersion: "0.2.0" }).errors.some((error) => error.includes("must belong to the current project version")), "a historical evidence version cannot certify a new release");
+  for (const filename of [...inputs, "skills/active/references/added.md"]) {
+    write(evidenceRoot, filename, "changed\n");
+    assert.ok(inspectReleaseMetadata(evidenceRoot, contract).errors.some((error) => error.includes("missing or stale")), `${filename} must invalidate old PASS evidence`);
+    assert.throws(() => assertLiveEvidenceBinding(binding, liveEvidenceBinding(evidenceRoot)), /missing or stale/, "resume must also reject changed content");
+    if (inputs.includes(filename)) write(evidenceRoot, filename, "original\n");
+    else rmSync(path.join(evidenceRoot, filename));
+  }
+  const resource = "skills/active/references/rules.md";
+  rmSync(path.join(evidenceRoot, resource));
+  assert.ok(inspectReleaseMetadata(evidenceRoot, contract).errors.some((error) => error.includes("missing or stale")), "removed resources invalidate evidence");
+  write(evidenceRoot, resource, "original\n");
+  delete report.content_binding;
+  write(evidenceRoot, "report.json", JSON.stringify(report));
+  assert.ok(inspectReleaseMetadata(evidenceRoot, contract).errors.some((error) => error.includes("missing or stale")), "legacy PASS without binding stays historical");
+  assert.deepEqual(inspectReleaseMetadata(evidenceRoot, contract, { development: true }).errors, [], "daily checks do not require model calls");
+} finally {
+  rmSync(evidenceRoot, { recursive: true, force: true });
+}
 for (const waiver of [
   { ...historicalWaiver, authorized: false },
   { ...historicalWaiver, version: "0.7.2" },

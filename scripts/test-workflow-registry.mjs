@@ -14,6 +14,13 @@ const registry = parseYamlSubset(
   readFileSync(path.join(root, "packs", "engineering", "repo-doctor", "workflows.yaml"), "utf8"),
 );
 const inventory = discoverSkillInventory(root);
+const testFirst = registry.workflows["test-first-change"].stages;
+const implementation = testFirst.find((stage) => stage.id === "implementation");
+assert.equal(implementation.skill, "feature-implementation", "test-first new features need the feature owner");
+assert.deepEqual(implementation.alternatives, ["safe-fix-implementation"], "diagnosed local repairs retain their narrow owner");
+assert.equal(implementation.approval_gate, "production-approval");
+assert.ok(!testFirst.find((stage) => stage.id === "red-test").stop_conditions.includes("production_change_required"), "expected red must allow the authorized production stage");
+assert.equal(registry.workflows["bug-repair"].stages.find((stage) => stage.id === "fix").skill, "safe-fix-implementation");
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));

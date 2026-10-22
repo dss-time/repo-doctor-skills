@@ -138,8 +138,10 @@ export function inspectDoctor(root = scriptRoot) {
   ];
   record("ci-quality-gates", ciCommands.every((command) => ci.includes(command)), `required gates: ${ciCommands.join(", ")}`);
 
+  const development = inspectReleaseMetadata(root, releaseContract, { development: true });
+  record("development-metadata", development.errors.length === 0, development.errors.length ? development.errors.join("; ") : `project ${development.summary.projectVersion} development metadata consistent`);
   const release = inspectReleaseMetadata(root);
-  record("release-metadata", release.errors.length === 0, release.errors.length ? release.errors.join("; ") : `project ${release.summary.projectVersion} metadata consistent`);
+  record("release-metadata", release.errors.length === 0, release.errors.length ? release.errors.join("; ") : "formal release metadata and evidence consistent", "warning");
   if (head && tagCommit && head !== tagCommit) {
     record("release-lineage", false, `${expectedTag} does not point to HEAD`, "warning");
   } else if (head && tagCommit) {
@@ -160,7 +162,7 @@ export function inspectDoctor(root = scriptRoot) {
   return {
     schema_version: 1,
     status,
-    release_conclusion: errors.length ? "NO_GO" : warnings.length ? "GO_WITH_CONDITIONS" : "GO",
+    release_conclusion: errors.length || release.errors.length ? "NO_GO" : warnings.length ? "GO_WITH_CONDITIONS" : "GO",
     read_only: true,
     network_called: false,
     environment: { node: process.versions.node, branch, workspace_clean: workspace === "", head },
@@ -169,7 +171,8 @@ export function inspectDoctor(root = scriptRoot) {
     release: {
       current_project_version: packageJson?.version ?? null,
       release_channel: releaseContract.releaseChannel,
-      live_model_status: releaseContract.liveModelStatus,
+      live_model_status: release.errors.some((error) => error.startsWith(releaseContract.liveModelReport)) ? "STALE_OR_INVALID" : releaseContract.liveModelStatus,
+      historical_live_model_status: releaseContract.liveModelStatus,
       maintainer_waiver: releaseContract.liveModelWaiver,
       local_release_tag: tagCommit ? expectedTag : null,
       local_release_commit: tagCommit,

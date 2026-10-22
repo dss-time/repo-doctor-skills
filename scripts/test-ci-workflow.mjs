@@ -37,5 +37,7 @@ for (const command of order) {
 }
 assert.match(content, /permissions:\s*\n\s+contents:\s+read/);
 assert.match(content, /persist-credentials:\s+false/);
+assert.match(content, /run: npm run release:check -- --development/);
+assert.match(content, /if: startsWith\(github\.ref, 'refs\/tags\/v'\)\s+run: npm run release:check\s*\n/);
 assert.doesNotMatch(content, /npm publish|gh release|git push/);
 console.log("CI contract test passed for complete ordered, read-only quality gates.");

@@ -19,7 +19,7 @@ Convert confirmed analysis into a safe, atomic, verifiable, and reversible imple
 ## Boundary
 
 - Confirm that the requirement, desired behavior, and blast radius are sufficiently known.
-- If the requirement is ambiguous, recommend `requirements-to-spec`. If dependencies or compatibility impact are unknown, recommend `change-impact-analysis`.
+- If material decisions remain open, recommend `requirements-clarification`; if decisions are settled but a testable specification is missing, recommend `requirements-to-spec`. If dependencies or compatibility impact are unknown, recommend `change-impact-analysis`.
 - Do not modify code, tests, configuration, dependencies, or documentation.
 - Route settled feature delivery to `feature-implementation` and diagnosed local repairs to `safe-fix-implementation`.
 - Reject opportunistic refactors and unrelated cleanup.
@@ -68,7 +68,7 @@ Label every item as required, recommended, or later optimization. Do not execute
 ## 职责边界
 
 - 确认需求、目标行为和影响范围已经足够清楚。
-- 需求模糊时建议使用 `requirements-to-spec`；依赖或兼容性影响未知时建议使用 `change-impact-analysis`。
+- 重大决策仍开放时使用 `requirements-clarification`；决策已闭合但缺少可测试规格时使用 `requirements-to-spec`；依赖或兼容性影响未知时建议使用 `change-impact-analysis`。
 - 不得修改代码、测试、配置、依赖或文档。
 - 已确认功能交付交给 `feature-implementation`，已诊断局部修复交给 `safe-fix-implementation`。
 - 拒绝顺手重构和无关清理。

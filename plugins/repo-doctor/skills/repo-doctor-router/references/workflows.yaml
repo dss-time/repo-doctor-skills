@@ -1,4 +1,4 @@
-version: 2
+version: 3
 registry_id: repo-doctor.workflows
 supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
 workflows:
@@ -389,7 +389,7 @@ workflows:
         alternatives: []
         permission: write_scoped
         approval_gate: test-approval
-        stop_conditions: [expected_failure_not_observed, production_change_required]
+        stop_conditions: [expected_failure_not_observed]
       -
         id: production-approval
         type: gate
@@ -405,12 +405,12 @@ workflows:
       -
         id: implementation
         type: skill
-        skill: safe-fix-implementation
+        skill: feature-implementation
         optional: false
         condition: production_write_authorized
         prerequisites: [production-approval]
         next: [green-test]
-        alternatives: []
+        alternatives: [safe-fix-implementation]
         permission: write_scoped
         approval_gate: production-approval
         stop_conditions: [scope_expansion_required]

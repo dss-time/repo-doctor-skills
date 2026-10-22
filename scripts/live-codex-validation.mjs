@@ -9,6 +9,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { liveEvidenceBinding, assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -49,6 +50,12 @@ const implicitPolicy = new Map(inventory.active_skills.map((skill) => [
   skill.execution?.allow_implicit_invocation !== false,
 ]));
 const installedRoot = realpathSync(path.join(codexHome, "skills"));
+
+export function currentEvidenceBinding() {
+  const expected = liveEvidenceBinding(root);
+  assertLiveEvidenceBinding(expected, liveEvidenceBinding(root, installedRoot));
+  return expected;
+}
 
 export function sha256(filename) {
   return createHash("sha256").update(readFileSync(filename)).digest("hex");
@@ -755,6 +762,7 @@ export function summarize(cases) {
 }
 
 async function main() {
+  const contentBinding = currentEvidenceBinding();
   const allCases = buildCoreCases();
   const filteredCases = requestedCase
     ? allCases.filter((testCase) => testCase.case_id === requestedCase)
@@ -768,6 +776,7 @@ async function main() {
     if (!requestedModel) throw new Error("Core resume requires an explicit model");
     if (requestedCase || limit > 0) throw new Error("Resume cannot be combined with case or limit filters");
     const previous = JSON.parse(readFileSync(path.resolve(resumeReportPath), "utf8"));
+    assertLiveEvidenceBinding(previous.content_binding, contentBinding);
     if (previous.project_version !== inventory.project_version || previous.requested_model !== requestedModel
       || previous.cases.length !== allCases.length || new Set(previous.cases.map((item) => item.case_id)).size !== allCases.length) {
       throw new Error("Core resume requires a complete same-version, same-model case inventory");
@@ -831,9 +840,11 @@ async function main() {
     }
   }, concurrency);
   server.close();
+  assertLiveEvidenceBinding(contentBinding, currentEvidenceBinding());
   const summary = summarize(results);
   const report = {
     schema_version: 1,
+    content_binding: contentBinding,
     generated_at: new Date().toISOString(),
     started_at: startedAt,
     project_version: inventory.project_version,

@@ -745,7 +745,7 @@ The only machine-readable relationship source is `packs/engineering/repo-doctor/
 |---|---|---|
 | `feature-delivery` | End-to-end feature delivery. | Implementation and optional test approval |
 | `bug-repair` | Evidence-led bug repair and post-fix regression. | Fix and test approval |
-| `test-first-change` | Expected failure before production implementation. | Test and implementation approval |
+| `test-first-change` | Expected failure, then `feature-implementation` for settled features; use the `safe-fix-implementation` alternative only for diagnosed local defects. | Test and implementation approval |
 | `post-fix-regression-test` | Regression coverage after a verified fix. | Test approval |
 | `review-only` | Read-only diff review. | None |
 | `ci-diagnosis` | First credible CI failure diagnosis. | None |

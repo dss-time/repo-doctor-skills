@@ -15,10 +15,29 @@
   "keywords": [
     "ai",
     "agent-skills",
+    "skills",
     "codex",
+    "claude-code",
+    "workbuddy",
+    "cursor",
+    "qwen",
+    "kimi",
+    "chatgpt",
     "code-review",
-    "developer-tools",
-    "repository"
+    "debugging",
+    "root-cause-analysis",
+    "test-driven-development",
+    "requirements-analysis",
+    "feature-implementation",
+    "documentation",
+    "document-review",
+    "pdf-review",
+    "spreadsheet-data-cleaning",
+    "report-writing",
+    "skill-authoring",
+    "bilingual",
+    "workflow",
+    "developer-tools"
   ],
   "bin": {
     "repo-doctor-skills": "./bin/repo-doctor-skills.mjs"

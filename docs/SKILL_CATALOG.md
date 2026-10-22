@@ -71,7 +71,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 ### `requirements-to-spec` — Requirements Specification（需求规格化）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/requirements-to-spec/skill.yaml`
-- **Version / status / risk:** `0.1.1` / `beta` / `read_only`
+- **Version / status / risk:** `0.1.2` / `beta` / `read_only`
 - **Invocation identifier:** `requirements-to-spec`
 - **Execution profile:** classification=`lightweight`; default=`fast`; implicit invocation=yes
 - **Canonical purpose and boundary:** Convert requirements whose material product, data, security, permission, compatibility, and acceptance decisions are already closed into a structured, implementable, testable specification. Use when a clarification summary or settled discussion is ready for specification and only non-blocking assumptions remain; stop and route material open decisions to requirements-clarification. Do not use for task decomposition, implementation planning, code explanation, bug fixing, or direct edits.
@@ -169,7 +169,7 @@ Examples use platform-neutral natural language. See the [User Manual](USER_MANUA
 ### `safe-change-plan` — Safe Change Plan（安全变更计划）
 
 - **Canonical metadata:** `packs/engineering/repo-doctor/skills/safe-change-plan/skill.yaml`
-- **Version / status / risk:** `0.1.2` / `beta` / `advisory`
+- **Version / status / risk:** `0.1.3` / `beta` / `advisory`
 - **Invocation identifier:** `safe-change-plan`
 - **Execution profile:** classification=`lightweight`; default=`fast`; implicit invocation=yes
 - **Canonical purpose and boundary:** Turn a confirmed specification, root-cause finding, or impact analysis into an atomic, verifiable, reversible implementation plan with explicit scope and risk controls. Use only when material decisions are closed and blast radius is sufficiently known; route open decisions to requirements-clarification, settled requirements needing a specification to requirements-to-spec, unknown impact to change-impact-analysis, architecture rationale or decision documentation to architecture-decision-record, and execution to safe-fix-implementation.

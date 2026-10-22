@@ -143,6 +143,7 @@ export async function install({ preset = "recommended", skill = null, language =
   const parent = path.dirname(resolvedTarget);
   mkdirSync(parent, { recursive: true });
   const staging = mkdtempSync(path.join(parent, ".repo-doctor-install-"));
+  let preserveStaging = false;
   try {
     for (const slug of slugs) {
       const destination = path.join(staging, slug);
@@ -167,15 +168,40 @@ export async function install({ preset = "recommended", skill = null, language =
     });
     if (conflicts.length && !force) throw new Error(`Different existing Skills: ${conflicts.join(", ")}. Use --force to replace selected Skills.`);
     mkdirSync(resolvedTarget, { recursive: true });
-    for (const slug of pending) {
-      const destination = path.join(resolvedTarget, slug);
-      if (force) rmSync(destination, { recursive: true, force: true });
-      renameSync(path.join(staging, slug), destination);
+    const changes = [];
+    const backupRoot = path.join(staging, ".backup");
+    mkdirSync(backupRoot);
+    try {
+      for (const slug of pending) {
+        const change = { destination: path.join(resolvedTarget, slug), backup: path.join(backupRoot, slug), backedUp: false, installed: false };
+        changes.push(change);
+        if (conflicts.includes(slug)) {
+          renameSync(change.destination, change.backup);
+          change.backedUp = true;
+        }
+        renameSync(path.join(staging, slug), change.destination);
+        change.installed = true;
+      }
+      verifyInstalled(resolvedTarget, slugs);
+    } catch (error) {
+      const rollbackErrors = [];
+      for (const change of changes.reverse()) {
+        try {
+          if (change.installed) rmSync(change.destination, { recursive: true, force: true });
+          if (change.backedUp) renameSync(change.backup, change.destination);
+        } catch (rollbackError) {
+          rollbackErrors.push(`${change.destination}: ${rollbackError.message}`);
+        }
+      }
+      if (rollbackErrors.length) {
+        preserveStaging = true;
+        throw new Error(`${error.message}; rollback incomplete: ${rollbackErrors.join("; ")}. Recovery files preserved at ${backupRoot}`, { cause: error });
+      }
+      throw new Error(`${error.message}; installation rolled back; previous Skills restored`, { cause: error });
     }
-    verifyInstalled(resolvedTarget, slugs);
     return { preset: skill ? "individual" : preset, target: resolvedTarget, skills: slugs, installed: pending.length, unchanged: unchanged.length, language };
   } finally {
-    rmSync(staging, { recursive: true, force: true });
+    if (!preserveStaging) rmSync(staging, { recursive: true, force: true });
   }
 }
 

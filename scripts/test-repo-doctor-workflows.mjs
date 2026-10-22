@@ -95,6 +95,10 @@ for (const locale of ["en", "zh-CN"]) {
 
 requireTerms("packs/engineering/repo-doctor/skills/requirements-to-spec/instructions.en.md", ["material decisions are already closed", "requirements-clarification", "stop specification work"]);
 requireTerms("packs/engineering/repo-doctor/skills/requirements-to-spec/instructions.zh-CN.md", ["重大决策已经闭合", "requirements-clarification", "停止规格化"]);
+for (const locale of ["en", "zh-CN"]) {
+  requireTerms(`packs/engineering/repo-doctor/skills/requirements-to-spec/instructions.${locale}.md`, ["feature-implementation", "safe-fix-implementation"]);
+  requireTerms(`packs/engineering/repo-doctor/skills/safe-change-plan/instructions.${locale}.md`, ["requirements-clarification", "requirements-to-spec"]);
+}
 requireTerms("packs/engineering/repo-doctor/skills/spec-to-work-items/instructions.en.md", ["Return copyable Markdown only in the response", "even when the user asks", "use Shell to write indirectly"]);
 requireTerms("packs/engineering/repo-doctor/skills/spec-to-work-items/instructions.zh-CN.md", ["当前响应中输出 Markdown", "即使用户明确授权", "不得用 Shell"]);
 
@@ -102,8 +106,11 @@ requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instr
 requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.zh-CN.md", ["可信、可重复", "成功判据", "可证伪", "trigger_condition", "systemic_root_cause"]);
 requireTerms("packs/engineering/repo-doctor/skills/safe-code-review/instructions.en.md", ["Repository Conformance", "Change Intent Fidelity", "Operational Safety", "insufficient evidence"]);
 requireTerms("packs/engineering/repo-doctor/skills/safe-code-review/instructions.zh-CN.md", ["Repository Conformance", "Change Intent Fidelity", "Operational Safety", "证据不足"]);
-requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.en.md", ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified", "Never switch either silently", "One behavior slice"]);
-requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.zh-CN.md", ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified", "不得静默切换", "一个行为切片"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.en.md", ["testing-contract.en.md", "test_first", "sensitivity_unverified", "Never switch either silently", "one behavior slice"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-test-implementation/instructions.zh-CN.md", ["testing-contract.zh-CN.md", "test_first", "sensitivity_unverified", "不得静默切换", "当前切片未解决前不处理第二个行为"]);
+for (const locale of ["en", "zh-CN"]) {
+  requireTerms(`packs/engineering/repo-doctor/references/testing-contract.${locale}.md`, ["test_first", "regression_after_fix", "characterization", "sensitivity_unverified"]);
+}
 requireTerms("packs/engineering/repo-doctor/skills/decision-prototype/instructions.en.md", ["logic-prototype", "ui-prototype", "NON-PRODUCTION PROTOTYPE", "supported", "rejected", "uncertain"]);
 requireTerms("packs/engineering/repo-doctor/skills/decision-prototype/instructions.zh-CN.md", ["logic-prototype", "ui-prototype", "NON-PRODUCTION PROTOTYPE", "supported", "rejected", "uncertain"]);
 requireTerms("packs/engineering/repo-doctor/skills/architecture-deepening-analysis/instructions.en.md", ["caller", "at least two", "rollback", "ADR", "never performs a broad refactor"]);

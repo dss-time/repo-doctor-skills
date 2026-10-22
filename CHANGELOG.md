@@ -10,11 +10,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
+- Separate daily metadata consistency from formal release gates; bind fresh model evidence and resume checks to canonical source and complete Skill runtime trees. Existing v0.8.0 reports remain historical and do not certify these changes.
+- Preserve replaced Skills until installation verification succeeds; roll back the whole attempted batch on failure and retain recovery files if restoration fails.
+- Route test-first feature implementation to `feature-implementation`, retaining `safe-fix-implementation` for diagnosed local repairs; send unresolved material decisions to clarification before specification or planning. Advance requirements-to-spec and safe-change-plan patch versions within the unreleased Repo Doctor 0.10.1 Pack.
 - Bundle the canonical workflow registry with Router across installable distributions, and ship a shared test contract only with feature/test implementation Skills so individual installation remains usable.
 - Allow verified cleanup of run-owned isolated temporary artifacts during test and release checks; retain protection for existing files and unknown paths.
 - Reuse authorized prototype command scope, route settled production features to feature implementation, and require initial red evidence only in test-first mode.
 - Correct current installation counts and stable-version examples in both user manuals, with inventory-backed documentation checks.
 - Bump the five changed Skill patch versions and Repo Doctor Pack/plugin to 0.10.1. These changes are unreleased; v0.8.0 model results remain historical evidence, not validation of this revision.
+
+### Documentation
+
+- Expand npm keywords to match existing Skills and platform formats, retaining `skills` and adding `workbuddy`.
+- Document WorkBuddy's generic Skill import path in both languages, with installation and execution explicitly marked as not yet verified in WorkBuddy.
 
 ## [0.8.0] - 2026-10-15
 

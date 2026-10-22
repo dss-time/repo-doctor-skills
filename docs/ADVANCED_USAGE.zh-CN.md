@@ -77,6 +77,10 @@ dist/claude-code-zh-CN/.claude/skills/<skill-name>/SKILL.md
 
 把 `.claude/skills/` 复制到宿主支持的位置。发现机制和显式命令取决于宿主版本；可靠后备方式是 Skill slug 加自然语言任务。
 
+### WorkBuddy
+
+WorkBuddy 支持通过本地技能导入使用本项目的标准 Skill 目录（`SKILL.md` 及配套资源）。保留每个 Skill 的完整目录。这属于通用 Skill 格式兼容，尚未在 WorkBuddy 中实机验证安装和执行。具体操作参见[官方技能安装说明](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market)。本项目的预设安装器暂不提供 `--agent workbuddy` 参数。
+
 ### Cursor
 
 生成结构为：

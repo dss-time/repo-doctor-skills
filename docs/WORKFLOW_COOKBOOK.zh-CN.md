@@ -650,7 +650,7 @@ Word 基础与增强：
 |---|---|---|
 | `feature-delivery` | 端到端功能交付。 | 实施和可选测试授权 |
 | `bug-repair` | 证据驱动的 Bug 修复与修复后回归。 | 修复和测试授权 |
-| `test-first-change` | 生产实现前建立预期失败。 | 测试和实施授权 |
+| `test-first-change` | 先建立预期失败，再由 `feature-implementation` 交付已确认功能；只有已诊断的局部缺陷才使用 `safe-fix-implementation` 备选。 | 测试和实施授权 |
 | `post-fix-regression-test` | 已验证修复后补回归。 | 测试授权 |
 | `review-only` | 只读审查 diff。 | 无 |
 | `ci-diagnosis` | 诊断 CI 第一个可信失败。 | 无 |

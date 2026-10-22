@@ -49,3 +49,7 @@ git diff --check
 ```
 
 `npm test` includes isolated deterministic-build and ZIP-order fixtures. Before release, run the full build twice and confirm the generated-tree fingerprint is unchanged. A unified formatter or linter can be evaluated later if the executable codebase grows enough to justify one; it is not a current release blocker.
+
+Daily development uses `npm run release:check -- --development`: it checks current package/lock and Pack/plugin consistency, version floors, inventory, lifecycle, and preserved release history. It does not require a new model evaluation or certify a release. `npm run doctor` reports stale release evidence as a warning and keeps the release conclusion `NO_GO` while daily consistency can pass.
+
+Formal releases still require `npm run release:check`; CI runs this stricter gate on `v*` tags. Before a new evaluation, rebuild `skills/`, refresh the release inventory, and install that exact generated tree into the isolated evaluation home. The evaluator records hashes of canonical `packs/` and the entire generated/installed Skill tree, including references, scripts, assets, and workflows. Core resume, advanced validation, and the release gate reject missing or mismatched content bindings. Rebuild and run a fresh evaluation after content changes; never backfill a binding into an old PASS report. Historical reports and release contracts remain unchanged until preparing an explicitly authorized new release.

@@ -9,7 +9,7 @@ Convert requirements whose material decisions are already closed into an impleme
 - Continue with explicit assumptions only for non-blocking details that cannot materially change the specification.
 - If a material decision remains open or reopens, stop specification work and hand the decision ledger to `requirements-clarification`; do not hide it under an assumption.
 - Do not use this skill when the user supplied a complete formal specification, only wants existing code explained, wants a bug fixed, requests direct edits, or needs work-item decomposition.
-- Route impact discovery to `change-impact-analysis`, implementation planning to `safe-change-plan`, and edits to `safe-fix-implementation`.
+- Route impact discovery to `change-impact-analysis`, implementation planning to `safe-change-plan`, settled feature delivery to `feature-implementation`, and diagnosed local repairs to `safe-fix-implementation`.
 - Match the user's language. Preserve code identifiers, paths, API names, commands, and error messages.
 
 ## Workflow

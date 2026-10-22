@@ -4,7 +4,7 @@ name:
   zh-CN: 需求规格化
 category: engineering
 visibility: public
-version: 0.1.1
+version: 0.1.2
 status: beta
 default_locale: zh-CN
 supported_locales:

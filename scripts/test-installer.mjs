@@ -4,6 +4,9 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
+import { install, recommendedSkills } from "./install.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tempRoot = mkdtempSync(path.join(tmpdir(), "repo-doctor-installer-"));
@@ -162,6 +165,42 @@ try {
   assert.match(ambiguous.stderr, /Multiple Agent homes were detected/);
   assert.ok(!existsSync(path.join(tempRoot, "ambiguous-codex")));
   assert.ok(!existsSync(path.join(tempRoot, "ambiguous-agents")));
+
+  // Exercise a partial batch: replace one customized Skill, add one new Skill,
+  // then fail the next replacement. Everything must return to its prior state.
+  for (const failRestore of [false, true]) {
+    const rollbackTarget = path.join(tempRoot, `rollback-${failRestore}`);
+    const [first, added, failing] = recommendedSkills;
+    for (const skill of [first, failing]) {
+      await install({ skill, target: rollbackTarget });
+      writeFileSync(path.join(rollbackTarget, skill, "custom.txt"), `original ${skill}`);
+    }
+    const originalRename = fs.renameSync;
+    let backup;
+    fs.renameSync = (from, to) => {
+      if (to === path.join(rollbackTarget, failing) && !from.includes(`${path.sep}.backup${path.sep}`)) {
+        throw Object.assign(new Error("injected install EIO"), { code: "EIO" });
+      }
+      if (failRestore && from.includes(`${path.sep}.backup${path.sep}`) && to === path.join(rollbackTarget, failing)) {
+        backup = from;
+        throw Object.assign(new Error("injected restore EIO"), { code: "EIO" });
+      }
+      return originalRename(from, to);
+    };
+    syncBuiltinESMExports();
+    try {
+      await assert.rejects(install({ target: rollbackTarget, force: true }), failRestore ? /Recovery files preserved at/ : /previous Skills restored/);
+    } finally {
+      fs.renameSync = originalRename;
+      syncBuiltinESMExports();
+    }
+    assert.equal(readFileSync(path.join(rollbackTarget, first, "custom.txt"), "utf8"), `original ${first}`);
+    assert.ok(!existsSync(path.join(rollbackTarget, added)), "newly installed Skill must also roll back");
+    const restored = failRestore ? backup : path.join(rollbackTarget, failing);
+    assert.equal(readFileSync(path.join(restored, "custom.txt"), "utf8"), `original ${failing}`);
+    const stagingDirs = readdirSync(tempRoot).filter((name) => name.startsWith(".repo-doctor-install-"));
+    assert.equal(stagingDirs.length, failRestore ? 1 : 0, "retain backup only when restoration needs recovery");
+  }
 } finally {
   rmSync(tempRoot, { recursive: true, force: true });
 }

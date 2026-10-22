@@ -23,7 +23,7 @@ Convert requirements whose material decisions are already closed into an impleme
 - Continue with explicit assumptions only for non-blocking details that cannot materially change the specification.
 - If a material decision remains open or reopens, stop specification work and hand the decision ledger to `requirements-clarification`; do not hide it under an assumption.
 - Do not use this skill when the user supplied a complete formal specification, only wants existing code explained, wants a bug fixed, requests direct edits, or needs work-item decomposition.
-- Route impact discovery to `change-impact-analysis`, implementation planning to `safe-change-plan`, and edits to `safe-fix-implementation`.
+- Route impact discovery to `change-impact-analysis`, implementation planning to `safe-change-plan`, settled feature delivery to `feature-implementation`, and diagnosed local repairs to `safe-fix-implementation`.
 - Match the user's language. Preserve code identifiers, paths, API names, commands, and error messages.
 
 ## Workflow
@@ -75,7 +75,7 @@ If a blocking decision exists, stop and return a handoff to `requirements-clarif
 - 只有不会实质改变规格的细节才能作为显式假设继续。
 - 发现重大决策仍未闭合或重新出现时，停止规格化并把决策台账交给 `requirements-clarification`，不得把它伪装成假设。
 - 用户已提供完整正式规格、只要求解释代码、要求修 Bug、直接修改或需要拆工作项时，不使用本 Skill。
-- 影响发现交给 `change-impact-analysis`，实施规划交给 `safe-change-plan`，实际修改交给 `safe-fix-implementation`。
+- 影响发现交给 `change-impact-analysis`，实施规划交给 `safe-change-plan`，已确认功能交付交给 `feature-implementation`，已诊断局部修复交给 `safe-fix-implementation`。
 - 输出语言跟随用户输入；代码标识符、路径、API 名称、命令和错误信息保持原样。
 
 ## 工作流程

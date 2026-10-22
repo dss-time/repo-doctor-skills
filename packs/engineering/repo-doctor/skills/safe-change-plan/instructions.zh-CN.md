@@ -5,7 +5,7 @@
 ## 职责边界
 
 - 确认需求、目标行为和影响范围已经足够清楚。
-- 需求模糊时建议使用 `requirements-to-spec`；依赖或兼容性影响未知时建议使用 `change-impact-analysis`。
+- 重大决策仍开放时使用 `requirements-clarification`；决策已闭合但缺少可测试规格时使用 `requirements-to-spec`；依赖或兼容性影响未知时建议使用 `change-impact-analysis`。
 - 不得修改代码、测试、配置、依赖或文档。
 - 已确认功能交付交给 `feature-implementation`，已诊断局部修复交给 `safe-fix-implementation`。
 - 拒绝顺手重构和无关清理。

@@ -77,6 +77,10 @@ dist/claude-code-zh-CN/.claude/skills/<skill-name>/SKILL.md
 
 Copy `.claude/skills/` into the supported target context. Discovery and explicit command syntax depend on the host version; the reliable fallback is the Skill slug plus a natural-language task.
 
+### WorkBuddy
+
+WorkBuddy support uses the project's standard Skill directories (`SKILL.md` plus bundled resources), through WorkBuddy's local Skill import. Preserve each complete Skill directory. This is generic Skill-format compatibility; installation and execution have not yet been verified in WorkBuddy. See the [official Skill installation guide](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market). The preset installer does not provide a `--agent workbuddy` option.
+
 ### Cursor
 
 The generated structure is:

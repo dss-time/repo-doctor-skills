@@ -56,7 +56,11 @@ jobs:
       - name: Check Skill and generated-output quality
         run: npm run quality:check
 
-      - name: Check release metadata
+      - name: Check development metadata
+        run: npm run release:check -- --development
+
+      - name: Check tagged release metadata and evidence
+        if: startsWith(github.ref, 'refs/tags/v')
         run: npm run release:check
 
       - name: Check generated-file drift

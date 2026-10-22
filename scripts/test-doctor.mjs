@@ -5,6 +5,7 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { tmpdir } from "node:os";
 import { inspectDoctor, inspectSkillInventory } from "./doctor.mjs";
+import { inspectReleaseMetadata, releaseContract } from "./release-metadata.mjs";
 
 const root = process.cwd();
 // A count-preserving substitution must still be detected; adding canonical Skills
@@ -62,10 +63,13 @@ assert.equal(result.inventory.expected_chatgpt_zips, expectedInventory.expectedZ
 assert.ok(result.workflow.count > 0);
 assert.equal(result.release.current_project_version, JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version);
 assert.equal(result.release.release_channel, "stable");
-assert.equal(result.release.live_model_status, "PASS");
+const formal = inspectReleaseMetadata(root);
+assert.equal(result.release.live_model_status, formal.errors.some((error) => error.startsWith(releaseContract.liveModelReport)) ? "STALE_OR_INVALID" : releaseContract.liveModelStatus);
+assert.equal(result.release.historical_live_model_status, releaseContract.liveModelStatus);
+if (formal.errors.length) assert.equal(result.release_conclusion, "NO_GO", "daily health must not imply release readiness");
 assert.equal(result.release.maintainer_waiver, null);
 assert.ok(["PASS", "PASS_WITH_CONDITIONS"].includes(result.status));
-assert.equal(result.errors.length, 0, "Doctor must report no release errors after completed evidence");
+assert.equal(result.errors.length, 0, "development consistency must not require a fresh release evaluation");
 assert.equal(fingerprint(), before, "doctor must not modify inspected files");
 const cli = spawnSync(process.execPath, ["scripts/doctor.mjs", "--json"], { cwd: root, encoding: "utf8" });
 assert.equal(cli.status, 0, cli.stderr);

@@ -4,6 +4,7 @@ import {
   AppServer,
   activeSkills,
   codexHome,
+  currentEvidenceBinding,
   compactEvidenceReport,
   hasNaturalLanguage,
   markdown,
@@ -19,6 +20,8 @@ import {
   toolEvidence,
   workspace,
 } from "./live-codex-validation.mjs";
+
+import { assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
 
 function option(name, fallback = null) {
   const index = process.argv.indexOf(name);
@@ -611,6 +614,7 @@ async function runPermission(server, testCase) {
 }
 
 async function main() {
+  assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
   const coreCases = baseReport.cases.filter((testCase) =>
     ["explicit", "implicit", "negative"].includes(testCase.invocation));
   const coreSummary = summarize(coreCases);
@@ -703,6 +707,7 @@ async function main() {
       ? "PASS"
       : "FAIL",
   };
+  assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
   const sanitizedReport = sanitizeEvidence(compactEvidenceReport(report));
   writeFileSync(outputPath, `${JSON.stringify(sanitizedReport, null, 2)}\n`);
   writeFileSync(outputPath.replace(/\.json$/, ".md"), markdown(sanitizedReport));
@@ -711,6 +716,7 @@ async function main() {
 }
 
 async function retryServiceFailures() {
+  assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
   if (baseReport.requested_model !== requestedModel) throw new Error("Service retry must use the report's explicit model");
   if (baseReport.project_version !== JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version
     || baseReport.cases.length !== 317
@@ -773,6 +779,7 @@ async function retryServiceFailures() {
     },
     result: summary.passed === 317 ? "PASS" : "FAIL",
   };
+  assertLiveEvidenceBinding(baseReport.content_binding, currentEvidenceBinding());
   const sanitized = sanitizeEvidence(compactEvidenceReport(report));
   writeFileSync(outputPath, `${JSON.stringify(sanitized, null, 2)}\n`);
   writeFileSync(outputPath.replace(/\.json$/, ".md"), markdown(sanitized));

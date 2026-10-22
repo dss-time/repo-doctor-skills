@@ -5,7 +5,7 @@ Convert confirmed analysis into a safe, atomic, verifiable, and reversible imple
 ## Boundary
 
 - Confirm that the requirement, desired behavior, and blast radius are sufficiently known.
-- If the requirement is ambiguous, recommend `requirements-to-spec`. If dependencies or compatibility impact are unknown, recommend `change-impact-analysis`.
+- If material decisions remain open, recommend `requirements-clarification`; if decisions are settled but a testable specification is missing, recommend `requirements-to-spec`. If dependencies or compatibility impact are unknown, recommend `change-impact-analysis`.
 - Do not modify code, tests, configuration, dependencies, or documentation.
 - Route settled feature delivery to `feature-implementation` and diagnosed local repairs to `safe-fix-implementation`.
 - Reject opportunistic refactors and unrelated cleanup.

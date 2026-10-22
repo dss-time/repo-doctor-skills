@@ -10,6 +10,7 @@ import {
 } from "./deterministic-files.mjs";
 import { discoverPackRoots } from "./sync-pack-plugin.mjs";
 import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
+import { liveEvidenceBinding, assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
 
 const scriptRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const semverPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|[A-Za-z-][0-9A-Za-z-]*))*))?$/;
@@ -579,7 +580,15 @@ function auditLiveModelEvidence(root, contract, errors) {
   }
   const report = readJson(root, contract.liveModelReport, errors);
   if (!report) return;
+  try {
+    assertLiveEvidenceBinding(report.content_binding, liveEvidenceBinding(root));
+  } catch (error) {
+    errors.push(`${contract.liveModelReport}: ${error.message}`);
+  }
   const evidenceVersion = contract.liveModelEvidenceVersion ?? contract.projectVersion;
+  if (evidenceVersion !== contract.projectVersion) {
+    errors.push("release contract: Live-model evidence must belong to the current project version");
+  }
   if (report.project_version !== evidenceVersion) {
     errors.push(
       `${contract.liveModelReport}: evidence version must be ${evidenceVersion}, found ${report.project_version}`,
@@ -597,17 +606,37 @@ function auditLiveModelEvidence(root, contract, errors) {
   }
 }
 
-export function inspectReleaseMetadata(root = scriptRoot, contract = releaseContract) {
+export function inspectReleaseMetadata(root = scriptRoot, contract = releaseContract, { development = false } = {}) {
   const resolvedRoot = path.resolve(root);
   const errors = [];
+  const historicalContract = contract;
+  if (development) {
+    const project = readJson(resolvedRoot, "package.json", errors);
+    const packs = contract.packs.map((pack) => {
+      const metadata = readYaml(resolvedRoot, `packs/${pack.path}/pack.yaml`, errors);
+      const version = metadata?.version ?? pack.version;
+      if (isSemver(version) && compareSemver(version, pack.version) < 0) {
+        errors.push(`packs/${pack.path}: Pack version regresses below release contract ${pack.version}`);
+      }
+      const activeSkillCount = skillDirectories(path.join(resolvedRoot, "packs", pack.path))
+        .filter((slug) => releaseEligibleStatuses.has(readYaml(resolvedRoot, `packs/${pack.path}/skills/${slug}/skill.yaml`, errors)?.status)).length;
+      return { ...pack, version, activeSkillCount, plugin: pack.plugin ? { ...pack.plugin, version } : null };
+    });
+    if (isSemver(project?.version) && compareSemver(project.version, contract.projectVersion) < 0) {
+      errors.push(`package.json: project version regresses below release contract ${contract.projectVersion}`);
+    }
+    contract = { ...contract, projectVersion: project?.version ?? contract.projectVersion, packs };
+  }
   auditPackage(resolvedRoot, contract, errors);
   const packResults = auditPacks(resolvedRoot, contract, errors);
   auditTemplate(resolvedRoot, contract, errors);
   auditPluginsAndMarketplace(resolvedRoot, contract, packResults, errors);
-  auditChangelog(resolvedRoot, contract, errors);
-  auditReleaseDocument(resolvedRoot, contract, errors);
-  auditLiveModelWaiver(resolvedRoot, contract, errors);
-  auditLiveModelEvidence(resolvedRoot, contract, errors);
+  auditChangelog(resolvedRoot, development ? historicalContract : contract, errors);
+  if (!development) {
+    auditReleaseDocument(resolvedRoot, contract, errors);
+    auditLiveModelWaiver(resolvedRoot, contract, errors);
+    auditLiveModelEvidence(resolvedRoot, contract, errors);
+  }
   return {
     errors: errors.sort(compareNames),
     summary: {
@@ -621,10 +650,11 @@ export function inspectReleaseMetadata(root = scriptRoot, contract = releaseCont
 }
 
 function parseArguments(argv) {
-  const options = { check: false, root: scriptRoot };
+  const options = { check: false, root: scriptRoot, development: false };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
+    else if (argument === "--development") options.development = true;
     else if (argument === "--root") {
       const value = argv[index + 1];
       if (!value) throw new Error("--root requires a path");
@@ -646,7 +676,8 @@ function main() {
     console.error(`Release metadata check failed:\n- ${error.message}`);
     process.exit(1);
   }
-  const result = inspectReleaseMetadata(options.root);
+  const result = inspectReleaseMetadata(options.root, releaseContract, options);
+  if (options.development) console.log("Development consistency only; formal release readiness is not checked.");
   if (result.errors.length > 0) {
     console.error(`Release metadata check failed with ${result.errors.length} issue(s):`);
     for (const error of result.errors) console.error(`- ${error}`);
