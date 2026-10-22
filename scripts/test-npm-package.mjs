@@ -10,7 +10,7 @@ const binPath = path.join(root, "bin", "repo-doctor-skills.mjs");
 assert.equal(packageJson.name, "repo-doctor-skills");
 assert.equal(packageJson.version, "0.8.1");
 assert.notEqual(packageJson.private, true, "public CLI package must not be private");
-assert.deepEqual(packageJson.bin, { "repo-doctor-skills": "./bin/repo-doctor-skills.mjs" });
+assert.deepEqual(packageJson.bin, { "repo-doctor-skills": "bin/repo-doctor-skills.mjs" });
 assert.equal(packageJson.publishConfig?.access, "public");
 assert.equal(packageJson.publishConfig?.registry, "https://registry.npmjs.org/");
 assert.ok(Array.isArray(packageJson.files) && packageJson.files.includes("bin/"));

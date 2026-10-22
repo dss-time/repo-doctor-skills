@@ -37,4 +37,9 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 
 ## 外部发布状态
 
-本地完整验证及新的 328/328 模型评测已通过。npm 官方于 2026-10-22 02:33 UTC（北京时间 10:33）起报告安装及发布故障，参见[官方状态](https://status.npmjs.org/)。npm 0.8.1 上传两次超时，查询时已发布 latest 仍为 0.8.0。首次 GitHub CI 在 tarball 验证时因 npm exec 超时而失败；本地 tarball 测试现已明确离线运行，CI 安装也避免额外审计/资助请求，参见[当前 Actions 状态](https://github.com/dss-time/repo-doctor-skills/actions)。外部服务状态不改变已记录的本地测试和模型结果；npm 不可用期间可通过 GitHub 插件或本 Release 附带 ZIP 安装。
+GitHub v0.8.1 及 [npm repo-doctor-skills@0.8.1](https://www.npmjs.com/package/repo-doctor-skills/v/0.8.1) 均已发布。npm 发布最初遇到服务错误，重新完成 CLI 登录及网页验证后，于 2026-10-22 发布成功。CLI 入口采用 npm 规范路径，实际压缩包通过推荐 7/7 及完整 41/41 安装验证。首次 GitHub CI 的注册表超时已通过离线 tarball 验证修复，main 和 tag CI 均通过。新的 328/328 模型评测结果保持不变。
+
+```bash
+npx repo-doctor-skills@0.8.1 install --agent codex
+npx repo-doctor-skills@0.8.1 install --preset full --agent codex
+```

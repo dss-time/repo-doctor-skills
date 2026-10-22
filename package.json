@@ -40,7 +40,7 @@
     "developer-tools"
   ],
   "bin": {
-    "repo-doctor-skills": "./bin/repo-doctor-skills.mjs"
+    "repo-doctor-skills": "bin/repo-doctor-skills.mjs"
   },
   "files": [
     "bin/",

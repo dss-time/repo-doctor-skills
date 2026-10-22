@@ -91,11 +91,11 @@ Pin the GitHub plugin to `v0.8.1`:
 codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
-npm v0.8.1 publication is pending because of the [npm installation/publishing incident](https://status.npmjs.org/). The currently published npm version remains v0.8.0; use the GitHub plugin above for v0.8.1.
+Install the exact npm version (seven recommended Skills, or all 41):
 
 ```bash
-npx repo-doctor-skills@0.8.0 install --agent codex
-npx repo-doctor-skills@0.8.0 install --preset full --agent codex
+npx repo-doctor-skills@0.8.1 install --agent codex
+npx repo-doctor-skills@0.8.1 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.

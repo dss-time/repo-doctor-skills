@@ -37,4 +37,9 @@ Choose one installation method per agent. The GitHub Release includes 38 individ
 
 ## External publication status
 
-The complete local validation suite and fresh 328/328 model evaluation passed. npm reported an active package installation and publishing incident on 2026-10-22, starting at 02:33 UTC (10:33 Asia/Shanghai): [official status](https://status.npmjs.org/). The npm 0.8.1 upload timed out twice; a registry query still reports 0.8.0 as the published latest version. The initial GitHub CI reached tarball validation but timed out on a registry-dependent npm exec. Local tarball smoke now runs explicitly offline, and CI setup avoids incidental audit/funding requests; see [current Actions status](https://github.com/dss-time/repo-doctor-skills/actions). These external states do not change the recorded local test or model results. Use GitHub plugin installation or the attached ZIPs while npm is unavailable.
+GitHub v0.8.1 and [npm repo-doctor-skills@0.8.1](https://www.npmjs.com/package/repo-doctor-skills/v/0.8.1) are published. npm publication initially encountered service errors; a fresh CLI login and browser verification completed publication on 2026-10-22. The CLI entry uses npm's normalized path and the packed CLI passed Recommended 7/7 and Full 41/41 installation checks. The initial GitHub CI registry timeout was fixed by making tarball smoke checks offline; both main and tag CI passed. The fresh 328/328 model results remain unchanged.
+
+```bash
+npx repo-doctor-skills@0.8.1 install --agent codex
+npx repo-doctor-skills@0.8.1 install --preset full --agent codex
+```

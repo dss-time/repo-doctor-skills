@@ -77,6 +77,8 @@ try {
   execFileSync("tar", ["-xzf", tarball, "-C", tempRoot]);
   const extracted = path.join(tempRoot, "package");
   assert.ok(existsSync(extracted));
+  const packedPackage = JSON.parse(readFileSync(path.join(extracted, "package.json"), "utf8"));
+  assert.deepEqual(packedPackage.bin, { "repo-doctor-skills": "bin/repo-doctor-skills.mjs" });
   for (const relative of entries.filter((entry) => entry.startsWith("package/") && !entry.endsWith("/"))) {
     const filename = path.join(tempRoot, relative);
     if (!statSync(filename).isFile()) continue;
