@@ -2,6 +2,8 @@
 
 # Repo Doctor Skills
 
+# Repo Doctor Skills[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/dss-time/badge.svg)](https://hub.xerj.org/contributors/dss-time)
+
 Focused Skills for debugging, code review, fixes, and tests.
 
 ## Start in 30 seconds
