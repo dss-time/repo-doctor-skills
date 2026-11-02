@@ -7,7 +7,7 @@
 Focused Skills for debugging, code review, fixes, and tests.
 
 
-The current checkout prepares **0.9.0-beta.1**, an unpublished Beta candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.1.md) and [validation](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md).
+The current version is **0.9.0-beta.1**, a Beta prerelease candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.1.md) and [validation](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md).
 
 ## Start in 30 seconds
 

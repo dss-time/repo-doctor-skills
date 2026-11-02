@@ -1,6 +1,6 @@
 # 0.9.0-beta.1 候选验证
 
-日期：2026-11-02（Asia/Shanghai）。结论：**本地 Beta 候选门禁通过，尚未对外发布**。不将这个结果解释为稳定版、生产系统或所有客户端均已验证。
+日期：2026-11-02（Asia/Shanghai）。结论：**本地 Beta 候选门禁通过**。本记录生成时尚未对外发布；后续发布状态以 GitHub Releases 为准。不将这个结果解释为稳定版、生产系统或所有客户端均已验证。
 
 机器证据：[候选汇总](../tests/reports/coordination-release-0.9.0-beta.1.json)、[本地检查](../tests/reports/coordination-local-0.9.0-beta.1.json)。原始当前版本试运行：[report.json](../tests/reports/coordination-live-caziQ0/report.json)。这些记录绑定当前 canonical 源与完整 Skill 运行时；内容变化将使门禁失效。此前失败、中断和旧源码试运行全部保留为历史，不计入当前通过结果。
 
@@ -53,4 +53,4 @@
 
 完整 Live-model 语料路由评测仍为 **UNKNOWN**，未使用旧版 328 项报告或豁免。当前只验证了限定合成项目的 Codex 串行 CLI 宿主适配；没有验证同 Agent 原生自动调度、Claude Code/Cursor 实机、多 Agent 并行、生产操作或任意第三方 MCP 工具的权限隔离。
 
-当前未执行 Git commit、push、tag、GitHub 发布或 npm 发布；远端 CI 和发布后资产校验因此也未执行。若后续对外发布，应使用 prerelease／npm beta 通道，保留现有 0.8.1 稳定分发。当前门禁通过仅针对本地 Beta 候选。
+本地验证记录生成时尚未执行 Git commit、push、tag、GitHub 发布或 npm 发布；当时也未执行远端 CI 和发布后资产校验。若后续对外发布，应使用 prerelease／npm beta 通道，保留现有 0.8.1 稳定分发。当前门禁通过仅针对本地 Beta 候选。

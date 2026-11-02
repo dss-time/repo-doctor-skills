@@ -5,7 +5,7 @@
 用职责明确的 Skill 排查 Bug、审查代码、完成修复和测试。
 
 
-当前工作区准备 **0.9.0-beta.1**，属于尚未发布的 Beta 候选；已发布稳定版仍为 0.8.1。查看[候选说明](docs/RELEASE_NOTES_0.9.0-beta.1.zh-CN.md)和[验证记录](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md)。
+当前版本为 **0.9.0-beta.1**，属于 Beta 预发布候选；已发布稳定版仍为 0.8.1。查看[候选说明](docs/RELEASE_NOTES_0.9.0-beta.1.zh-CN.md)和[验证记录](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md)。
 
 ## 30 秒开始
 

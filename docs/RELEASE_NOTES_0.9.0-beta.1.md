@@ -1,6 +1,6 @@
 # Repo Doctor Skills v0.9.0-beta.1 — Beta Release Candidate
 
-Prepared: 2026-11-02. Intended tag: `v0.9.0-beta.1`. This Release Candidate has not been published.
+Prepared: 2026-11-02. Intended tag: `v0.9.0-beta.1`. This is a Beta prerelease candidate. Publication status is recorded on GitHub Releases.
 
 Live-model full-corpus routing status: **UNKNOWN** for this candidate. Historical 328-case PASS reports do not certify this source. No waiver is used. The separate, fresh coordination trial is a mandatory candidate gate and is reported with its exact source/runtime binding; it is not relabeled as a full-corpus evaluation.
 
@@ -26,4 +26,4 @@ No matched old/new Token or tool-call savings are claimed. Tests passing do not 
 
 ## Publication
 
-No Git tag, GitHub Release or npm publication has been performed for this candidate. Any eventual prerelease should use the Beta channel and npm `beta` dist-tag, retaining the existing stable distribution.
+GitHub publication uses the prerelease channel and retains the existing stable distribution. npm publication is separate and has not been performed; any later npm publication should use the `beta` dist-tag.

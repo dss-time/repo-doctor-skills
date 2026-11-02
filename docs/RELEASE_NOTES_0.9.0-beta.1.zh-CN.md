@@ -1,6 +1,6 @@
 # Repo Doctor Skills v0.9.0-beta.1 — Beta 发布候选
 
-准备日期：2026-11-02。计划 tag：`v0.9.0-beta.1`。当前尚未发布。
+准备日期：2026-11-02。计划 tag：`v0.9.0-beta.1`。本版属于 Beta 预发布候选，发布状态以 GitHub Releases 为准。
 
 本候选完整 Live-model 路由评测状态为 **UNKNOWN**；历史 328 项 PASS 不证明本版。另有绑定当前源码与运行时的协调能力真实试运行，作为 Beta 必需门禁，不冒充完整语料评测，也没有使用豁免。
 
