@@ -10,6 +10,7 @@ Synchronize affected documentation with confirmed implementation, configuration,
 - If implementation appears wrong or contradicts the confirmed specification, report a blocker instead of changing business code.
 - Preserve each document's language, structure, terminology, links, formatting, and local style.
 - Do not rewrite unrelated sections or invent commands, parameters, return values, versions, compatibility claims, or migration steps.
+- Before any validation command, inspect its definition, package-manager lifecycle hooks and transitive scripts. Do not run commands that access the network, install dependencies, change files outside the authorized documentation scope, migrate data, deploy, publish, access production, perform unsafe deletion, or have unknown side effects. Mark the affected check `Blocked`, explain why, and continue independent authorized work. A command's name does not establish safety.
 
 ## Workflow
 
@@ -19,6 +20,6 @@ Synchronize affected documentation with confirmed implementation, configuration,
 4. For every update, map the statement to repository evidence and preserve the surrounding document's language and style.
 5. Synchronize commands, parameters, return values, compatibility, deprecation, migration sequence, and examples only when evidence confirms them.
 6. Make the smallest documentation-only edits. Keep unrelated prose and formatting unchanged.
-7. Run repository-provided documentation, link, formatting, or example checks when available. Do not invent missing check commands.
+7. Run available repository-provided documentation, link, formatting, or example checks only after the command preflight above and within user authorization. Prefer read-only checks; write-mode formatters require authorization for every affected path. Do not invent missing commands or report blocked/unrun checks as passed.
 8. Check links, code fences, versions, terminology, and cross-document consistency manually when no tool exists.
 9. Report updated files, evidence, validation, intentionally unchanged files, blockers, and documentation that may still be stale.

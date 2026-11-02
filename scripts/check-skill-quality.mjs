@@ -608,7 +608,8 @@ function auditRcaGeneratedContent() {
     if (!existsSync(file)) continue;
     const content = readFileSync(file, "utf8");
     for (const source of sourceByLocale[locale]) {
-      if (!content.includes(source)) errors.push(`${relative(file)}: RCA canonical/${target} generated content drift`);
+      const normalized = source.replaceAll("../../references/", "references/");
+      if (!content.includes(normalized)) errors.push(`${relative(file)}: RCA canonical/${target} generated content drift`);
     }
   }
 }

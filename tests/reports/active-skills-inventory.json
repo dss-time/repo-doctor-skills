@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T02:34:04.712Z",
-  "project_version": "0.8.1",
+  "generated_at": "2026-11-02T05:26:02.789Z",
+  "project_version": "0.9.0-beta.1",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.10.1",
+      "version": "0.11.0",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -98,7 +98,7 @@
       "id": "repo.repo-doctor-router",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
-      "version": "0.2.4",
+      "version": "0.2.5",
       "status": "beta",
       "name": {
         "en": "Repo Doctor Router",
@@ -326,7 +326,7 @@
       "id": "repo.bug-root-cause-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/bug-root-cause-analysis",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "status": "beta",
       "name": {
         "en": "Bug Root Cause Analysis",
@@ -402,7 +402,7 @@
       "id": "repo.safe-code-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-code-review",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "status": "beta",
       "name": {
         "en": "Safe Code Review",
@@ -440,7 +440,7 @@
       "id": "repo.change-impact-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/change-impact-analysis",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Change Impact Analysis",
@@ -554,7 +554,7 @@
       "id": "repo.safe-test-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-test-implementation",
-      "version": "0.4.3",
+      "version": "0.4.4",
       "status": "beta",
       "name": {
         "en": "Safe Test Implementation",
@@ -630,7 +630,7 @@
       "id": "repo.documentation-sync",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/documentation-sync",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Documentation Sync",
@@ -1048,7 +1048,7 @@
       "id": "repo.session-handoff",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/session-handoff",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "status": "beta",
       "name": {
         "en": "Session Handoff",
@@ -1086,7 +1086,7 @@
       "id": "repo.safe-fix-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-fix-implementation",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "status": "beta",
       "name": {
         "en": "Safe Fix Implementation",
@@ -1124,7 +1124,7 @@
       "id": "repo.feature-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/feature-implementation",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Feature Implementation",

@@ -1,5 +1,7 @@
 # 安全代码审查
 
+仅在已授权流程续接、证据复用或恢复时读取 `../../references/workflow-coordination.zh-CN.md`，保持本 Skill 自身范围和权限。
+
 独立审查轴可以防止一个维度的干净结论掩盖另一个维度的失败。
 
 输出默认 `fast`；需要详细证据时使用 `standard` 或 `audit`，字段以输出契约为准。

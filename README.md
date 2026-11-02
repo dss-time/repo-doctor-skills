@@ -6,6 +6,9 @@
 
 Focused Skills for debugging, code review, fixes, and tests.
 
+
+The current checkout prepares **0.9.0-beta.1**, an unpublished Beta candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.1.md) and [validation](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md).
+
 ## Start in 30 seconds
 
 ```bash
@@ -21,6 +24,8 @@ $safe-code-review Review the current changes.
 ```
 
 Use `$repo-doctor-router` when unsure. It recommends a Skill and gives a copyable next request; invoke a known Skill directly.
+
+Authorized multi-stage tasks can use [serial workflow coordination and evidence reuse](docs/WORKFLOW_COORDINATION.md). Simple tasks still use one Skill; automatic execution depends on the host.
 
 ## Codex plugin
 

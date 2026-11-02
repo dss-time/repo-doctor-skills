@@ -1,5 +1,7 @@
 # Safe Fix Implementation
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 Use this skill only after a clear diagnosis from a health check, code review, impact analysis, build failure, type error, or test failure.
 A clear, exact, low-risk edit request that names the target and desired result is also sufficiently confirmed; do not require a separate diagnosis or clarification before making that bounded fix.
 

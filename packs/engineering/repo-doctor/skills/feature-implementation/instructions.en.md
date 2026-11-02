@@ -1,5 +1,7 @@
 # Feature Implementation
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 Deliver a settled feature within the user's authorized scope, one verifiable behavior slice at a time.
 
 ## Boundary

@@ -62,7 +62,7 @@ assert.equal(result.inventory.plugin_skills, expectedInventory.expectedPlugins.l
 assert.equal(result.inventory.expected_chatgpt_zips, expectedInventory.expectedZips.length);
 assert.ok(result.workflow.count > 0);
 assert.equal(result.release.current_project_version, JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version);
-assert.equal(result.release.release_channel, "stable");
+assert.equal(result.release.release_channel, releaseContract.releaseChannel);
 const formal = inspectReleaseMetadata(root);
 assert.equal(result.release.live_model_status, formal.errors.some((error) => error.startsWith(releaseContract.liveModelReport)) ? "STALE_OR_INVALID" : releaseContract.liveModelStatus);
 assert.equal(result.release.historical_live_model_status, releaseContract.liveModelStatus);

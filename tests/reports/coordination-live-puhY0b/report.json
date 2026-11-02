@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "project_version": "0.9.0-beta.1",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "c0cdb0937d9bd918d4d488b022b027913a1da414e2fc816bb89583ea9e1bbc35",
+    "runtime_sha256": "cd9d44eacb60a35649f8d5d59ed696329535ce13fc29036f2a04326451c03cd1"
+  },
+  "date": "2026-11-02T05:12:40.268Z",
+  "result": "PASS",
+  "cases": [
+    {
+      "case": "simple",
+      "result": "PASS",
+      "verified_skill_loaded": true,
+      "changed_files": [
+        "README.md"
+      ],
+      "task": {
+        "schema_version": 2,
+        "id": "simple",
+        "goal": "Correct teh to the in README only",
+        "acceptance": [
+          "typo"
+        ],
+        "workflow_id": null,
+        "skill_id": "documentation-sync",
+        "registry_binding": "15f897b19a55a46780d8925cdd2270144490c69575ca27b8a5d16cbacf79886c",
+        "decisions": [],
+        "scope": {
+          "files": [],
+          "modules": [],
+          "interfaces": []
+        },
+        "risks": [],
+        "permission_refs": [],
+        "evidence": [
+          {
+            "id": "typo",
+            "source": "host file comparison and real Codex command events",
+            "summary": "Exact authorized typo correction observed",
+            "kind": "analysis",
+            "skill": "documentation-sync",
+            "dependencies": [
+              "README.md"
+            ],
+            "claims": [
+              "stage:task",
+              "acceptance:typo"
+            ],
+            "request_binding": "290a95b240126312a39f365274aa7e9681546f127c902c68b6af9aef1757c235",
+            "task_binding": "c1de5aa39240df07e4f7d7c8132ec76d343ede2d35ed0e608bc8ade4176e0c74",
+            "coverage_complete": true,
+            "result": "pass",
+            "bindings": {
+              "README.md": "3a5bb3cdd47248bf68104ad37b48bcbe3d9f42d8458d7ffd588a697e7650d4f1"
+            },
+            "environment": {
+              "node": "v24.19.0",
+              "platform": "darwin"
+            },
+            "recorded_at": "2026-11-02T05:13:06.103Z"
+          }
+        ],
+        "changes": [],
+        "unresolved": [],
+        "next_actions": [
+          {
+            "stage": "task",
+            "skill": "documentation-sync",
+            "action": "execute",
+            "reason": "applicable_stage",
+            "mode": "manual_handoff"
+          }
+        ],
+        "current_stage": "task",
+        "steps": {
+          "task": {
+            "status": "completed",
+            "attempts": 1,
+            "evidence_ids": [
+              "typo"
+            ],
+            "reason": "applicable_stage",
+            "request_binding": "290a95b240126312a39f365274aa7e9681546f127c902c68b6af9aef1757c235",
+            "effect_state": "known"
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "stage": "task",
+            "status": "running",
+            "reason": "applicable_stage"
+          },
+          {
+            "sequence": 2,
+            "stage": "task",
+            "status": "completed",
+            "reason": "observed_completion"
+          }
+        ]
+      },
+      "run": {
+        "id": "simple",
+        "sandbox": "workspace-write",
+        "host_loaded_skill": {
+          "slug": "documentation-sync",
+          "path": ".agents/skills/documentation-sync/SKILL.md",
+          "sha256": "68572c761dd713aa70133a1428b4b512ec4ff4e4628b0ca35434c21c8de29c93"
+        },
+        "permission_violations": [],
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 25783,
+        "commands": [
+          {
+            "command": "/bin/zsh -c 'cat README.md'",
+            "exit_code": 0,
+            "output": "# Demo\n\nThis tool checks teh input.\n"
+          },
+          {
+            "command": "/bin/zsh -c 'cat README.md'",
+            "exit_code": 0,
+            "output": "# Demo\n\nThis tool checks the input.\n"
+          }
+        ],
+        "tools": [],
+        "tool_item_count": 3,
+        "final_answer": "Corrected `teh` to `the` in README.md. Verified with `cat README.md`; all other content is unchanged. No other files were modified.",
+        "answer": "I’m applying the supplied documentation-sync skill to correct the typo in README.md and verify the change.\nCorrected `teh` to `the` in README.md. Verified with `cat README.md`; all other content is unchanged. No other files were modified.",
+        "completed": true,
+        "usage": {
+          "input_tokens": 79598,
+          "cached_input_tokens": 59136,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 212,
+          "reasoning_output_tokens": 0
+        },
+        "errors": [],
+        "prompt_sha256": "c099b004926b61be01303e89bca4f4689ab78ddcab08e99db32020c5263f038a",
+        "argv": [
+          "exec",
+          "--ephemeral",
+          "--json",
+          "--color",
+          "never",
+          "--skip-git-repo-check",
+          "--sandbox",
+          "workspace-write",
+          "-C",
+          "$TRIAL_ROOT/simple",
+          "--disable",
+          "plugins",
+          "--disable",
+          "apps",
+          "--disable",
+          "multi_agent",
+          "--disable",
+          "memories",
+          "-c",
+          "approval_policy=\"never\"",
+          "-c",
+          "analytics.enabled=false",
+          "-c",
+          "sandbox_workspace_write.network_access=false"
+        ]
+      }
+    }
+  ],
+  "cli_version": "codex-cli 0.166.0-alpha.5.1",
+  "model_selection": "existing user configuration; no model override",
+  "core_sha256": "718507f25f2c4179f41fd3859b32a8f64badaad903ca0c1398cb4c49862d6034",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

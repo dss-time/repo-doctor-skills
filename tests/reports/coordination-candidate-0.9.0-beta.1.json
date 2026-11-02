@@ -1,0 +1,20 @@
+{
+  "project_version": "0.9.0-beta.1",
+  "result": "LOCAL_BETA_CANDIDATE_READY",
+  "published": false,
+  "report": "tests/reports/coordination-release-0.9.0-beta.1.json",
+  "package_directory": "dist/release-candidates/0.9.0-beta.1-XP71ma",
+  "syntax_modules": 58,
+  "zip_checksums_verified": 38,
+  "npm_checksums_verified": 1,
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "f60a18a19e7a936d7a993b741a6dd598d89330cebb43d2ff9e0d2941eecb3538",
+    "runtime_sha256": "978b025450848b061bb0f2c40df5b9d86b9afacd2382b5c8a155c3286250a528"
+  },
+  "limits": [
+    "Full-corpus Live-model status UNKNOWN",
+    "Remote CI and publication not performed",
+    "Scoped Codex CLI trial only"
+  ]
+}

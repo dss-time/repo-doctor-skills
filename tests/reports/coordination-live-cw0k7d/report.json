@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02T02:36:11.212Z",
+  "result": "BLOCKED",
+  "cases": [
+    {
+      "case": "simple",
+      "result": "BLOCKED",
+      "verified_skill_loaded": false,
+      "changed_files": [],
+      "task": {
+        "schema_version": 1,
+        "id": "simple",
+        "goal": "Correct teh to the in README only",
+        "acceptance": [
+          "typo"
+        ],
+        "workflow_id": null,
+        "skill_id": "documentation-sync",
+        "registry_binding": "15f897b19a55a46780d8925cdd2270144490c69575ca27b8a5d16cbacf79886c",
+        "decisions": [],
+        "scope": {
+          "files": [],
+          "modules": [],
+          "interfaces": []
+        },
+        "risks": [],
+        "permission_refs": [],
+        "evidence": [],
+        "changes": [],
+        "unresolved": [],
+        "next_actions": [
+          {
+            "stage": "task",
+            "skill": "documentation-sync",
+            "action": "execute",
+            "reason": "applicable_stage",
+            "mode": "manual_handoff"
+          }
+        ],
+        "current_stage": "task",
+        "steps": {
+          "task": {
+            "status": "running",
+            "attempts": 1,
+            "evidence_ids": [],
+            "reason": "applicable_stage",
+            "request_binding": "290a95b240126312a39f365274aa7e9681546f127c902c68b6af9aef1757c235"
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "stage": "task",
+            "status": "running",
+            "reason": "applicable_stage"
+          }
+        ]
+      },
+      "run": {
+        "id": "simple",
+        "sandbox": "workspace-write",
+        "exit_code": 1,
+        "timed_out": false,
+        "duration_ms": 5222,
+        "completed": false,
+        "usage": null,
+        "commands": [],
+        "answer": "",
+        "prompt_sha256": "d7097b30703427420d80ad07f5ef589175c54e0f4dc9d634fa058abef44201f0",
+        "argv": [
+          "exec",
+          "--ephemeral",
+          "--json",
+          "--color",
+          "never",
+          "--skip-git-repo-check",
+          "--sandbox",
+          "workspace-write",
+          "-C",
+          "$TRIAL_ROOT/simple",
+          "--disable",
+          "plugins",
+          "--disable",
+          "apps",
+          "--disable",
+          "multi_agent",
+          "--disable",
+          "memories",
+          "-c",
+          "approval_policy=\"never\"",
+          "-c",
+          "analytics.enabled=false",
+          "-c",
+          "sandbox_workspace_write.network_access=false"
+        ],
+        "errors": []
+      }
+    }
+  ],
+  "cli_version": "codex-cli 0.166.0-alpha.5.1",
+  "model_selection": "existing user configuration; no model override",
+  "core_sha256": "0a7060d38e7b9ef11a11f1fe22c7b72d869adbd079f6c549c59b66449616586c",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

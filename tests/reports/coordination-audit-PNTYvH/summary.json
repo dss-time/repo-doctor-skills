@@ -1,0 +1,184 @@
+{
+  "date": "2026-11-02",
+  "result": "NOT_READY",
+  "scope": "Independent coordination-core audit and actual Codex CLI smoke trial",
+  "core": {
+    "scope": "coordination core independently checked against requirements and actual Skill contracts",
+    "result": "FINDINGS",
+    "findings": [
+      {
+        "id": "failed-write-retry",
+        "severity": "P1",
+        "expected": "blocked",
+        "observed": "execute",
+        "passed": false,
+        "location": "workflow-coordination.mjs:300",
+        "reason": "validation_failed writes are omitted from reconciliation checks"
+      },
+      {
+        "id": "interrupted-optional-skip",
+        "severity": "P1",
+        "expected": "blocked",
+        "observed": "skip",
+        "passed": false,
+        "location": "workflow-coordination.mjs:185",
+        "reason": "optional condition is handled before interrupted/running state reconciliation"
+      },
+      {
+        "id": "read-only-conditional-skill",
+        "severity": "P1",
+        "expected": "execute",
+        "observed": "permission_blocked",
+        "detail": "write_scope_missing",
+        "passed": false,
+        "location": "workflow-coordination.mjs:94",
+        "reason": "write_files metadata is treated as mandatory write permission for all modes"
+      },
+      {
+        "id": "old-pending-checkpoint-replay",
+        "severity": "P1",
+        "expected": "blocked",
+        "observed": "execute",
+        "passed": false,
+        "location": "workflow-coordination.mjs:309",
+        "reason": "restore cannot detect operations completed after a pending checkpoint"
+      },
+      {
+        "id": "completed-scope-change",
+        "severity": "P1",
+        "expected": "permission_blocked or evidence_insufficient",
+        "observed": "complete",
+        "passed": false,
+        "location": "workflow-coordination.mjs:202",
+        "reason": "completed results do not compare their request binding with the current requested operation"
+      },
+      {
+        "id": "unknown-result-as-failure",
+        "severity": "P2",
+        "expected": "unknown / investigate",
+        "observed": "failed / rerun",
+        "passed": false,
+        "location": "workflow-coordination.mjs:51",
+        "reason": "any result except pass is classified as observed_failure before validity checks"
+      }
+    ]
+  },
+  "baseline_tests": {
+    "passed": 24,
+    "failed": 0
+  },
+  "observer_tests": {
+    "passed": 6,
+    "failed": 0
+  },
+  "live_turns": [
+    {
+      "artifact": "tests/reports/coordination-live-JIiniM/simple.events.jsonl",
+      "id": "simple",
+      "skill": "documentation-sync",
+      "completed": true,
+      "usage": {
+        "input_tokens": 77469,
+        "cached_input_tokens": 39552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 235,
+        "reasoning_output_tokens": 0
+      },
+      "tool_item_count": 4,
+      "permission_violations": []
+    },
+    {
+      "artifact": "tests/reports/coordination-live-X5UdV3/gap.events.jsonl",
+      "id": "gap",
+      "skill": "test-gap-analysis",
+      "completed": true,
+      "usage": {
+        "input_tokens": 78541,
+        "cached_input_tokens": 38656,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 865,
+        "reasoning_output_tokens": 0
+      },
+      "tool_item_count": 2,
+      "permission_violations": []
+    },
+    {
+      "artifact": "tests/reports/coordination-live-57aKPj/gap.events.jsonl",
+      "id": "gap",
+      "skill": "test-gap-analysis",
+      "completed": true,
+      "usage": {
+        "input_tokens": 78249,
+        "cached_input_tokens": 48256,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 796,
+        "reasoning_output_tokens": 0
+      },
+      "tool_item_count": 2,
+      "permission_violations": []
+    },
+    {
+      "artifact": "tests/reports/coordination-live-57aKPj/regression.events.jsonl",
+      "id": "regression",
+      "skill": "safe-test-implementation",
+      "completed": true,
+      "usage": {
+        "input_tokens": 102961,
+        "cached_input_tokens": 79232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 591,
+        "reasoning_output_tokens": 8
+      },
+      "tool_item_count": 6,
+      "permission_violations": []
+    },
+    {
+      "artifact": "tests/reports/coordination-live-jNm920/core-review.events.jsonl",
+      "id": "core-review",
+      "skill": "safe-code-review",
+      "completed": true,
+      "usage": {
+        "input_tokens": 259814,
+        "cached_input_tokens": 222080,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3741,
+        "reasoning_output_tokens": 479
+      },
+      "tool_item_count": 7,
+      "permission_violations": [
+        "Shell execution observed outside the Skill-declared permission set (including bootstrap reads)"
+      ]
+    },
+    {
+      "artifact": "tests/reports/coordination-live-zNVMTm/review.events.jsonl",
+      "id": "review",
+      "skill": "safe-code-review",
+      "completed": true,
+      "usage": {
+        "input_tokens": 128503,
+        "cached_input_tokens": 107392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 541,
+        "reasoning_output_tokens": 27
+      },
+      "tool_item_count": 3,
+      "permission_violations": [
+        "Shell execution observed outside the Skill-declared permission set (including bootstrap reads)"
+      ]
+    }
+  ],
+  "functional_simple_result": "PASS",
+  "functional_workflow_result": "PASS_BEFORE_DELIBERATE_INVALIDATION_PROBE",
+  "workflow_permission_result": "FAIL",
+  "native_trial_style": "Host-driven serial CLI sessions, separately reviewed; not automatic same-agent native orchestration",
+  "actual_model": "Not emitted by CLI event stream; inherited user configuration, no model override",
+  "final_workflow_report": "tests/reports/coordination-live-zNVMTm/report.json",
+  "startup_blocked_report": "tests/reports/coordination-live-cw0k7d/report.json",
+  "observer_only_attempts": [
+    "tests/reports/coordination-live-X5UdV3/report.json",
+    "tests/reports/coordination-live-57aKPj/report.json"
+  ],
+  "sources_unchanged": true,
+  "fixes_applied_to_core": false,
+  "old_new_comparison": "Not run; no efficiency percentage claimed"
+}

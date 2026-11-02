@@ -1,6 +1,6 @@
 {
   "name": "repo-doctor-skills",
-  "version": "0.8.1",
+  "version": "0.9.0-beta.1",
   "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, document review, and safe agent workflows.",
   "type": "module",
   "license": "MIT",
@@ -62,7 +62,7 @@
     "test:performance": "node scripts/test-performance-contracts.mjs",
     "benchmark:performance": "node scripts/live-performance-benchmark.mjs",
     "test:ci": "node scripts/test-ci-workflow.mjs",
-    "test:workflow": "node scripts/test-repo-doctor-workflows.mjs && node scripts/test-workflow-registry.mjs && node scripts/test-golden-workflows.mjs",
+    "test:workflow": "node scripts/test-repo-doctor-workflows.mjs && node scripts/test-workflow-registry.mjs && node scripts/test-golden-workflows.mjs && npm run test:coordination",
     "test:maintainer": "node scripts/test-maintainer-tools.mjs",
     "test:build-integrity": "node scripts/test-build-integrity.mjs",
     "test:skills-sh": "node scripts/test-skills-sh-compatibility.mjs",
@@ -95,7 +95,8 @@
     "doctor": "node scripts/doctor.mjs",
     "install:skills": "node scripts/install.mjs",
     "prepack": "node scripts/prepare-npm-package.mjs",
-    "create:skill": "node scripts/create-skill.mjs"
+    "create:skill": "node scripts/create-skill.mjs",
+    "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs"
   },
   "engines": {
     "node": ">=18"

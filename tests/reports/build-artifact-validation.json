@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T02:34:04.712Z",
-  "project_version": "0.8.1",
+  "generated_at": "2026-11-02T05:26:02.789Z",
+  "project_version": "0.9.0-beta.1",
   "expected_active_skills": 41,
   "targets": [
     {
@@ -104,169 +104,169 @@
     },
     {
       "zip": "rd-api-contract-review.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-architecture-decision-record.zip",
-      "entry_count": 5,
+      "entry_count": 9,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-architecture-deepening-analysis.zip",
-      "entry_count": 6,
+      "entry_count": 10,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-bug-root-cause-analysis.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-change-impact-analysis.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-ci-failure-diagnosis.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-configuration-audit.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-database-migration-review.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-dead-code-verification.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-decision-prototype.zip",
-      "entry_count": 6,
+      "entry_count": 10,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-dependency-upgrade-analysis.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-documentation-sync.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-feature-implementation.zip",
-      "entry_count": 6,
+      "entry_count": 10,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-performance-regression-analysis.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-project-health-check.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-release-readiness-check.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-repo-doctor-router.zip",
-      "entry_count": 5,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-repo-onboarding.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-requirements-clarification.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-requirements-to-spec.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-safe-change-plan.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-safe-code-review.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-safe-fix-implementation.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-safe-test-implementation.zip",
-      "entry_count": 6,
+      "entry_count": 10,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-security-focused-review.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-session-handoff.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-spec-to-work-items.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },
     {
       "zip": "rd-test-gap-analysis.zip",
-      "entry_count": 4,
+      "entry_count": 8,
       "status": "PASS",
       "issues": []
     },

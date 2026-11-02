@@ -1,0 +1,107 @@
+{
+  "project_version": "0.9.0-beta.1",
+  "generated_at": "2026-11-02T05:27:13.064Z",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "f60a18a19e7a936d7a993b741a6dd598d89330cebb43d2ff9e0d2941eecb3538",
+    "runtime_sha256": "978b025450848b061bb0f2c40df5b9d86b9afacd2382b5c8a155c3286250a528"
+  },
+  "result": "PASS",
+  "checks": [
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "scope": "Full suite; package/install/build/activation/workflow/release/eval/doctor regressions"
+    },
+    {
+      "command": "npm run test:coordination",
+      "result": "PASS",
+      "cases": 57,
+      "scope": "44 core + 7 observation + 6 candidate-gate tests, plus six audited regressions"
+    },
+    {
+      "command": "npm run validate",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run quality:check",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run docs:check",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run release:reports",
+      "result": "PASS",
+      "bilingual": "41/41",
+      "platform_targets": "7/7",
+      "zip_artifacts": "38/38"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "audit_regressions": [
+    {
+      "id": "failed-write-retry",
+      "severity": "P1",
+      "expected": "blocked",
+      "observed": "blocked",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:300",
+      "regression": "validation_failed writes are omitted from reconciliation checks"
+    },
+    {
+      "id": "interrupted-optional-skip",
+      "severity": "P1",
+      "expected": "blocked",
+      "observed": "blocked",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:185",
+      "regression": "optional condition is handled before interrupted/running state reconciliation"
+    },
+    {
+      "id": "read-only-conditional-skill",
+      "severity": "P1",
+      "expected": "execute",
+      "observed": "execute",
+      "detail": "applicable_stage",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:94",
+      "regression": "write_files metadata is treated as mandatory write permission for all modes"
+    },
+    {
+      "id": "old-pending-checkpoint-replay",
+      "severity": "P1",
+      "expected": "blocked",
+      "observed": "blocked",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:309",
+      "regression": "restore cannot detect operations completed after a pending checkpoint"
+    },
+    {
+      "id": "completed-scope-change",
+      "severity": "P1",
+      "expected": "permission_blocked or evidence_insufficient",
+      "observed": "evidence_insufficient",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:202",
+      "regression": "completed results do not compare their request binding with the current requested operation"
+    },
+    {
+      "id": "unknown-result-as-failure",
+      "severity": "P2",
+      "expected": "unknown / investigate",
+      "observed": "unknown / investigate",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:51",
+      "regression": "any result except pass is classified as observed_failure before validity checks"
+    }
+  ],
+  "limits": [
+    "Local checks are separate from independent live-model review and formal candidate gate.",
+    "No remote publication performed."
+  ]
+}

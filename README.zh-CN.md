@@ -4,6 +4,9 @@
 
 用职责明确的 Skill 排查 Bug、审查代码、完成修复和测试。
 
+
+当前工作区准备 **0.9.0-beta.1**，属于尚未发布的 Beta 候选；已发布稳定版仍为 0.8.1。查看[候选说明](docs/RELEASE_NOTES_0.9.0-beta.1.zh-CN.md)和[验证记录](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md)。
+
 ## 30 秒开始
 
 ```bash
@@ -19,6 +22,8 @@ $safe-code-review 审查当前修改。
 ```
 
 不知道选哪个时，使用 `$repo-doctor-router`。它会推荐 Skill 并给出可复制的下一步请求；知道 Skill 名时直接调用。
+
+已授权的连续任务可使用[串行工作流协同与证据复用](docs/WORKFLOW_COORDINATION.zh-CN.md)。简单任务仍直接调用一个 Skill；自动执行能力取决于宿主。
 
 ## Codex 插件
 

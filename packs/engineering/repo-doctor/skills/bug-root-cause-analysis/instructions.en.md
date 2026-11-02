@@ -1,5 +1,7 @@
 # Bug Root Cause Analysis
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 A root-cause investigation starts with a trustworthy, repeatable signal that can tell success from the target failure.
 
 Default output is `fast`; use `standard` or `audit` for detailed evidence, following the output contract.

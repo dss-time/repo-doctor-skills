@@ -101,7 +101,8 @@ try {
   );
   assert.match(readFileSync(path.join(routerTarget, "repo-doctor-router/SKILL.md"), "utf8"), /references\/workflows.yaml/);
   assert.ok(!existsSync(path.join(routerTarget, "repo-doctor-router/references/testing-contract.en.md")));
-  assert.ok(!existsSync(path.join(fullTarget, "safe-code-review/references/workflows.yaml")));
+  assert.deepEqual(readFileSync(path.join(fullTarget, "safe-code-review/references/workflows.yaml")), readFileSync(path.join(root, "packs/engineering/repo-doctor/workflows.yaml")), "opt-in coordination resources must be self-contained for individual Skills");
+  assert.ok(existsSync(path.join(fullTarget, "safe-code-review/references/workflow-coordination.mjs")));
   assert.ok(!existsSync(path.join(fullTarget, "safe-code-review/references/testing-contract.en.md")));
 
   for (const language of ["en", "zh-CN", "bilingual"]) {

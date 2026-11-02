@@ -1,0 +1,1 @@
+Use $documentation-sync. Load .agents/skills/documentation-sync/SKILL.md first. Correct only "teh" to "the" in README.md. Only README.md is authorized for writing. Do not expand into clarification, planning or a broader workflow. Report the actual change and validation. Use only local read-only discovery commands and a focused check if necessary; do not install anything.

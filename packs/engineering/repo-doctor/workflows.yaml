@@ -1,6 +1,35 @@
-version: 3
+version: 4
 registry_id: repo-doctor.workflows
 supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
+coordination:
+  version: 1
+  risk_requirements:
+    security:
+      before_write:
+        - {claim: security-impact, skill: change-impact-analysis}
+        - {claim: security-boundary, skill: security-focused-review}
+      before_delivery:
+        - {claim: security-validation}
+        - {claim: compatibility-validation}
+        - {claim: regression-validation, kind: test}
+        - {claim: final-review, skill: safe-code-review, kind: review}
+    database:
+      before_write:
+        - {claim: database-impact, skill: change-impact-analysis}
+        - {claim: migration-safety, skill: database-migration-review}
+      before_delivery:
+        - {claim: migration-validation}
+        - {claim: compatibility-validation}
+        - {claim: regression-validation, kind: test}
+        - {claim: final-review, skill: safe-code-review, kind: review}
+    public-interface:
+      before_write:
+        - {claim: contract-impact, skill: change-impact-analysis}
+        - {claim: compatibility-analysis, skill: api-contract-review}
+      before_delivery:
+        - {claim: compatibility-validation}
+        - {claim: regression-validation, kind: test}
+        - {claim: final-review, skill: safe-code-review, kind: review}
 workflows:
   feature-delivery:
     title:
@@ -158,7 +187,7 @@ workflows:
         id: release
         type: skill
         skill: release-readiness-check
-        optional: false
+        optional: true
         condition: candidate_available
         prerequisites: [test-implementation]
         next: []
@@ -276,7 +305,7 @@ workflows:
         id: test-approval
         type: gate
         skill: none
-        optional: false
+        optional: true
         condition: regression_test_required
         prerequisites: [test-gap]
         next: [regression-test]
@@ -288,7 +317,7 @@ workflows:
         id: regression-test
         type: skill
         skill: safe-test-implementation
-        optional: false
+        optional: true
         condition: regression_after_fix
         prerequisites: [test-approval]
         next: [release]
@@ -300,7 +329,7 @@ workflows:
         id: release
         type: skill
         skill: release-readiness-check
-        optional: false
+        optional: true
         condition: candidate_available
         prerequisites: [regression-test]
         next: []
@@ -686,7 +715,7 @@ workflows:
         id: release
         type: skill
         skill: release-readiness-check
-        optional: false
+        optional: true
         condition: candidate_available
         prerequisites: [review]
         next: []
@@ -780,7 +809,7 @@ workflows:
         id: release
         type: skill
         skill: release-readiness-check
-        optional: false
+        optional: true
         condition: candidate_available
         prerequisites: [review-change]
         next: []
@@ -874,7 +903,7 @@ workflows:
         id: release
         type: skill
         skill: release-readiness-check
-        optional: false
+        optional: true
         condition: candidate_available
         prerequisites: [review-change]
         next: []

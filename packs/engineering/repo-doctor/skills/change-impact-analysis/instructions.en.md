@@ -1,5 +1,7 @@
 # Change Impact Analysis
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 Use this skill before modifying, moving, renaming, deleting, or redesigning shared code.
 
 ## Safety Boundary

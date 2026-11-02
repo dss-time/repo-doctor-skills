@@ -1,5 +1,7 @@
 # Safe Code Review
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 Independent review axes prevent a clean result in one concern from hiding a failure in another.
 
 Default output is `fast`; use `standard` or `audit` for detailed evidence, following the output contract.

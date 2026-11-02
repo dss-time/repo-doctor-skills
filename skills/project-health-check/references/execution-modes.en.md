@@ -6,16 +6,16 @@ Use risk, scope, reversibility, and authorization—not the Skill's professional
 
 Use for a clear, local, low-risk, reversible request that does not involve production data, security or permissions, migrations, releases, public-contract breakage, dependency upgrades, or broad architecture change.
 
-Default budget:
+Default approach:
 
 - one primary Skill;
 - user-named files first; no repository-wide scan;
-- at most 3 directly relevant files and 3 necessary commands;
-- one focused syntax check, test, typecheck, lint target, or minimum reproduction;
-- no full test suite, complete build, release gate, persistent audit report, or automatic Skill chaining;
+- expand file reads, tool calls and tests as needed to establish reliable evidence; no fixed numerical limits;
+- select checks by affected behavior, dependencies and risk; reuse only valid evidence;
+- do not default to full regression or persistent reports; use them when justified by impact and authorization; no unauthorized Skill chaining;
 - output only the conclusion, completed/found items, minimum validation, and at most one next recommendation.
 
-The file and command limits are soft budgets. If correct work needs more, explain the reason and switch to `standard` before exceeding them.
+Evidence sufficiency determines investigation depth. Escalate for increased scope or risk, not a file, command, test or Token count.
 
 ## `standard`
 

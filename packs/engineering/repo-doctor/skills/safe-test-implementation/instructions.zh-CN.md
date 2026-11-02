@@ -1,5 +1,7 @@
 # Safe Test Implementation（安全补充测试）
 
+仅在已授权流程续接、证据复用或恢复时读取 `../../references/workflow-coordination.zh-CN.md`，保持本 Skill 自身范围和权限。
+
 每个行为切片按所选测试模式取得可信证据，绿灯后才能整理。
 
 输出模式与 test_mode 独立，二者都不得静默切换。

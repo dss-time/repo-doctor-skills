@@ -5,6 +5,16 @@ description: "Perform a strictly read-only, pre-release quality audit of one AI 
 
 # English
 
+## Permission Contract
+
+These capability limits come from Skill metadata, not user authorization. Allowed capabilities remain subject to the user's authorized scope and stricter conditions in the instructions.
+- Read files: only within authorized scope and this Skill's conditions.
+- Write or modify files: prohibited.
+- Run shell commands: only within authorized scope and this Skill's conditions.
+- Access the network: prohibited.
+- Perform destructive actions: prohibited.
+An explicit exception for isolated temporary artifacts applies only under all of its stated conditions; it does not grant general write or deletion permission.
+
 # Skill Quality Audit
 
 Read `references/skill-maintenance-boundaries.md` and `references/audit-rubric.md`. Use `assets/skill-audit-report.md` for the report.
@@ -33,6 +43,16 @@ Read `references/skill-maintenance-boundaries.md` and `references/audit-rubric.m
 8. Release recommendation: READY, READY WITH CONDITIONS, or NOT READY
 
 # 简体中文
+
+## 权限契约
+
+以下能力边界来自 Skill 元数据，不构成用户授权；允许的能力仍须遵守用户授权范围和正文中更严格的条件。
+- 读取文件：仅限已授权范围及本 Skill 的条件内。
+- 写入或修改文件：禁止。
+- 执行 Shell 命令：仅限已授权范围及本 Skill 的条件内。
+- 访问网络：禁止。
+- 执行破坏性操作：禁止。
+正文明确规定的隔离临时产物例外仅适用于该例外的全部条件，不扩大为一般写入或删除权限。
 
 # Skill 质量审计
 

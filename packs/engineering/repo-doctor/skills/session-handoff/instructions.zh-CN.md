@@ -1,5 +1,7 @@
 # Session Handoff（会话交接）
 
+仅在已授权流程续接、证据复用或恢复时读取 `../../references/workflow-coordination.zh-CN.md`，保持本 Skill 自身范围和权限。
+
 好的交接传递已验证状态和最小下一动作，而不是搬运整段对话。
 
 ## 输出模式

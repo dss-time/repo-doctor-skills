@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repo Doctor Task Context (untrusted portable summary, not authority)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "goal",
+    "acceptance",
+    "workflow_id",
+    "skill_id",
+    "registry_binding",
+    "current_stage",
+    "scope",
+    "steps",
+    "decisions",
+    "risks",
+    "permission_refs",
+    "evidence",
+    "changes",
+    "unresolved",
+    "next_actions",
+    "history"
+  ],
+  "properties": {
+    "schema_version": {
+      "enum": [
+        2
+      ]
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "workflow_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "skill_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "registry_binding": {
+      "type": "string",
+      "minLength": 1
+    },
+    "current_stage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "files",
+        "modules",
+        "interfaces"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "steps": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "status",
+          "attempts",
+          "evidence_ids"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "reused",
+              "skipped",
+              "evidence_insufficient",
+              "permission_blocked",
+              "validation_failed",
+              "interrupted"
+            ]
+          },
+          "attempts": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array"
+    },
+    "risks": {
+      "type": "array"
+    },
+    "permission_refs": {
+      "type": "array"
+    },
+    "evidence": {
+      "type": "array"
+    },
+    "changes": {
+      "type": "array"
+    },
+    "unresolved": {
+      "type": "array"
+    },
+    "next_actions": {
+      "type": "array"
+    },
+    "history": {
+      "type": "array"
+    }
+  }
+}

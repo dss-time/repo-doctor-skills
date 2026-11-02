@@ -1,5 +1,7 @@
 # Safe Test Implementation
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 Complete one behavior slice with evidence appropriate to its test mode; organize only after green.
 
 Output mode and test_mode are independent. Never switch either silently.

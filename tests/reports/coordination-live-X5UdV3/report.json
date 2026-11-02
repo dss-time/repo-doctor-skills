@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02T02:38:48.273Z",
+  "result": "FAIL",
+  "cases": [
+    {
+      "case": "workflow",
+      "result": "FAIL",
+      "task": {
+        "schema_version": 1,
+        "id": "regression",
+        "goal": "Add percentage-discount regression coverage and independently review it",
+        "acceptance": [
+          "percentage-regression"
+        ],
+        "workflow_id": "post-fix-regression-test",
+        "skill_id": null,
+        "registry_binding": "15f897b19a55a46780d8925cdd2270144490c69575ca27b8a5d16cbacf79886c",
+        "decisions": [],
+        "scope": {
+          "files": [
+            "src/cart.mjs",
+            "tests/cart.test.mjs",
+            "SPEC.md"
+          ],
+          "modules": [],
+          "interfaces": []
+        },
+        "risks": [],
+        "permission_refs": [],
+        "evidence": [
+          {
+            "id": "spec",
+            "source": "host-authored immutable synthetic specification",
+            "summary": "Fix exists, test-only scope and no release candidate",
+            "kind": "analysis",
+            "dependencies": [
+              "SPEC.md",
+              "src/cart.mjs",
+              "package.json"
+            ],
+            "claims": [],
+            "task_binding": "f511d6e9d2da38419f89607b29b88503d8d2bc8fba982a936b629f0a3f62c337",
+            "coverage_complete": true,
+            "result": "pass",
+            "bindings": {
+              "SPEC.md": "f11477a44da04f87d311cb221ba5120ef5c34ac140accf6cf26270728d032ead",
+              "src/cart.mjs": "1d13ab247f8246b3c8b89277cb1b0d865c7cf214287bdf9db31c18fff8f4e706",
+              "package.json": "4003286c17aaf60a813c018365595acb05bcc822a8991ab858d8ab93d72dfd3d"
+            },
+            "environment": {
+              "node": "v24.19.0",
+              "platform": "darwin"
+            },
+            "recorded_at": "2026-11-02T02:38:48.321Z"
+          }
+        ],
+        "changes": [],
+        "unresolved": [],
+        "next_actions": [
+          {
+            "stage": "test-gap",
+            "skill": "test-gap-analysis",
+            "action": "execute",
+            "reason": "applicable_stage",
+            "mode": "manual_handoff"
+          }
+        ],
+        "current_stage": "test-gap",
+        "steps": {
+          "test-gap": {
+            "status": "running",
+            "attempts": 1,
+            "evidence_ids": [],
+            "reason": "applicable_stage",
+            "request_binding": "7e38a4f3fddc624d6c8b29b05967af439c7fe5a606ca21ce9a9a6426807c798d"
+          },
+          "test-approval": {
+            "status": "pending",
+            "attempts": 0,
+            "evidence_ids": []
+          },
+          "regression-test": {
+            "status": "pending",
+            "attempts": 0,
+            "evidence_ids": []
+          },
+          "review": {
+            "status": "pending",
+            "attempts": 0,
+            "evidence_ids": []
+          },
+          "release": {
+            "status": "pending",
+            "attempts": 0,
+            "evidence_ids": []
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "stage": "test-gap",
+            "status": "running",
+            "reason": "applicable_stage"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "id": "gap",
+          "sandbox": "read-only",
+          "exit_code": 0,
+          "timed_out": false,
+          "duration_ms": 44266,
+          "completed": true,
+          "usage": {
+            "input_tokens": 78541,
+            "cached_input_tokens": 38656,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 865,
+            "reasoning_output_tokens": 0
+          },
+          "commands": [],
+          "answer": "I’ll use `test-gap-analysis` to compare the discount requirements, implementation, and existing tests, keeping the analysis read-only.\nThe production fix already exists; **two regression tests are missing**. [src/cart.mjs:1]($TRIAL_ROOT/workflow/src/cart.mjs:1) applies `total * (1 - percentage / 100)`, consistent with [SPEC.md:2]($TRIAL_ROOT/workflow/SPEC.md:2). No production change is indicated.\n\n| Behavior | Coverage | Recommendation and value |\n|---|---|---|\n| `discount(100, 0) === 100` | Covered | Preserve the existing “zero percent preserves total” test. |\n| `discount(200, 25) === 150` | Missing—high priority | Add a unit regression test that distinguishes percentage calculation from subtracting a fixed amount. |\n| `discount(100, 100) === 0` | Missing—high priority | Add a unit boundary regression test protecting full-discount behavior. |\n\nEvidence: [tests/cart.test.mjs:4]($TRIAL_ROOT/workflow/tests/cart.test.mjs:4) contains only the zero-percent assertion. Percentage-discount behavior is therefore **partially covered overall**: the existing test would also pass an implementation that always returns the original total.\n\nThe test system uses `node:test`, `node:assert/strict`, and a direct public-function import, with inline inputs and no fixtures or mocks ([tests/cart.test.mjs:1]($TRIAL_ROOT/workflow/tests/cart.test.mjs:1)). Both missing cases belong at this unit layer; additional integration or end-to-end tests are unnecessary for this scope.\n\nRecommended validation: `npm test`, explicitly defined as `node --test tests/cart.test.mjs` in [package.json:1]($TRIAL_ROOT/workflow/package.json:1). Command confidence is high from the manifest; execution results and CI integration remain unknown.\n\nNo files changed and no tests ran. This is static coverage analysis; the selected skill prohibits shell execution.",
+          "prompt_sha256": "07c160fe0fd77e8967696d2b43dbbde2995883c87d8bbfd03f6329cb24919c06",
+          "argv": [
+            "exec",
+            "--ephemeral",
+            "--json",
+            "--color",
+            "never",
+            "--skip-git-repo-check",
+            "--sandbox",
+            "read-only",
+            "-C",
+            "$TRIAL_ROOT/workflow",
+            "--disable",
+            "plugins",
+            "--disable",
+            "apps",
+            "--disable",
+            "multi_agent",
+            "--disable",
+            "memories",
+            "-c",
+            "approval_policy=\"never\"",
+            "-c",
+            "analytics.enabled=false",
+            "-c",
+            "sandbox_workspace_write.network_access=false"
+          ],
+          "errors": []
+        }
+      ],
+      "reason": "gap stage not observed or changed files"
+    }
+  ],
+  "cli_version": "codex-cli 0.166.0-alpha.5.1",
+  "model_selection": "existing user configuration; no model override",
+  "core_sha256": "0a7060d38e7b9ef11a11f1fe22c7b72d869adbd079f6c549c59b66449616586c",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

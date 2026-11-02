@@ -1,5 +1,7 @@
 # Repo Doctor Router
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions. The optional host helper is `../../references/workflow-coordination.mjs`; this Router still only recommends.
+
 The best route is the smallest verified next capability that matches the current artifact and permission state.
 
 Default to one `fast` recommendation; expand to `standard` or `audit` only for requested routing detail. Fields belong to the output contract.

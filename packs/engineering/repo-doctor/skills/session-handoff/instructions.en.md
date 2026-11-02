@@ -1,5 +1,7 @@
 # Session Handoff
 
+For authorized workflow continuation, evidence reuse or recovery, read `../../references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
+
 A good handoff transfers verified state and the smallest next action, not the conversation's bulk.
 
 ## Output modes

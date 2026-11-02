@@ -7,6 +7,16 @@ description: "Default to this Skill for an unqualified PDF review and for checks
 
 Use the section matching the user's language. 使用与用户输入语言一致的章节。
 
+## Permission Contract
+
+These capability limits come from Skill metadata, not user authorization. Allowed capabilities remain subject to the user's authorized scope and stricter conditions in the instructions.
+- Read files: only within authorized scope and this Skill's conditions.
+- Write or modify files: prohibited.
+- Run shell commands: only within authorized scope and this Skill's conditions.
+- Access the network: prohibited.
+- Perform destructive actions: prohibited.
+An explicit exception for isolated temporary artifacts applies only under all of its stated conditions; it does not grant general write or deletion permission.
+
 # PDF Review
 
 Read `references/productivity-evidence-and-file-safety.md` and `references/pdf-capability-matrix.md`.
@@ -31,6 +41,16 @@ Keep the original PDF read-only. If rendering or OCR is unavailable, explicitly 
 5. Unreviewed pages or capabilities and limitations
 
 ---
+
+## 权限契约
+
+以下能力边界来自 Skill 元数据，不构成用户授权；允许的能力仍须遵守用户授权范围和正文中更严格的条件。
+- 读取文件：仅限已授权范围及本 Skill 的条件内。
+- 写入或修改文件：禁止。
+- 执行 Shell 命令：仅限已授权范围及本 Skill 的条件内。
+- 访问网络：禁止。
+- 执行破坏性操作：禁止。
+正文明确规定的隔离临时产物例外仅适用于该例外的全部条件，不扩大为一般写入或删除权限。
 
 # PDF 审查
 

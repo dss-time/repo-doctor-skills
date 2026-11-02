@@ -85,6 +85,11 @@ export function validateRegistryDocument(registry, {
       .map(([slug]) => slug),
   );
   const workflowIds = Object.keys(registry.workflows).sort(compareNames);
+  for (const [risk, rules] of Object.entries(registry.coordination?.risk_requirements ?? {})) {
+    for (const requirement of [...rules.before_write, ...rules.before_delivery]) {
+      if (requirement.skill && !activeSkills.has(requirement.skill)) errors.push(`${risk}: unknown/inactive risk Skill ${requirement.skill}`);
+    }
+  }
 
   for (const [workflowId, workflow] of Object.entries(registry.workflows)) {
     const stageMap = new Map();

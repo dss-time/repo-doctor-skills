@@ -8,6 +8,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.9.0-beta.1] - 2026-11-02
+
+### Added
+
+- Opt-in serial coordination over the existing Registry: structured task context, scoped evidence reuse, risk obligations and safe recovery.
+- Isolated Codex CLI trial and adversarial regression gates; broader full-corpus live-model status remains UNKNOWN for this candidate.
+
+### Changed
+
+- Prepare a Beta Release Candidate, not a completed publication; Repo Doctor Pack/plugin advances to 0.11.0-beta.1.
+- Use impact and evidence sufficiency instead of fixed file/command budgets; independent Skills remain directly installable.
+
+### Fixed
+
+- Reconcile failed/interrupted writes before retry or optional skips; require fresh host reconciliation for every restored checkpoint.
+- Bind results to current operation scope; allow read-only conditional modes; distinguish unknown, stale and observed failed evidence.
+- Make coordination distribution tests work without pre-existing ignored build artifacts.
+
+### Security
+
+- Require scoped host checks of narrower Skill rules, current request bindings and per-attempt reconciliation.
+- Load Skill content before live execution, remove native Shell tools for Shell-prohibited Skills, and reject violating receipts.
+
+### Documentation
+
+- Document Task Context v2, Beta limits, independent review and current measured trial results. Historical evaluations do not certify this candidate.
+
 ## [0.8.1] - 2026-10-22
 
 ### Added
@@ -505,7 +532,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...HEAD
+[0.9.0-beta.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...v0.9.0-beta.1
 [0.8.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.3...v0.8.0
 [0.7.3]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.2...v0.7.3

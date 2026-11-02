@@ -5,10 +5,21 @@ description: "Synchronize documentation with a confirmed code, configuration, AP
 
 # English
 
+## Permission Contract
+
+These capability limits come from Skill metadata, not user authorization. Allowed capabilities remain subject to the user's authorized scope and stricter conditions in the instructions.
+- Read files: only within authorized scope and this Skill's conditions.
+- Write or modify files: only within authorized scope and this Skill's conditions.
+- Run shell commands: only within authorized scope and this Skill's conditions.
+- Access the network: prohibited.
+- Perform destructive actions: prohibited.
+An explicit exception for isolated temporary artifacts applies only under all of its stated conditions; it does not grant general write or deletion permission.
+
 ## Execution Contract
 
 Default to `fast`; bounded natural-language invocation is allowed.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For authorized multi-stage work, evidence reuse or recovery, read `references/workflow-coordination.en.md`; optionally use `references/workflow-coordination.mjs` and `references/workflows.yaml`. Provide manual handoff when host execution is unavailable.
 For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
@@ -24,6 +35,7 @@ Synchronize affected documentation with confirmed implementation, configuration,
 - If implementation appears wrong or contradicts the confirmed specification, report a blocker instead of changing business code.
 - Preserve each document's language, structure, terminology, links, formatting, and local style.
 - Do not rewrite unrelated sections or invent commands, parameters, return values, versions, compatibility claims, or migration steps.
+- Before any validation command, inspect its definition, package-manager lifecycle hooks and transitive scripts. Do not run commands that access the network, install dependencies, change files outside the authorized documentation scope, migrate data, deploy, publish, access production, perform unsafe deletion, or have unknown side effects. Mark the affected check `Blocked`, explain why, and continue independent authorized work. A command's name does not establish safety.
 
 ## Workflow
 
@@ -33,7 +45,7 @@ Synchronize affected documentation with confirmed implementation, configuration,
 4. For every update, map the statement to repository evidence and preserve the surrounding document's language and style.
 5. Synchronize commands, parameters, return values, compatibility, deprecation, migration sequence, and examples only when evidence confirms them.
 6. Make the smallest documentation-only edits. Keep unrelated prose and formatting unchanged.
-7. Run repository-provided documentation, link, formatting, or example checks when available. Do not invent missing check commands.
+7. Run available repository-provided documentation, link, formatting, or example checks only after the command preflight above and within user authorization. Prefer read-only checks; write-mode formatters require authorization for every affected path. Do not invent missing commands or report blocked/unrun checks as passed.
 8. Check links, code fences, versions, terminology, and cross-document consistency manually when no tool exists.
 9. Report updated files, evidence, validation, intentionally unchanged files, blockers, and documentation that may still be stale.
 
@@ -51,10 +63,21 @@ Separate confirmed documentation changes from assumptions. List only commands ac
 
 # 简体中文
 
+## 权限契约
+
+以下能力边界来自 Skill 元数据，不构成用户授权；允许的能力仍须遵守用户授权范围和正文中更严格的条件。
+- 读取文件：仅限已授权范围及本 Skill 的条件内。
+- 写入或修改文件：仅限已授权范围及本 Skill 的条件内。
+- 执行 Shell 命令：仅限已授权范围及本 Skill 的条件内。
+- 访问网络：禁止。
+- 执行破坏性操作：禁止。
+正文明确规定的隔离临时产物例外仅适用于该例外的全部条件，不扩大为一般写入或删除权限。
+
 ## 执行契约
 
 默认使用 `fast`；允许边界明确的自然语言隐式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+仅在已授权多阶段协作、证据复用或恢复时读取 `references/workflow-coordination.zh-CN.md`；按需使用 `references/workflow-coordination.mjs` 和 `references/workflows.yaml`，宿主不支持执行时提供人工交接。
 必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
@@ -70,6 +93,7 @@ Separate confirmed documentation changes from assumptions. List only commands ac
 - 发现实现错误或与已确认规格冲突时，报告阻塞项，不修改业务代码。
 - 保留各文档原有语言、结构、术语、链接、格式和局部风格。
 - 不重写无关章节，也不编造命令、参数、返回值、版本、兼容性或迁移步骤。
+- 执行任何验证命令前，检查其定义、包管理器生命周期钩子及传递脚本。命令涉及联网、安装依赖、修改授权文档范围外的文件、数据迁移、部署、发布、生产访问、不安全删除或未知副作用时，不得执行；将受影响检查标为 `Blocked` 并说明原因，继续独立且已授权的工作。命令名称不能证明安全。
 
 ## 工作流程
 
@@ -79,7 +103,7 @@ Separate confirmed documentation changes from assumptions. List only commands ac
 4. 每项更新都映射到仓库证据，并保持周边文档语言和风格。
 5. 只有证据确认时才同步命令、参数、返回值、兼容性、弃用、迁移顺序和示例。
 6. 做最小文档修改，保持无关文字和格式不变。
-7. 存在仓库提供的文档、链接、格式或示例检查时运行；不得编造不存在的命令。
+7. 仅在通过上述命令预检且符合用户授权时，运行仓库提供的文档、链接、格式或示例检查。优先只读检查；写入式格式化必须覆盖全部受影响路径的授权。不得编造不存在的命令，也不得把阻塞或未运行的检查写成通过。
 8. 没有工具时人工检查链接、代码围栏、版本、术语和跨文档一致性。
 9. 报告更新文件、证据、验证、明确未修改文件、阻塞项和仍可能过期的文档。
 

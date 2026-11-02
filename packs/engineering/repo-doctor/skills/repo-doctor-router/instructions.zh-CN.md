@@ -1,5 +1,7 @@
 # Repo Doctor Router（工作流路由）
 
+仅在已授权流程续接、证据复用或恢复时读取 `../../references/workflow-coordination.zh-CN.md`，保持本 Skill 自身范围和权限。可选宿主辅助模块为 `../../references/workflow-coordination.mjs`；Router 仍只推荐。
+
 最佳路由是与当前产物和权限状态匹配的最小已核验下一能力。
 
 默认 `fast` 推荐一个 Skill；`standard` 或 `audit` 仅在要求详细路由时展开。输出字段以输出契约为准。

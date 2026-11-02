@@ -6,6 +6,7 @@ import {
   discoverActivePackSkills,
   discoverPackRoots,
   executionContract,
+  permissionContract,
   copyPackReferences,
 } from "./sync-pack-plugin.mjs";
 import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
@@ -71,8 +72,11 @@ function renderSkill(skillDir, locale, target) {
   instructions = instructions.replaceAll("../../workflows.yaml", target.startsWith("claude-code")
     ? "references/workflows.yaml" : `references/${skillName}/workflows.yaml`);
   if (metadata.execution) {
-    instructions = `${executionContract(metadata.execution, locale)}\n\n${instructions}`;
+    const contract = executionContract(metadata.execution, locale).replaceAll('references/workflows.yaml',
+      target.startsWith('claude-code') ? 'references/workflows.yaml' : `references/${skillName}/workflows.yaml`);
+    instructions = `${contract}\n\n${instructions}`;
   }
+  instructions = `${permissionContract(metadata.permissions, locale)}\n\n${instructions}`;
   const output = readFileSync(path.join(skillDir, `output.${locale}.md`), "utf8");
 
   if (target.startsWith("cursor")) {
@@ -107,6 +111,8 @@ export function renderCodexSkill(skillDir) {
     instructionsZh = `${executionContract(metadata.execution, "zh-CN")}\n\n${instructionsZh}`;
   }
   const outputEn = readFileSync(path.join(skillDir, "output.en.md"), "utf8");
+  instructionsEn = `${permissionContract(metadata.permissions, "en")}\n\n${instructionsEn}`;
+  instructionsZh = `${permissionContract(metadata.permissions, "zh-CN")}\n\n${instructionsZh}`;
   const outputZh = readFileSync(path.join(skillDir, "output.zh-CN.md"), "utf8");
   return [
     "---",

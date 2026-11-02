@@ -221,11 +221,11 @@ export function validateSchema(value, schema, instancePath = "$") {
   const expectedType = schema.type;
   if (expectedType) {
     const actualType = Array.isArray(value) ? "array" : value === null ? "null" : typeof value;
-    const matches = expectedType === "object"
+    const matches = (Array.isArray(expectedType) ? expectedType : [expectedType]).some(type => type === "object"
       ? actualType === "object" && value !== null && !Array.isArray(value)
-      : expectedType === "integer"
+      : type === "integer"
         ? Number.isInteger(value)
-        : actualType === expectedType;
+        : actualType === type);
     if (!matches) return [`${instancePath}: expected type ${expectedType}, received ${actualType}`];
   }
 
@@ -234,6 +234,9 @@ export function validateSchema(value, schema, instancePath = "$") {
   }
   if (schema.enum && !schema.enum.some((candidate) => sameValue(value, candidate))) {
     errors.push(`${instancePath}: value ${JSON.stringify(value)} is not one of ${schema.enum.map(JSON.stringify).join(", ")}`);
+  }
+  if (typeof value === "number" && schema.minimum !== undefined && value < schema.minimum) {
+    errors.push(`${instancePath}: number is below minimum ${schema.minimum}`);
   }
 
   if (typeof value === "string") {

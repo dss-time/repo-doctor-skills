@@ -2,6 +2,9 @@
 
 Repo Doctor Skills keeps release versions, component versions, and maturity statuses separate. A matching number in two places is not evidence that they share a lifecycle.
 
+
+The current checkout prepares unpublished 0.9.0-beta.1; published stable remains 0.8.1. The existing stable full-corpus gate is preserved, and the candidate additionally requires fresh coordination trial evidence. Full-corpus Live-model status is UNKNOWN; historical reports are not substituted.
+
 ## 1. Project release version
 
 The project release version covers the repository-level release as a whole. Its authoritative metadata is `package.json`; the same version must be used by the Git tag, GitHub Release, formal `CHANGELOG.md` section, and release notes.

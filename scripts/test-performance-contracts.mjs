@@ -37,8 +37,8 @@ for (const entry of cases) {
 
   if (entry.risk_tier === "simple") {
     assert.equal(entry.expected_mode, "fast", `${entry.case_id}: simple requests must use fast`);
-    assert.ok(entry.recommended_max_files_read <= 3, `${entry.case_id}: fast file budget exceeds 3`);
-    assert.ok(entry.recommended_max_commands <= 3, `${entry.case_id}: fast command budget exceeds 3`);
+    assert.equal(entry.validation_selection, "impact_and_evidence");
+    assert.equal("recommended_max_commands" in entry, false);
     assert.equal(entry.full_test_suite_allowed, false, `${entry.case_id}: fast cannot run the full test suite`);
     assert.equal(entry.full_build_allowed, false, `${entry.case_id}: fast cannot run the full build`);
     assert.equal(entry.persistent_report_allowed, false, `${entry.case_id}: fast cannot create a persistent report`);
@@ -69,7 +69,7 @@ for (const locale of ["en", "zh-CN"]) {
   const reference = path.join(packRoot, "references", `execution-modes.${locale}.md`);
   assert.ok(existsSync(reference), `missing ${locale} execution-mode reference`);
   const content = readFileSync(reference, "utf8");
-  for (const required of ["fast", "standard", "audit", "3"]) {
+  for (const required of ["fast", "standard", "audit"]) {
     assert.ok(content.includes(required), `${path.relative(root, reference)}: missing ${required}`);
   }
   assert.ok(

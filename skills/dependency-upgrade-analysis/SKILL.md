@@ -5,10 +5,21 @@ description: "Explicit-invocation analysis of one defined dependency upgrade usi
 
 # English
 
+## Permission Contract
+
+These capability limits come from Skill metadata, not user authorization. Allowed capabilities remain subject to the user's authorized scope and stricter conditions in the instructions.
+- Read files: only within authorized scope and this Skill's conditions.
+- Write or modify files: prohibited.
+- Run shell commands: prohibited.
+- Access the network: prohibited.
+- Perform destructive actions: prohibited.
+An explicit exception for isolated temporary artifacts applies only under all of its stated conditions; it does not grant general write or deletion permission.
+
 ## Execution Contract
 
 Default to `standard`; explicit invocation is required.
 Complete one primary task by default. Continue an authorized end-to-end workflow within each Skill's permissions; Router remains recommendation-only. Pause for new material decisions or scope, not authorization already given.
+For authorized multi-stage work, evidence reuse or recovery, read `references/workflow-coordination.en.md`; optionally use `references/workflow-coordination.mjs` and `references/workflows.yaml`. Provide manual handoff when host execution is unavailable.
 For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
@@ -41,10 +52,21 @@ Analyze one defined dependency upgrade. Keep manifests, lockfiles, code, configu
 
 # 简体中文
 
+## 权限契约
+
+以下能力边界来自 Skill 元数据，不构成用户授权；允许的能力仍须遵守用户授权范围和正文中更严格的条件。
+- 读取文件：仅限已授权范围及本 Skill 的条件内。
+- 写入或修改文件：禁止。
+- 执行 Shell 命令：禁止。
+- 访问网络：禁止。
+- 执行破坏性操作：禁止。
+正文明确规定的隔离临时产物例外仅适用于该例外的全部条件，不扩大为一般写入或删除权限。
+
 ## 执行契约
 
 默认使用 `standard`；仅允许用户显式调用。
 默认完成一个主任务。用户已授权完整流程时，在各 Skill 权限内连续完成；Router 仍只推荐。新重大决策或超出授权时暂停，不重复索取已有授权。
+仅在已授权多阶段协作、证据复用或恢复时读取 `references/workflow-coordination.zh-CN.md`；按需使用 `references/workflow-coordination.mjs` 和 `references/workflows.yaml`，宿主不支持执行时提供人工交接。
 必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 

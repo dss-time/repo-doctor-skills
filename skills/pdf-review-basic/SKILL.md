@@ -5,6 +5,16 @@ description: "Perform a lightweight, read-only, text-only PDF check only when th
 
 # English
 
+## Permission Contract
+
+These capability limits come from Skill metadata, not user authorization. Allowed capabilities remain subject to the user's authorized scope and stricter conditions in the instructions.
+- Read files: only within authorized scope and this Skill's conditions.
+- Write or modify files: prohibited.
+- Run shell commands: prohibited.
+- Access the network: prohibited.
+- Perform destructive actions: prohibited.
+An explicit exception for isolated temporary artifacts applies only under all of its stated conditions; it does not grant general write or deletion permission.
+
 # Basic PDF Review
 
 Perform only an explicitly requested lightweight, read-only check of extractable PDF text.
@@ -44,6 +54,16 @@ Perform only an explicitly requested lightweight, read-only check of extractable
 6. Excluded OCR, visual, layout, table, image, and scanned-content checks
 
 # 简体中文
+
+## 权限契约
+
+以下能力边界来自 Skill 元数据，不构成用户授权；允许的能力仍须遵守用户授权范围和正文中更严格的条件。
+- 读取文件：仅限已授权范围及本 Skill 的条件内。
+- 写入或修改文件：禁止。
+- 执行 Shell 命令：禁止。
+- 访问网络：禁止。
+- 执行破坏性操作：禁止。
+正文明确规定的隔离临时产物例外仅适用于该例外的全部条件，不扩大为一般写入或删除权限。
 
 # PDF 基础审查
 
