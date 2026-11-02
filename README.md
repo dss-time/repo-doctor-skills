@@ -2,15 +2,8 @@
 
 # Repo Doctor Skills
 
- [![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/dss-time/badge.svg)](https://hub.xerj.org/contributors/dss-time)
-
-![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen)
-
-![Agent Skills](https://img.shields.io/badge/Agent-Skills-blue)
-
-![Codex](https://img.shields.io/badge/Codex-Compatible-blue)
-
-![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-orange)
+[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/dss-time/badge.svg)](https://hub.xerj.org/contributors/dss-time)
+![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen) ![Agent Skills](https://img.shields.io/badge/Agent-Skills-blue) ![Codex](https://img.shields.io/badge/Codex-Compatible-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-orange)
 
 Focused Skills for debugging, code review, fixes, and tests.
 
