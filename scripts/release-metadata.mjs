@@ -29,14 +29,14 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.9.0-beta.1",
+  projectVersion: "0.9.0-beta.2",
   stableInstallVersion: "0.8.1",
-  releaseDate: "2026-11-02",
+  releaseDate: "2026-11-03",
   releaseChannel: "candidate",
   liveModelStatus: "UNKNOWN",
   liveModelWaiver: null,
   liveModelReport: null,
-  liveModelEvidenceVersion: "0.9.0-beta.1",
+  liveModelEvidenceVersion: "0.9.0-beta.2",
   expectedLiveModelCases: 328,
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
@@ -45,9 +45,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.11.0",
+      version: "0.11.1",
       activeSkillCount: 28,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.11.0" }),
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.11.1" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
@@ -66,7 +66,7 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "office.document-data-doctor",
       path: "office/document-data-doctor",
-      version: "0.1.0",
+      version: "0.1.1",
       activeSkillCount: 3,
       plugin: null,
     }),
@@ -91,8 +91,8 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.9.0-beta.1.md",
-  coordinationReport: "tests/reports/coordination-release-0.9.0-beta.1.json",
+  releaseDocument: "docs/RELEASE_NOTES_0.9.0-beta.2.md",
+  coordinationReport: "tests/reports/coordination-release-0.9.0-beta.2.json",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 
@@ -564,7 +564,7 @@ function auditLiveModelWaiver(root, contract, errors) {
 }
 
 function auditLiveModelEvidence(root, contract, errors) {
-  if (contract.releaseChannel !== "stable") return;
+  if (contract.releaseChannel !== "stable" && contract.liveModelStatus !== "PASS") return;
   // Explicit maintainer exception for this version only; future releases still require PASS.
   if (contract.projectVersion === "0.7.2" && contract.liveModelStatus === "UNKNOWN") {
     const waiverErrors = [];

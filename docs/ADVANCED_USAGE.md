@@ -99,6 +99,8 @@ The `qwen-zh-CN`, `kimi-zh-CN`, `generic-zh-CN`, and `generic-en` targets are Ma
 
 Requirements: Node.js 18 or later; ChatGPT ZIP creation also needs `zip` on `PATH`.
 
+The bundled installer supports Node.js 18 and later. CI checks schema validation and installation on Linux, macOS and Windows with Node 18 and current LTS. The minimum Node version also runs the packed CLI on Linux. Full build and release checks run on Linux current LTS.
+
 ```bash
 git clone https://github.com/dss-time/repo-doctor-skills.git
 cd repo-doctor-skills
@@ -131,13 +133,13 @@ Installer targeting is deliberately conservative:
 - without an explicit option, exactly one configured `CODEX_HOME` or `AGENTS_HOME` is required;
 - multiple detected homes cause a safe exit before any write; directory existence alone is never treated as Agent detection.
 
-The installer defaults to Recommended, verifies the installed set, and refuses to replace an existing selected Skill unless `--force` is explicit. Public CLI equivalents include:
+The installer defaults to Recommended and verifies the installed set. Reinstalling replaces selected same-name Skill directories, including local edits and old resources. Identical content is skipped. Public CLI equivalents include:
 
 ```bash
 npx repo-doctor-skills install --agent codex
 npx repo-doctor-skills install --agent shared
 npx repo-doctor-skills install --target-dir ./my-skills
-npx repo-doctor-skills install --force
+npx repo-doctor-skills install
 ```
 
 ## 6. Individual Skill installation
@@ -197,6 +199,6 @@ npx repo-doctor-skills install --skill safe-code-review
 npx repo-doctor-skills install --language en
 ```
 
-`--skill` and `--preset` are mutually exclusive. Choose en, zh-CN, or bilingual (default) for the body; resources remain available. Identical content is skipped, different content is reported, and `--force` replaces only selected Skills.
+`--skill` and `--preset` are mutually exclusive. Choose en, zh-CN, or bilingual (default) for the body, with resources included. Reinstalling replaces selected same-name Skill directories in place, including local edits and old resources. Identical content is skipped, and other Skills remain installed. `--force` is accepted for compatibility. Failed installations attempt to restore the previous directories and report the backup location if recovery is incomplete.
 
 Project Release Version and Plugin / Pack Component Version are independent; see [version policy](VERSIONING.md).

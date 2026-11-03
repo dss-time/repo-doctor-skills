@@ -36,6 +36,8 @@ export function installerUsage(command = "repo-doctor-skills install") {
     `Usage: ${command} [--preset recommended|full | --skill SLUG] [--language en|zh-CN|bilingual] [--agent codex|shared] [--target-dir PATH] [--force]`,
     "",
     "Defaults to the Recommended preset. Use --target-dir for an explicit isolated destination.",
+    "Reinstalling replaces selected same-name Skills, including local edits. Identical content is skipped.",
+    "--force is accepted for compatibility. Replacement is already the default.",
     "Without a reliable Agent signal, the target defaults to the shared ~/.agents/skills directory.",
   ].join("\n");
 }
@@ -124,7 +126,7 @@ async function skillSources() {
   };
 }
 
-export async function install({ preset = "recommended", skill = null, language = "bilingual", target, force = false } = {}) {
+export async function install({ preset = "recommended", skill = null, language = "bilingual", target } = {}) {
   if (!target) throw new Error("target is required");
   if (!new Set(["recommended", "full"]).has(preset)) throw new Error(`unsupported preset ${JSON.stringify(preset)}`);
   if (!["en", "zh-CN", "bilingual"].includes(language)) throw new InstallerUsageError(`Unsupported language ${JSON.stringify(language)}.`);
@@ -166,7 +168,6 @@ export async function install({ preset = "recommended", skill = null, language =
     const conflicts = pending.filter((slug) => {
       try { lstatSync(path.join(resolvedTarget, slug)); return true; } catch (error) { if (error.code === "ENOENT") return false; throw error; }
     });
-    if (conflicts.length && !force) throw new Error(`Different existing Skills: ${conflicts.join(", ")}. Use --force to replace selected Skills.`);
     mkdirSync(resolvedTarget, { recursive: true });
     const changes = [];
     const backupRoot = path.join(staging, ".backup");
@@ -214,7 +215,7 @@ export async function runInstallerCli(args = process.argv.slice(2), { env = proc
     validateArguments(args);
     const preset = option(args, "--preset") ?? "recommended";
     const target = resolveTarget(args, env, home);
-    const result = await install({ preset, skill: option(args, "--skill"), language: option(args, "--language") ?? "bilingual", target, force: args.includes("--force") });
+    const result = await install({ preset, skill: option(args, "--skill"), language: option(args, "--language") ?? "bilingual", target });
     const label = { recommended: "Recommended", full: "Full", individual: "Individual" }[result.preset];
     stdout.write([
       "Repo Doctor Skills installed.",

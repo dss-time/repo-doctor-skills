@@ -22,7 +22,7 @@ export function auditCoordination() {
       execution: 'same_agent', capabilities: { read_files: true, write_files: true } };
     function evidence(id, skill, claims, extra = {}) {
       const e = captureEvidence(root, { id, operation_binding: operationBinding(host), source: 'synthetic audit host', summary: 'Boundary fixture only', kind: 'analysis',
-        task_binding: taskBinding(task), dependencies: ['scope.txt'], result: 'pass', coverage_complete: true, skill, claims, ...extra, ...(claims.some(c => c.startsWith('stage:')) ? { request_binding: digest(host.requests[claims.find(c => c.startsWith('stage:')).slice(6)]) } : {}) }, host.environment);
+        task_binding: taskBinding(task), dependencies: ['scope.txt'], result: 'pass', coverage_complete: true, skill, claims, ...extra, ...(claims.some(c => c.startsWith('stage:')) ? { request_binding: digest(host.requests[claims.find(c => c.startsWith('stage:')).slice(6)]), execution_attempt: task.steps[claims.find(c => c.startsWith('stage:')).slice(6)].attempts } : {}) }, host.environment);
       task.evidence.push(e); host.trustedEvidence.add(digest(e)); return e.id;
     }
     const facts = evidence('facts', 'host', []);

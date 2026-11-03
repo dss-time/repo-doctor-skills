@@ -22,7 +22,9 @@ if (args.length === 0 || args.includes("--help")) {
     "  --language en|zh-CN|bilingual",
     "  --agent codex|shared",
     "  --target-dir <path>",
-    "  --force",
+    "  --force (compatibility option)",
+    "",
+    "Reinstalling replaces selected same-name Skills, including local edits. Identical content is skipped.",
     "",
   ].join("\n"));
   process.exitCode = 0;

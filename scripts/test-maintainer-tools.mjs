@@ -240,7 +240,7 @@ try {
     "skills",
     "requirements-to-spec",
   );
-  function runRiskFixture(name, { permissions, risk, filesystem = "read" }) {
+  function runRiskFixture(name, { permissions, risk, filesystem = "read", shell }) {
     const fixtureRoot = path.join(tempRoot, "risk-quality", name);
     const packRoot = path.join(fixtureRoot, "packs", "fixture", "risk-pack");
     const skillRoot = path.join(packRoot, "skills", "requirements-to-spec");
@@ -252,6 +252,7 @@ try {
     yaml = replaceYamlSection(yaml, "risk_level", risk);
     yaml = yaml.replace("filesystem: read", `filesystem: ${filesystem}`);
     if (permissions.includes("run_shell_commands: true")) yaml = yaml.replace("shell: none", "shell: optional");
+    if (shell) yaml = yaml.replace(/shell: (none|optional|required)/, `shell: ${shell}`);
     writeFileSync(path.join(skillRoot, "skill.yaml"), yaml);
     return runNode(checker, ["--root", fixtureRoot]);
   }
@@ -274,6 +275,13 @@ try {
   }
 
   for (const fixture of [
+    {
+      name: "shell-tool-without-permission",
+      permissions: readOnlyPermissionsBlock,
+      risk: "risk_level: { default: read_only }",
+      shell: "optional",
+      error: "disabled shell permission requires tool_requirements.shell: none",
+    },
     {
       name: "scalar-risk",
       permissions: readOnlyPermissionsBlock,

@@ -1,8 +1,18 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { parse } from "yaml";
 
 const content = readFileSync(path.join(process.cwd(), ".github", "workflows", "ci.yml"), "utf8");
+const workflow = parse(content);
+const compatibility = workflow.jobs.compatibility;
+assert.deepEqual(compatibility.strategy.matrix.os, ["ubuntu-latest", "macos-latest", "windows-latest"]);
+assert.deepEqual(compatibility.strategy.matrix.node, ["18", "lts/*"]);
+assert.equal(JSON.parse(readFileSync("package.json", "utf8")).engines.node, ">=18");
+assert.ok(compatibility.steps.some((step) => step.run === "node scripts/test-installer.mjs"));
+assert.ok(compatibility.steps.some((step) => step.run === "npm run test:npm"
+  && step.if === "runner.os == 'Linux' && matrix.node == '18'"));
+const qualityContent = content.slice(content.indexOf("  quality-gates:"));
 const required = [
   /actions\/checkout@v6/,
   /find scripts -type f -name .*?-print0 \| xargs -0 -n 1 node --check/,
@@ -31,7 +41,7 @@ const order = [
 ];
 let previous = -1;
 for (const command of order) {
-  const index = content.indexOf(command);
+  const index = qualityContent.indexOf(command);
   assert.ok(index > previous, `CI command out of order: ${command}`);
   previous = index;
 }

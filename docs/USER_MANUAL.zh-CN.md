@@ -30,7 +30,7 @@ codex plugin add repo-doctor@repo-doctor-marketplace
 | 安装入口 | 默认位置与作用范围 | 更新方式 |
 |---|---|---|
 | `npx skills@latest add` | 当前项目；加 `-g` 为用户级 | 同一作用范围下使用 `check` / `update` |
-| `npx repo-doctor-skills install` | 用户级；按下方规则选目录，或用 `--target-dir` 指定 | 重跑相同命令；内容不同时先备份自定义修改，再选择是否 `--force` 替换 |
+| `npx repo-doctor-skills install` | 用户级；按下方规则选目录，或用 `--target-dir` 指定 | 重跑相同命令，替换选中的同名 Skill，包括本地修改和旧资源 |
 | Codex 插件 | 由宿主插件管理器控制 | 按第 7 节选择版本并刷新或重装 |
 
 同一 Agent 使用一种安装入口即可；安装成功后新建任务。

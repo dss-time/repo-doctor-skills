@@ -22,6 +22,10 @@ Reuse only valid records. Relevant file/configuration/dependency/environment cha
 
 Conditions are true, false or unknown and need sourced host assessment with valid evidence. A false optional condition permits `skipped`; a required stage cannot disappear. Existing sufficient results produce `reused`, not skipped. Unknown evidence is `evidence_insufficient`; missing authority is `permission_blocked`; an observed failed check is `validation_failed`. These states never count as success. Gate satisfaction is re-evaluated against current host authorization, even after recovery.
 
+Attested failed checks with unknown dependency or environment validity remain unresolved and block dependent execution and delivery with `evidence_insufficient`. Demonstrably changed inputs make a historical failure stale. A missing environment key cannot resolve an observed failure.
+
+Execution completion receipts include `execution_attempt` matching the current stage attempt counter. `finishStep` rejects earlier attempts. Historical results can be reused only through the explicit reuse path. Demonstrated input changes take precedence over missing environment information when classifying evidence.
+
 ## Host contract and progression
 
 The host supplies the canonical Registry/inventory, current environment, verified evidence digests, assessed conditions/stop predicates, current grants, available capabilities, exact requested paths/operations and command preflight. Context cannot supply these authorities. Permissions are the intersection of user scope, Skill declaration and host capability; check narrower Skill rules separately. Exact path matching is deliberate: do not turn a stored glob or folder label into unrestricted write authority.

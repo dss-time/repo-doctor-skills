@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -57,7 +57,7 @@ try {
   const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
-  assert.equal(packReport[0].version, "0.9.0-beta.1");
+  assert.equal(packReport[0].version, "0.9.0-beta.2");
   const tarball = path.join(tempRoot, packReport[0].filename);
   assert.ok(existsSync(tarball));
 
@@ -90,7 +90,7 @@ try {
 
   const version = runNpx(tarball, ["--version"]);
   assert.equal(version.status, 0, version.stderr || version.stdout);
-  assert.equal(version.stdout.trim(), "0.9.0-beta.1");
+  assert.equal(version.stdout.trim(), "0.9.0-beta.2");
 
   const help = runNpx(tarball, ["--help"]);
   assert.equal(help.status, 0, help.stderr || help.stdout);
@@ -114,6 +114,17 @@ try {
   const collision = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
   assert.equal(collision.status, 0, collision.stderr);
   assert.match(collision.stdout, /unchanged: 7/);
+  const modifiedSkill = path.join(recommendedTarget, "safe-code-review", "SKILL.md");
+  const originalSkill = readFileSync(modifiedSkill, "utf8");
+  const staleResource = path.join(recommendedTarget, "safe-code-review", "old-resource.md");
+  writeFileSync(modifiedSkill, "local edit\n");
+  writeFileSync(staleResource, "obsolete resource\n");
+  const replacement = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
+  assert.equal(replacement.status, 0, replacement.stderr || replacement.stdout);
+  assert.equal(readFileSync(modifiedSkill, "utf8"), originalSkill);
+  assert.ok(!existsSync(staleResource));
+  assert.equal(installedCount(recommendedTarget), 7);
+  assert.match(replacement.stdout, /Installed: 1 Skills; unchanged: 6/);
   const forced = runNpx(tarball, ["install", "--target-dir", recommendedTarget, "--force"]);
   assert.equal(forced.status, 0, forced.stderr || forced.stdout);
 

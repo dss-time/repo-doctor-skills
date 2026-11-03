@@ -208,6 +208,8 @@ export function parseArguments(argv) {
     } else if (argument === "--tag") {
       options.tag = argv[index + 1] ?? "";
       index += 1;
+    } else if (argument === "--allow-prerelease") {
+      options.allowPrerelease = true;
     } else {
       fail(`unknown argument: ${argument}`);
     }
@@ -217,9 +219,9 @@ export function parseArguments(argv) {
   return options;
 }
 
-export function verifyDownloadedRelease({ release, directory, tag }) {
+export function verifyDownloadedRelease({ release, directory, tag, allowPrerelease = false }) {
   if (release.tagName !== tag) fail(`Release tag ${release.tagName} does not match ${tag}`);
-  if (release.isDraft || release.isPrerelease) fail(`${tag} is not a stable published Release`);
+  if (release.isDraft || (release.isPrerelease && !allowPrerelease)) fail(`${tag} is not a stable published Release`);
   if (!Array.isArray(release.assets) || release.assets.length === 0) fail(`${tag} has no assets`);
 
   const version = tag.slice(1);
@@ -294,7 +296,7 @@ export function verifyRemoteRelease(options) {
       "-D",
       downloadDirectory,
     ], { network: true });
-    return verifyDownloadedRelease({ release, directory: downloadDirectory, tag: options.tag });
+    return verifyDownloadedRelease({ release, directory: downloadDirectory, tag: options.tag, allowPrerelease: options.allowPrerelease });
   } finally {
     rmSync(temporaryRoot, { recursive: true, force: true });
   }

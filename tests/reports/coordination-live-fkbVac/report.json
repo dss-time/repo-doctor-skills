@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "project_version": "0.9.0-beta.2",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "305316b5d06af7b9a1213963c1c861b4fa52e3332bfa37368e7581c6620a53bb",
+    "runtime_sha256": "3e48bbfd558e9cb9f0ccc3a5bfd7973a97f97a157d2dc4d150de6adbda81fe7c"
+  },
+  "date": "2026-11-03T08:23:49.040Z",
+  "result": "BLOCKED",
+  "cases": [
+    {
+      "case": "core-review",
+      "result": "BLOCKED",
+      "changed_files": [],
+      "run": {
+        "id": "core-review",
+        "sandbox": "read-only",
+        "host_loaded_skill": {
+          "slug": "safe-code-review",
+          "path": ".agents/skills/safe-code-review/SKILL.md",
+          "sha256": "9cb7f220774b4266053840cfc228c01db54182936b5fe3b5c3cac2e21fa08787"
+        },
+        "permission_violations": [],
+        "exit_code": 1,
+        "timed_out": false,
+        "duration_ms": 18549,
+        "commands": [],
+        "tools": [],
+        "tool_item_count": 0,
+        "final_answer": "I’m applying safe-code-review in audit mode, checking the three axes independently. I’ll use only native file reads and permitted in-memory Node checks, without shell commands or file changes.",
+        "answer": "I’m applying safe-code-review in audit mode, checking the three axes independently. I’ll use only native file reads and permitted in-memory Node checks, without shell commands or file changes.",
+        "completed": false,
+        "usage": null,
+        "errors": [
+          {
+            "type": "error",
+            "message": "You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:52 PM."
+          },
+          {
+            "type": "turn.failed",
+            "error": {
+              "message": "You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:52 PM."
+            }
+          }
+        ],
+        "prompt_sha256": "be0f83427b445c099a98d5fcd36bc04e091be3c100f535c2705f92ad470d1b45",
+        "argv": [
+          "exec",
+          "--ephemeral",
+          "--json",
+          "--color",
+          "never",
+          "--skip-git-repo-check",
+          "--sandbox",
+          "read-only",
+          "-C",
+          "$TRIAL_ROOT/core-review",
+          "--disable",
+          "plugins",
+          "--disable",
+          "apps",
+          "--disable",
+          "multi_agent",
+          "--disable",
+          "memories",
+          "--disable",
+          "shell_tool",
+          "--disable",
+          "unified_exec",
+          "-c",
+          "approval_policy=\"never\"",
+          "-c",
+          "analytics.enabled=false",
+          "-c",
+          "sandbox_workspace_write.network_access=false",
+          "--output-schema",
+          "$REPO/tests/reports/coordination-live-fkbVac/core-review.schema.json"
+        ]
+      }
+    }
+  ],
+  "cli_version": "codex-cli 0.166.0-alpha.5.1",
+  "model_selection": "existing user configuration; no model override",
+  "core_sha256": "c8888af375a6cb72adf6d591afb52796e6807cfa3987d0af064155ea480d9b32",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

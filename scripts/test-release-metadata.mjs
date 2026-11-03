@@ -246,7 +246,7 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.9.0-beta.1");
+assert.equal(releaseContract.projectVersion, "0.9.0-beta.2");
 assert.equal(releaseContract.releaseChannel, "candidate");
 assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
 assert.equal(releaseContract.liveModelWaiver, null);
@@ -255,10 +255,10 @@ assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVe
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.11.0",
+    "engineering.repo-doctor": "0.11.1",
     "productivity.productivity-toolkit": "0.1.0",
     "engineering.skill-maintainer": "0.2.0",
-    "office.document-data-doctor": "0.1.0",
+    "office.document-data-doctor": "0.1.1",
   },
   "default contract must preserve the confirmed two-layer Pack versions",
 );
@@ -446,6 +446,13 @@ try {
   const report = { project_version: "0.2.0", result: "PASS", summary: { total: 3, passed: 3, failed: 0, blocked: 0 }, content_binding: binding };
   write(evidenceRoot, "report.json", JSON.stringify(report));
   assert.deepEqual(inspectReleaseMetadata(evidenceRoot, contract).errors, [], "matching complete evidence passes the formal gate");
+  write(evidenceRoot, "docs/RELEASE_NOTES_DRAFT.md", "# v0.2.0 Release Candidate\nLive-model PASS\n");
+  const candidateContract = { ...contract, releaseChannel: "candidate" };
+  assert.deepEqual(inspectReleaseMetadata(evidenceRoot, candidateContract).errors, []);
+  write(evidenceRoot, "report.json", JSON.stringify({ ...report, result: "FAIL" }));
+  assert.ok(inspectReleaseMetadata(evidenceRoot, candidateContract).errors.some((error) => error.includes("final result must be PASS")), "candidate PASS claims require valid model evidence");
+  write(evidenceRoot, "report.json", JSON.stringify(report));
+  write(evidenceRoot, "docs/RELEASE_NOTES_DRAFT.md", "# v0.2.0 stable release\nLive-model PASS\n");
   assert.ok(inspectReleaseMetadata(evidenceRoot, { ...contract, projectVersion: "0.3.0", liveModelEvidenceVersion: "0.2.0" }).errors.some((error) => error.includes("must belong to the current project version")), "a historical evidence version cannot certify a new release");
   for (const filename of [...inputs, "skills/active/references/added.md"]) {
     write(evidenceRoot, filename, "changed\n");

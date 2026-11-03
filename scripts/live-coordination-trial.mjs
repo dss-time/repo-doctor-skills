@@ -89,7 +89,7 @@ async function runCodex(id, root, prompt, sandbox) {
 }
 function attest(task, host, input) {
   const stage = input.claims?.find(c => c.startsWith('stage:'))?.slice(6);
-  const record = captureEvidence(host.root, { ...input, operation_binding: operationBinding(host), ...(stage ? { request_binding: digest(host.requests[stage]) } : {}), task_binding: taskBinding(task), coverage_complete: true, result: 'pass' }, environment);
+  const record = captureEvidence(host.root, { ...input, operation_binding: operationBinding(host), ...(stage ? { request_binding: digest(host.requests[stage]), execution_attempt: task.steps[stage].attempts } : {}), task_binding: taskBinding(task), coverage_complete: true, result: 'pass' }, environment);
   task.evidence.push(record); host.trustedEvidence.add(digest(record)); return record;
 }
 function hostFor(task, root) { return { root, registry, inventory, environment, trustedEvidence: new Set(), scopeReviewed: true, continuationAuthorized: true,

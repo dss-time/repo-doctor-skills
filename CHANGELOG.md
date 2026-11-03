@@ -8,6 +8,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.9.0-beta.2] - 2026-11-03
+
+### Added
+
+- Installation compatibility CI for Linux, macOS and Windows on Node 18 and current LTS, including a packed CLI check on Linux Node 18.
+
+### Changed
+
+- Replace selected same-name Skill directories by default on reinstall, retaining identical-content skips, legacy --force compatibility and transactional rollback.
+- Advance Repo Doctor Pack/plugin to 0.11.1 and Document Data Doctor Pack to 0.1.1.
+
+### Fixed
+
+- Derive performance benchmark routing choices and installation counts from canonical and installed inventories instead of stale 27/40 constants.
+- Align Shell tool requirements with prohibited Shell permissions in 17 Skills and remove the onboarding command exception.
+- Keep attested failed checks unresolved when environment validity becomes unknown, blocking dependent execution and delivery until evidence is restored.
+
+### Security
+
+- Reject metadata that requests a Shell tool while prohibiting Shell execution. Preserve original read, write and network permissions.
+
+### Documentation
+
+- Update bilingual installation instructions, compatibility scope and current-version validation records.
+
 ## [0.9.0-beta.1] - 2026-11-02
 
 ### Added
@@ -532,7 +557,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.2...HEAD
+[0.9.0-beta.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...v0.9.0-beta.2
 [0.9.0-beta.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...v0.9.0-beta.1
 [0.8.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.7.3...v0.8.0

@@ -4,7 +4,7 @@ name:
   zh-CN: CI 失败诊断
 category: engineering
 visibility: public
-version: 0.1.1
+version: 0.1.2
 status: beta
 default_locale: zh-CN
 supported_locales:
@@ -27,7 +27,7 @@ triggers:
 tool_requirements:
   filesystem: read
   git: optional
-  shell: optional
+  shell: none
   web: none
 permissions:
   read_files: true

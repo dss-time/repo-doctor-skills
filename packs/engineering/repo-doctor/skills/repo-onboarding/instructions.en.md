@@ -6,7 +6,7 @@ Use this skill to understand an unfamiliar repository before editing code.
 
 - Read-only by default.
 - Do not modify files.
-- Do not run commands unless the environment and user request allow it.
+- Do not run Shell commands. Read repository files through native read-only file APIs. If those APIs are unavailable, report the missing evidence and the minimum input needed.
 - Separate facts from assumptions.
 
 ## Workflow

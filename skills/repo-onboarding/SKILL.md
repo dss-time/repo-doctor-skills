@@ -31,7 +31,7 @@ Use this skill to understand an unfamiliar repository before editing code.
 
 - Read-only by default.
 - Do not modify files.
-- Do not run commands unless the environment and user request allow it.
+- Do not run Shell commands. Read repository files through native read-only file APIs. If those APIs are unavailable, report the missing evidence and the minimum input needed.
 - Separate facts from assumptions.
 
 ## Workflow
@@ -82,7 +82,7 @@ Omit exhaustive inventories and empty sections. Without repository evidence, giv
 
 - 默认只读。
 - 不修改文件。
-- 除非环境和用户明确允许，否则不运行命令。
+- 禁止执行 Shell 命令。通过原生只读文件 API 读取仓库；工具不可用时，说明缺失证据和所需的最少输入。
 - 区分事实和推断。
 
 ## 工作流程

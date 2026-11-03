@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"01a1a081-f709-72f0-978a-4c4f117b801a"}
+{"type":"item.completed","item":{"id":"item_0","type":"error","message":"Codex is ignoring 1 unrecognized configuration setting. Check for typos or deprecated settings.\n  user ($USER_HOME/.codex/config.toml): `model_providers.openai_https.service_tier` is ignored."}}
+{"type":"item.completed","item":{"id":"item_1","type":"error","message":"Codex is ignoring 1 unrecognized configuration setting. Check for typos or deprecated settings.\n  user ($USER_HOME/.codex/config.toml): `model_providers.openai_https.service_tier` is ignored."}}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"I’m applying safe-code-review in audit mode, checking the three axes independently. I’ll use only native file reads and permitted in-memory Node checks, without shell commands or file changes."}}
+{"type":"error","message":"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:52 PM."}
+{"type":"turn.failed","error":{"message":"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 6:52 PM."}}

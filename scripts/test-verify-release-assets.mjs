@@ -7,6 +7,7 @@ import {
   parseManifest,
   validateSkillContent,
   validateZipEntry,
+  verifyDownloadedRelease,
 } from "./verify-release-assets.mjs";
 
 function expectFailure(callback, fragment) {
@@ -99,6 +100,11 @@ assert.deepEqual(
   { repository: "dss-time/repo-doctor-skills", tag: "v0.4.0" },
 );
 expectFailure(() => parseArguments(["--tag", "main"]), "invalid --tag");
+assert.equal(parseArguments(["--tag", "v0.9.0-beta.2", "--allow-prerelease"]).allowPrerelease, true);
+const prerelease = { tagName: "v0.9.0-beta.2", isDraft: false, isPrerelease: true, assets: [] };
+expectFailure(() => verifyDownloadedRelease({ release: prerelease, tag: prerelease.tagName }), "not a stable published Release");
+expectFailure(() => verifyDownloadedRelease({ release: prerelease, tag: prerelease.tagName, allowPrerelease: true }), "has no assets");
+expectFailure(() => verifyDownloadedRelease({ release: { ...prerelease, isDraft: true }, tag: prerelease.tagName, allowPrerelease: true }), "not a stable published Release");
 expectFailure(() => parseChecksums(`${digestA}  ../escape.zip\n`), "invalid checksum line");
 
 console.log("Remote Release asset verifier tests passed.");

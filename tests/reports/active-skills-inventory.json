@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-02T05:26:02.789Z",
-  "project_version": "0.9.0-beta.1",
+  "generated_at": "2026-11-03T08:16:04.552Z",
+  "project_version": "0.9.0-beta.2",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.11.0",
+      "version": "0.11.1",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -62,7 +62,7 @@
         "en": "Document Data Doctor",
         "zh-CN": "文档数据医生"
       },
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "path": "packs/office/document-data-doctor",
       "skills": [
@@ -136,7 +136,7 @@
       "id": "repo.repo-onboarding",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-onboarding",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Repo Onboarding",
@@ -160,7 +160,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -364,7 +364,7 @@
       "id": "repo.project-health-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/project-health-check",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Project Health Check",
@@ -388,7 +388,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -402,7 +402,7 @@
       "id": "repo.safe-code-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-code-review",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "status": "beta",
       "name": {
         "en": "Safe Code Review",
@@ -426,7 +426,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -440,7 +440,7 @@
       "id": "repo.change-impact-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/change-impact-analysis",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Change Impact Analysis",
@@ -464,7 +464,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -478,7 +478,7 @@
       "id": "repo.safe-change-plan",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "status": "beta",
       "name": {
         "en": "Safe Change Plan",
@@ -502,7 +502,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -516,7 +516,7 @@
       "id": "repo.test-gap-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/test-gap-analysis",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Test Gap Analysis",
@@ -540,7 +540,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -592,7 +592,7 @@
       "id": "repo.ci-failure-diagnosis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/ci-failure-diagnosis",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "CI Failure Diagnosis",
@@ -616,7 +616,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -706,7 +706,7 @@
       "id": "repo.dependency-upgrade-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/dependency-upgrade-analysis",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Dependency Upgrade Analysis",
@@ -730,7 +730,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "optional"
       },
       "execution": {
@@ -744,7 +744,7 @@
       "id": "repo.api-contract-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/api-contract-review",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "API Contract Review",
@@ -768,7 +768,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -782,7 +782,7 @@
       "id": "repo.database-migration-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/database-migration-review",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Database Migration Review",
@@ -806,7 +806,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -820,7 +820,7 @@
       "id": "repo.dead-code-verification",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/dead-code-verification",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Dead Code Verification",
@@ -844,7 +844,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -858,7 +858,7 @@
       "id": "repo.security-focused-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/security-focused-review",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Security Focused Review",
@@ -882,7 +882,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "optional"
       },
       "execution": {
@@ -896,7 +896,7 @@
       "id": "repo.performance-regression-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/performance-regression-analysis",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Performance Regression Analysis",
@@ -920,7 +920,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -1010,7 +1010,7 @@
       "id": "repo.configuration-audit",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/configuration-audit",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Configuration Audit",
@@ -1034,7 +1034,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "optional",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": {
@@ -1230,7 +1230,7 @@
       "id": "office.pdf-review-basic",
       "pack": "office.document-data-doctor",
       "path": "packs/office/document-data-doctor/skills/pdf-review-basic",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Basic PDF Review",
@@ -1254,7 +1254,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "none",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": null
@@ -1264,7 +1264,7 @@
       "id": "office.word-document-review-basic",
       "pack": "office.document-data-doctor",
       "path": "packs/office/document-data-doctor/skills/word-document-review-basic",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Basic Word Document Review",
@@ -1288,7 +1288,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "none",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": null
@@ -1298,7 +1298,7 @@
       "id": "office.excel-data-quality-check-basic",
       "pack": "office.document-data-doctor",
       "path": "packs/office/document-data-doctor/skills/excel-data-quality-check-basic",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Basic Excel Data Quality Check",
@@ -1322,7 +1322,7 @@
       "tool_requirements": {
         "filesystem": "read",
         "git": "none",
-        "shell": "optional",
+        "shell": "none",
         "web": "none"
       },
       "execution": null

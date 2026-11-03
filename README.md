@@ -8,7 +8,7 @@
 Focused Skills for debugging, code review, fixes, and tests.
 
 
-The current version is **0.9.0-beta.1**, a Beta prerelease candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.1.md) and [validation](docs/WORKFLOW_COORDINATION_BETA_VALIDATION.md).
+The current version is **0.9.0-beta.2**, a Beta prerelease candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.2.md) and [validation](docs/RELEASE_VALIDATION_0.9.0-beta.2.md).
 
 ## Start in 30 seconds
 
@@ -87,7 +87,7 @@ npx repo-doctor-skills install --preset full
 npx repo-doctor-skills install --language en
 ```
 
-This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. It prints the target, skips identical content, and requires `--force` to replace different content. The external skills CLI has its own Node requirements.
+This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. Reinstalling replaces selected same-name Skills in the target directory, including local edits and old resources. Identical content is skipped. The bundled installer supports Node.js 18 and later. CI covers installation on Linux, macOS and Windows using Node 18 and current LTS, with full repository checks on Linux. The external skills CLI has its own Node requirements.
 
 ## v0.8.1 stable release
 

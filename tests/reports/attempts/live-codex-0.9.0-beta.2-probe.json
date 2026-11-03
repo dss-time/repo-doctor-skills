@@ -1,0 +1,795 @@
+{
+  "schema_version": 1,
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "28a8b346b4d27b124f9ea481c31549dd24a1b7ca065a1ab77ca031670be23987",
+    "runtime_sha256": "5adbb80f7e7ccdd1550843774e9d2f5de83e5efe165de5d9a240581eb112ee6e"
+  },
+  "generated_at": "2026-11-03T07:56:12.253Z",
+  "started_at": "2026-11-03T07:55:49.442Z",
+  "project_version": "0.9.0-beta.2",
+  "source_commit": null,
+  "source_worktree": "current uncommitted release candidate",
+  "codex_cli_version": "unrecorded",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "isolation": {
+    "home": "host authentication; isolated Skill roots and SQLite state",
+    "codex_home": "host authentication context; Skill installation temporary and redacted",
+    "workspace": "temporary empty Git repository",
+    "source": "temporary installation of canonical-generated Skills",
+    "path_redacted": true,
+    "real_user_skill_directory_read": true,
+    "host_capability_metadata_may_be_visible": true
+  },
+  "installation": {
+    "first_session": {
+      "result": "PASS",
+      "expected_count": 41,
+      "discovered_count": 41,
+      "skills": [
+        {
+          "name": "api-contract-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/api-contract-review/SKILL.md",
+          "sha256": "29318b98892d286448c1abba3e04d5e4f39abe40f2543d327770bb6acd920680",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-decision-record",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-decision-record/SKILL.md",
+          "sha256": "7ada10c5691259ccfe1502feb1dd420d62dca8044991cd52bce3952f1ea0446c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-deepening-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-deepening-analysis/SKILL.md",
+          "sha256": "931f2808e6415a60aeeeec5a7e9844fb8ac6b254b5358e0a72f2e91d0d6aa8f4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "bug-root-cause-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/bug-root-cause-analysis/SKILL.md",
+          "sha256": "94a219dec51f1f187695b4082fb629e3f78ea7ff3605859f3f15626f74c72c76",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "change-impact-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/change-impact-analysis/SKILL.md",
+          "sha256": "6da2a25f3731c0f62e180d7e1554638c9d98f8d65b9b740e73e6bae097939d0e",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "ci-failure-diagnosis",
+          "path": "$ISOLATED_CODEX_HOME/skills/ci-failure-diagnosis/SKILL.md",
+          "sha256": "3d0507d6bc85f5e3ad527132cd1de19e38bd881632a4eafddbb33a359c855542",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "configuration-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/configuration-audit/SKILL.md",
+          "sha256": "d284a5debc237230a6d0d089044faabb06066b58c39366287fed495f1b1bb9ab",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "content-consistency-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/content-consistency-check/SKILL.md",
+          "sha256": "df47a3dd518f28f577a25e0a48a849925eef6fdccf20ba165435470666b3c882",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "database-migration-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/database-migration-review/SKILL.md",
+          "sha256": "20e80cdee17a7be6007fb1d117b820799201c7eb58de6530947a210aebbe7d43",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dead-code-verification",
+          "path": "$ISOLATED_CODEX_HOME/skills/dead-code-verification/SKILL.md",
+          "sha256": "bd706895ce81c77ad602cb85aaf030259162e18cc133dc6f47c16874872e29a3",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "decision-prototype",
+          "path": "$ISOLATED_CODEX_HOME/skills/decision-prototype/SKILL.md",
+          "sha256": "f5378248446b0b70589cb12d002a03a692d1307c3afc7356627ba35bd1f46649",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dependency-upgrade-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/dependency-upgrade-analysis/SKILL.md",
+          "sha256": "f3b0d91d83e548a87917eddf290da4ba3d0fd828e16e70cc4a94bb56598f13c1",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "document-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/document-review/SKILL.md",
+          "sha256": "5e02224f3f7c10503f8fde9d021c8aa39769f8f271c9179b1b465e046b7ef0df",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "documentation-sync",
+          "path": "$ISOLATED_CODEX_HOME/skills/documentation-sync/SKILL.md",
+          "sha256": "68572c761dd713aa70133a1428b4b512ec4ff4e4628b0ca35434c21c8de29c93",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "excel-data-quality-check-basic",
+          "path": "$ISOLATED_CODEX_HOME/skills/excel-data-quality-check-basic/SKILL.md",
+          "sha256": "324b270bcab9bb0953116f50043a099346ba665db41a88b8668dfef6b3bef28f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "feature-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/feature-implementation/SKILL.md",
+          "sha256": "499bd500f268db522613fa420b61f926795b1c1fd8ee0bc9bacf2e6c22d49779",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "meeting-notes-to-actions",
+          "path": "$ISOLATED_CODEX_HOME/skills/meeting-notes-to-actions/SKILL.md",
+          "sha256": "30a3e74b5c3b582fc7c8c1ec6c594c331468e1355cc2baa8d0dc152b68576377",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "pdf-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/pdf-review/SKILL.md",
+          "sha256": "ba29bf4316d08aea586e63bba2f13d07de4798396aa9c067ecd790732eea2e2b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "pdf-review-basic",
+          "path": "$ISOLATED_CODEX_HOME/skills/pdf-review-basic/SKILL.md",
+          "sha256": "28df89bd457b478e2c9b1d647a5977e5a7a406bf33489e8183d0763430f87f4d",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "performance-regression-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/performance-regression-analysis/SKILL.md",
+          "sha256": "db2c22baf1c5de2c95f260980bc44387cbbcaf4e9463a45f9f88aecbc6d96f1c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "presentation-outline",
+          "path": "$ISOLATED_CODEX_HOME/skills/presentation-outline/SKILL.md",
+          "sha256": "b1b8b8f1f42b6965aa1b1d6277ea3b33b7aec6a568bd4ced14492ec9801d9987",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "project-health-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/project-health-check/SKILL.md",
+          "sha256": "aefd35c84a3c480f97b34b1443eb94a4304de7de0914c10e093ae9423a7fbcf9",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "release-readiness-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/release-readiness-check/SKILL.md",
+          "sha256": "91435c8e9f3be77d9be58291644ae273f96a777ab7b9ebd0c04a82e21f1314e6",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-doctor-router",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+          "sha256": "fcdc11b2d9852fdc3c7ff0e0cc70aba2f62d6da74c7dde7fc7184bf66a13fb40",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-onboarding",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-onboarding/SKILL.md",
+          "sha256": "f9cb435639b69d9e4c94e567aaaa4f83e1e9e796cb01c004eb98474c60d23a5b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "report-writer",
+          "path": "$ISOLATED_CODEX_HOME/skills/report-writer/SKILL.md",
+          "sha256": "12a8a2e8c506a8db58b8e0bf9d8d15402b70f778054b39d61010f1089f74793c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "requirements-clarification",
+          "path": "$ISOLATED_CODEX_HOME/skills/requirements-clarification/SKILL.md",
+          "sha256": "df5fdffd447935227872cc1856960c1457405f24840b684077a0bd89e0a1cac1",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "requirements-to-spec",
+          "path": "$ISOLATED_CODEX_HOME/skills/requirements-to-spec/SKILL.md",
+          "sha256": "03002ab3dcdf90c455d6c14293e06636888c63a16dd084d253016a352de1f9b5",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "research-brief",
+          "path": "$ISOLATED_CODEX_HOME/skills/research-brief/SKILL.md",
+          "sha256": "39b611b01d5edd6f805672b9663218e1e20e3639716e0f165ac9f749b295c21b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-change-plan",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-change-plan/SKILL.md",
+          "sha256": "22bf8c3e7c7fc1e64f26913f5877414de3b624f2669cf6bbaa4d5b77c37a81e6",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-code-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-code-review/SKILL.md",
+          "sha256": "9cb7f220774b4266053840cfc228c01db54182936b5fe3b5c3cac2e21fa08787",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-fix-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-fix-implementation/SKILL.md",
+          "sha256": "1bc8689e8122340674ddc200c9b8e64eb678df67a979ff10f6ab7016a6dc263a",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-test-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-test-implementation/SKILL.md",
+          "sha256": "87adc1022cc19191df22cc6f1464e051490a5c19ec539b5bbd909a04327f9dfb",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "security-focused-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/security-focused-review/SKILL.md",
+          "sha256": "c57a52714335c9380a8746a7f3df31667d927e77d163a71c050376bc244a75b5",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "session-handoff",
+          "path": "$ISOLATED_CODEX_HOME/skills/session-handoff/SKILL.md",
+          "sha256": "466f2eeb580ec4c98a43a13aaa4e0d5acf9ac3ccac63ccc5352174fe852ce0d8",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-authoring",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-authoring/SKILL.md",
+          "sha256": "7d3077451264fe608c3eed3366085bdbb1a49905d64ae4900b633c4dc230f223",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-quality-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-quality-audit/SKILL.md",
+          "sha256": "cf445a96216ff5e6ccea717948512deddcdb5d1ee7fc9ac90e592e41efea15b4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "spec-to-work-items",
+          "path": "$ISOLATED_CODEX_HOME/skills/spec-to-work-items/SKILL.md",
+          "sha256": "d993556580e57779ba0bc8eeb203d2d466ad4e166903bd0c41ad1f3a459d35cc",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "spreadsheet-data-cleaning",
+          "path": "$ISOLATED_CODEX_HOME/skills/spreadsheet-data-cleaning/SKILL.md",
+          "sha256": "332fe684c06744ce13e8d39d699669c108db9a53e92458d089e4a62a140b4544",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "test-gap-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/test-gap-analysis/SKILL.md",
+          "sha256": "3470007149780625cbb17cea9d2967310958af03d7aae5685014a38dc4410ebd",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "word-document-review-basic",
+          "path": "$ISOLATED_CODEX_HOME/skills/word-document-review-basic/SKILL.md",
+          "sha256": "73742de33905075a0715f1fb66334cf8cd9f58c9c773e14a43e5bee1b094bb50",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        }
+      ],
+      "errors": [],
+      "issues": []
+    },
+    "second_session": {
+      "result": "PASS",
+      "expected_count": 41,
+      "discovered_count": 41,
+      "skills": [
+        {
+          "name": "api-contract-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/api-contract-review/SKILL.md",
+          "sha256": "29318b98892d286448c1abba3e04d5e4f39abe40f2543d327770bb6acd920680",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-decision-record",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-decision-record/SKILL.md",
+          "sha256": "7ada10c5691259ccfe1502feb1dd420d62dca8044991cd52bce3952f1ea0446c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-deepening-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-deepening-analysis/SKILL.md",
+          "sha256": "931f2808e6415a60aeeeec5a7e9844fb8ac6b254b5358e0a72f2e91d0d6aa8f4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "bug-root-cause-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/bug-root-cause-analysis/SKILL.md",
+          "sha256": "94a219dec51f1f187695b4082fb629e3f78ea7ff3605859f3f15626f74c72c76",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "change-impact-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/change-impact-analysis/SKILL.md",
+          "sha256": "6da2a25f3731c0f62e180d7e1554638c9d98f8d65b9b740e73e6bae097939d0e",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "ci-failure-diagnosis",
+          "path": "$ISOLATED_CODEX_HOME/skills/ci-failure-diagnosis/SKILL.md",
+          "sha256": "3d0507d6bc85f5e3ad527132cd1de19e38bd881632a4eafddbb33a359c855542",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "configuration-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/configuration-audit/SKILL.md",
+          "sha256": "d284a5debc237230a6d0d089044faabb06066b58c39366287fed495f1b1bb9ab",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "content-consistency-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/content-consistency-check/SKILL.md",
+          "sha256": "df47a3dd518f28f577a25e0a48a849925eef6fdccf20ba165435470666b3c882",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "database-migration-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/database-migration-review/SKILL.md",
+          "sha256": "20e80cdee17a7be6007fb1d117b820799201c7eb58de6530947a210aebbe7d43",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dead-code-verification",
+          "path": "$ISOLATED_CODEX_HOME/skills/dead-code-verification/SKILL.md",
+          "sha256": "bd706895ce81c77ad602cb85aaf030259162e18cc133dc6f47c16874872e29a3",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "decision-prototype",
+          "path": "$ISOLATED_CODEX_HOME/skills/decision-prototype/SKILL.md",
+          "sha256": "f5378248446b0b70589cb12d002a03a692d1307c3afc7356627ba35bd1f46649",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dependency-upgrade-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/dependency-upgrade-analysis/SKILL.md",
+          "sha256": "f3b0d91d83e548a87917eddf290da4ba3d0fd828e16e70cc4a94bb56598f13c1",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "document-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/document-review/SKILL.md",
+          "sha256": "5e02224f3f7c10503f8fde9d021c8aa39769f8f271c9179b1b465e046b7ef0df",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "documentation-sync",
+          "path": "$ISOLATED_CODEX_HOME/skills/documentation-sync/SKILL.md",
+          "sha256": "68572c761dd713aa70133a1428b4b512ec4ff4e4628b0ca35434c21c8de29c93",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "excel-data-quality-check-basic",
+          "path": "$ISOLATED_CODEX_HOME/skills/excel-data-quality-check-basic/SKILL.md",
+          "sha256": "324b270bcab9bb0953116f50043a099346ba665db41a88b8668dfef6b3bef28f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "feature-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/feature-implementation/SKILL.md",
+          "sha256": "499bd500f268db522613fa420b61f926795b1c1fd8ee0bc9bacf2e6c22d49779",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "meeting-notes-to-actions",
+          "path": "$ISOLATED_CODEX_HOME/skills/meeting-notes-to-actions/SKILL.md",
+          "sha256": "30a3e74b5c3b582fc7c8c1ec6c594c331468e1355cc2baa8d0dc152b68576377",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "pdf-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/pdf-review/SKILL.md",
+          "sha256": "ba29bf4316d08aea586e63bba2f13d07de4798396aa9c067ecd790732eea2e2b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "pdf-review-basic",
+          "path": "$ISOLATED_CODEX_HOME/skills/pdf-review-basic/SKILL.md",
+          "sha256": "28df89bd457b478e2c9b1d647a5977e5a7a406bf33489e8183d0763430f87f4d",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "performance-regression-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/performance-regression-analysis/SKILL.md",
+          "sha256": "db2c22baf1c5de2c95f260980bc44387cbbcaf4e9463a45f9f88aecbc6d96f1c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "presentation-outline",
+          "path": "$ISOLATED_CODEX_HOME/skills/presentation-outline/SKILL.md",
+          "sha256": "b1b8b8f1f42b6965aa1b1d6277ea3b33b7aec6a568bd4ced14492ec9801d9987",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "project-health-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/project-health-check/SKILL.md",
+          "sha256": "aefd35c84a3c480f97b34b1443eb94a4304de7de0914c10e093ae9423a7fbcf9",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "release-readiness-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/release-readiness-check/SKILL.md",
+          "sha256": "91435c8e9f3be77d9be58291644ae273f96a777ab7b9ebd0c04a82e21f1314e6",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-doctor-router",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+          "sha256": "fcdc11b2d9852fdc3c7ff0e0cc70aba2f62d6da74c7dde7fc7184bf66a13fb40",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-onboarding",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-onboarding/SKILL.md",
+          "sha256": "f9cb435639b69d9e4c94e567aaaa4f83e1e9e796cb01c004eb98474c60d23a5b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "report-writer",
+          "path": "$ISOLATED_CODEX_HOME/skills/report-writer/SKILL.md",
+          "sha256": "12a8a2e8c506a8db58b8e0bf9d8d15402b70f778054b39d61010f1089f74793c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "requirements-clarification",
+          "path": "$ISOLATED_CODEX_HOME/skills/requirements-clarification/SKILL.md",
+          "sha256": "df5fdffd447935227872cc1856960c1457405f24840b684077a0bd89e0a1cac1",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "requirements-to-spec",
+          "path": "$ISOLATED_CODEX_HOME/skills/requirements-to-spec/SKILL.md",
+          "sha256": "03002ab3dcdf90c455d6c14293e06636888c63a16dd084d253016a352de1f9b5",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "research-brief",
+          "path": "$ISOLATED_CODEX_HOME/skills/research-brief/SKILL.md",
+          "sha256": "39b611b01d5edd6f805672b9663218e1e20e3639716e0f165ac9f749b295c21b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-change-plan",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-change-plan/SKILL.md",
+          "sha256": "22bf8c3e7c7fc1e64f26913f5877414de3b624f2669cf6bbaa4d5b77c37a81e6",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-code-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-code-review/SKILL.md",
+          "sha256": "9cb7f220774b4266053840cfc228c01db54182936b5fe3b5c3cac2e21fa08787",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-fix-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-fix-implementation/SKILL.md",
+          "sha256": "1bc8689e8122340674ddc200c9b8e64eb678df67a979ff10f6ab7016a6dc263a",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-test-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-test-implementation/SKILL.md",
+          "sha256": "87adc1022cc19191df22cc6f1464e051490a5c19ec539b5bbd909a04327f9dfb",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "security-focused-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/security-focused-review/SKILL.md",
+          "sha256": "c57a52714335c9380a8746a7f3df31667d927e77d163a71c050376bc244a75b5",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "session-handoff",
+          "path": "$ISOLATED_CODEX_HOME/skills/session-handoff/SKILL.md",
+          "sha256": "466f2eeb580ec4c98a43a13aaa4e0d5acf9ac3ccac63ccc5352174fe852ce0d8",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-authoring",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-authoring/SKILL.md",
+          "sha256": "7d3077451264fe608c3eed3366085bdbb1a49905d64ae4900b633c4dc230f223",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-quality-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-quality-audit/SKILL.md",
+          "sha256": "cf445a96216ff5e6ccea717948512deddcdb5d1ee7fc9ac90e592e41efea15b4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "spec-to-work-items",
+          "path": "$ISOLATED_CODEX_HOME/skills/spec-to-work-items/SKILL.md",
+          "sha256": "d993556580e57779ba0bc8eeb203d2d466ad4e166903bd0c41ad1f3a459d35cc",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "spreadsheet-data-cleaning",
+          "path": "$ISOLATED_CODEX_HOME/skills/spreadsheet-data-cleaning/SKILL.md",
+          "sha256": "332fe684c06744ce13e8d39d699669c108db9a53e92458d089e4a62a140b4544",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "test-gap-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/test-gap-analysis/SKILL.md",
+          "sha256": "3470007149780625cbb17cea9d2967310958af03d7aae5685014a38dc4410ebd",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "word-document-review-basic",
+          "path": "$ISOLATED_CODEX_HOME/skills/word-document-review-basic/SKILL.md",
+          "sha256": "73742de33905075a0715f1fb66334cf8cd9f58c9c773e14a43e5bee1b094bb50",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        }
+      ],
+      "errors": [],
+      "issues": []
+    }
+  },
+  "coverage": {
+    "inventory_skills": 41,
+    "required_core_calls": 205,
+    "executed_core_calls": 1,
+    "probe_limit": 1,
+    "requested_case": null
+  },
+  "test_corrections": [
+    {
+      "fixture": "docs-adjacent",
+      "classification": "test error",
+      "reason": "The original adjacent fixture expected safe-fix-implementation but did not provide the clear diagnosis that the canonical Skill contract requires. A real call correctly routed the underspecified request to requirements-clarification. The fixture now states a confirmed root cause and bounded production fix while preserving the same documentation-sync boundary."
+    },
+    {
+      "fixture": "rts-adjacent",
+      "classification": "test error",
+      "reason": "The fixture asks about a public API, while the canonical change-impact-analysis contract explicitly hands API contract compatibility to api-contract-review. After a rerun exposed ambiguity between generic impact and contract review, the fixture was sharpened with the canonical server/client/schema and breaking-change criteria, and the expected Skill was corrected to api-contract-review."
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "blocked": 0,
+    "pass_rate": "100.00%",
+    "by_invocation": {
+      "explicit": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0
+      }
+    }
+  },
+  "cases": [
+    {
+      "case_id": "repo-doctor-router--explicit-en",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 22745,
+          "inputTokens": 22561,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 184,
+          "reasoningOutputTokens": 58
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-doctor-router",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Which Repo Doctor Skill should handle this repository task? Recommend the workflow without running it.",
+      "expected_skill": "repo-doctor-router",
+      "actual_skill": "repo-doctor-router",
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+      "local_skill_sha256": "fcdc11b2d9852fdc3c7ff0e0cc70aba2f62d6da74c7dde7fc7184bf66a13fb40",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": "repo-doctor-router",
+        "response_language": "en",
+        "decision": "blocked",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "Recommend: Unverified, pending task details\nReason: No repository task or current artifact was supplied, so a specific Skill or workflow cannot be selected.\nMode: fast\nNeeds: Desired outcome and available evidence, such as a diff, error log, requirement, or specification.\nTry: “Recommend a Repo Doctor workflow for [task], using [available evidence]. Recommendation only.”",
+          "characters": 373,
+          "sha256": "554dac4b6d85eb1c57c7a6bb019342cb18da3a91f968894130056e5ce0bc44ba",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "Routing awaits a repository task description.",
+          "characters": 45,
+          "sha256": "2f80c853eab5dcae81bc50ab53c04e374ba3c9b4cdbda6138083aaf4f970e987",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 566,
+        "sha256": "d66a96d88fec8ab809081a50d88671c39c374b251ce3a2eadc41510178ec0410",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    }
+  ],
+  "result": "FAIL",
+  "evidence_storage": {
+    "model_output_policy": "bounded excerpts and SHA-256 digests; no bulk full-model transcript",
+    "all_cases_retained": true
+  }
+}

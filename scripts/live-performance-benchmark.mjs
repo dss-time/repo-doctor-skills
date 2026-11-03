@@ -16,6 +16,9 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { discoverActivePackSkills } from "./sync-pack-plugin.mjs";
+import { discoverCanonicalSkillDirs } from "./build-skills.mjs";
+import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 
 const root = realpathSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."));
 const option = (name, fallback = null) => {
@@ -39,35 +42,13 @@ const authProbesOnly = process.argv.includes("--auth-probes-only");
 const transportRetryLimit = 2;
 const transportRetryBackoffMs = [1000, 2500];
 const checkpointPath = `${outputPath}.checkpoint.json`;
-const repoDoctorSkills = [
-  "api-contract-review",
-  "architecture-decision-record",
-  "architecture-deepening-analysis",
-  "bug-root-cause-analysis",
-  "change-impact-analysis",
-  "ci-failure-diagnosis",
-  "configuration-audit",
-  "database-migration-review",
-  "dead-code-verification",
-  "decision-prototype",
-  "dependency-upgrade-analysis",
-  "documentation-sync",
-  "performance-regression-analysis",
-  "project-health-check",
-  "release-readiness-check",
-  "repo-doctor-router",
-  "repo-onboarding",
-  "requirements-clarification",
-  "requirements-to-spec",
-  "safe-change-plan",
-  "safe-code-review",
-  "safe-fix-implementation",
-  "safe-test-implementation",
-  "security-focused-review",
-  "session-handoff",
-  "spec-to-work-items",
-  "test-gap-analysis",
-];
+const repoDoctorPack = path.join(root, "packs", "engineering", "repo-doctor");
+const repoDoctorSkills = discoverActivePackSkills(repoDoctorPack);
+const currentSkillCount = discoverCanonicalSkillDirs(path.join(root, "packs")).length;
+const executionProfiles = repoDoctorSkills.map((slug) => parseYamlSubset(
+  readFileSync(path.join(repoDoctorPack, "skills", slug, "skill.yaml"), "utf8"),
+).execution);
+const implicitEnabled = executionProfiles.filter((profile) => profile.allow_implicit_invocation).length;
 
 const fixtureFiles = {
   "package.json": `${JSON.stringify({
@@ -686,6 +667,10 @@ function installBaselineSkills(tempRoot) {
   const home = path.join(tempRoot, "codex-home");
   mkdirSync(home, { recursive: true });
   cpSync(path.join(source, "dist", "codex-zh-CN", "skills"), path.join(home, "skills"), { recursive: true });
+  const expectedCount = discoverCanonicalSkillDirs(path.join(source, "packs")).length;
+  if (countInstalledSkills(home) !== expectedCount) {
+    throw new Error(`Baseline installation does not match ${baselineRef} canonical inventory`);
+  }
   rmSync(source, { recursive: true, force: true });
   rmSync(archive, { force: true });
   return home;
@@ -1107,6 +1092,7 @@ async function runVariant(label, codexHome, variantRoot, selectedCases) {
   writeFixture(base);
   validateSyntheticFixture(base);
   const skillRoot = realpathSync(path.join(codexHome, "skills"));
+  const expectedCount = countInstalledSkills(codexHome);
   const server = new AppServer({ stateRoot: variantRoot, cwd: base });
   try {
     await server.initialize();
@@ -1119,10 +1105,10 @@ async function runVariant(label, codexHome, variantRoot, selectedCases) {
         return resolved.startsWith(`${skillRoot}${path.sep}`);
       })
       .map((skill) => skill.name);
-    if (discovery.errors.length > 0 || installed.length !== 40) {
-      throw new Error(`${label} discovery failed: ${installed.length}/40, errors=${discovery.errors.length}`);
+    if (discovery.errors.length > 0 || installed.length !== expectedCount) {
+      throw new Error(`${label} discovery failed: ${installed.length}/${expectedCount}, errors=${discovery.errors.length}`);
     }
-    process.stdout.write(`${label.toUpperCase()} DISCOVERY PASS ${installed.length}/40\n`);
+    process.stdout.write(`${label.toUpperCase()} DISCOVERY PASS ${installed.length}/${expectedCount}\n`);
     const results = await pool(selectedCases, async (testCase, index) => {
       const workspace = path.join(variantRoot, "cases", testCase.case_id, "repo-doctor-performance-benchmark");
       mkdirSync(path.dirname(workspace), { recursive: true });
@@ -1298,7 +1284,7 @@ async function runAuthProbe(label, stateRoot, skillRoot = null) {
         if (!skill.path || !existsSync(skill.path)) return false;
         return realpathSync(skill.path).startsWith(`${skillRoot}${path.sep}`);
       });
-      if (discovery.errors.length > 0 || installed.length !== 40) {
+      if (discovery.errors.length > 0 || installed.length !== countInstalledSkills(path.dirname(skillRoot))) {
         throw new Error(`${label} Skill discovery failed before auth probe`);
       }
     }
@@ -1608,7 +1594,7 @@ External status: **${report.external_status}**
 
 ## Deterministic coverage
 
-All 30 execution contracts remain valid: 20 simple cases require fast, bounded execution; 10 elevated cases preserve standard or audit behavior and permission gates. Repo Doctor execution profiles remain present for 27/27 Skills.
+All 30 execution contracts remain valid: 20 simple cases require fast, bounded execution; 10 elevated cases preserve standard or audit behavior and permission gates. Repo Doctor execution profiles remain present for ${repoDoctorSkills.length}/${repoDoctorSkills.length} Skills.
 
 ## Real Codex A/B
 
@@ -1672,10 +1658,10 @@ async function main() {
       const optimizedHome = installOptimizedSkills(optimizedPrepareRoot);
       const baselineCount = countInstalledSkills(baselineHome);
       const optimizedCount = countInstalledSkills(optimizedHome);
-      if (baselineCount !== 40 || optimizedCount !== 40) {
+      if (baselineCount === 0 || optimizedCount !== currentSkillCount) {
         throw new Error(`Prepared Skill counts differ: baseline=${baselineCount}, optimized=${optimizedCount}`);
       }
-      process.stdout.write(`ISOLATED BUILDS PASS baseline=${baselineCount}/40 optimized=${optimizedCount}/40\n`);
+      process.stdout.write(`ISOLATED BUILDS PASS baseline=${baselineCount} optimized=${optimizedCount}/${currentSkillCount} engineering=${repoDoctorSkills.length} feature-implementation=${repoDoctorSkills.includes("feature-implementation")}\n`);
     } finally {
       rmSync(baselinePrepareRoot, { recursive: true, force: true });
       rmSync(optimizedPrepareRoot, { recursive: true, force: true });
@@ -1694,8 +1680,8 @@ async function main() {
   let baselineResultsMap = new Map();
   let optimizedResultsMap = new Map();
   if (recordObservedAuthFailure) {
-    baselineSkills = 40;
-    optimizedSkills = 40;
+    baselineSkills = null;
+    optimizedSkills = null;
     const observedFailure = new Error("Observed external authentication service error before model execution.");
     baselineResultsMap = new Map(selectedCases.map((testCase) => [
       testCase.case_id,
@@ -1713,7 +1699,7 @@ async function main() {
       optimizedRoot = mkdtempSync(path.join(os.tmpdir(), "repo-doctor-performance-optimized-"));
       const optimizedHome = installOptimizedSkills(optimizedRoot);
       optimizedSkills = countInstalledSkills(optimizedHome);
-      if (baselineSkills !== 40 || optimizedSkills !== 40) {
+      if (baselineSkills === 0 || optimizedSkills !== currentSkillCount) {
         throw new Error(`Prepared Skill counts differ: baseline=${baselineSkills}, optimized=${optimizedSkills}`);
       }
       baselineSkillsDigest = fixtureDigest(path.join(baselineHome, "skills"));
@@ -1840,16 +1826,16 @@ async function main() {
     baseline: {
       tag: baselineRef,
       commit: baselineCommit,
-      skills_count: baselineSkills || 40,
+      skills_count: baselineSkills,
       skills_sha256: baselineSkillsDigest,
       test_environment: "host Codex authentication; isolated Skill root, SQLite state, and fresh synthetic workspace per case",
     },
     optimized: {
       worktree: "current uncommitted candidate on main",
       base_commit: optimizedCommit,
-      skills_count: optimizedSkills || 40,
+      skills_count: optimizedSkills,
       skills_sha256: optimizedSkillsDigest,
-      execution_profiles: "27/27 Repo Doctor Skills",
+      execution_profiles: `${repoDoctorSkills.length}/${repoDoctorSkills.length} Repo Doctor Skills`,
     },
     test_counts: {
       zh_simple: cases.filter((entry) => entry.language === "zh-CN" && entry.level === "simple").length,
@@ -1928,7 +1914,7 @@ async function main() {
       explicit_heavy_invocation: optimizedAvailable.length ? explicitHeavyCasesPass : "UNAVAILABLE",
     },
     implicit_invocation: {
-      configured: { implicit_enabled: 15, explicit_only: 12 },
+      configured: { implicit_enabled: implicitEnabled, explicit_only: repoDoctorSkills.length - implicitEnabled },
       observed_issues: implicitIssues.map((entry) => entry.case_id),
       summary: !coverage.sufficient
         ? "Real implicit-invocation behavior is unavailable because the external model service did not complete the benchmark."
@@ -1938,7 +1924,7 @@ async function main() {
     },
     external_service: hasTransportGaps
       ? {
-          installation_and_discovery: "PASS 40/40 for both variants",
+          installation_and_discovery: baselineSkillsDigest && optimizedSkillsDigest ? `PASS baseline=${baselineSkills}, optimized=${optimizedSkills}` : "UNVERIFIED",
           model_calls_completed: baselineAvailable.length + optimizedAvailable.length,
           model_calls_failed_before_completion: [...baselineResults, ...optimizedResults]
             .filter((entry) => entry.service_failure).length,
@@ -1950,7 +1936,7 @@ async function main() {
             : "BLOCKED_EXTERNAL_MODEL_SERVICE; not a Skill failure",
         }
       : {
-          installation_and_discovery: "PASS 40/40 for both variants",
+          installation_and_discovery: baselineSkillsDigest && optimizedSkillsDigest ? `PASS baseline=${baselineSkills}, optimized=${optimizedSkills}` : "UNVERIFIED",
           model_calls_completed: baselineAvailable.length + optimizedAvailable.length,
           failure: null,
           classification: "AVAILABLE",

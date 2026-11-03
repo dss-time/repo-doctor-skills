@@ -83,6 +83,12 @@ export function permissionRiskIssues(metadata) {
       message: "shell permission conflicts with tool_requirements.shell: none",
     });
   }
+  if (permissions.run_shell_commands === false && tools.shell !== "none") {
+    issues.push({
+      code: "shell_tool_without_permission",
+      message: "disabled shell permission requires tool_requirements.shell: none",
+    });
+  }
   if (permissions.access_network === true && !new Set(["optional", "required"]).has(tools.web)) {
     issues.push({
       code: "network_without_tool",

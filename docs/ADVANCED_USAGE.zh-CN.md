@@ -99,6 +99,8 @@ dist/cursor-zh-CN/.cursor/rules/<skill-name>.mdc
 
 要求：Node.js 18 或更高版本；生成 ChatGPT ZIP 时，`PATH` 中还需要 `zip`。
 
+自带安装器支持 Node.js 18 及以上版本。CI 使用 Node 18 和当前 LTS 检查 Linux、macOS、Windows 的 Schema 与安装行为，并在 Linux 最低 Node 版本运行打包 CLI。完整构建与发布检查运行于 Linux 当前 LTS。
+
 ```bash
 git clone https://github.com/dss-time/repo-doctor-skills.git
 cd repo-doctor-skills
@@ -131,13 +133,13 @@ node scripts/build-skills.mjs --target kimi-zh-CN
 - 没有显式参数时，使用唯一已配置的 home；未配置时使用共享 `.agents/skills`；
 - 同时检测到多个 home 时，在写入前安全退出；绝不会只凭目录存在判断 Agent。
 
-安装器默认使用 Recommended，完成后核验安装集合；除非显式传入 `--force`，否则不会替换目标中已有的同名 Skill。公开 CLI 的对应命令包括：
+安装器默认使用 Recommended，完成后核验安装集合。重复安装会替换选中的同名 Skill 目录，包括本地修改和旧资源；内容相同则跳过。公开 CLI 的对应命令包括：
 
 ```bash
 npx repo-doctor-skills install --agent codex
 npx repo-doctor-skills install --agent shared
 npx repo-doctor-skills install --target-dir ./my-skills
-npx repo-doctor-skills install --force
+npx repo-doctor-skills install
 ```
 
 ## 6. Individual 单 Skill 安装
@@ -197,6 +199,6 @@ npx repo-doctor-skills install --skill safe-code-review
 npx repo-doctor-skills install --language zh-CN
 ```
 
-`--skill` 与 `--preset` 互斥。语言可选 en、zh-CN、bilingual（默认）；只选择正文语言，保留资源。相同内容跳过，不同内容明确提示，`--force` 仅替换选中项。
+`--skill` 与 `--preset` 互斥。语言可选 en、zh-CN、bilingual（默认），资源随正文一起安装。重复安装会原位替换选中的同名 Skill 目录，包括本地修改和旧资源；相同内容跳过，其他 Skill 保留。`--force` 参数继续兼容。安装失败时会尝试恢复原目录，恢复不完整时会报告备份位置。
 
 Project Release Version（项目发布版本）与 Plugin / Pack Component Version（组件版本）独立管理，详见[版本策略](VERSIONING.zh-CN.md)。

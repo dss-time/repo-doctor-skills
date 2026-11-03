@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "project_version": "0.9.0-beta.2",
+  "result": "INCOMPLETE",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "8b2e9934af3757bbd3968abff7809cdb7403150e66fa95038789da0d98b3402c",
+    "runtime_sha256": "7b16b3fab6af9e5de83438a4b168eed4554f73b6e2ec27819c8408b731b0a5e3"
+  },
+  "date": "2026-11-03T08:24:09.542452+00:00",
+  "requested_model": "gpt-6.1-sol",
+  "reason": "Stopped model app-server after independent review found previous-attempt receipt replay and invalidation-order defects. Final current-source full evaluation must run after fixes.",
+  "observations": {
+    "completed_passes_lower_bound": 135
+  },
+  "release_eligible": false,
+  "independent_review_report": "tests/reports/coordination-live-nl0nRZ/report.json"
+}

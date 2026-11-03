@@ -8,7 +8,7 @@ const packageJson = JSON.parse(readFileSync(path.join(root, "package.json"), "ut
 const binPath = path.join(root, "bin", "repo-doctor-skills.mjs");
 
 assert.equal(packageJson.name, "repo-doctor-skills");
-assert.equal(packageJson.version, "0.9.0-beta.1");
+assert.equal(packageJson.version, "0.9.0-beta.2");
 assert.notEqual(packageJson.private, true, "public CLI package must not be private");
 assert.deepEqual(packageJson.bin, { "repo-doctor-skills": "bin/repo-doctor-skills.mjs" });
 assert.equal(packageJson.publishConfig?.access, "public");
@@ -19,6 +19,8 @@ assert.ok(packageJson.files.includes("scripts/install.mjs"));
 
 const bin = readFileSync(binPath, "utf8");
 assert.ok(bin.startsWith("#!/usr/bin/env node\n"), "CLI bin must have a Node shebang");
-assert.ok((statSync(binPath).mode & 0o111) !== 0, "CLI bin must be executable");
+if (process.platform !== "win32") {
+  assert.ok((statSync(binPath).mode & 0o111) !== 0, "CLI bin must be executable on POSIX systems");
+}
 
-console.log("Public npm package contract test passed for repo-doctor-skills@0.9.0-beta.1.");
+console.log("Public npm package contract test passed for repo-doctor-skills@0.9.0-beta.2.");

@@ -30,7 +30,7 @@ Choose the plugin or copied Skills for the same agent to avoid duplicate discove
 | Install entry | Default location and scope | Update |
 |---|---|---|
 | `npx skills@latest add` | Current project; `-g` selects user-wide scope | Use `check` / `update` in the same scope |
-| `npx repo-doctor-skills install` | User-wide, selected by the rules below; override with `--target-dir` | Repeat the same command; back up custom edits before choosing `--force` for differing content |
+| `npx repo-doctor-skills install` | User-wide, selected by the rules below; override with `--target-dir` | Repeat the same command to replace selected same-name Skills, including local edits and old resources |
 | Codex plugin | Managed by the host plugin manager | Select a version and refresh or reinstall as described in section 7 |
 
 Choose one install entry per agent and start a new task after installation.

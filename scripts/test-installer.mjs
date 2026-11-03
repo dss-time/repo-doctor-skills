@@ -120,20 +120,30 @@ try {
   }
 
   const changedFile = path.join(target, "safe-code-review/SKILL.md");
+  const originalContent = readFileSync(changedFile, "utf8");
+  const staleResource = path.join(target, "safe-code-review/old-resource.md");
   writeFileSync(changedFile, "user-owned edit\n");
-  const conflict = cli(["--target-dir", target]);
-  assert.equal(conflict.status, 1);
-  assert.match(conflict.stderr, /Different existing Skills: safe-code-review/);
-  assert.equal(readFileSync(changedFile, "utf8"), "user-owned edit\n");
-  const replace = cli(["--skill", "safe-code-review", "--target-dir", target, "--force"]);
+  writeFileSync(staleResource, "obsolete resource\n");
+  const unselectedFile = path.join(target, "feature-implementation/SKILL.md");
+  writeFileSync(unselectedFile, "unselected local edit\n");
+  const replace = cli(["--skill", "safe-code-review", "--target-dir", target]);
   assert.equal(replace.status, 0, replace.stderr);
-  assert.notEqual(readFileSync(changedFile, "utf8"), "user-owned edit\n");
+  assert.equal(readFileSync(changedFile, "utf8"), originalContent);
+  assert.ok(!existsSync(staleResource), "replacement must remove stale resources");
+  assert.equal(readFileSync(unselectedFile, "utf8"), "unselected local edit\n");
+  assert.equal(readdirSync(target).length, 41, "replacement must reuse the same Skill directory");
+
+  writeFileSync(changedFile, "legacy force edit\n");
+  const legacyForce = cli(["--skill", "safe-code-review", "--target-dir", target, "--force"]);
+  assert.equal(legacyForce.status, 0, legacyForce.stderr);
+  assert.equal(readFileSync(changedFile, "utf8"), originalContent);
 
   const linked = path.join(target, "safe-code-review/user-link");
   symlinkSync(changedFile, linked);
-  const linkConflict = cli(["--skill", "safe-code-review", "--target-dir", target]);
-  assert.equal(linkConflict.status, 1);
-  assert.ok(existsSync(linked));
+  const linkReplacement = cli(["--skill", "safe-code-review", "--target-dir", target]);
+  assert.equal(linkReplacement.status, 0, linkReplacement.stderr);
+  assert.ok(!existsSync(linked));
+  assert.equal(readFileSync(changedFile, "utf8"), originalContent);
 
   for (const args of [["--skill", "../escape"], ["--skill", "missing"], ["--language", "xx"], ["--force", "--force"], ["--skill"], ["--unknown"], ["--preset", "full", "--skill", "safe-code-review"]]) {
     const absent = path.join(tempRoot, "must-stay-absent");
@@ -190,7 +200,7 @@ try {
     };
     syncBuiltinESMExports();
     try {
-      await assert.rejects(install({ target: rollbackTarget, force: true }), failRestore ? /Recovery files preserved at/ : /previous Skills restored/);
+      await assert.rejects(install({ target: rollbackTarget }), failRestore ? /Recovery files preserved at/ : /previous Skills restored/);
     } finally {
       fs.renameSync = originalRename;
       syncBuiltinESMExports();

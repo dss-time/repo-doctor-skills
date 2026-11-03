@@ -26,7 +26,7 @@ function setup(t, selector = { skill_id: 'documentation-sync' }) {
     skillChecks: {}, recoveryChecks: new Map(), risks: [], reviewBinding: 'diff-1', deliveryRequirements: [], reuse: {} };
   function evidence(id, claims = [], extra = {}) {
     const e = captureEvidence(root, { id, operation_binding: operationBinding(host), task_binding: taskBinding(task), kind: 'analysis', source: `fixture:${id}`, summary: id, dependencies: ['facts.txt'], coverage_complete: true,
-      result: 'pass', claims, ...extra, ...(claims.some(c => c.startsWith('stage:')) ? { request_binding: digest(host.requests[claims.find(c => c.startsWith('stage:')).slice(6)]) } : {}) }, host.environment);
+      result: 'pass', claims, ...extra, ...(claims.some(c => c.startsWith('stage:')) ? { request_binding: digest(host.requests[claims.find(c => c.startsWith('stage:')).slice(6)]), execution_attempt: task.steps[claims.find(c => c.startsWith('stage:')).slice(6)].attempts } : {}) }, host.environment);
     task.evidence.push(e); host.trustedEvidence.add(digest(e)); return e;
   }
   const facts = evidence('facts');
@@ -484,6 +484,60 @@ test('Unresolved failed verification blocks dependent execution until an explici
   assert.equal(nextAction(f.task, f.host).action, 'validation_failed');
   f.host.failureRepairs = new Map([[digest(failed), { source: 'Authorized targeted repair', stages: { task: digest(f.host.requests.task) } }]]);
   assert.equal(nextAction(f.task, f.host).action, 'execute');
+});
+
+test('Missing environment information cannot erase an attested failure before execution or delivery', t => {
+  for (const completed of [false, true]) {
+    const f = setup(t);
+    if (completed) {
+      const action = advance(f.task, f.host);
+      f.complete(action, { claims: ['stage:task', 'acceptance:behavior'] });
+      assert.equal(nextAction(f.task, f.host).action, 'complete');
+    }
+    f.host.environment.testRuntime = 'original';
+    const failed = f.evidence('observed-failure', [], {
+      kind: 'test', command: 'synthetic observed check', cwd: '.', exit_code: 1, result: 'fail',
+    });
+    assert.equal(nextAction(f.task, f.host).action, 'validation_failed');
+    delete f.host.environment.testRuntime;
+    assert.equal(evidenceValidity(failed, f.host).status, 'unknown');
+    assert.equal(nextAction(f.task, f.host).action, 'evidence_insufficient');
+    f.host.environment.testRuntime = 'original';
+    assert.equal(nextAction(f.task, f.host).action, 'validation_failed');
+    f.host.environment.testRuntime = 'changed';
+    assert.equal(evidenceValidity(failed, f.host).status, 'stale');
+    assert.equal(nextAction(f.task, f.host).action, completed ? 'complete' : 'execute');
+  }
+});
+
+test('Completion rejects a previous execution attempt while explicit reuse remains available', t => {
+  const f = setup(t);
+  const first = advance(f.task, f.host);
+  const old = f.complete(first, { claims: ['stage:task', 'acceptance:behavior'] });
+  f.host.reconciled = new Set([reconciliationBinding(f.task, 'task', f.host)]);
+  reopen(f.task, 'task', f.host, { reason: 'Retry inspected operation', source: 'host', safeToRetry: true });
+  advance(f.task, f.host);
+  assert.equal(f.task.steps.task.attempts, 2);
+  assert.throws(() => finishStep(f.task, 'task', [old.id], f.host), /current-attempt/);
+  f.complete({ stage: 'task', skill: 'documentation-sync' }, { claims: ['stage:task', 'acceptance:behavior'] });
+  assert.equal(nextAction(f.task, f.host).action, 'complete');
+  f.host.reconciled = new Set([reconciliationBinding(f.task, 'task', f.host)]);
+  reopen(f.task, 'task', f.host, { reason: 'Reuse verified existing result', source: 'host', safeToRetry: true });
+  f.host.reuse.task = [old.id];
+  assert.equal(advance(f.task, f.host).action, 'reuse');
+});
+
+test('Demonstrated dependency or environment changes take precedence over unknown inputs', t => {
+  const f = setup(t);
+  f.host.environment.extra = 'original';
+  const receipt = f.runTest();
+  delete f.host.environment.node;
+  f.host.environment.extra = 'changed';
+  assert.equal(evidenceValidity(receipt, f.host).status, 'stale');
+  f.host.environment.extra = 'original';
+  assert.equal(evidenceValidity(receipt, f.host).status, 'unknown');
+  writeFileSync(path.join(f.root, 'lock.json'), '{"changed":true}');
+  assert.equal(evidenceValidity(receipt, f.host).status, 'stale');
 });
 
 test('Acceptance and risk claims cannot cross an authorized operation scope change', t => {
