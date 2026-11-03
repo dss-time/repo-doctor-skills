@@ -5,6 +5,7 @@ import { parse } from "yaml";
 
 const content = readFileSync(path.join(process.cwd(), ".github", "workflows", "ci.yml"), "utf8");
 const workflow = parse(content);
+assert.match(readFileSync(".gitattributes", "utf8"), /^\* text=auto eol=lf$/m);
 const compatibility = workflow.jobs.compatibility;
 assert.deepEqual(compatibility.strategy.matrix.os, ["ubuntu-latest", "macos-latest", "windows-latest"]);
 assert.deepEqual(compatibility.strategy.matrix.node, ["18", "lts/*"]);

@@ -193,7 +193,7 @@ function stepEvidence(task, stage, host, executionAttempt = null) {
 
 function unresolvedFailures(task, host) {
   const unresolved = [];
-  for (const failed of task.evidence.filter(e => e.task_binding === taskBinding(task) && e.kind === 'test' && e.result === 'fail')) {
+  for (const failed of task.evidence.filter(e => e.kind === 'test' && e.result === 'fail')) {
     const validity = evidenceValidity(failed, host);
     if (validity.status === 'stale' || validity.reason === 'source_not_attested') continue;
     if (validity.status === 'unknown') {

@@ -14,6 +14,9 @@ Live-model validation is **UNKNOWN** while fresh current-source evaluation is ru
 
 - Preserve unresolved attested failures when environment information becomes unknown. A new regression detects the original delivery bypass.
 
+- Bind completion receipts to the current execution attempt, preserve unresolved failures across task intent changes and prioritize demonstrated input changes over unknown environment fields.
+- Keep checked-out text files in LF format for Windows frontmatter compatibility.
+
 ## Components
 
 41 active Skills, 28 Repo Doctor Skills, 13 workflows and 38 ChatGPT ZIPs. Repo Doctor Pack/plugin is 0.11.1. Document Data Doctor Pack is 0.1.1.

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "project_version": "0.9.0-beta.2",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "f5472cbdd2b752c9285adb2419263e605b319d6dfea86365ac255a27928ac53a",
+    "runtime_sha256": "34463d82496a58b33f361c4fbf09420532868f421fe1cca1f264b3c2f1628d23"
+  },
+  "date": "2026-11-03T08:36:10.990Z",
+  "result": "PASS",
+  "cases": [
+    {
+      "case": "simple",
+      "result": "PASS",
+      "verified_skill_loaded": true,
+      "changed_files": [
+        "README.md"
+      ],
+      "task": {
+        "schema_version": 2,
+        "id": "simple",
+        "goal": "Correct teh to the in README only",
+        "acceptance": [
+          "typo"
+        ],
+        "workflow_id": null,
+        "skill_id": "documentation-sync",
+        "registry_binding": "15f897b19a55a46780d8925cdd2270144490c69575ca27b8a5d16cbacf79886c",
+        "decisions": [],
+        "scope": {
+          "files": [],
+          "modules": [],
+          "interfaces": []
+        },
+        "risks": [],
+        "permission_refs": [],
+        "evidence": [
+          {
+            "id": "typo",
+            "source": "host file comparison and real Codex command events",
+            "summary": "Exact authorized typo correction observed",
+            "kind": "analysis",
+            "skill": "documentation-sync",
+            "dependencies": [
+              "README.md"
+            ],
+            "claims": [
+              "stage:task",
+              "acceptance:typo"
+            ],
+            "operation_binding": "ceca7eb42b116aebc346b8a6be03d68c65dd1655697163f7b3adad813c8dad6d",
+            "request_binding": "290a95b240126312a39f365274aa7e9681546f127c902c68b6af9aef1757c235",
+            "execution_attempt": 1,
+            "task_binding": "c1de5aa39240df07e4f7d7c8132ec76d343ede2d35ed0e608bc8ade4176e0c74",
+            "coverage_complete": true,
+            "result": "pass",
+            "bindings": {
+              "README.md": "3a5bb3cdd47248bf68104ad37b48bcbe3d9f42d8458d7ffd588a697e7650d4f1"
+            },
+            "environment": {
+              "node": "v24.19.0",
+              "platform": "darwin"
+            },
+            "recorded_at": "2026-11-03T08:36:45.764Z"
+          }
+        ],
+        "changes": [],
+        "unresolved": [],
+        "next_actions": [
+          {
+            "stage": "task",
+            "skill": "documentation-sync",
+            "action": "execute",
+            "reason": "applicable_stage",
+            "mode": "manual_handoff"
+          }
+        ],
+        "current_stage": "task",
+        "steps": {
+          "task": {
+            "status": "completed",
+            "attempts": 1,
+            "evidence_ids": [
+              "typo"
+            ],
+            "reason": "applicable_stage",
+            "request_binding": "290a95b240126312a39f365274aa7e9681546f127c902c68b6af9aef1757c235",
+            "effect_state": "known"
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "stage": "task",
+            "status": "running",
+            "reason": "applicable_stage"
+          },
+          {
+            "sequence": 2,
+            "stage": "task",
+            "status": "completed",
+            "reason": "observed_completion"
+          }
+        ]
+      },
+      "run": {
+        "id": "simple",
+        "sandbox": "workspace-write",
+        "host_loaded_skill": {
+          "slug": "documentation-sync",
+          "path": ".agents/skills/documentation-sync/SKILL.md",
+          "sha256": "68572c761dd713aa70133a1428b4b512ec4ff4e4628b0ca35434c21c8de29c93"
+        },
+        "permission_violations": [],
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 34753,
+        "commands": [],
+        "tools": [
+          {
+            "server": "node_repl",
+            "tool": "js",
+            "arguments": {
+              "code": "const fs = await import('node:fs/promises'); const path = nodeRepl.cwd + '/README.md'; const before = await fs.readFile(path, 'utf8'); nodeRepl.write(before);",
+              "title": "Read authorized README"
+            },
+            "status": "completed",
+            "error": null,
+            "result_error": false,
+            "result_excerpt": "{\"content\":[{\"type\":\"text\",\"text\":\"# Demo\\n\\nThis tool checks teh input.\\n\"}],\"_meta\":{\"codex/nodeReplExecutionDurationMs\":2},\"structured_content\":null}",
+            "result_sha256": "8919fb2480f909a2c8bd46e387f592cf8237c3687269e524981a2624cfa8942d"
+          },
+          {
+            "server": "node_repl",
+            "tool": "js",
+            "arguments": {
+              "code": "const after = before.replace(/\\bteh\\b/g, 'the'); await fs.writeFile(path, after); const verified = await fs.readFile(path, 'utf8'); if (verified !== after || verified !== '# Demo\\n\\nThis tool checks the input.\\n') throw new Error('Verification failed'); nodeRepl.write('Verified: only teh → the in README.md.');",
+              "title": "Correct typo and verify exact README contents"
+            },
+            "status": "completed",
+            "error": null,
+            "result_error": false,
+            "result_excerpt": "{\"content\":[{\"type\":\"text\",\"text\":\"Verified: only teh → the in README.md.\"}],\"_meta\":{\"codex/nodeReplExecutionDurationMs\":2},\"structured_content\":null}",
+            "result_sha256": "0ff148dd8881ef4f6428dab9caef4aae129b9dbbb745f2973222880d51fc44d9"
+          }
+        ],
+        "tool_item_count": 2,
+        "final_answer": "Corrected `teh` to `the` in README.md. A focused read-back check confirmed the exact expected contents. No other files were changed.",
+        "answer": "I’m applying the supplied documentation-sync skill to correct only the README typo and verify the change.\nCorrected `teh` to `the` in README.md. A focused read-back check confirmed the exact expected contents. No other files were changed.",
+        "completed": true,
+        "usage": {
+          "input_tokens": 77931,
+          "cached_input_tokens": 47744,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 283,
+          "reasoning_output_tokens": 0
+        },
+        "errors": [],
+        "prompt_sha256": "c099b004926b61be01303e89bca4f4689ab78ddcab08e99db32020c5263f038a",
+        "argv": [
+          "exec",
+          "--ephemeral",
+          "--json",
+          "--color",
+          "never",
+          "--skip-git-repo-check",
+          "--sandbox",
+          "workspace-write",
+          "-C",
+          "$TRIAL_ROOT/simple",
+          "--disable",
+          "plugins",
+          "--disable",
+          "apps",
+          "--disable",
+          "multi_agent",
+          "--disable",
+          "memories",
+          "-c",
+          "approval_policy=\"never\"",
+          "-c",
+          "analytics.enabled=false",
+          "-c",
+          "sandbox_workspace_write.network_access=false"
+        ]
+      }
+    }
+  ],
+  "cli_version": "codex-cli 0.166.0-alpha.5.1",
+  "model_selection": "existing user configuration; no model override",
+  "core_sha256": "bb97e72103cba82a6689d4ad371ff8942b8b2e4d6681dea59f84adf7d43567f4",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

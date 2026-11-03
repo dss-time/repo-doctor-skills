@@ -26,6 +26,8 @@ Attested failed checks with unknown dependency or environment validity remain un
 
 Execution completion receipts include `execution_attempt` matching the current stage attempt counter. `finishStep` rejects earlier attempts. Historical results can be reused only through the explicit reuse path. Demonstrated input changes take precedence over missing environment information when classifying evidence.
 
+Changing task intent invalidates positive task-bound claims but does not resolve an attested failed check with unchanged observed inputs. Such failures still require the existing repair or investigated resolution path.
+
 ## Host contract and progression
 
 The host supplies the canonical Registry/inventory, current environment, verified evidence digests, assessed conditions/stop predicates, current grants, available capabilities, exact requested paths/operations and command preflight. Context cannot supply these authorities. Permissions are the intersection of user scope, Skill declaration and host capability; check narrower Skill rules separately. Exact path matching is deliberate: do not turn a stored glob or folder label into unrestricted write authority.

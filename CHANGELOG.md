@@ -23,7 +23,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Derive performance benchmark routing choices and installation counts from canonical and installed inventories instead of stale 27/40 constants.
 - Align Shell tool requirements with prohibited Shell permissions in 17 Skills and remove the onboarding command exception.
-- Keep attested failed checks unresolved when environment validity becomes unknown, blocking dependent execution and delivery until evidence is restored.
+- Keep attested failed checks unresolved when environment validity becomes unknown or task intent changes, blocking dependent execution and delivery until evidence is restored.
+- Bind completion receipts to their execution attempt and prioritize demonstrated input changes over unknown environment fields.
+- Normalize checked-out text files to LF for Windows frontmatter compatibility.
 
 ### Security
 

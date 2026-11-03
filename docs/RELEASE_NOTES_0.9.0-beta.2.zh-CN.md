@@ -14,6 +14,9 @@ Live-model 验证状态为 **UNKNOWN**，正在运行绑定本版源码的全量
 
 - 已观察到的失败在环境信息缺失时继续阻止执行与交付，新增回归已验证能检出原缺陷。
 
+- 完成凭据绑定当前执行尝试，任务意图变化后继续保留未解决失败，已证实输入变化优先于环境未知。
+- 文本统一为 LF，修复 Windows frontmatter 读取兼容性。
+
 ## 组件
 
 41 个有效 Skill、28 个 Repo Doctor Skill、13 条工作流和 38 个 ChatGPT ZIP。Repo Doctor Pack/插件为 0.11.1，Document Data Doctor Pack 为 0.1.1。

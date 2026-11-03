@@ -540,6 +540,29 @@ test('Demonstrated dependency or environment changes take precedence over unknow
   assert.equal(evidenceValidity(receipt, f.host).status, 'stale');
 });
 
+test('Intent changes cannot erase an attested test failure before execution or delivery', t => {
+  for (const completed of [false, true]) {
+    for (const field of ['decisions', 'acceptance']) {
+      const f = setup(t);
+      if (completed) {
+        const action = advance(f.task, f.host);
+        f.complete(action, { claims: ['stage:task', 'acceptance:behavior'] });
+      }
+      const failed = f.evidence('observed-failure', [], {
+        kind: 'test', command: 'synthetic observed check', cwd: '.', exit_code: 1, result: 'fail',
+      });
+      assert.equal(nextAction(f.task, f.host).action, 'validation_failed');
+      f.task[field].push(field === 'decisions' ? { decision: 'Updated intent', source: 'host' } : 'additional-acceptance');
+      if (completed) {
+        const updated = f.evidence('updated-result', ['stage:task', ...f.task.acceptance.map(id => `acceptance:${id}`)], { skill: 'documentation-sync' });
+        f.task.steps.task.evidence_ids = [updated.id];
+      }
+      assert.equal(evidenceValidity(failed, f.host).status, 'failed');
+      assert.equal(nextAction(f.task, f.host).action, 'validation_failed');
+    }
+  }
+});
+
 test('Acceptance and risk claims cannot cross an authorized operation scope change', t => {
   const f = setup(t); const a = advance(f.task, f.host); const prior = f.complete(a, { claims: ['stage:task','acceptance:behavior'] });
   assert.equal(nextAction(f.task, f.host).action, 'complete');
