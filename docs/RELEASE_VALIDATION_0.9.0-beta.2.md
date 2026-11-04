@@ -1,8 +1,8 @@
 # v0.9.0-beta.2 验证记录
 
-日期为 2026-11-03，时区为 Asia/Shanghai。
+验证运行跨 2026-11-03 至 2026-11-04，时区为 Asia/Shanghai。
 
-本版 Live-model 状态为 UNKNOWN，最终源码的新评测正在运行。
+本版 Live-model 状态为 PASS，328/328。
 
 ## 已完成的本地验证
 
@@ -29,6 +29,23 @@
 
 进一步审查指出任务决策或验收变化不应清除观测输入未变的失败。已移除该过滤条件，回归覆盖决策和验收变化前的执行与交付。
 
-首次分支 CI 的 Linux、macOS、质量门禁通过。Windows 在读取 CRLF frontmatter 时失败，新增 .gitattributes 统一文本为 LF 后重跑。
+首次分支 CI 的 Linux、macOS、质量门禁通过。Windows 在读取 CRLF frontmatter 时失败，新增 .gitattributes 统一文本为 LF 后，分支 CI 全部通过。
 
-最终源码核心报告、完整报告、串行协作试运行和 GitHub CI 结果完成后补充。
+- 成功运行 https://github.com/dss-time/repo-doctor-skills/actions/runs/41604748380
+- 对应提交 2821fe7729ce22d1ab1e4c7dfa48beec0956f8fa
+- 六个系统/Node 组合和完整质量门禁均通过。
+
+最终独立核心审查通过现有 Beta 门禁，无 P0/P1，保留一个非阻塞 P2。依赖覆盖不完整时，已证明输入变化仍可能被归为未知，导致恢复被保守阻塞。审查原文保留在 tests/reports/coordination-live-5S4dph/report.json。
+
+最终源码的串行协作门禁已通过，报告为 tests/reports/coordination-release-0.9.0-beta.2.json。它组合三份相同源码绑定的真实记录，分别覆盖简单修改、串行测试工作流与独立核心审查。早期失败报告继续保留。
+
+最终源码核心真实模型评测为 PASS，205/205，实际模型均为 gpt-6.1-sol，推理强度 low，权限越界为 0。报告为 tests/reports/live-codex-core-validation-0.9.0-beta.2.json。完整高级评测已通过，总计 328/328，failed=0、blocked=0。
+
+
+## 完整真实模型结论
+
+- 完整报告为 tests/reports/live-codex-skill-validation-0.9.0-beta.2.json 及同名 Markdown。
+- 205 项核心、44 个双语工作流步骤、65 项模式/判定、14 项权限全部通过。
+- 高级评测先因额度限制停于 223/328，通过项未改写。原报告保留在 tests/reports/attempts/live-codex-0.9.0-beta.2-advanced-quota.json。
+- 2026-11-04 从检查点恢复，核对同版本、同模型、同评测器和完整源码/运行时绑定，复用完整通过的工作流并补齐剩余项。
+- 正式发布门禁同时要求完整模型报告与当前串行协作报告。

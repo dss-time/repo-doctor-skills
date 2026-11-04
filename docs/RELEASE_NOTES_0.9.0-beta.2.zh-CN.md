@@ -1,8 +1,8 @@
 # Repo Doctor Skills v0.9.0-beta.2 — Beta 发布候选
 
-准备日期为 2026-11-03，tag 为 `v0.9.0-beta.2`。
+准备日期为 2026-11-04，tag 为 `v0.9.0-beta.2`。
 
-Live-model 验证状态为 **UNKNOWN**，正在运行绑定本版源码的全量评测。
+Live-model 验证为 **PASS，328/328**，模型为 GPT-6.1 Sol，推理强度 low。包含 205 项核心、44 个工作流步骤、65 项模式/判定及 14 项权限用例。高级评测的额度中断报告保留，恢复前核对版本、模型、评测器及完整 Skill 内容一致后复用通过项。
 
 ## 修改内容
 
@@ -24,6 +24,10 @@ Live-model 验证状态为 **UNKNOWN**，正在运行绑定本版源码的全量
 ## 验证
 
 本版实际结果见[验证记录](RELEASE_VALIDATION_0.9.0-beta.2.md)。全量语料及串行协作试运行报告需要绑定当前 canonical 源和完整安装运行时。
+
+## 已知限制
+
+独立核心审查满足现有 Beta 门禁，保留一项非阻塞 P2。依赖覆盖不完整时，已记录输入变化后仍可能被判为未知，导致恢复被保守阻塞。原始审查见 tests/reports/coordination-live-5S4dph/report.json。
 
 ## 安装
 

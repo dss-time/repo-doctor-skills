@@ -8,10 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-## [0.9.0-beta.2] - 2026-11-03
+## [0.9.0-beta.2] - 2026-11-04
 
 ### Added
 
+- Fresh current-source real-model evidence with 328/328 PASS on GPT-6.1 Sol low, including checkpoint recovery after a preserved quota interruption.
 - Installation compatibility CI for Linux, macOS and Windows on Node 18 and current LTS, including a packed CLI check on Linux Node 18.
 
 ### Changed

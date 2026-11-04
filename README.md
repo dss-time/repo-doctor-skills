@@ -10,6 +10,8 @@ Focused Skills for debugging, code review, fixes, and tests.
 
 The current version is **0.9.0-beta.2**, a Beta prerelease candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.2.md) and [validation](docs/RELEASE_VALIDATION_0.9.0-beta.2.md).
 
+Fresh current-source real-model validation passed **328/328** on GPT-6.1 Sol low. Installation CI passed on Linux, macOS and Windows with Node 18 and current LTS.
+
 ## Start in 30 seconds
 
 ```bash
@@ -88,6 +90,9 @@ npx repo-doctor-skills install --language en
 ```
 
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. Reinstalling replaces selected same-name Skills in the target directory, including local edits and old resources. Identical content is skipped. The bundled installer supports Node.js 18 and later. CI covers installation on Linux, macOS and Windows using Node 18 and current LTS, with full repository checks on Linux. The external skills CLI has its own Node requirements.
+
+
+The default replacement behavior above applies to this GitHub candidate’s bundled installer. The published npm stable package is 0.8.1 and follows that version’s installation rules.
 
 ## v0.8.1 stable release
 

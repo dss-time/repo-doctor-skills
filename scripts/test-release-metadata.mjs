@@ -248,7 +248,7 @@ assert.deepEqual(
 );
 assert.equal(releaseContract.projectVersion, "0.9.0-beta.2");
 assert.equal(releaseContract.releaseChannel, "candidate");
-assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
+assert.equal(releaseContract.liveModelStatus, "PASS");
 assert.equal(releaseContract.liveModelWaiver, null);
 assert.equal(releaseContract.expectedLiveModelCases, 328);
 assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion);

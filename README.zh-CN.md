@@ -7,6 +7,8 @@
 
 当前版本为 **0.9.0-beta.2**，属于 Beta 预发布候选；已发布稳定版仍为 0.8.1。查看[候选说明](docs/RELEASE_NOTES_0.9.0-beta.2.zh-CN.md)和[验证记录](docs/RELEASE_VALIDATION_0.9.0-beta.2.md)。
 
+绑定当前源码的真实模型评测 **328/328 全部通过**，使用 GPT-6.1 Sol low。Linux、macOS、Windows 在 Node 18 和当前 LTS 下的安装 CI 全部通过。
+
 ## 30 秒开始
 
 ```bash
@@ -85,6 +87,9 @@ npx repo-doctor-skills install --language zh-CN
 ```
 
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。重复安装会替换目标目录中选中的同名 Skill，包括本地修改和旧资源；内容相同则跳过。自带安装器支持 Node.js 18 及以上版本。CI 使用 Node 18 和当前 LTS 检查 Linux、macOS、Windows 安装，完整仓库检查运行于 Linux。外部 skills CLI 的 Node 要求由其自身版本决定。
+
+
+上述默认覆盖行为适用于当前 GitHub 候选源码中的安装器。npm 已发布稳定包为 0.8.1，安装规则以该版本为准。
 
 ## v0.8.1 正式版
 

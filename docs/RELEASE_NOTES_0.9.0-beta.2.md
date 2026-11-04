@@ -1,8 +1,8 @@
 # Repo Doctor Skills v0.9.0-beta.2 — Beta Release Candidate
 
-Prepared on 2026-11-03 for tag `v0.9.0-beta.2`.
+Prepared on 2026-11-04 for tag `v0.9.0-beta.2`.
 
-Live-model validation is **UNKNOWN** while fresh current-source evaluation is running.
+Live-model validation is **PASS, 328/328** on GPT-6.1 Sol with low reasoning. Coverage includes 205 core cases, 44 workflow steps, 65 mode/verdict cases and 14 permission cases. The quota-interrupted advanced attempt is preserved. Recovery verified unchanged version, model, evaluator and complete Skill content before reusing passed cases.
 
 ## Changes
 
@@ -24,6 +24,10 @@ Live-model validation is **UNKNOWN** while fresh current-source evaluation is ru
 ## Validation
 
 Current validation evidence is recorded in [the validation record](RELEASE_VALIDATION_0.9.0-beta.2.md). Full-corpus and scoped workflow trial reports must bind the current canonical source and complete installed runtime.
+
+## Known limitation
+
+Independent core review passed the existing Beta gate with one non-blocking P2 finding. When dependency coverage is incomplete, evidence classification can remain unknown even after a recorded input demonstrably changes. Recovery can therefore be conservatively blocked. The original review is preserved in tests/reports/coordination-live-5S4dph/report.json.
 
 ## Installation
 
