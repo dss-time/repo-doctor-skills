@@ -3,13 +3,13 @@
 Repo Doctor Skills 将项目发布版本、组件版本和成熟度状态分开管理。两个位置恰好出现相同数字，并不表示它们共用同一生命周期。
 
 
-当前工作区为 0.9.0-beta.1 候选，尚未发布；稳定版为 0.8.1。候选保留现有 stable 全量模型门禁，并新增协调能力真实试运行门禁。完整 Live-model 评测状态 UNKNOWN，不能使用历史报告替代。
+当前项目发布版本为 0.9.0，发布通道为 stable，源版本为 0.9.0-beta.2。项目通道与组件成熟度分别管理。
 
 ## 1. 项目发布版本
 
 项目发布版本描述整个仓库级发布。`package.json` 是项目版本的权威元数据；Git tag、GitHub Release、`CHANGELOG.md` 正式版本段和发布说明必须使用相同版本。
 
-已发布稳定版为 **0.8.1**（tag `v0.8.1`），其版本专属 GPT-6.1 Sol low 证据为 328/328。该结果属于历史稳定版，不证明当前 Beta 候选。稳定版 Repo Doctor Pack/插件为 0.10.1，含 28 个 Skill，总 active 数为 41。
+0.9.0 的等价晋升复用源 Beta 的 328/328 评测和串行协作报告，保留原版本与原始记录。晋升门禁验证完整 packs/skills 内容、安装器、CLI、除版本外的 package manifest 和证据文件摘要。任一内容变化将阻止晋升，需要新的评测。参见 tests/reports/release-promotion-0.9.0.json。
 
 不可变的 `v0.5.0` tag 指向原定执行效率候选版本，但该 tag 的 clean-checkout CI 暴露出 build-integrity 测试依赖被忽略的 `dist/` 产物，因此 v0.5.0 没有创建 GitHub Release。该 tag 原样保留，不删除也不移动。v0.5.1 保持相同 Skill 行为，只增加测试侧 clean-build 隔离修复。
 

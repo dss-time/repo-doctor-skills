@@ -4,6 +4,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import {
   compareNames,
   sortedDirectoryEntries,
@@ -29,10 +30,10 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.9.0-beta.2",
-  stableInstallVersion: "0.8.1",
+  projectVersion: "0.9.0",
+  stableInstallVersion: "0.9.0",
   releaseDate: "2026-11-04",
-  releaseChannel: "candidate",
+  releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
   liveModelReport: "tests/reports/live-codex-skill-validation-0.9.0-beta.2.json",
@@ -91,7 +92,8 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.9.0-beta.2.md",
+  releaseDocument: "docs/RELEASE_NOTES_0.9.0.md",
+  promotionRecord: "tests/reports/release-promotion-0.9.0.json",
   coordinationReport: "tests/reports/coordination-release-0.9.0-beta.2.json",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
@@ -563,7 +565,40 @@ function auditLiveModelWaiver(root, contract, errors) {
   }
 }
 
-function auditLiveModelEvidence(root, contract, errors) {
+export function promotionEvidenceVersion(root, contract, errors) {
+  const version = contract.liveModelEvidenceVersion ?? contract.projectVersion;
+  if (!contract.promotionRecord) return contract.projectVersion;
+  const record = readJson(root, contract.promotionRecord, errors);
+  if (!record) return contract.projectVersion;
+  const fail = message => errors.push(`${contract.promotionRecord}: ${message}`);
+  if (record.schema_version !== 1 || contract.releaseChannel !== "stable"
+      || record.target_version !== contract.projectVersion || record.source_version !== version
+      || !version.includes("-") || version.split("-")[0] !== contract.projectVersion
+      || record.source_tag !== `v${version}` || !/^[0-9a-f]{40}$/.test(record.source_commit ?? "")
+      || record.scope !== "equivalent-prerelease-promotion" || !record.authorization) {
+    fail("invalid version-scoped prerelease promotion");
+  }
+  try { assertLiveEvidenceBinding(record.content_binding, liveEvidenceBinding(root)); }
+  catch (error) { fail(error.message); }
+  const manifest = readJson(root, "package.json", errors);
+  if (manifest) {
+    const { version: ignoredVersion, ...runtimeManifest } = manifest;
+    if (JSON.stringify(runtimeManifest) !== JSON.stringify(record.package_manifest_without_version)) fail("package manifest changed beyond its version");
+  }
+  for (const filename of ["bin/repo-doctor-skills.mjs", "scripts/install.mjs"]) {
+    if (!existsSync(path.join(root, filename)) || createHash("sha256").update(readFileSync(path.join(root, filename))).digest("hex") !== record.runtime_files?.[filename]) {
+      fail(`${filename}: published runtime changed`);
+    }
+  }
+  for (const filename of [contract.liveModelReport, contract.coordinationReport].filter(Boolean)) {
+    if (!existsSync(path.join(root, filename)) || createHash("sha256").update(readFileSync(path.join(root, filename))).digest("hex") !== record.evidence_reports?.[filename]) {
+      fail(`${filename}: source evidence changed`);
+    }
+  }
+  return version;
+}
+
+function auditLiveModelEvidence(root, contract, errors, eligibleEvidenceVersion) {
   if (contract.releaseChannel !== "stable" && contract.liveModelStatus !== "PASS") return;
   // Explicit maintainer exception for this version only; future releases still require PASS.
   if (contract.projectVersion === "0.7.2" && contract.liveModelStatus === "UNKNOWN") {
@@ -589,7 +624,7 @@ function auditLiveModelEvidence(root, contract, errors) {
     errors.push(`${contract.liveModelReport}: ${error.message}`);
   }
   const evidenceVersion = contract.liveModelEvidenceVersion ?? contract.projectVersion;
-  if (evidenceVersion !== contract.projectVersion) {
+  if (evidenceVersion !== eligibleEvidenceVersion) {
     errors.push("release contract: Live-model evidence must belong to the current project version");
   }
   if (report.project_version !== evidenceVersion) {
@@ -638,10 +673,11 @@ export function inspectReleaseMetadata(root = scriptRoot, contract = releaseCont
   if (!development) {
     auditReleaseDocument(resolvedRoot, contract, errors);
     auditLiveModelWaiver(resolvedRoot, contract, errors);
-    auditLiveModelEvidence(resolvedRoot, contract, errors);
+    const eligibleEvidenceVersion = promotionEvidenceVersion(resolvedRoot, contract, errors);
+    auditLiveModelEvidence(resolvedRoot, contract, errors, eligibleEvidenceVersion);
     if (contract.coordinationReport) {
       const report = readJson(resolvedRoot, contract.coordinationReport, errors);
-      if (report) errors.push(...inspectCoordinationRelease(resolvedRoot, report, contract.projectVersion));
+      if (report) errors.push(...inspectCoordinationRelease(resolvedRoot, report, eligibleEvidenceVersion));
     }
   }
   return {

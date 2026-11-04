@@ -8,9 +8,9 @@
 Focused Skills for debugging, code review, fixes, and tests.
 
 
-The current version is **0.9.0-beta.2**, a Beta prerelease candidate; the published stable version remains 0.8.1. See [candidate notes](docs/RELEASE_NOTES_0.9.0-beta.2.md) and [validation](docs/RELEASE_VALIDATION_0.9.0-beta.2.md).
+The current version is **0.9.0**, promoted to a stable release from the validated 0.9.0-beta.2. See [release notes](docs/RELEASE_NOTES_0.9.0.md) and [validation](docs/RELEASE_VALIDATION_0.9.0.md).
 
-Fresh current-source real-model validation passed **328/328** on GPT-6.1 Sol low. Installation CI passed on Linux, macOS and Windows with Node 18 and current LTS.
+The equivalent Beta Skill content passed **328/328** on GPT-6.1 Sol low. Installation CI passed on Linux, macOS and Windows with Node 18 and current LTS.
 
 ## Start in 30 seconds
 
@@ -92,23 +92,23 @@ npx repo-doctor-skills install --language en
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. Reinstalling replaces selected same-name Skills in the target directory, including local edits and old resources. Identical content is skipped. The bundled installer supports Node.js 18 and later. CI covers installation on Linux, macOS and Windows using Node 18 and current LTS, with full repository checks on Linux. The external skills CLI has its own Node requirements.
 
 
-The default replacement behavior above applies to this GitHub candidate’s bundled installer. The published npm stable package is 0.8.1 and follows that version’s installation rules.
+The stable npm installer replaces selected same-name Skill directories by default.
 
-## v0.8.1 stable release
+## v0.9.0 stable release
 
-The source contains 41 Skills (28 in Repo Doctor) and 38 ChatGPT ZIPs. Fresh GPT-6.1 Sol low validation passed **328/328**: 205 core, 44 workflow steps, 65 mode/verdict and 14 permission cases. [Release notes](docs/RELEASE_NOTES_0.8.1.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
+The source contains 41 Skills (28 in Repo Doctor) and 38 ChatGPT ZIPs. The source Beta GPT-6.1 Sol low validation passed **328/328**: 205 core, 44 workflow steps, 65 mode/verdict and 14 permission cases. [Release notes](docs/RELEASE_NOTES_0.9.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-Pin the GitHub plugin to `v0.8.1`:
+Pin the GitHub plugin to `v0.9.0`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.9.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 Install the exact npm version (seven recommended Skills, or all 41):
 
 ```bash
-npx repo-doctor-skills@0.8.1 install --agent codex
-npx repo-doctor-skills@0.8.1 install --preset full --agent codex
+npx repo-doctor-skills@0.9.0 install --agent codex
+npx repo-doctor-skills@0.9.0 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.

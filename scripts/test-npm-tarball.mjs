@@ -57,7 +57,7 @@ try {
   const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
-  assert.equal(packReport[0].version, "0.9.0-beta.2");
+  assert.equal(packReport[0].version, "0.9.0");
   const tarball = path.join(tempRoot, packReport[0].filename);
   assert.ok(existsSync(tarball));
 
@@ -90,7 +90,7 @@ try {
 
   const version = runNpx(tarball, ["--version"]);
   assert.equal(version.status, 0, version.stderr || version.stdout);
-  assert.equal(version.stdout.trim(), "0.9.0-beta.2");
+  assert.equal(version.stdout.trim(), "0.9.0");
 
   const help = runNpx(tarball, ["--help"]);
   assert.equal(help.status, 0, help.stderr || help.stdout);

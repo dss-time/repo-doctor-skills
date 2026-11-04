@@ -6,6 +6,7 @@ import {
   readFileSync,
   rmSync,
   writeFileSync,
+  cpSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -13,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import {
   inspectReleaseMetadata,
   releaseContract,
+  promotionEvidenceVersion,
 } from "./release-metadata.mjs";
 import { liveEvidenceBinding, assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
 
@@ -246,12 +248,54 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.9.0-beta.2");
-assert.equal(releaseContract.releaseChannel, "candidate");
+assert.equal(releaseContract.projectVersion, "0.9.0");
+assert.equal(releaseContract.releaseChannel, "stable");
 assert.equal(releaseContract.liveModelStatus, "PASS");
 assert.equal(releaseContract.liveModelWaiver, null);
 assert.equal(releaseContract.expectedLiveModelCases, 328);
-assert.equal(releaseContract.liveModelEvidenceVersion, releaseContract.projectVersion);
+assert.equal(releaseContract.liveModelEvidenceVersion, "0.9.0-beta.2");
+
+const promotionRoot = mkdtempSync(path.join(tmpdir(), "release-promotion-"));
+try {
+  for (const name of ["packs", "skills", "package.json", "bin/repo-doctor-skills.mjs", "scripts/install.mjs",
+    releaseContract.promotionRecord, releaseContract.liveModelReport, releaseContract.coordinationReport]) {
+    const destination = path.join(promotionRoot, name);
+    mkdirSync(path.dirname(destination), { recursive: true });
+    cpSync(path.join(repositoryRoot, name), destination, { recursive: true });
+  }
+  const checkPromotion = () => {
+    const errors = [];
+    promotionEvidenceVersion(promotionRoot, releaseContract, errors);
+    return errors;
+  };
+  assert.deepEqual(checkPromotion(), [], "equivalent promotion accepts original prerelease evidence");
+  for (const filename of ["scripts/install.mjs", "bin/repo-doctor-skills.mjs", releaseContract.liveModelReport,
+    "packs/engineering/repo-doctor/skills/repo-onboarding/instructions.en.md", "skills/repo-onboarding/SKILL.md"]) {
+    const absolute = path.join(promotionRoot, filename);
+    const original = readFileSync(absolute);
+    writeFileSync(absolute, Buffer.concat([original, Buffer.from("\nchanged\n")]));
+    assert.ok(checkPromotion().length > 0, `${filename} changes must block promotion`);
+    writeFileSync(absolute, original);
+  }
+  const packagePath = path.join(promotionRoot, "package.json");
+  const originalPackage = readFileSync(packagePath);
+  const changedPackage = JSON.parse(originalPackage);
+  changedPackage.engines.node = ">=24";
+  writeFileSync(packagePath, JSON.stringify(changedPackage));
+  assert.ok(checkPromotion().some(error => error.includes("manifest changed")));
+  writeFileSync(packagePath, originalPackage);
+  const recordPath = path.join(promotionRoot, releaseContract.promotionRecord);
+  const originalRecord = readFileSync(recordPath);
+  const invalidRecord = JSON.parse(originalRecord);
+  invalidRecord.target_version = "1.0.0";
+  writeFileSync(recordPath, JSON.stringify(invalidRecord));
+  assert.ok(checkPromotion().some(error => error.includes("invalid version-scoped")));
+  writeFileSync(recordPath, originalRecord);
+  rmSync(recordPath);
+  assert.ok(checkPromotion().length > 0, "promotion requires its explicit record");
+} finally {
+  rmSync(promotionRoot, { recursive: true, force: true });
+}
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {

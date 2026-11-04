@@ -5,9 +5,9 @@
 用职责明确的 Skill 排查 Bug、审查代码、完成修复和测试。
 
 
-当前版本为 **0.9.0-beta.2**，属于 Beta 预发布候选；已发布稳定版仍为 0.8.1。查看[候选说明](docs/RELEASE_NOTES_0.9.0-beta.2.zh-CN.md)和[验证记录](docs/RELEASE_VALIDATION_0.9.0-beta.2.md)。
+当前版本为 **0.9.0**，由已验证的 0.9.0-beta.2 晋升为稳定版。查看[发布说明](docs/RELEASE_NOTES_0.9.0.zh-CN.md)和[验证记录](docs/RELEASE_VALIDATION_0.9.0.md)。
 
-绑定当前源码的真实模型评测 **328/328 全部通过**，使用 GPT-6.1 Sol low。Linux、macOS、Windows 在 Node 18 和当前 LTS 下的安装 CI 全部通过。
+等价 Beta 内容的真实模型评测 **328/328 全部通过**，使用 GPT-6.1 Sol low。Linux、macOS、Windows 在 Node 18 和当前 LTS 下的安装 CI 全部通过。
 
 ## 30 秒开始
 
@@ -89,23 +89,23 @@ npx repo-doctor-skills install --language zh-CN
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。重复安装会替换目标目录中选中的同名 Skill，包括本地修改和旧资源；内容相同则跳过。自带安装器支持 Node.js 18 及以上版本。CI 使用 Node 18 和当前 LTS 检查 Linux、macOS、Windows 安装，完整仓库检查运行于 Linux。外部 skills CLI 的 Node 要求由其自身版本决定。
 
 
-上述默认覆盖行为适用于当前 GitHub 候选源码中的安装器。npm 已发布稳定包为 0.8.1，安装规则以该版本为准。
+稳定版 npm 安装器默认原位替换选中的同名 Skill 目录。
 
-## v0.8.1 正式版
+## v0.9.0 正式版
 
-源码包含 41 个 Skill（Repo Doctor 28 个）和 38 个 ChatGPT ZIP。新的 GPT-6.1 Sol low 评测 **328/328 全部通过**：205 项核心、44 个工作流步骤、65 项模式/判定及 14 项权限用例。[发布说明](docs/RELEASE_NOTES_0.8.1.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
+源码包含 41 个 Skill（Repo Doctor 28 个）和 38 个 ChatGPT ZIP。源 Beta 的 GPT-6.1 Sol low 评测 **328/328 全部通过**：205 项核心、44 个工作流步骤、65 项模式/判定及 14 项权限用例。[发布说明](docs/RELEASE_NOTES_0.9.0.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
 
-将 GitHub 插件固定到 `v0.8.1`：
+将 GitHub 插件固定到 `v0.9.0`：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.8.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.9.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 安装指定 npm 版本（默认 7 个常用 Skill，也可安装全部 41 个）：
 
 ```bash
-npx repo-doctor-skills@0.8.1 install --agent codex
-npx repo-doctor-skills@0.8.1 install --preset full --agent codex
+npx repo-doctor-skills@0.9.0 install --agent codex
+npx repo-doctor-skills@0.9.0 install --preset full --agent codex
 ```
 
 同一 Agent 选择一种安装方式。官方 skills CLI 从公开 GitHub 源码安装。

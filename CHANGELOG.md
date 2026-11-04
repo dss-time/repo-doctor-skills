@@ -8,6 +8,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-11-04
+
+### Added
+
+- Version-scoped equivalent-promotion evidence binding source Beta reports, complete Skill content, installer/CLI bytes and package runtime metadata.
+
+### Changed
+
+- Promote the validated 0.9.0-beta.2 distribution to stable 0.9.0.
+
+### Fixed
+
+- Preserve the Beta installer replacement, permissions, workflow and Windows compatibility fixes in stable distribution.
+
+### Security
+
+- Reject promotion when source content, published runtime, package metadata or original evidence changes.
+
+### Documentation
+
+- Update stable npm/plugin installation examples and retain the source Beta report versions and known P2 limitation.
+
 ## [0.9.0-beta.2] - 2026-11-04
 
 ### Added
@@ -560,7 +582,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.2...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.2...v0.9.0
 [0.9.0-beta.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...v0.9.0-beta.2
 [0.9.0-beta.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...v0.9.0-beta.1
 [0.8.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.0...v0.8.1
