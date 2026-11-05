@@ -30,15 +30,15 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.9.0",
-  stableInstallVersion: "0.9.0",
-  releaseDate: "2026-11-04",
+  projectVersion: "0.10.0",
+  stableInstallVersion: "0.10.0",
+  releaseDate: "2026-11-05",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
-  liveModelReport: "tests/reports/live-codex-skill-validation-0.9.0-beta.2.json",
-  liveModelEvidenceVersion: "0.9.0-beta.2",
-  expectedLiveModelCases: 328,
+  liveModelReport: "tests/reports/live-codex-skill-validation-0.10.0.json",
+  liveModelEvidenceVersion: "0.10.0",
+  expectedLiveModelCases: 284,
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
   historicalTag: "v0.0.1",
@@ -46,30 +46,23 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.11.1",
-      activeSkillCount: 28,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.11.1" }),
+      version: "0.12.0",
+      activeSkillCount: 26,
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.12.0" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
       path: "productivity/productivity-toolkit",
-      version: "0.1.0",
-      activeSkillCount: 8,
-      plugin: Object.freeze({ name: "productivity-toolkit", version: "0.1.0" }),
+      version: "0.2.0",
+      activeSkillCount: 5,
+      plugin: Object.freeze({ name: "productivity-toolkit", version: "0.2.0" }),
     }),
     Object.freeze({
       id: "engineering.skill-maintainer",
       path: "engineering/skill-maintainer",
-      version: "0.2.0",
+      version: "0.2.1",
       activeSkillCount: 2,
-      plugin: Object.freeze({ name: "skill-maintainer", version: "0.2.0" }),
-    }),
-    Object.freeze({
-      id: "office.document-data-doctor",
-      path: "office/document-data-doctor",
-      version: "0.1.1",
-      activeSkillCount: 3,
-      plugin: null,
+      plugin: Object.freeze({ name: "skill-maintainer", version: "0.2.1" }),
     }),
   ]),
   skillVersionFloor: "0.1.0",
@@ -92,9 +85,9 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.9.0.md",
-  promotionRecord: "tests/reports/release-promotion-0.9.0.json",
-  coordinationReport: "tests/reports/coordination-release-0.9.0-beta.2.json",
+  releaseDocument: "docs/RELEASE_NOTES_0.10.0.md",
+  promotionRecord: null,
+  coordinationReport: "tests/reports/coordination-release-0.10.0.json",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 
@@ -650,7 +643,9 @@ export function inspectReleaseMetadata(root = scriptRoot, contract = releaseCont
   const historicalContract = contract;
   if (development) {
     const project = readJson(resolvedRoot, "package.json", errors);
-    const packs = contract.packs.map((pack) => {
+    const packs = contract.packs.filter((pack) =>
+      existsSync(path.join(resolvedRoot, "packs", pack.path, "pack.yaml")),
+    ).map((pack) => {
       const metadata = readYaml(resolvedRoot, `packs/${pack.path}/pack.yaml`, errors);
       const version = metadata?.version ?? pack.version;
       if (isSemver(version) && compareSemver(version, pack.version) < 0) {

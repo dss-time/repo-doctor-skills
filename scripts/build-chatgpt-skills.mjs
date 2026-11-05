@@ -49,19 +49,14 @@ const interfaces = {
     defaultPrompt: "使用 $repo-doctor-router 推荐下一 Skill 或工作流，但不要执行推荐。",
   },
   "requirements-clarification": {
-    displayName: "Requirements Clarification（需求决策澄清）",
-    shortDescription: "在规格化前逐项关闭会实质改变实现的需求决策",
-    defaultPrompt: "使用 $requirements-clarification 澄清关键需求决策，不要实施代码。",
+    displayName: "Requirements Clarification and Specification（需求澄清与规格化）",
+    shortDescription: "澄清重大需求决策，或将已确认需求整理为可测试规格",
+    defaultPrompt: "使用 $requirements-clarification 选择 clarification 或 specification 阶段，复用已确认决策。",
   },
   "decision-prototype": {
     displayName: "Decision Prototype（决策原型验证）",
     shortDescription: "用最小可丢弃逻辑或 UI 原型验证一个设计决策",
     defaultPrompt: "使用 $decision-prototype 以非生产原型验证一个逻辑或 UI 决策，不把原型当作正式实现。",
-  },
-  "spec-to-work-items": {
-    displayName: "Spec to Work Items（规格拆分工作项）",
-    shortDescription: "把已确认规格拆成可独立验证且可安全并行的垂直工作项",
-    defaultPrompt: "使用 $spec-to-work-items 拆分已确认规格，不创建外部 Issue。",
   },
   "session-handoff": {
     displayName: "Session Handoff（会话交接）",
@@ -77,21 +72,6 @@ const interfaces = {
     displayName: "Research Brief（研究简报）",
     shortDescription: "围绕研究问题建立来源台账、交叉验证并输出简报",
     defaultPrompt: "使用 $research-brief 有来源地研究这个问题；无法联网时明确降级。",
-  },
-  "spreadsheet-data-cleaning": {
-    displayName: "Spreadsheet Data Cleaning（表格数据清洗）",
-    shortDescription: "画像并清洗表格，另存结果并提供前后统计和审计日志",
-    defaultPrompt: "使用 $spreadsheet-data-cleaning 清洗这份表格，保留原文件并输出审计记录。",
-  },
-  "document-review": {
-    displayName: "Document Review（文档审查）",
-    shortDescription: "审查文档结构、逻辑、证据、语言和格式并分级问题",
-    defaultPrompt: "使用 $document-review 审查这份文档，区分必须修改、建议修改和可选润色。",
-  },
-  "pdf-review": {
-    displayName: "PDF Review（PDF 审查）",
-    shortDescription: "按真实提取、页码、OCR 和渲染能力执行 PDF 专项审查",
-    defaultPrompt: "使用 $pdf-review 审查这份 PDF，不要虚构页码、OCR 或视觉验证。",
   },
   "meeting-notes-to-actions": {
     displayName: "Meeting Notes to Actions（会议纪要转行动项）",
@@ -173,11 +153,6 @@ const interfaces = {
     shortDescription: "对具体候选版本执行有证据的只读发布门禁检查",
     defaultPrompt: "使用 $release-readiness-check 检查这个候选版本并给出发布结论，不执行发布。",
   },
-  "requirements-to-spec": {
-    displayName: "Requirements to Spec（需求澄清与规格化）",
-    shortDescription: "把模糊需求整理为可实施、可验证的规格与验收标准",
-    defaultPrompt: "使用 $requirements-to-spec 把这项需求整理为可验证规格，不要修改代码。",
-  },
   "bug-root-cause-analysis": {
     displayName: "Bug Root Cause Analysis（Bug 根因分析）",
     shortDescription: "复现具体故障并建立从输入到症状的根因证据链",
@@ -185,8 +160,8 @@ const interfaces = {
   },
   "safe-change-plan": {
     displayName: "Safe Change Plan（安全变更计划）",
-    shortDescription: "把已确认分析拆成原子、可验证、可回滚的实施计划",
-    defaultPrompt: "使用 $safe-change-plan 根据已确认分析制定安全变更计划，不要执行计划。",
+    shortDescription: "将已确认范围拆成原子步骤或可独立验证的交付工作项",
+    defaultPrompt: "使用 $safe-change-plan 选择 atomic-steps 或 work-items 粒度制定安全变更计划。",
   },
   "test-gap-analysis": {
     displayName: "Test Gap Analysis（测试缺口分析）",

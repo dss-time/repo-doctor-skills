@@ -23,3 +23,7 @@ Synchronize affected documentation with confirmed implementation, configuration,
 7. Run available repository-provided documentation, link, formatting, or example checks only after the command preflight above and within user authorization. Prefer read-only checks; write-mode formatters require authorization for every affected path. Do not invent missing commands or report blocked/unrun checks as passed.
 8. Check links, code fences, versions, terminology, and cross-document consistency manually when no tool exists.
 9. Report updated files, evidence, validation, intentionally unchanged files, blockers, and documentation that may still be stale.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

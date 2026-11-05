@@ -21,3 +21,9 @@ Analyze coverage gaps for a requirement, root cause, existing test suite, or Git
 7. Prioritize gaps by failure impact, likelihood, change risk, observability, and test value rather than coverage percentage alone.
 8. Recommend focused test cases and verified commands without writing test code.
 9. State evidence limits and the inputs needed to resolve unknown coverage.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before a separate test-gap pass, map acceptance criteria to current tests and valid execution evidence. Reuse sufficient coverage evidence; request a separate analysis or test change only for missing, stale or unknown coverage. When verification is deferred, retain the pending coverage check instead of reporting coverage as proven.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

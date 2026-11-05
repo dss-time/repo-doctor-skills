@@ -1,26 +1,30 @@
 id: repo.requirements-clarification
 name:
-  en: Requirements Clarification
-  zh-CN: 需求决策澄清
+  en: Requirements Clarification and Specification
+  zh-CN: 需求澄清与规格化
 category: engineering
 visibility: public
-version: 0.2.2
+version: 0.3.1
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Close consequential product, behavior, data, permission, compatibility, and acceptance decisions through an evidence-first decision-tree interview. Use for a vague or disputed request before specification; choose fast, standard, or documented mode. Do not use when a testable specification already exists or to implement code. Automatic invocation is appropriate only when material ambiguity is evident; durable terminology or ADR edits require explicit write authorization.
-  zh-CN: 通过证据优先的问题树访谈，关闭会影响产品、行为、数据、权限、兼容性和验收的重要决策。用于规格化前仍模糊或存在争议的需求，可选 fast、standard 或 documented 模式。已有可测试规格或需要实施代码时不使用；仅在明显存在重大歧义时适合自动调用，持久术语或 ADR 修改必须获得明确写权限。
+  en: Clarify material product, behavior, data, permission, compatibility, migration, and acceptance decisions or turn settled requirements into a testable specification. Select clarification or specification phase from evidence and the requested outcome, skipping interviews for settled decisions. Use fast, standard, or documented output. Specification stays read-only and optional documented clarification edits require path-scoped authorization. Do not implement code or rework a complete specification without a requested change.
+  zh-CN: 澄清产品、行为、数据、权限、兼容、迁移和验收的重要决策，或把已确认需求整理成可测试规格。依据证据和目标选择 clarification 或 specification 阶段，已确认决策跳过访谈。可选 fast、standard、documented 输出。规格阶段保持只读，documented 澄清阶段可选文档修改需要路径级授权。不实施代码，也不在没有修订需求时重做完整规格。
 triggers:
   en:
+    - turn settled decisions into a testable specification
+    - organize the approved discussion into requirements
     - clarify the unresolved requirements decisions
     - identify questions before writing the specification
     - close the important product and compatibility choices
     - interview me about this vague feature
     - requirements clarification
   zh-CN:
+    - 把已确认需求整理成可测试规格
+    - 将定稿讨论整理为需求文档
     - 澄清尚未解决的需求决策
     - 写规格前找出关键问题
     - 关闭重要产品和兼容性选择

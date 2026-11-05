@@ -40,9 +40,9 @@ Use one Skill directly when the problem is clear. The Router is only the fallbac
 ## Turn requirements into a specification
 
 - **Problem:** Decisions are settled, but a testable implementation specification is missing.
-- **Skill:** `$requirements-to-spec`
+- **Skill:** `$requirements-clarification`
 - **Why:** Converts confirmed requirements into a bounded, verifiable specification.
-- **Shortest example:** `$requirements-to-spec — Turn these settled requirements into acceptance criteria and constraints.`
+- **Shortest example:** `$requirements-clarification — Turn these settled requirements into acceptance criteria and constraints.`
 
 ## Validate an approach
 

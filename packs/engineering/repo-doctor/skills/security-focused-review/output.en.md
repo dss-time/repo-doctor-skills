@@ -5,3 +5,5 @@
 4. Repair direction and safe validation
 5. Positive controls observed
 6. Unknowns and excluded attack surfaces
+
+7. Selected language/runtime profiles, excluded checks and regression expectations

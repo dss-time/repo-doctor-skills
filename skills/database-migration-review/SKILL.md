@@ -41,6 +41,10 @@ Review one concrete migration using repository evidence. Do not execute it or co
 6. Recommend backup, dry run, sampling, checksums or invariants, canary/gray rollout, observability, stop conditions, and rollback.
 7. Report evidence, severity, impact, confidence, validation, and unknowns without executing or editing.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 1. Scope, engine, and rollout phases
 2. Evidence
@@ -87,6 +91,10 @@ Review one concrete migration using repository evidence. Do not execute it or co
 5. 验证 expand/migrate/contract 顺序及新旧应用兼容性。
 6. 建议备份、dry run、抽样、校验和或不变量、灰度、可观察性、停止条件和回滚。
 7. 不执行或修改，报告证据、严重度、影响、置信度、验证和未知项。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 1. 范围、引擎与发布阶段

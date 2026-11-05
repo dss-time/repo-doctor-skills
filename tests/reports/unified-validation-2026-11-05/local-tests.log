@@ -1,0 +1,225 @@
+
+> repo-doctor-skills@0.9.0 test
+> npm run test:core && npm run test:ux && npm run test:npm
+
+
+> repo-doctor-skills@0.9.0 test:core
+> npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:skills-sh && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor
+
+
+> repo-doctor-skills@0.9.0 test:ci
+> node scripts/test-ci-workflow.mjs
+
+CI contract test passed for complete ordered, read-only quality gates.
+
+> repo-doctor-skills@0.9.0 test:activation
+> node scripts/test-skill-activation.mjs
+
+Activation contract tests passed for 267 cases across 33 required skills.
+
+> repo-doctor-skills@0.9.0 test:performance
+> node scripts/test-performance-contracts.mjs
+
+Performance contracts passed for 20 simple and 10 elevated scenarios across 26 Repo Doctor Skills.
+
+> repo-doctor-skills@0.9.0 test:workflow
+> node scripts/test-repo-doctor-workflows.mjs && node scripts/test-workflow-registry.mjs && node scripts/test-golden-workflows.mjs && npm run test:coordination
+
+Repo Doctor workflow contract tests passed for concise routing, decision-tree clarification, prototypes, architecture analysis, handoff, signal-first RCA, three-axis review, test cycles, and Skill quality.
+Workflow registry mutation tests passed.
+Golden Workflow tests passed for feature delivery, bug repair, and session handoff.
+
+> repo-doctor-skills@0.9.0 test:coordination
+> node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs
+
+✔ A complete scoped candidate contract can pass without fabricating a full-corpus PASS (8.48475ms)
+✔ Another version or changed source cannot reuse a candidate report (6.667542ms)
+✔ Missing stages, sensitivity or independent verdict blocks the candidate (6.428375ms)
+✔ Actual forbidden Shell receipts fail even if a report claims no violation (6.162833ms)
+✔ A different Skill or changed installed content cannot stand in for the required stage (6.106708ms)
+✔ Missing actual turns and unexpected file scope cannot inherit a PASS label (5.656958ms)
+✔ Non-Shell file reads can prove a read-only Skill was actually loaded (0.797875ms)
+✔ A model claim or failed read is not a Skill-load receipt (0.113417ms)
+✔ Shell reads require both a successful exit and actual file content (0.109084ms)
+✔ Node TAP and spec reporters preserve the observed count; unknown output does not pass (0.128375ms)
+✔ Failed service turns remain incomplete and cannot fabricate usage (0.067125ms)
+✔ A functional result cannot conceal Shell execution forbidden by the active Skill (0.074417ms)
+✔ Independent review requires all axes and rejects blocking findings or unstructured reassurance (0.679417ms)
+✔ A: one documentation edit, no Router, interview, tickets or full regression (8.533625ms)
+✔ B: diagnosed local fix uses one Skill and actual focused regression (67.807333ms)
+✔ C: unknown root cause cannot complete diagnosis without an observed failure signal (175.006ms)
+✔ D: cross-module delivery retains specification, impact, implementation, tests and independent review (133.308917ms)
+✔ E: a fast security/database request cannot bypass specialist evidence or write grants (111.989125ms)
+✔ F: interrupted writes never replay; restored context cannot restore authority (4.846708ms)
+✔ F: completed writes with stale evidence require reconciliation, not blind retry (3.766333ms)
+✔ G: review failure reopens fix and review, preserving unaffected test evidence (138.785375ms)
+✔ Unknown applicability does not skip; required false condition does not advance (7.722625ms)
+✔ Added/deleted files, environment changes and unknown dependencies invalidate precisely (35.116166ms)
+✔ Context tampering and registry drift cannot reuse evidence (3.318166ms)
+✔ Skill restrictions and scoped grants are intersected, not unioned (5.609834ms)
+✔ Review completion rejects implementation self-evaluation (3.518083ms)
+✔ Conditions can reopen; unsupported host falls back to manual handoff (2.90525ms)
+✔ Dependency traversal and symlink escape are rejected (3.164625ms)
+✔ New risks and stop conditions interrupt an otherwise valid flow (40.494084ms)
+✔ Persisted gate approval never replaces current authorization (26.9905ms)
+✔ A failed or unknown test is not reusable; new relevant coverage triggers investigation (32.590792ms)
+✔ Permission preflight rejects symlink targets even with a matching path grant (2.972167ms)
+✔ Changed goal/acceptance cannot inherit old stage or acceptance claims (4.376833ms)
+✔ Review basis binds actual files, acceptance and baseline; context matches its schema (3.914834ms)
+✔ Production completion cannot substitute self-reported acceptance for actual verification (3.620959ms)
+✔ Distribution ships the same standalone coordinator without a pre-existing dist directory (925.914708ms)
+✔ An explicit release-preparation request cannot skip its release gate (5.752416ms)
+✔ Audited retry, interrupted skip, stale checkpoint, scope and evidence regressions remain closed (10.386292ms)
+✔ Read-only conditional modes need no writes, while narrower mode rules remain mandatory (2.205292ms)
+✔ Recovery approval cannot be reused for another import of the same pending checkpoint (2.797292ms)
+✔ Failed-write reconciliation must name the current attempt and scope (3.005958ms)
+✔ Historical failures become stale; unobserved results require investigation (34.672166ms)
+✔ Raw imported JSON cannot bypass the recovery boundary (2.016375ms)
+✔ Stale shell-only results cannot replay a potentially effectful operation (2.792042ms)
+✔ Independent review evidence must itself match the current stage and request (2.977875ms)
+✔ A reconciled attempt can reopen for a newly authorized scope without reusing old results (2.913708ms)
+✔ Portable context cannot retain injected host authority fields (2.26175ms)
+✔ Optional applicability toggles retain completed writes instead of making them pending again (119.298375ms)
+✔ Reused effectful results require exact reconciliation before reopen (2.516584ms)
+✔ Replacement receipts cannot clear reconciliation of a stale completed write (3.379542ms)
+✔ A false optional condition cannot hide stale completed effects or revoked grants (73.706458ms)
+✔ Unknown, missing and stale stop evidence require investigation (2.378958ms)
+✔ Shell-only risk operations cannot bypass specialist pre-operation checks (1.99325ms)
+✔ A current failed command cannot be masked by a valid pass without investigated resolution (64.423958ms)
+✔ An investigated failure cannot be cleared using a pass predating the failure (31.2955ms)
+✔ Unresolved failed verification blocks dependent execution until an explicit repair path exists (31.594333ms)
+✔ Missing environment information cannot erase an attested failure before execution or delivery (9.347125ms)
+✔ Completion rejects a previous execution attempt while explicit reuse remains available (5.145167ms)
+✔ Demonstrated dependency or environment changes take precedence over unknown inputs (29.900542ms)
+✔ Intent changes cannot erase an attested test failure before execution or delivery (13.384042ms)
+✔ Acceptance and risk claims cannot cross an authorized operation scope change (4.169917ms)
+✔ Deferred verification blocks command dispatch while independent edits remain available (3.477208ms)
+ℹ tests 62
+ℹ suites 0
+ℹ pass 62
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2292.556125
+{
+  "scope": "coordination core independently checked against requirements and actual Skill contracts",
+  "result": "PASS",
+  "findings": [
+    {
+      "id": "failed-write-retry",
+      "severity": "P1",
+      "expected": "blocked",
+      "observed": "blocked",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:300",
+      "regression": "validation_failed writes are omitted from reconciliation checks"
+    },
+    {
+      "id": "interrupted-optional-skip",
+      "severity": "P1",
+      "expected": "blocked",
+      "observed": "blocked",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:185",
+      "regression": "optional condition is handled before interrupted/running state reconciliation"
+    },
+    {
+      "id": "read-only-conditional-skill",
+      "severity": "P1",
+      "expected": "execute",
+      "observed": "execute",
+      "detail": "applicable_stage",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:94",
+      "regression": "write_files metadata is treated as mandatory write permission for all modes"
+    },
+    {
+      "id": "old-pending-checkpoint-replay",
+      "severity": "P1",
+      "expected": "blocked",
+      "observed": "blocked",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:309",
+      "regression": "restore cannot detect operations completed after a pending checkpoint"
+    },
+    {
+      "id": "completed-scope-change",
+      "severity": "P1",
+      "expected": "permission_blocked or evidence_insufficient",
+      "observed": "evidence_insufficient",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:202",
+      "regression": "completed results do not compare their request binding with the current requested operation"
+    },
+    {
+      "id": "unknown-result-as-failure",
+      "severity": "P2",
+      "expected": "unknown / investigate",
+      "observed": "unknown / investigate",
+      "passed": true,
+      "original_location": "workflow-coordination.mjs:51",
+      "regression": "any result except pass is classified as observed_failure before validity checks"
+    }
+  ]
+}
+
+> repo-doctor-skills@0.9.0 test:maintainer
+> node scripts/test-maintainer-tools.mjs
+
+Maintainer tool tests passed for quality, creation, YAML parsing, Schema, and risk/permission boundary cases.
+
+> repo-doctor-skills@0.9.0 test:build-integrity
+> node scripts/test-build-integrity.mjs
+
+Build integrity tests passed for descriptions, 33 plugin Skills, manifest ordering, filesystem perturbation, and ZIP determinism.
+
+> repo-doctor-skills@0.9.0 test:skills-sh
+> node scripts/test-skills-sh-compatibility.mjs
+
+Expected active Skills = 33
+Distributable Skills = 33
+Missing = 0
+Extra = 0
+Duplicates = 0
+Fixtures = 0
+Parse errors = 0
+
+> repo-doctor-skills@0.9.0 test:plugin-sync
+> node scripts/test-repo-doctor-sync.mjs
+
+Repo Doctor sync tests passed for 26 skills, RCA permission/safety and equivalent-risk contracts, original-Skill coverage, drift detection, pruning, and idempotence.
+
+> repo-doctor-skills@0.9.0 test:docs
+> node scripts/test-user-docs.mjs
+
+User documentation catalog tests passed (3 Packs, 33 Skills, 33 plugin/ZIP distributions).
+
+> repo-doctor-skills@0.9.0 test:release
+> node scripts/test-release-metadata.mjs && node scripts/test-verify-release-assets.mjs
+
+Release metadata tests passed for version contracts, lifecycle rules, stable authorization, templates, deprecations, CHANGELOG, and release documentation.
+Remote Release asset verifier tests passed.
+
+> repo-doctor-skills@0.9.0 test:eval
+> node scripts/test-eval-tools.mjs && node scripts/test-security-eval.mjs
+
+Offline live-model evaluation tools passed without network, API keys, uploads, or fabricated model results.
+PASS security fixtures and scorer controls; C fixtures are statically evaluated, not executed.
+
+> repo-doctor-skills@0.9.0 test:doctor
+> node scripts/test-doctor.mjs
+
+Doctor tests passed for read-only inspection and JSON output.
+
+> repo-doctor-skills@0.9.0 test:ux
+> node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs
+
+New-user UX tests passed: bilingual entry flow, 7 Recommended Skills, 33 active Skills.
+Installer tests passed: Recommended 7/7, Full 33/33, explicit Codex target, ambiguous-target safety, and cleanup.
+
+> repo-doctor-skills@0.9.0 test:npm
+> node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs
+
+Public npm package contract test passed for repo-doctor-skills@0.9.0.
+npm tarball tests passed: minimal contents, isolated CLI, Recommended 7/7, Full 33/33, options, safety, and cleanup.

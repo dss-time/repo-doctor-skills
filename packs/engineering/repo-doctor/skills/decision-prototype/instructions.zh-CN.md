@@ -21,7 +21,7 @@
 - 使用内存状态、公开安全的合成数据和本地 stub。问题确实涉及持久化或外部依赖时，停止并要求单独批准非生产环境和数据边界。
 - 未经明确授权不安装依赖，优先复用现有运行时与组件。
 - 不自动删除原型文件。只建议删除、作为证据保留或正式重写；删除必须另行明确授权。
-- 进入生产工作时，未闭合决策先澄清，缺少规格交给 `requirements-to-spec`，缺少实施顺序交给 `safe-change-plan`，已确认功能交给 `feature-implementation`，局部修复交给 `safe-fix-implementation`。复用已有生产授权，仅对缺失范围询问。
+- 进入生产工作时，未闭合决策先澄清，缺少规格交给 `requirements-clarification`，缺少实施顺序交给 `safe-change-plan`，已确认功能交给 `feature-implementation`，局部修复交给 `safe-fix-implementation`。复用已有生产授权，仅对缺失范围询问。
 
 ## 工作流程
 
@@ -39,3 +39,7 @@
 ## 停止条件
 
 缺少写权限、位置不安全、运行时不可用、需要生产访问、需要真实凭据/数据、需要未授权安装依赖、需要破坏性清理，或问题过宽无法由最小原型回答时，返回 `Blocked`。
+
+读取[执行边界](../../references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](../../references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](../../references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。

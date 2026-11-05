@@ -50,6 +50,8 @@ Use this skill for a broad repository diagnosis. Do not start by rewriting code.
 5. Prioritize by real user or release risk.
 6. Assess every review dimension; report findings and evidence using the output contract, marking any unassessed dimension.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
 # Output Format
 
 Default to three compact parts:
@@ -104,6 +106,8 @@ Do not repeat conclusions or imply unchecked coverage. If no supported issue is 
 4. 检查测试覆盖信号和发布命令。
 5. 按真实用户风险或发布风险排序。
 6. 逐项评估检查维度，按输出契约报告问题和证据，注明未评估维度。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
 
 # 输出格式
 

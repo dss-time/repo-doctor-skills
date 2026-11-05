@@ -1,4 +1,0 @@
-interface:
-  display_name: "Spreadsheet Data Cleaning（表格数据清洗）"
-  short_description: "画像并清洗表格，另存结果并提供前后统计和审计日志"
-  default_prompt: "使用 $spreadsheet-data-cleaning 清洗这份表格，保留原文件并输出审计记录。"

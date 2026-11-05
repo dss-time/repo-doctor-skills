@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-04T07:41:22.796Z",
-  "project_version": "0.9.0",
+  "generated_at": "2026-11-05T07:42:46.858Z",
+  "project_version": "0.10.0",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,21 +8,19 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.11.1",
+      "version": "0.12.0",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
         "repo-doctor-router",
         "repo-onboarding",
         "requirements-clarification",
-        "requirements-to-spec",
-        "spec-to-work-items",
+        "safe-change-plan",
         "decision-prototype",
         "bug-root-cause-analysis",
         "project-health-check",
         "safe-code-review",
         "change-impact-analysis",
-        "safe-change-plan",
         "test-gap-analysis",
         "safe-test-implementation",
         "ci-failure-diagnosis",
@@ -48,7 +46,7 @@
         "en": "Skill Maintainer",
         "zh-CN": "Skill 维护工具"
       },
-      "version": "0.2.0",
+      "version": "0.2.1",
       "status": "beta",
       "path": "packs/engineering/skill-maintainer",
       "skills": [
@@ -57,35 +55,17 @@
       ]
     },
     {
-      "id": "office.document-data-doctor",
-      "name": {
-        "en": "Document Data Doctor",
-        "zh-CN": "文档数据医生"
-      },
-      "version": "0.1.1",
-      "status": "beta",
-      "path": "packs/office/document-data-doctor",
-      "skills": [
-        "pdf-review-basic",
-        "word-document-review-basic",
-        "excel-data-quality-check-basic"
-      ]
-    },
-    {
       "id": "productivity.productivity-toolkit",
       "name": {
         "en": "Productivity Toolkit",
         "zh-CN": "通用办公与研究生产力工具包"
       },
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "beta",
       "path": "packs/productivity/productivity-toolkit",
       "skills": [
         "report-writer",
         "research-brief",
-        "spreadsheet-data-cleaning",
-        "document-review",
-        "pdf-review",
         "meeting-notes-to-actions",
         "presentation-outline",
         "content-consistency-check"
@@ -98,7 +78,7 @@
       "id": "repo.repo-doctor-router",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-doctor-router",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "status": "beta",
       "name": {
         "en": "Repo Doctor Router",
@@ -136,7 +116,7 @@
       "id": "repo.repo-onboarding",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/repo-onboarding",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "status": "beta",
       "name": {
         "en": "Repo Onboarding",
@@ -174,15 +154,15 @@
       "id": "repo.requirements-clarification",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/requirements-clarification",
-      "version": "0.2.2",
+      "version": "0.3.1",
       "status": "beta",
       "name": {
-        "en": "Requirements Clarification",
-        "zh-CN": "需求决策澄清"
+        "en": "Requirements Clarification and Specification",
+        "zh-CN": "需求澄清与规格化"
       },
       "description": {
-        "en": "Close consequential product, behavior, data, permission, compatibility, and acceptance decisions through an evidence-first decision-tree interview. Use for a vague or disputed request before specification; choose fast, standard, or documented mode. Do not use when a testable specification already exists or to implement code. Automatic invocation is appropriate only when material ambiguity is evident; durable terminology or ADR edits require explicit write authorization.",
-        "zh-CN": "通过证据优先的问题树访谈，关闭会影响产品、行为、数据、权限、兼容性和验收的重要决策。用于规格化前仍模糊或存在争议的需求，可选 fast、standard 或 documented 模式。已有可测试规格或需要实施代码时不使用；仅在明显存在重大歧义时适合自动调用，持久术语或 ADR 修改必须获得明确写权限。"
+        "en": "Clarify material product, behavior, data, permission, compatibility, migration, and acceptance decisions or turn settled requirements into a testable specification. Select clarification or specification phase from evidence and the requested outcome, skipping interviews for settled decisions. Use fast, standard, or documented output. Specification stays read-only and optional documented clarification edits require path-scoped authorization. Do not implement code or rework a complete specification without a requested change.",
+        "zh-CN": "澄清产品、行为、数据、权限、兼容、迁移和验收的重要决策，或把已确认需求整理成可测试规格。依据证据和目标选择 clarification 或 specification 阶段，已确认决策跳过访谈。可选 fast、standard、documented 输出。规格阶段保持只读，documented 澄清阶段可选文档修改需要路径级授权。不实施代码，也不在没有修订需求时重做完整规格。"
       },
       "supported_locales": [
         "en",
@@ -208,19 +188,19 @@
       }
     },
     {
-      "slug": "requirements-to-spec",
-      "id": "repo.requirements-to-spec",
+      "slug": "safe-change-plan",
+      "id": "repo.safe-change-plan",
       "pack": "engineering.repo-doctor",
-      "path": "packs/engineering/repo-doctor/skills/requirements-to-spec",
-      "version": "0.1.2",
+      "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
+      "version": "0.2.1",
       "status": "beta",
       "name": {
-        "en": "Requirements Specification",
-        "zh-CN": "需求规格化"
+        "en": "Safe Change Plan",
+        "zh-CN": "安全变更计划"
       },
       "description": {
-        "en": "Convert requirements whose material product, data, security, permission, compatibility, and acceptance decisions are already closed into a structured, implementable, testable specification. Use when a clarification summary or settled discussion is ready for specification and only non-blocking assumptions remain; stop and route material open decisions to requirements-clarification. Do not use for task decomposition, implementation planning, code explanation, bug fixing, or direct edits.",
-        "zh-CN": "将产品、数据、安全、权限、兼容性和验收等重大决策已经闭合的需求整理为结构化、可实施、可验证的规格。用于已有澄清摘要或讨论已定稿、只剩非阻塞假设时；发现重大未决决策必须停止并转交 requirements-clarification。不用于拆工作项、制定实施计划、解释代码、修 Bug 或直接修改。"
+        "en": "Plan a confirmed change, repair, or multi-behavior delivery as atomic-steps or independently verifiable vertical work-items with dependencies, safe parallelism, conflict areas, acceptance, tests, risks, and rollback. Nest necessary code steps within work items for a complete plan. Use settled requirements and sufficient impact evidence; route unknown decisions or missing specifications to requirements-clarification and unknown impact to change-impact-analysis. Return Markdown only without file writes, Shell, external tasks, or implementation.",
+        "zh-CN": "将已确认变更、修复或多行为交付规划为 atomic-steps 原子步骤或可独立验证的 work-items 垂直工作项，覆盖依赖、安全并行、冲突区域、验收、测试、风险和回滚。完整计划将必要代码步骤嵌入工作项。需要已闭合需求和充分影响证据。未决需求或缺少规格交给 requirements-clarification，未知影响交给 change-impact-analysis。只返回 Markdown，不写文件、不调用 Shell、不创建外部任务或执行实施。"
       },
       "supported_locales": [
         "en",
@@ -246,49 +226,11 @@
       }
     },
     {
-      "slug": "spec-to-work-items",
-      "id": "repo.spec-to-work-items",
-      "pack": "engineering.repo-doctor",
-      "path": "packs/engineering/repo-doctor/skills/spec-to-work-items",
-      "version": "0.1.1",
-      "status": "beta",
-      "name": {
-        "en": "Spec to Work Items",
-        "zh-CN": "规格拆分工作项"
-      },
-      "description": {
-        "en": "Decompose a confirmed specification, implementation plan, or settled conversation into independently executable and verifiable vertical work items with dependencies, safe parallelism, conflict areas, tests, risks, and rollback notes. Use for delivery planning of a multi-behavior scope; return copyable Markdown in the current response only and never write files, invoke Shell, or create external tasks even with user authorization. Do not use for unresolved requirements, a single small fix, or a file-by-file technical-layer checklist.",
-        "zh-CN": "将已确认规格、实施计划或已闭合对话拆成可独立执行和验证的垂直工作项，明确依赖、安全并行、冲突区域、测试、风险和回滚。用于包含多个可交付行为的交付规划；只在当前响应返回可复制 Markdown；即使用户授权也不写文件、不调用 Shell、不创建外部任务。需求未闭合、单个小修复或按文件与技术层罗列清单时不使用。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": false,
-        "run_shell_commands": false,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "read",
-        "git": "optional",
-        "shell": "none",
-        "web": "none"
-      },
-      "execution": {
-        "classification": "standard",
-        "default_mode": "fast",
-        "allow_implicit_invocation": true
-      }
-    },
-    {
       "slug": "decision-prototype",
       "id": "repo.decision-prototype",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/decision-prototype",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Decision Prototype",
@@ -326,7 +268,7 @@
       "id": "repo.bug-root-cause-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/bug-root-cause-analysis",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "status": "beta",
       "name": {
         "en": "Bug Root Cause Analysis",
@@ -364,7 +306,7 @@
       "id": "repo.project-health-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/project-health-check",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "status": "beta",
       "name": {
         "en": "Project Health Check",
@@ -402,7 +344,7 @@
       "id": "repo.safe-code-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-code-review",
-      "version": "0.3.3",
+      "version": "0.3.4",
       "status": "beta",
       "name": {
         "en": "Safe Code Review",
@@ -440,7 +382,7 @@
       "id": "repo.change-impact-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/change-impact-analysis",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "status": "beta",
       "name": {
         "en": "Change Impact Analysis",
@@ -474,49 +416,11 @@
       }
     },
     {
-      "slug": "safe-change-plan",
-      "id": "repo.safe-change-plan",
-      "pack": "engineering.repo-doctor",
-      "path": "packs/engineering/repo-doctor/skills/safe-change-plan",
-      "version": "0.1.4",
-      "status": "beta",
-      "name": {
-        "en": "Safe Change Plan",
-        "zh-CN": "安全变更计划"
-      },
-      "description": {
-        "en": "Turn a confirmed specification, root-cause finding, or impact analysis into an atomic, verifiable, reversible implementation plan with explicit scope and risk controls. Use only when material decisions are closed and blast radius is sufficiently known; route open decisions to requirements-clarification, settled requirements needing a specification to requirements-to-spec, unknown impact to change-impact-analysis, architecture rationale or decision documentation to architecture-decision-record, and execution to safe-fix-implementation.",
-        "zh-CN": "将已确认规格、根因结论或影响分析转为原子化、可验证、可回滚且范围明确的实施计划。仅在重大决策已闭合且影响范围足够明确时使用；未决需求交给 requirements-clarification，已闭合但尚需规格化的需求交给 requirements-to-spec，影响未知交给 change-impact-analysis，架构理由或决策文档交给 architecture-decision-record，执行交给 safe-fix-implementation。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": false,
-        "run_shell_commands": false,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "read",
-        "git": "optional",
-        "shell": "none",
-        "web": "none"
-      },
-      "execution": {
-        "classification": "lightweight",
-        "default_mode": "fast",
-        "allow_implicit_invocation": true
-      }
-    },
-    {
       "slug": "test-gap-analysis",
       "id": "repo.test-gap-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/test-gap-analysis",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Test Gap Analysis",
@@ -554,7 +458,7 @@
       "id": "repo.safe-test-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-test-implementation",
-      "version": "0.4.4",
+      "version": "0.4.5",
       "status": "beta",
       "name": {
         "en": "Safe Test Implementation",
@@ -592,7 +496,7 @@
       "id": "repo.ci-failure-diagnosis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/ci-failure-diagnosis",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "CI Failure Diagnosis",
@@ -630,7 +534,7 @@
       "id": "repo.documentation-sync",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/documentation-sync",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Documentation Sync",
@@ -668,7 +572,7 @@
       "id": "repo.release-readiness-check",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/release-readiness-check",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "status": "beta",
       "name": {
         "en": "Release Readiness Check",
@@ -706,7 +610,7 @@
       "id": "repo.dependency-upgrade-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/dependency-upgrade-analysis",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Dependency Upgrade Analysis",
@@ -744,7 +648,7 @@
       "id": "repo.api-contract-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/api-contract-review",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "API Contract Review",
@@ -782,7 +686,7 @@
       "id": "repo.database-migration-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/database-migration-review",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Database Migration Review",
@@ -820,7 +724,7 @@
       "id": "repo.dead-code-verification",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/dead-code-verification",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Dead Code Verification",
@@ -858,7 +762,7 @@
       "id": "repo.security-focused-review",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/security-focused-review",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Security Focused Review",
@@ -896,7 +800,7 @@
       "id": "repo.performance-regression-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/performance-regression-analysis",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Performance Regression Analysis",
@@ -934,7 +838,7 @@
       "id": "repo.architecture-deepening-analysis",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/architecture-deepening-analysis",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Architecture Deepening Analysis",
@@ -972,7 +876,7 @@
       "id": "repo.architecture-decision-record",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/architecture-decision-record",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "status": "beta",
       "name": {
         "en": "Architecture Decision Record",
@@ -1010,7 +914,7 @@
       "id": "repo.configuration-audit",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/configuration-audit",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Configuration Audit",
@@ -1048,7 +952,7 @@
       "id": "repo.session-handoff",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/session-handoff",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "status": "beta",
       "name": {
         "en": "Session Handoff",
@@ -1086,7 +990,7 @@
       "id": "repo.safe-fix-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/safe-fix-implementation",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "status": "beta",
       "name": {
         "en": "Safe Fix Implementation",
@@ -1124,7 +1028,7 @@
       "id": "repo.feature-implementation",
       "pack": "engineering.repo-doctor",
       "path": "packs/engineering/repo-doctor/skills/feature-implementation",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "status": "beta",
       "name": {
         "en": "Feature Implementation",
@@ -1226,108 +1130,6 @@
       "execution": null
     },
     {
-      "slug": "pdf-review-basic",
-      "id": "office.pdf-review-basic",
-      "pack": "office.document-data-doctor",
-      "path": "packs/office/document-data-doctor/skills/pdf-review-basic",
-      "version": "0.1.1",
-      "status": "beta",
-      "name": {
-        "en": "Basic PDF Review",
-        "zh-CN": "PDF 基础审查"
-      },
-      "description": {
-        "en": "Perform a lightweight, read-only, text-only PDF check only when the user explicitly limits the task to extractable text, headings, obvious textual issues, and a short issue list without OCR, rendering, scanned-content recognition, tables, images, complex layout, or source-file changes. Do not use for an unqualified PDF review; use pdf-review for generic requests, page or visual verification, OCR, scanned pages, tables, images, layout, or completeness. PDF modification or regeneration is outside both review Skills and requires a separately authorized editing workflow.",
-        "zh-CN": "仅在用户明确把任务限定为基础、轻量、只读、纯文本检查时，检查 PDF 的可提取文字、标题和明显文本问题并给出简短清单，不做 OCR、页面渲染、扫描内容识别、表格、图片、复杂版式或源文件修改。不得用于未限定范围的通用 PDF 审查；通用请求、页码或视觉核验、OCR、扫描页、表格、图片、版式或完整性应使用 pdf-review。PDF 修改或重新生成不属于这两个审查 Skill，需要另行授权的编辑流程。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": false,
-        "run_shell_commands": false,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "read",
-        "git": "none",
-        "shell": "none",
-        "web": "none"
-      },
-      "execution": null
-    },
-    {
-      "slug": "word-document-review-basic",
-      "id": "office.word-document-review-basic",
-      "pack": "office.document-data-doctor",
-      "path": "packs/office/document-data-doctor/skills/word-document-review-basic",
-      "version": "0.1.1",
-      "status": "beta",
-      "name": {
-        "en": "Basic Word Document Review",
-        "zh-CN": "Word 文档基础审查"
-      },
-      "description": {
-        "en": "Perform a lightweight, read-only, text-only Word check only when the user explicitly limits the task to wording, heading hierarchy, simple grammar, obvious consistency, and unresolved placeholders without editing the source, preserving complex formatting, or handling tracked changes, comments, complex tables, images, headers, footers, or visual layout. Do not use for an unqualified Word or document review; use document-review for holistic structure, logic, facts, revisions, formatting, tables, links, comments, or rendered DOCX verification.",
-        "zh-CN": "仅在用户明确把任务限定为基础、轻量、只读、纯文本检查时，检查 Word 文档的文字、标题层级、简单语法、明显一致性和未解决占位符，不编辑源文件、不保留复杂格式，也不处理修订痕迹、批注、复杂表格、图片、页眉页脚或视觉版式。不得用于未限定范围的通用 Word 或文档审查；整体结构、逻辑、事实、修订、格式、表格、链接、批注或 DOCX 渲染验证应使用 document-review。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": false,
-        "run_shell_commands": false,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "read",
-        "git": "none",
-        "shell": "none",
-        "web": "none"
-      },
-      "execution": null
-    },
-    {
-      "slug": "excel-data-quality-check-basic",
-      "id": "office.excel-data-quality-check-basic",
-      "pack": "office.document-data-doctor",
-      "path": "packs/office/document-data-doctor/skills/excel-data-quality-check-basic",
-      "version": "0.1.1",
-      "status": "beta",
-      "name": {
-        "en": "Basic Excel Data Quality Check",
-        "zh-CN": "Excel 数据质量基础检查"
-      },
-      "description": {
-        "en": "Perform a read-only spreadsheet data-quality audit that reports missing values, duplicates, types, formats, anomalies, and source-traceability issues without cleaning, standardizing, filling, deduplicating, overwriting, or generating a modified copy. Use for requests to check, audit, or list data-quality problems; use spreadsheet-data-cleaning when the user requests transformations, fixes, or a cleaned output.",
-        "zh-CN": "对表格执行只读数据质量审计，报告缺失、重复、类型、格式、异常和来源可追溯性问题，不清洗、标准化、填补、去重、覆盖或生成修改后的副本。用于检查、审计或列出数据质量问题；用户要求转换、修复或输出清洗结果时使用 spreadsheet-data-cleaning。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": false,
-        "run_shell_commands": false,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "read",
-        "git": "none",
-        "shell": "none",
-        "web": "none"
-      },
-      "execution": null
-    },
-    {
       "slug": "report-writer",
       "id": "productivity.report-writer",
       "pack": "productivity.productivity-toolkit",
@@ -1392,108 +1194,6 @@
         "git": "none",
         "shell": "none",
         "web": "optional"
-      },
-      "execution": null
-    },
-    {
-      "slug": "spreadsheet-data-cleaning",
-      "id": "productivity.spreadsheet-data-cleaning",
-      "pack": "productivity.productivity-toolkit",
-      "path": "packs/productivity/productivity-toolkit/skills/spreadsheet-data-cleaning",
-      "version": "0.1.0",
-      "status": "beta",
-      "name": {
-        "en": "Spreadsheet Data Cleaning",
-        "zh-CN": "表格数据清洗"
-      },
-      "description": {
-        "en": "Profile, clean, standardize, transform, fill, or deduplicate spreadsheet or delimited data into an authorized new output with traceable rules, before/after statistics, an audit log, and validation of formulas, encoding, dimensions, and key summaries. Do not overwrite source data, guess critical values, or delete plausible records, and degrade to a cleaning plan when execution tools are unavailable. Use excel-data-quality-check-basic instead when the user requests only a read-only data-quality audit or issue report without changes or a cleaned copy.",
-        "zh-CN": "对电子表格或分隔数据进行画像、清洗、标准化、转换、填补或去重，并在用户授权下生成新结果，提供可追踪规则、前后统计、审计日志及公式、编码、行列数和关键汇总验证。不得覆盖原始数据、猜测关键值或删除可能有效的记录；缺少执行工具时降级为清洗计划。用户只要求只读数据质量审计或问题报告，不要求修改或清洗副本时，应使用 excel-data-quality-check-basic。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": true,
-        "run_shell_commands": true,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "write",
-        "git": "none",
-        "shell": "optional",
-        "web": "none"
-      },
-      "execution": null
-    },
-    {
-      "slug": "document-review",
-      "id": "productivity.document-review",
-      "pack": "productivity.productivity-toolkit",
-      "path": "packs/productivity/productivity-toolkit/skills/document-review",
-      "version": "0.1.0",
-      "status": "beta",
-      "name": {
-        "en": "Document Review",
-        "zh-CN": "文档审查"
-      },
-      "description": {
-        "en": "Default to this Skill for an unqualified document or Word review and for holistic checks of structure, logic, completeness, terminology, factual support, figures, citations, grammar, formatting, tables, links, comments, tracked changes, or authorized revisions. When DOCX or rendering tools are unavailable, degrade within this Skill and state the limitation. Use content-consistency-check for cross-document reconciliation, and do not use when the user explicitly requests word-document-review-basic or a lightweight, read-only, text-and-headings-only Word check without complex formatting or revisions.",
-        "zh-CN": "未限定范围的通用文档或 Word 审查，以及结构、逻辑、完整性、术语、事实依据、数字、引用、语法、格式、表格、链接、批注、修订痕迹或获授权修订等整体检查，默认使用本 Skill。DOCX 或渲染工具不可用时仍在本 Skill 内降级并说明限制。跨文档核对应使用 content-consistency-check；用户明确指定 word-document-review-basic，或明确要求轻量、只读、只检查文字和标题且不处理复杂格式或修订时不使用本 Skill。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": true,
-        "run_shell_commands": true,
-        "access_network": true,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "write",
-        "git": "none",
-        "shell": "optional",
-        "web": "optional"
-      },
-      "execution": null
-    },
-    {
-      "slug": "pdf-review",
-      "id": "productivity.pdf-review",
-      "pack": "productivity.productivity-toolkit",
-      "path": "packs/productivity/productivity-toolkit/skills/pdf-review",
-      "version": "0.1.0",
-      "status": "beta",
-      "name": {
-        "en": "PDF Review",
-        "zh-CN": "PDF 审查"
-      },
-      "description": {
-        "en": "Default to this Skill for an unqualified PDF review and for checks involving searchable text, structure, tables, page-located claims, numeric consistency, citations, scanned pages, OCR, rendering, completeness, or visual layout. Detect available capabilities and degrade within this Skill when tools are unavailable; do not modify the source PDF or claim unsupported verification. Do not use when the user explicitly requests pdf-review-basic or a lightweight, text-only check without OCR, rendering, or complex layout review.",
-        "zh-CN": "未限定范围的通用 PDF 审查，以及涉及可搜索文字、结构、表格、页码定位、数字一致性、引用、扫描页、OCR、渲染、完整性或视觉版式的检查，默认使用本 Skill。检测可用能力，工具不可用时仍在本 Skill 内降级；不得修改原 PDF 或声称完成不受支持的验证。用户明确指定 pdf-review-basic，或明确要求不做 OCR、渲染和复杂版式检查的轻量纯文本任务时不使用本 Skill。"
-      },
-      "supported_locales": [
-        "en",
-        "zh-CN"
-      ],
-      "permissions": {
-        "read_files": true,
-        "write_files": false,
-        "run_shell_commands": true,
-        "access_network": false,
-        "destructive_actions_allowed": false
-      },
-      "tool_requirements": {
-        "filesystem": "read",
-        "git": "none",
-        "shell": "optional",
-        "web": "none"
       },
       "execution": null
     },
@@ -1570,15 +1270,15 @@
       "id": "productivity.content-consistency-check",
       "pack": "productivity.productivity-toolkit",
       "path": "packs/productivity/productivity-toolkit/skills/content-consistency-check",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "status": "beta",
       "name": {
         "en": "Content Consistency Check",
         "zh-CN": "内容一致性检查"
       },
       "description": {
-        "en": "Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; use document-review for holistic quality of one document, and do not select a correct value without authoritative evidence or claim unsupported file-format checks.",
-        "zh-CN": "对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；单份文档整体质量应使用 document-review；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。"
+        "en": "Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; do not select a correct value without authoritative evidence or claim unsupported file-format checks.",
+        "zh-CN": "对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。"
       },
       "supported_locales": [
         "en",
@@ -1604,14 +1304,12 @@
     "repo-doctor-router",
     "repo-onboarding",
     "requirements-clarification",
-    "requirements-to-spec",
-    "spec-to-work-items",
+    "safe-change-plan",
     "decision-prototype",
     "bug-root-cause-analysis",
     "project-health-check",
     "safe-code-review",
     "change-impact-analysis",
-    "safe-change-plan",
     "test-gap-analysis",
     "safe-test-implementation",
     "ci-failure-diagnosis",
@@ -1682,13 +1380,10 @@
   ],
   "chatgpt_zips": [
     "pt-content-consistency-check.zip",
-    "pt-document-review.zip",
     "pt-meeting-notes-to-actions.zip",
-    "pt-pdf-review.zip",
     "pt-presentation-outline.zip",
     "pt-report-writer.zip",
     "pt-research-brief.zip",
-    "pt-spreadsheet-data-cleaning.zip",
     "rd-api-contract-review.zip",
     "rd-architecture-decision-record.zip",
     "rd-architecture-deepening-analysis.zip",
@@ -1708,19 +1403,17 @@
     "rd-repo-doctor-router.zip",
     "rd-repo-onboarding.zip",
     "rd-requirements-clarification.zip",
-    "rd-requirements-to-spec.zip",
     "rd-safe-change-plan.zip",
     "rd-safe-code-review.zip",
     "rd-safe-fix-implementation.zip",
     "rd-safe-test-implementation.zip",
     "rd-security-focused-review.zip",
     "rd-session-handoff.zip",
-    "rd-spec-to-work-items.zip",
     "rd-test-gap-analysis.zip",
     "sm-skill-authoring.zip",
     "sm-skill-quality-audit.zip"
   ],
-  "activation_contract_count": 306,
+  "activation_contract_count": 267,
   "activation_contracts": [
     "rdr-zh-positive",
     "rdr-en-positive",
@@ -1859,45 +1552,6 @@
     "rb-negative",
     "rb-assumption",
     "rb-blocking",
-    "edqb-zh-positive",
-    "edqb-en-positive",
-    "edqb-adjacent",
-    "edqb-zh-negative",
-    "edqb-en-negative",
-    "edqb-assumption",
-    "edqb-blocking",
-    "sdc-zh-positive",
-    "sdc-en-positive",
-    "sdc-adjacent",
-    "sdc-negative",
-    "sdc-assumption",
-    "sdc-blocking",
-    "wdrb-zh-positive",
-    "wdrb-en-positive",
-    "wdrb-adjacent",
-    "wdrb-zh-negative",
-    "wdrb-en-negative",
-    "wdrb-assumption",
-    "wdrb-blocking",
-    "dr-zh-positive",
-    "dr-en-positive",
-    "dr-adjacent",
-    "dr-negative",
-    "dr-assumption",
-    "dr-blocking",
-    "pbr-zh-positive",
-    "pbr-en-positive",
-    "pbr-adjacent",
-    "pbr-zh-negative",
-    "pbr-en-negative",
-    "pbr-assumption",
-    "pbr-blocking",
-    "pdf-zh-positive",
-    "pdf-en-positive",
-    "pdf-adjacent",
-    "pdf-negative",
-    "pdf-assumption",
-    "pdf-blocking",
     "mna-zh-positive",
     "mna-en-positive",
     "mna-adjacent",

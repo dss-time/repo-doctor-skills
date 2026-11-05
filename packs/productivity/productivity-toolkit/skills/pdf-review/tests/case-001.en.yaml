@@ -1,9 +1,0 @@
-input: "Review this PDF, distinguish extracted text from OCR, and omit page numbers that cannot be verified."
-expected:
-  must_include:
-    - capability status
-    - page location status
-    - confidence
-  must_not:
-    - invented page number
-    - false visual inspection

@@ -238,15 +238,22 @@ try {
     "engineering",
     "repo-doctor",
     "skills",
-    "requirements-to-spec",
+    "safe-change-plan",
   );
   function runRiskFixture(name, { permissions, risk, filesystem = "read", shell }) {
     const fixtureRoot = path.join(tempRoot, "risk-quality", name);
     const packRoot = path.join(fixtureRoot, "packs", "fixture", "risk-pack");
-    const skillRoot = path.join(packRoot, "skills", "requirements-to-spec");
+    const skillRoot = path.join(packRoot, "skills", "safe-change-plan");
     mkdirSync(path.dirname(skillRoot), { recursive: true });
     cpSync(sourceRiskSkill, skillRoot, { recursive: true });
-    writeFileSync(path.join(packRoot, "pack.yaml"), "skills:\n  - requirements-to-spec\n");
+    mkdirSync(path.join(packRoot, "references"), { recursive: true });
+    for (const locale of ["en", "zh-CN"]) {
+      for (const name of ["language-security-boundaries", "execution-boundaries", "user-workspace-safety"]) {
+        const resource = `${name}.${locale}.md`;
+        cpSync(path.join(sourceRiskSkill, "..", "..", "references", resource), path.join(packRoot, "references", resource));
+      }
+    }
+    writeFileSync(path.join(packRoot, "pack.yaml"), "skills:\n  - safe-change-plan\n");
     let yaml = readFileSync(path.join(skillRoot, "skill.yaml"), "utf8");
     yaml = replaceYamlSection(yaml, "permissions", permissions);
     yaml = replaceYamlSection(yaml, "risk_level", risk);

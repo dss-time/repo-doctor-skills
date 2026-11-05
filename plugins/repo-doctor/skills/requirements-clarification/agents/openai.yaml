@@ -1,6 +1,6 @@
 interface:
-  display_name: "Requirements Clarification（需求决策澄清）"
-  short_description: "在规格化前逐项关闭会实质改变实现的需求决策"
-  default_prompt: "使用 $requirements-clarification 在规格化前关闭关键需求决策，不要实施代码。"
+  display_name: "Requirements Clarification and Specification（需求澄清与规格化）"
+  short_description: "澄清重大需求决策，或将已确认需求整理为可测试规格"
+  default_prompt: "使用 $requirements-clarification 根据需求状态选择 clarification 或 specification 阶段，复用已确认决策。"
 policy:
   allow_implicit_invocation: true

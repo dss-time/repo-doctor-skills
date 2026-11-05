@@ -51,9 +51,9 @@ Use [execution modes](references/execution-modes.en.md) when detailed mode selec
 2. Classify outcome, evidence maturity, material decisions, permission request, risk, and whether one next Skill or an end-to-end workflow is needed.
 3. Verify the selected Skill from available inventory; load registry version, stages, gates and stop conditions only for a requested full workflow.
 4. Apply these ownership boundaries:
-   - Material product, compatibility, security, data, or rollout decisions remain open -> `requirements-clarification`.
-   - Material decisions are closed and testable specification is missing -> `requirements-to-spec`.
-   - A settled large specification needs vertical delivery slices -> `spec-to-work-items`.
+   - Material product, compatibility, security, data, or rollout decisions remain open -> `requirements-clarification` in clarification phase.
+   - Material decisions are closed and testable specification is missing -> `requirements-clarification` in specification phase, skipping the interview.
+   - A settled large specification needs vertical delivery slices -> `safe-change-plan` with work-items granularity.
    - Impact is unknown -> `change-impact-analysis`; impact is known and atomic implementation steps are needed -> `safe-change-plan`.
    - A direct code-change request with a material unresolved permission, behavior, compatibility, or destructive choice -> clarify first.
    - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and implementation owner below; never treat clarity as permission.
@@ -74,6 +74,8 @@ Use [execution modes](references/execution-modes.en.md) when detailed mode selec
 
 Return one verified recommendation and never execute it. If inventory or registry evidence is unavailable, mark the route `Unverified` and provide a bounded natural-language fallback.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
 # Output Contract
 
 Default `fast` output:
@@ -89,6 +91,8 @@ Try: <copyable invocation preserving the user’s problem and scope>
 Keep `fast` to these fields. Give one host-supported invocation or natural-language request, preserving scope and permissions; use placeholders for missing inputs.
 
 For `standard` or requested detail, add classification, workflow ID, current stage, prerequisites, permission gate, stop condition, next Skill, and one alternative. For `audit`, add registry/version verification, active-inventory evidence, rejected candidates, platform alias capability, and unresolved uncertainty.
+
+For a requirements recommendation, include clarification or specification phase in Try. For planning, include atomic-steps or work-items granularity. A settled specification request must skip the interview.
 
 ---
 
@@ -136,10 +140,10 @@ For `standard` or requested detail, add classification, workflow ID, current sta
 2. 按目标、证据成熟度、重大决策、权限请求、风险，以及需要单一步骤还是端到端工作流进行分类。
 3. 从可用清单核验推荐 Skill；只有请求完整工作流时才读取注册表版本、阶段、门禁和停止条件。
 4. 应用职责边界：
-   - 产品、兼容性、安全、数据或发布方式仍有重大未决选择 -> `requirements-clarification`。
-   - 重大决策已闭合但缺少可测试规格 -> `requirements-to-spec`。
-   - 大型已闭合规格需要垂直交付切片 -> `spec-to-work-items`。
-   - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan`。
+   - 产品、兼容性、安全、数据或发布方式仍有重大未决选择 -> `requirements-clarification` 的 clarification 阶段。
+   - 重大决策已闭合但缺少可测试规格 -> `requirements-clarification` 的 specification 阶段，跳过访谈。
+   - 大型已闭合规格需要垂直交付切片 -> `safe-change-plan` 的 work-items 粒度。
+   - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan` 的 atomic-steps 粒度。
    - 直接改代码请求仍有重大权限、行为、兼容性或破坏性选择 -> 先澄清。
    - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和下述实施承接者；清晰不等于授权。
    - 已确认新功能规格/工作项且已有写授权 -> `feature-implementation`；已诊断局部缺陷仍交给 `safe-fix-implementation`。
@@ -159,6 +163,8 @@ For `standard` or requested detail, add classification, workflow ID, current sta
 
 只返回一个已核验推荐，绝不执行。清单或注册表无法核实时，将路由标为 `Unverified` 并给出边界明确的自然语言后备指令。
 
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
 # 输出契约
 
 默认 `fast` 输出：
@@ -174,3 +180,5 @@ For `standard` or requested detail, add classification, workflow ID, current sta
 `fast` 只输出上述字段。给一个宿主支持的调用或自然语言请求，保留范围和权限；缺失输入用占位符。
 
 `standard` 或用户要求详细信息时，增加分类、workflow ID、当前阶段、前置条件、权限门禁、停止条件、后续 Skill 和一个替代路径。`audit` 再增加注册表/版本核验、active 清单证据、被拒绝候选、平台 alias 能力和未解决不确定性。
+
+推荐需求入口时，在可复制调用中注明 clarification 或 specification 阶段；推荐规划时注明 atomic-steps 或 work-items 粒度。已定稿需求请求规格时跳过访谈。

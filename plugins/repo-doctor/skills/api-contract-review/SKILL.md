@@ -42,6 +42,10 @@ Review one defined API or module contract. Keep server, client, schemas, documen
 5. State affected consumers, migration and deprecation needs, compatibility layers, versioning options, and contract-test recommendations.
 6. Report evidence, impact, severity, confidence, validation, and unknowns without editing the interface.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 1. Scope and contract map
 2. Evidence
@@ -87,6 +91,10 @@ Review one defined API or module contract. Keep server, client, schemas, documen
 4. 将差异分类为 breaking、non-breaking、behavioral、仅文档或未知。
 5. 说明受影响消费者、迁移与弃用、兼容层、版本化选项和契约测试建议。
 6. 不修改接口，报告证据、影响、严重度、置信度、验证和未知项。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 1. 范围与契约映射

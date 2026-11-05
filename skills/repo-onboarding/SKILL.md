@@ -43,6 +43,8 @@ Use this skill to understand an unfamiliar repository before editing code.
 5. Identify risky areas such as public interfaces, shared utilities, authentication, data migrations, generated files, release scripts, or build config.
 6. Produce the practical onboarding map using the output contract.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
 # Output Format
 
 Default `fast` map:
@@ -93,6 +95,8 @@ Omit exhaustive inventories and empty sections. Without repository evidence, giv
 4. 识别入口文件、核心模块、脚本和验证命令。
 5. 识别风险区域，例如公共接口、共享工具、认证、数据迁移、生成文件、发布脚本或构建配置。
 6. 按输出契约给出实用的仓库地图。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
 
 # 输出格式
 

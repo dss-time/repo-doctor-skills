@@ -7,14 +7,12 @@ It includes:
 - `repo-doctor-router`
 - `repo-onboarding`
 - `requirements-clarification`
-- `requirements-to-spec`
-- `spec-to-work-items`
+- `safe-change-plan`
 - `decision-prototype`
 - `bug-root-cause-analysis`
 - `project-health-check`
 - `safe-code-review`
 - `change-impact-analysis`
-- `safe-change-plan`
 - `test-gap-analysis`
 - `safe-test-implementation`
 - `ci-failure-diagnosis`
@@ -33,4 +31,4 @@ It includes:
 - `safe-fix-implementation`
 - `feature-implementation`
 
-The pack defaults to read-first behavior. Routing, work-item planning, architecture analysis, diagnosis, specialized review, and release-gate skills are read-only. `requirements-clarification` is read-only in `fast` and `standard`; its `documented` mode may update an explicitly authorized terminology or ADR path. `decision-prototype` may write only an explicitly authorized, non-production prototype scope. `session-handoff` writes a sanitized brief to the operating-system temporary directory by default and needs explicit authorization for project paths. `safe-test-implementation` may edit tests, fixtures, and test helpers; `documentation-sync` may edit documentation; `architecture-decision-record` may edit ADR and architecture documentation only. `safe-fix-implementation` owns diagnosed local repairs; `feature-implementation` owns authorized delivery of settled feature slices, including related tests/docs and acceptance evidence. Release gates may execute preflighted, authorized local validation without editing source.
+The pack defaults to read-first behavior. Routing, work-item planning, architecture analysis, diagnosis, specialized review, and release-gate skills are read-only. `requirements-clarification` is read-only in `fast` and `standard`; its `documented` clarification phase may update an explicitly authorized terminology or ADR path. The specification phase stays read-only in every mode. `decision-prototype` may write only an explicitly authorized, non-production prototype scope. `session-handoff` writes a sanitized brief to the operating-system temporary directory by default and needs explicit authorization for project paths. `safe-test-implementation` may edit tests, fixtures, and test helpers; `documentation-sync` may edit documentation; `architecture-decision-record` may edit ADR and architecture documentation only. `safe-fix-implementation` owns diagnosed local repairs; `feature-implementation` owns authorized delivery of settled feature slices, including related tests/docs and acceptance evidence. Release gates may execute preflighted, authorized local validation without editing source.

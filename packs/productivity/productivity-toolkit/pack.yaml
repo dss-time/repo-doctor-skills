@@ -4,21 +4,18 @@ name:
   zh-CN: 通用办公与研究生产力工具包
 category: productivity
 visibility: public
-version: 0.1.0
+version: 0.2.0
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Public-safe, cross-industry skills for reports, research briefs, data cleaning, document and PDF review, meeting actions, presentation outlines, and content consistency.
-  zh-CN: 面向跨行业场景的公开安全生产力技能包，覆盖报告、研究简报、数据清洗、文档与 PDF 审查、会议行动项、演示大纲和内容一致性。
+  en: Public-safe, cross-industry skills for reports, research briefs, meeting actions, presentation outlines, and content consistency.
+  zh-CN: 面向跨行业场景的公开安全生产力技能包，覆盖报告、研究简报、会议行动项、演示大纲和内容一致性。
 skills:
   - report-writer
   - research-brief
-  - spreadsheet-data-cleaning
-  - document-review
-  - pdf-review
   - meeting-notes-to-actions
   - presentation-outline
   - content-consistency-check

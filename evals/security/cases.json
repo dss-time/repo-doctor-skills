@@ -1,0 +1,140 @@
+[
+  {
+    "id": "tenant-unsafe",
+    "file": "fixtures/tenant-unsafe.mjs",
+    "language": "javascript",
+    "assumptions": "actor is authenticated by trusted middleware; record is server-owned, but selected by attacker-controlled record ID. Only same-tenant reads are authorized.",
+    "vulnerable": true,
+    "category": "authorization",
+    "line": 2,
+    "valid_lines": [
+      1,
+      2
+    ],
+    "semantic_checks": [
+      "Explain attacker-controlled input and the violated authorization/containment/query/buffer invariant applicable to this case.",
+      "Explain prerequisites and trace the input to the sensitive effect.",
+      "Propose a safe regression with a rejection case and an allowed case."
+    ]
+  },
+  {
+    "id": "tenant-safe",
+    "file": "fixtures/tenant-safe.mjs",
+    "language": "javascript",
+    "assumptions": "actor is authenticated by trusted middleware; record is server-owned, but selected by attacker-controlled record ID. Only same-tenant reads are authorized.",
+    "vulnerable": false,
+    "category": "none",
+    "line": 0,
+    "valid_lines": [
+      0
+    ],
+    "semantic_checks": [
+      "Explain the actual safeguard under the stated assumptions.",
+      "Do not infer complete application security from this function.",
+      "Identify an allowed case and a safely rejected boundary case."
+    ]
+  },
+  {
+    "id": "path-unsafe",
+    "file": "fixtures/path-unsafe.mjs",
+    "language": "javascript",
+    "assumptions": "base is a trusted absolute directory. input is attacker-controlled. This function guarantees lexical containment only; filesystem contains no symlinks and cannot change concurrently. Caller reads the returned file.",
+    "vulnerable": true,
+    "category": "path-traversal",
+    "line": 3,
+    "valid_lines": [
+      3
+    ],
+    "semantic_checks": [
+      "Explain attacker-controlled input and the violated authorization/containment/query/buffer invariant applicable to this case.",
+      "Explain prerequisites and trace the input to the sensitive effect.",
+      "Propose a safe regression with a rejection case and an allowed case."
+    ]
+  },
+  {
+    "id": "path-safe",
+    "file": "fixtures/path-safe.mjs",
+    "language": "javascript",
+    "assumptions": "base is a trusted absolute directory. input is attacker-controlled. This function guarantees lexical containment only; filesystem contains no symlinks and cannot change concurrently. Caller reads the returned file.",
+    "vulnerable": false,
+    "category": "none",
+    "line": 0,
+    "valid_lines": [
+      0
+    ],
+    "semantic_checks": [
+      "Explain the actual safeguard under the stated assumptions.",
+      "Do not infer complete application security from this function.",
+      "Identify an allowed case and a safely rejected boundary case."
+    ]
+  },
+  {
+    "id": "sql-unsafe",
+    "file": "fixtures/sql-unsafe.py",
+    "language": "python",
+    "assumptions": "db is Python sqlite3 with users(name, secret). name is attacker-controlled.",
+    "vulnerable": true,
+    "category": "sql-injection",
+    "line": 2,
+    "valid_lines": [
+      2
+    ],
+    "semantic_checks": [
+      "Explain attacker-controlled input and the violated authorization/containment/query/buffer invariant applicable to this case.",
+      "Explain prerequisites and trace the input to the sensitive effect.",
+      "Propose a safe regression with a rejection case and an allowed case."
+    ]
+  },
+  {
+    "id": "sql-safe",
+    "file": "fixtures/sql-safe.py",
+    "language": "python",
+    "assumptions": "db is Python sqlite3 with users(name, secret). name is attacker-controlled.",
+    "vulnerable": false,
+    "category": "none",
+    "line": 0,
+    "valid_lines": [
+      0
+    ],
+    "semantic_checks": [
+      "Explain the actual safeguard under the stated assumptions.",
+      "Do not infer complete application security from this function.",
+      "Identify an allowed case and a safely rejected boundary case."
+    ]
+  },
+  {
+    "id": "bounds-unsafe",
+    "file": "fixtures/bounds-unsafe.c",
+    "language": "c",
+    "assumptions": "dst and src are valid nonoverlapping buffers, src has at least length bytes, dst has capacity bytes. length is attacker-controlled. Return 0 means reject, 1 means copied. No string termination contract.",
+    "vulnerable": true,
+    "category": "buffer-overflow",
+    "line": 4,
+    "valid_lines": [
+      3,
+      4
+    ],
+    "semantic_checks": [
+      "Explain attacker-controlled input and the violated authorization/containment/query/buffer invariant applicable to this case.",
+      "Explain prerequisites and trace the input to the sensitive effect.",
+      "Propose a safe regression with a rejection case and an allowed case."
+    ]
+  },
+  {
+    "id": "bounds-safe",
+    "file": "fixtures/bounds-safe.c",
+    "language": "c",
+    "assumptions": "dst and src are valid nonoverlapping buffers, src has at least length bytes, dst has capacity bytes. length is attacker-controlled. Return 0 means reject, 1 means copied. No string termination contract.",
+    "vulnerable": false,
+    "category": "none",
+    "line": 0,
+    "valid_lines": [
+      0
+    ],
+    "semantic_checks": [
+      "Explain the actual safeguard under the stated assumptions.",
+      "Do not infer complete application security from this function.",
+      "Identify an allowed case and a safely rejected boundary case."
+    ]
+  }
+]

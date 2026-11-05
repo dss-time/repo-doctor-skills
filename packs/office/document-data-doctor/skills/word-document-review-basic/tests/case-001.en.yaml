@@ -1,9 +1,0 @@
-input: "Perform a basic text-only Word check without editing or tracked changes."
-expected:
-  must_include:
-    - text-only
-    - headings
-    - manual confirmation
-  must_not:
-    - internal template
-    - edited file

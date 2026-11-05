@@ -1,6 +1,6 @@
 ---
 name: content-consistency-check
-description: "Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; use document-review for holistic quality of one document, and do not select a correct value without authoritative evidence or claim unsupported file-format checks. 对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；单份文档整体质量应使用 document-review；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。"
+description: "Compare one or more artifacts for conflicting terminology, figures, dates, units, people, versions, links, and conclusions, reporting both locations, severity, conflict type, and a recommended authority. Use when reconciliation across content is primary; do not select a correct value without authoritative evidence or claim unsupported file-format checks. 对一个或多个材料中的术语、数字、日期、单位、人物、版本、链接和结论进行对照，报告冲突两侧位置、严重度、类型和建议权威基准。主要任务是跨内容核对时使用；没有权威证据时不得擅选正确值，也不得声称完成不受支持的文件格式检查。"
 ---
 
 # Content Consistency Check（内容一致性检查）
@@ -28,7 +28,7 @@ Read `references/productivity-evidence-and-file-safety.md` and `references/consi
 5. Report both sides, context, impact, severity, confidence, and proposed authority. Do not silently choose the correct value; select one only when authoritative evidence establishes it.
 6. Summarize systemic patterns and a reconciliation sequence. Keep the source artifacts read-only.
 
-Use `document-review` when the request is primarily structure, logic, grammar, and completeness within one document.
+Requests primarily about structure, logic, grammar, and completeness within one document are outside this Skill’s scope.
 
 # Output Contract
 
@@ -61,7 +61,7 @@ Use `document-review` when the request is primarily structure, logic, grammar, a
 5. 报告冲突两侧、上下文、影响、严重度、置信度和建议权威基准；不得静默选择正确值，只有权威证据明确时才能选定。
 6. 总结系统性模式和协调顺序，保持原材料只读。
 
-主要任务是单份文档的结构、逻辑、语法和完整性时使用 `document-review`。
+主要任务是单份文档的结构、逻辑、语法和完整性时，不属于本 Skill 的适用范围。
 
 # 输出契约
 

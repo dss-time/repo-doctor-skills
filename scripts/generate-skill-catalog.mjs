@@ -17,7 +17,6 @@ const activePackOrder = [
   "engineering.repo-doctor",
   "productivity.productivity-toolkit",
   "engineering.skill-maintainer",
-  "office.document-data-doctor",
 ];
 
 // Keep this registry aligned with pluginBuilds in build-chatgpt-skills.mjs. The

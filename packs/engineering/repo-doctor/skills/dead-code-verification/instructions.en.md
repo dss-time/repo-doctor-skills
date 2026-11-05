@@ -14,3 +14,5 @@ Verify one defined removal candidate. Default to “not safe to remove” when s
 4. Classify the candidate as confirmed unused, probably unused, still used, or unproven.
 5. Explain deletion impact, false-negative risks, compatibility concerns, validation tests, staged disablement, and restoration method.
 6. Report evidence, severity/priority, impact, confidence, recommendation, validation, and unknowns without deletion.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.

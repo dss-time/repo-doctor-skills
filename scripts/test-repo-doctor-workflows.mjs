@@ -21,8 +21,12 @@ function requireTerms(relativePath, terms) {
   return content;
 }
 
-for (const slug of ["repo-doctor-router", "requirements-clarification", "decision-prototype", "architecture-deepening-analysis", "spec-to-work-items", "session-handoff"]) {
+for (const slug of ["repo-doctor-router", "requirements-clarification", "decision-prototype", "architecture-deepening-analysis", "safe-change-plan", "session-handoff"]) {
   assert.ok(active.has(slug), `${slug} must be active in Repo Doctor`);
+}
+
+for (const slug of ["requirements-to-spec", "spec-to-work-items"]) {
+  assert.ok(!active.has(slug), `${slug} must be consolidated into its surviving owner`);
 }
 
 const progressiveModeSkills = [
@@ -55,8 +59,7 @@ for (const locale of ["en", "zh-CN"]) {
     `packs/engineering/repo-doctor/skills/repo-doctor-router/instructions.${suffix}.md`,
     [
       "requirements-clarification",
-      "requirements-to-spec",
-      "spec-to-work-items",
+      "safe-change-plan",
       "decision-prototype",
       "bug-root-cause-analysis",
       "architecture-deepening-analysis",
@@ -75,10 +78,10 @@ for (const locale of ["en", "zh-CN"]) {
   );
   requireTerms(
     `packs/engineering/repo-doctor/skills/requirements-clarification/output.${suffix}.md`,
-    ["confirmed", "inferred", "open", "deferred", "out_of_scope", "requirements-to-spec"],
+    ["confirmed", "inferred", "open", "deferred", "out_of_scope", "phase"],
   );
   requireTerms(
-    `packs/engineering/repo-doctor/skills/spec-to-work-items/output.${suffix}.md`,
+    `packs/engineering/repo-doctor/skills/safe-change-plan/output.${suffix}.md`,
     ["user_visible_outcome", "dependencies", "parallelizable_with", "acceptance_criteria", "verification", "rollback_notes", "recommended_skills"],
   );
   requireTerms(
@@ -93,14 +96,14 @@ for (const locale of ["en", "zh-CN"]) {
   );
 }
 
-requireTerms("packs/engineering/repo-doctor/skills/requirements-to-spec/instructions.en.md", ["material decisions are already closed", "requirements-clarification", "stop specification work"]);
-requireTerms("packs/engineering/repo-doctor/skills/requirements-to-spec/instructions.zh-CN.md", ["重大决策已经闭合", "requirements-clarification", "停止规格化"]);
+requireTerms("packs/engineering/repo-doctor/skills/requirements-clarification/instructions.en.md", ["material decisions are already closed", "clarification", "specification", "stop specification work"]);
+requireTerms("packs/engineering/repo-doctor/skills/requirements-clarification/instructions.zh-CN.md", ["重大决策已经闭合", "clarification", "specification", "停止规格化"]);
 for (const locale of ["en", "zh-CN"]) {
-  requireTerms(`packs/engineering/repo-doctor/skills/requirements-to-spec/instructions.${locale}.md`, ["feature-implementation", "safe-fix-implementation"]);
-  requireTerms(`packs/engineering/repo-doctor/skills/safe-change-plan/instructions.${locale}.md`, ["requirements-clarification", "requirements-to-spec"]);
+  requireTerms(`packs/engineering/repo-doctor/skills/requirements-clarification/instructions.${locale}.md`, ["feature-implementation", "safe-fix-implementation"]);
+  requireTerms(`packs/engineering/repo-doctor/skills/safe-change-plan/instructions.${locale}.md`, ["requirements-clarification"]);
 }
-requireTerms("packs/engineering/repo-doctor/skills/spec-to-work-items/instructions.en.md", ["Return copyable Markdown only in the response", "even when the user asks", "use Shell to write indirectly"]);
-requireTerms("packs/engineering/repo-doctor/skills/spec-to-work-items/instructions.zh-CN.md", ["当前响应中输出 Markdown", "即使用户明确授权", "不得用 Shell"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-change-plan/instructions.en.md", ["Return copyable Markdown only in the response", "even when the user asks", "use Shell to write indirectly", "atomic-steps", "work-items"]);
+requireTerms("packs/engineering/repo-doctor/skills/safe-change-plan/instructions.zh-CN.md", ["当前响应中输出 Markdown", "即使用户明确授权", "不得用 Shell", "atomic-steps", "work-items"]);
 
 requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.en.md", ["trustworthy, repeatable signal", "success predicate", "falsifiable hypotheses", "trigger_condition", "systemic_root_cause"]);
 requireTerms("packs/engineering/repo-doctor/skills/bug-root-cause-analysis/instructions.zh-CN.md", ["可信、可重复", "成功判据", "可证伪", "trigger_condition", "systemic_root_cause"]);

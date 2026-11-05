@@ -46,7 +46,7 @@ Read `references/prototype-checklist.en.md` only when designing states, deciding
 - Use in-memory state, synthetic public-safe data, and local stubs. If the question genuinely concerns persistence or an external dependency, stop for a separately approved non-production environment and data boundary.
 - Never install a dependency without explicit authorization. Prefer the existing runtime and components.
 - Do not automatically delete prototype files. Recommend deletion, retention as evidence, or formal reimplementation; execute deletion only on a separate explicit request.
-- For production work, route unsettled decisions/specifications to `requirements-to-spec` after clarification, missing sequencing to `safe-change-plan`, settled feature delivery to `feature-implementation`, and local fixes to `safe-fix-implementation`. Reuse existing production authorization; ask only for missing scope.
+- For production work, route unsettled decisions/specifications to `requirements-clarification` after clarification, missing sequencing to `safe-change-plan`, settled feature delivery to `feature-implementation`, and local fixes to `safe-fix-implementation`. Reuse existing production authorization; ask only for missing scope.
 
 ## Workflow
 
@@ -65,6 +65,10 @@ Read `references/prototype-checklist.en.md` only when designing states, deciding
 
 Return `Blocked` for missing write authorization, unsafe location, unavailable runtime, required production access, real credentials/data, unapproved dependency installation, destructive cleanup, or a validation question too broad to answer with a minimal prototype.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 
 Lead with `status`, validation question, verdict, and recommended disposition.
@@ -82,6 +86,8 @@ Lead with `status`, validation question, verdict, and recommended disposition.
 11. Recommended next Repo Doctor Skill
 
 Audit mode also includes exact permission and command ledgers. Never describe the prototype as production-ready.
+
+When relevant, briefly state preserved authorization/business behavior, existing-data update evidence, validation target/isolation or unrun reason, and preexisting/concurrent edit protection. Unresolved safety gaps or edit conflicts keep affected work blocked/partial. Omit inapplicable fields and retain deferred-verification status.
 
 # 简体中文
 
@@ -126,7 +132,7 @@ Audit mode also includes exact permission and command ledgers. Never describe th
 - 使用内存状态、公开安全的合成数据和本地 stub。问题确实涉及持久化或外部依赖时，停止并要求单独批准非生产环境和数据边界。
 - 未经明确授权不安装依赖，优先复用现有运行时与组件。
 - 不自动删除原型文件。只建议删除、作为证据保留或正式重写；删除必须另行明确授权。
-- 进入生产工作时，未闭合决策先澄清，缺少规格交给 `requirements-to-spec`，缺少实施顺序交给 `safe-change-plan`，已确认功能交给 `feature-implementation`，局部修复交给 `safe-fix-implementation`。复用已有生产授权，仅对缺失范围询问。
+- 进入生产工作时，未闭合决策先澄清，缺少规格交给 `requirements-clarification`，缺少实施顺序交给 `safe-change-plan`，已确认功能交给 `feature-implementation`，局部修复交给 `safe-fix-implementation`。复用已有生产授权，仅对缺失范围询问。
 
 ## 工作流程
 
@@ -145,6 +151,10 @@ Audit mode also includes exact permission and command ledgers. Never describe th
 
 缺少写权限、位置不安全、运行时不可用、需要生产访问、需要真实凭据/数据、需要未授权安装依赖、需要破坏性清理，或问题过宽无法由最小原型回答时，返回 `Blocked`。
 
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
+
 # 输出契约
 
 先给 `status`、验证问题、结论和建议处置。
@@ -162,3 +172,5 @@ Audit mode also includes exact permission and command ledgers. Never describe th
 11. 推荐的下一 Repo Doctor Skill
 
 audit 模式还要包含准确权限与命令账本。不得把原型描述为生产就绪。
+
+仅在相关时简述保留的权限/业务行为、已有数据更新依据、验证目标/隔离或未运行原因，以及已有/并发改动保护情况。未解决安全缺口或编辑冲突使受影响工作保持阻塞/部分完成。省略不适用字段，保留延期验证状态。

@@ -1,0 +1,11 @@
+input: "把这些已定稿的导出决策整理成可测试规格，不要修改代码。"
+expected:
+  must_include:
+    - specification
+    - Given/When/Then
+    - 用户与目标
+    - 假设
+    - 验收标准
+  must_not:
+    - 修改文件
+    - 实施计划

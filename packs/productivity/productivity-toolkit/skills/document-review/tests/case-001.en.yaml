@@ -1,9 +1,0 @@
-input: "Review this document and separate required changes from optional polish; do not rewrite it."
-expected:
-  must_include:
-    - location
-    - required changes
-    - limitations
-  must_not:
-    - full rewrite
-    - false rendering claim

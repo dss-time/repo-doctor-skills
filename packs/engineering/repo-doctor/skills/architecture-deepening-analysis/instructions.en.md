@@ -42,3 +42,7 @@ Examine interface size and required caller knowledge; how much complexity the im
 Each reported candidate must include observed friction, code evidence, root cause, impact scope, at least two options, recommendation, rejection reasons, migration order, test strategy, rollback strategy, risk, ADR need, and next Skill.
 
 Return `Blocked` when scope is undefined, callers cannot be inspected, essential ADRs are unavailable, or command safety is uncertain. Return `no qualified candidates` when evidence does not support a recommendation; do not manufacture one.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

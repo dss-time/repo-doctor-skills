@@ -1,6 +1,6 @@
 {
   "name": "productivity-toolkit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cross-platform office and research productivity skills with conservative file and evidence handling.",
   "author": {
     "name": "dss-time"
@@ -12,18 +12,15 @@
     "productivity",
     "reports",
     "research",
-    "spreadsheets",
     "documents",
-    "pdf",
     "meetings",
-    "presentations",
-    "data-quality"
+    "presentations"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Productivity Toolkit",
-    "shortDescription": "Reports, research, data cleaning, document review, and presentation planning.",
-    "longDescription": "Productivity Toolkit provides public-safe, cross-industry workflows for structured reports, sourced research briefs, traceable spreadsheet cleaning, document and PDF review, meeting actions, presentation outlines, and cross-content consistency checks.",
+    "shortDescription": "Reports, research, meeting actions, presentation planning, and content consistency.",
+    "longDescription": "Productivity Toolkit provides public-safe, cross-industry workflows for structured reports, sourced research briefs, meeting actions, presentation outlines, and cross-content consistency checks.",
     "developerName": "dss-time",
     "category": "Productivity",
     "capabilities": [
@@ -33,7 +30,6 @@
     "websiteURL": "https://github.com/dss-time/repo-doctor-skills",
     "defaultPrompt": [
       "Turn these materials into an evidence-aware report.",
-      "Clean this spreadsheet into a new auditable output.",
       "Check these documents for conflicting figures and dates."
     ],
     "brandColor": "#2563EB"

@@ -17,3 +17,5 @@ Use this skill to understand an unfamiliar repository before editing code.
 4. Identify entry points, core modules, scripts, and validation commands.
 5. Identify risky areas such as public interfaces, shared utilities, authentication, data migrations, generated files, release scripts, or build config.
 6. Produce the practical onboarding map using the output contract.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.

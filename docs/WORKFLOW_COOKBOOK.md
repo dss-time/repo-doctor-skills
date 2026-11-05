@@ -67,9 +67,7 @@ If the previous step has a blocking unknown, the next Skill should stop and ask.
 | Diagnose a CI failure | **ci-failure-diagnosis** | Confirm the first real error and remediation branch |
 | Review a high-risk API, database, or security change | **change-impact-analysis** | Confirm specialist evidence and an atomic plan |
 | Turn research into a report | **research-brief** | Verify sources and authorize an output file |
-| Clean spreadsheet data | **excel-data-quality-check-basic** or **spreadsheet-data-cleaning** | Confirm cleaning rules and a new output path |
 | Turn meeting notes into actions and a presentation | **meeting-notes-to-actions** | Confirm owners, dates, and file output |
-| Review a document, PDF, or spreadsheet | A Basic or enhanced Skill | Confirm tool capability and whether edits are allowed |
 | Author and audit a Skill | **skill-authoring** | Confirm creation scope, generated artifacts, and publication actions |
 
 ## 1. Understand an Unfamiliar Repository
@@ -108,15 +106,14 @@ unknowns. Do not implement fixes.
 ## 2. Move from a Vague Requirement to a Release Gate
 
 **Use when:** A user has an incomplete feature request and wants it delivered safely.  
-**Sequence:** **requirements-clarification [R]** → **requirements-to-spec [R]** → optional **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **feature-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → optional **[GATE] safe-test-implementation [W]** → optional **documentation-sync [W]** → **release-readiness-check [A/GATE]**.
+**Sequence:** **requirements-clarification [R]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **feature-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → optional **[GATE] safe-test-implementation [W]** → optional **documentation-sync [W]** → **release-readiness-check [A/GATE]**.
 
 | Phase | Why it comes here | Main boundary |
 |---|---|---|
-| Decision clarification | **requirements-clarification** reads repository evidence and closes only choices that materially affect behavior, compatibility, security, data, migration, or acceptance. | Asks one focused decision at a time and stops before specification or code. |
-| Specification | **requirements-to-spec** converts settled material decisions into scope, constraints, flows, and testable acceptance criteria. | If a material decision is open, stop and return to clarification; do not plan code or write files. |
-| Delivery slicing | For a large specification, **spec-to-work-items** creates vertical, independently verifiable items with dependencies, conflicts, tests, and parallel groups. | Does not create external issues or replace the code-level `safe-change-plan`. |
+| Decision clarification | **requirements-clarification** reads repository evidence and closes only choices that materially affect behavior, compatibility, security, data, migration, or acceptance. | Uses clarification phase for open choices; proceeds to specification only when requested. |
+| Specification | **requirements-clarification** converts settled material decisions into scope, constraints, flows, and testable acceptance criteria. | If a material decision is open, stop and return to clarification; do not plan code or write files. |
 | Impact analysis | **change-impact-analysis** uses repository evidence to identify affected modules, contracts, tests, and risks. | Does not implement changes. |
-| Implementation plan | **safe-change-plan** turns confirmed inputs into atomic steps with validation and rollback. | Stops and sends work back when requirements are vague or impact is unknown. |
+| Implementation plan | **safe-change-plan** selects atomic-steps or work-items, nesting necessary code steps in delivery slices with verification and rollback. | Stops and sends work back when requirements are vague or impact is unknown. |
 | Implementation | **feature-implementation** implements approved feature slices and supporting tests/docs, validating each before dependent work. | The plan and file scope must be approved before code writes or commands. |
 | Review and tests | **safe-code-review** reviews the change; **test-gap-analysis** identifies gaps; **safe-test-implementation** writes tests only after approval. | Review and gap analysis are not write authorization. |
 | Documentation and gate | Use **documentation-sync** for user-visible behavior, then **release-readiness-check** for GO, GO WITH CONDITIONS, or NO-GO. | The release gate does not release, change versions, create tags, commit, or push. |
@@ -124,7 +121,7 @@ unknowns. Do not implement fixes.
 Close material decisions first, then create the specification:
 
 ```text
-First use requirements-clarification to close material decisions. After they are closed, use requirements-to-spec to turn the settled request into an implementable,
+Use requirements-clarification in clarification phase to close material decisions, then specification phase to produce an implementable,
 verifiable specification:
 
 <paste the original request>
@@ -407,16 +404,15 @@ must remain Proposed. Modify only ADR or architecture documentation.
 
 ## 6. Turn Research into a Deliverable Report
 
-**Use when:** You need to research supplied or online sources and then produce a report or review a PDF.  
-**Sequence:** **research-brief [R+N]** → optional **content-consistency-check [R+T]** → **[GATE] report-writer [W]** → optional **document-review [W]** → when a real PDF exists, **pdf-review [R+T]**.
+**Sequence:** **research-brief [R+N]** → optional **content-consistency-check [R+T]** → **[GATE] report-writer [W]**.
+
+**Use when:** You need to research supplied or online sources and then produce a report.
 
 | Step | Why | Main boundary |
 |---|---|---|
 | Research brief | **research-brief** defines the question, evidence standard, and dates, and prioritizes primary or official sources. | Without network access or supplied material, it must not pretend to have completed current research. |
 | Consistency check | Use **content-consistency-check** when documents disagree on numbers, dates, versions, or conclusions. | Does not choose a “correct” value without authoritative evidence. |
 | Report writing | **report-writer** organizes verified material into a report for a defined audience. | Confirm output format and location before file writes or export; never invent facts. |
-| Document review | **document-review** checks structure, logic, facts, numbers, citations, and formatting; its default is an issue list. | Revises a copy only when requested, preserving meaning and structure. |
-| PDF review | Use **pdf-review** only after a real PDF exists and the required tools are available. | Without rendering or OCR, disclose limits and never invent pages or visual validation. |
 
 Research prompt:
 
@@ -462,76 +458,8 @@ numbers, dates, terms, and citations consistent. State material limitations
 instead of inventing missing facts.
 ```
 
-Review and PDF handoff:
-
-```text
-Use document-review to review this report. First provide required changes,
-recommended changes, and optional polish. Do not rewrite the entire document or
-overwrite the source unless I authorize that separately.
-```
-
-```text
-Use pdf-review to inspect this generated PDF.
-
-State whether it is searchable, scanned, or OCR-derived. Preserve page
-locations where reliable and check missing pages, garbled text, table
-alignment, number conflicts, citations, and layout. Mark rendering or OCR
-checks unverified when the capability is unavailable.
-```
 
 **Safe handoff:** The source ledger must move with the research result into report writing. Network access, document writes, and file export are separate permissions; network access in one step does not authorize later file creation or overwrite.
-
-## 7. Clean Spreadsheet Data Without Losing the Source
-
-**Use when:** You want a data-quality picture first and then a traceable, cleaned copy.  
-**Sequence:** For audit only, **excel-data-quality-check-basic [R]**; for cleaning, **spreadsheet-data-cleaning [W]** → optional **content-consistency-check [R+T]** → optional **report-writer [W]** or **presentation-outline [W]**.
-
-| Choice | When to use it | Boundary |
-|---|---|---|
-| **excel-data-quality-check-basic** | You need a read-only check of missing values, duplicates, types, formulas, and anomalies. | Does not write files, run scripts, or produce cleaned data. |
-| **spreadsheet-data-cleaning** | The user explicitly wants cleaning and the platform has spreadsheet tooling. | Keeps the source read-only, saves a new result, and logs every rule. |
-| **content-consistency-check** | The result must be compared with other documents, reports, or versions. | Reports conflicts without guessing the authoritative value. |
-
-Start with a read-only profile:
-
-```text
-Use excel-data-quality-check-basic for a read-only quality check of <file>.
-
-Report worksheets, columns, types, missing values, duplicates, anomalies,
-formula risks, and indeterminate items. Do not modify the source or create a
-cleaned copy.
-```
-
-When cleaning is confirmed, approve rules and output path first:
-
-```text
-Use spreadsheet-data-cleaning to clean <source file>.
-
-Allowed cleaning rules:
-- <rule 1>
-- <rule 2>
-
-Key fields that must not be guessed or filled:
-New output file:
-Audit log:
-Formulas, row/column counts, and key totals to preserve:
-
-The source must remain unchanged. First show the data profile and proposed
-rules. Stop for confirmation if a rule may delete valid data, alter formula
-meaning, or overwrite the source.
-```
-
-Validate the result:
-
-```text
-Compare the cleaned result with the source for consistency.
-
-Check row and column counts, key fields, date and number formats, formulas,
-duplicate and missing-value statistics, key totals, and the audit log. Separate
-expected changes, unexpected changes, and indeterminate items.
-```
-
-**[GATE]:** Deleting rows, filling key fields, correcting business anomalies, changing formulas, and overwriting files each require separate confirmation. If spreadsheet tooling is unavailable, provide rules and limitations; do not claim an XLSX/CSV was generated or validated.
 
 ## 8. Turn Meeting Notes into Actions and a Presentation
 
@@ -590,66 +518,6 @@ outline by default; do not generate a PPTX.
 ```
 
 **Safe handoff:** Preserve the raw notes as evidence, then preserve the structured result. Human confirmation is a factual-quality gate; writing a report or generating a file is a permission gate. They are not the same approval.
-
-## 9. Route Basic vs. Enhanced Document, PDF, and Spreadsheet Review
-
-**Use when:** You have a Word, PDF, or Excel file but do not know whether to choose a conservative Basic check or enhanced processing.  
-**Sequence:** Route by task intent and actual tool capability. Never treat missing tools as evidence that enhanced review was completed.
-
-### Routing decision
-
-1. **Need only a conservative, read-only check of accessible text or structure?**
-   - PDF: **pdf-review-basic [R]**
-   - Word: **word-document-review-basic [R]**
-   - Excel: **excel-data-quality-check-basic [R]**
-2. **Need structure, logic, citations, and formatting review, with a possible copy revision after approval?**
-   - Use **document-review [W]**.
-3. **Need PDF page locations, tables, missing-page checks, OCR status, or visual-layout inspection?**
-   - Use **pdf-review [R+T]** and require the relevant extraction, rendering, or OCR tools.
-4. **Need to clean Excel/CSV data and generate a new file?**
-   - Use **spreadsheet-data-cleaning [W]**.
-5. **Need to compare terms, numbers, dates, links, or conclusions across files?**
-   - Use **content-consistency-check [R+T]**.
-
-Basic PDF example:
-
-```text
-Use pdf-review-basic for a read-only basic review of <file>.
-
-Report issues, evidence, and unknowns only from text and structure that are
-reliably accessible. Do not claim OCR, page rendering, or visual inspection,
-and do not modify the file.
-```
-
-Enhanced PDF example:
-
-```text
-Use pdf-review to inspect <file>.
-
-I need page-specific, table, and layout findings. First confirm whether text
-extraction, page rendering, and OCR are reliable. State any degraded scope when
-a capability is missing. Do not invent page numbers, missing pages, or visual
-findings.
-```
-
-Basic and enhanced Word examples:
-
-```text
-Use word-document-review-basic for a read-only basic review of <file>. Report
-verifiable structure, terminology, numbers, and obvious issues. Do not modify
-the file or claim to have checked inaccessible formatting.
-```
-
-```text
-Use document-review to check <file> for structure, logic, completeness,
-terminology, facts, numbers, citations, grammar, and formatting consistency.
-
-By default, provide an issue list and suggested changes. Before any edit,
-describe which formatting can be preserved, the output-copy location, and
-anything that cannot be verified. Do not overwrite the source without approval.
-```
-
-**[GATE]:** “Read-only” and “requires no tools” are different concepts. When tools are unavailable, narrow the conclusion or stop. Do not switch to a Basic Skill while still claiming OCR, rendering, formula verification, or format fidelity. Source files remain read-only by default; transformations and revisions go to a new location.
 
 ## 10. Author a Skill and Audit It Before Release
 
@@ -757,4 +625,4 @@ The only machine-readable relationship source is `packs/engineering/repo-doctor/
 | `session-handoff` | Sanitized continuation brief with artifact references. | OS temporary output by default; explicit approval for a project path |
 | `release-preparation` | Read-only release gate. | None; publishing is external |
 
-A read-only output is evidence, never write authorization. `decision-prototype` requires an explicit write gate and cannot access production systems. `session-handoff` may create only a sanitized OS-temporary brief by default; project writes require explicit authorization. `spec-to-work-items` returns response Markdown only and cannot persist files or create tasks. Golden Workflow fixtures verify contracts, not live-model routing accuracy.
+A read-only output is evidence, never write authorization. `decision-prototype` requires an explicit write gate and cannot access production systems. `session-handoff` may create only a sanitized OS-temporary brief by default; project writes require explicit authorization. `safe-change-plan` returns response Markdown only and cannot persist files or create tasks. Golden Workflow fixtures verify contracts, not live-model routing accuracy.

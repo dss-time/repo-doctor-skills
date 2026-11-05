@@ -16,6 +16,7 @@ import { createTask, captureEvidence, operationBinding, digest, taskBinding, nex
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const option = (name, fallback) => { const i = process.argv.indexOf(name); return i < 0 ? fallback : process.argv[i + 1]; };
 const selected = option('--case', 'all');
+const requestedModel = option('--model', null);
 if (!['all', 'simple', 'workflow', 'review-core'].includes(selected)) throw new Error('Choose all, simple, workflow, or review-core');
 const resumeReport = option('--resume-report', null);
 const resumeWorkspace = option('--resume-workspace', null);
@@ -30,7 +31,7 @@ const inventory = discoverSkillInventory(repo);
 const environment = { node: process.version, platform: process.platform };
 const report = { schema_version: 1, project_version: JSON.parse(readFileSync(path.join(repo, 'package.json'), 'utf8')).version, content_binding: liveEvidenceBinding(repo), date: new Date().toISOString(), result: 'INCOMPLETE', cases: [],
   cli_version: spawnSync('codex', ['--version'], { encoding: 'utf8' }).stdout.trim(),
-  model_selection: 'existing user configuration; no model override', core_sha256: digest(readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.mjs'), 'utf8')),
+  model_selection: requestedModel ?? 'existing user configuration; no model override', core_sha256: digest(readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.mjs'), 'utf8')),
   limitations: ['Host-driven serial CLI turns, not universal native automatic orchestration.', 'Only synthetic fixtures; not production or cross-client validation.', 'No old/new matched-pair Token comparison.'] };
 const clean = value => JSON.parse(JSON.stringify(value).replaceAll(temp, '$TRIAL_ROOT').replaceAll(repo, '$REPO')
   .replaceAll('/Users/ep', '$USER_HOME').replace(/\bsk-[A-Za-z0-9_-]{20,}\b/g, '[REDACTED]'));
@@ -63,10 +64,10 @@ async function runCodex(id, root, prompt, sandbox) {
   const schemaPath = path.join(output, `${id}.schema.json`);
   const reviewing = ['review', 'core-review'].includes(id);
   if (reviewing) { writeFileSync(schemaPath, JSON.stringify(independentReviewSchema)); prompt += '\nReturn the final independent verdict using the required JSON schema. Do not classify an evidence gap as clear.'; }
-  const args = ['exec', '--ephemeral', '--json', '--color', 'never', '--skip-git-repo-check', '--sandbox', sandbox, '-C', root,
+  const args = ['exec', ...(requestedModel ? ['--model', requestedModel] : []), '--ephemeral', '--json', '--color', 'never', '--skip-git-repo-check', '--sandbox', sandbox, '-C', root,
     '--disable', 'plugins', '--disable', 'apps', '--disable', 'multi_agent', '--disable', 'memories',
     ...(inventory.get(invokedSkill).permissions.run_shell_commands ? [] : ['--disable', 'shell_tool', '--disable', 'unified_exec']),
-    '-c', 'approval_policy="never"', '-c', 'analytics.enabled=false', '-c', 'sandbox_workspace_write.network_access=false', ...(reviewing ? ['--output-schema', schemaPath] : []), '-'];
+    '-c', 'approval_policy="never"', '-c', 'model_reasoning_effort="medium"', '-c', 'analytics.enabled=false', '-c', 'sandbox_workspace_write.network_access=false', ...(reviewing ? ['--output-schema', schemaPath] : []), '-'];
   const sqlite = path.join(temp, 'sqlite', id); mkdirSync(sqlite, { recursive: true });
   const start = Date.now();
   const run = await new Promise(resolve => {
@@ -89,7 +90,7 @@ async function runCodex(id, root, prompt, sandbox) {
 }
 function attest(task, host, input) {
   const stage = input.claims?.find(c => c.startsWith('stage:'))?.slice(6);
-  const record = captureEvidence(host.root, { ...input, operation_binding: operationBinding(host), ...(stage ? { request_binding: digest(host.requests[stage]), execution_attempt: task.steps[stage].attempts } : {}), task_binding: taskBinding(task), coverage_complete: true, result: 'pass' }, environment);
+  const record = captureEvidence(host.root, { ...input, operation_binding: operationBinding(host), ...(stage ? { request_binding: digest(host.requests[stage]), execution_attempt: task.steps[stage].attempts, execution_nonce: task.steps[stage].execution_nonce } : {}), task_binding: taskBinding(task), coverage_complete: true, result: 'pass' }, environment);
   task.evidence.push(record); host.trustedEvidence.add(digest(record)); return record;
 }
 function hostFor(task, root) { return { root, registry, inventory, environment, trustedEvidence: new Set(), scopeReviewed: true, continuationAuthorized: true,

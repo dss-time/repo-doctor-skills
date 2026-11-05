@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "project_version": "0.10.0",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "89e799a9e0858804dbe5ec6dd8423c1a09a5acfcf10bd90848d1b62356120808",
+    "runtime_sha256": "e5f4e537eff2e59527b7bb0ed85236a913d380bbc0b60491ea7594cab5b86a8b"
+  },
+  "date": "2026-11-05T07:43:35.318Z",
+  "result": "BLOCKED",
+  "cases": [
+    {
+      "case": "simple",
+      "result": "BLOCKED",
+      "verified_skill_loaded": true,
+      "changed_files": [],
+      "task": {
+        "schema_version": 2,
+        "id": "simple",
+        "goal": "Correct teh to the in README only",
+        "acceptance": [
+          "typo"
+        ],
+        "workflow_id": null,
+        "skill_id": "documentation-sync",
+        "registry_binding": "b7efc4163fa5b5c3678cb708c404328d376c34ac2d69008a9f6ccc66e3df434f",
+        "decisions": [],
+        "scope": {
+          "files": [],
+          "modules": [],
+          "interfaces": []
+        },
+        "risks": [],
+        "permission_refs": [],
+        "evidence": [],
+        "changes": [],
+        "unresolved": [],
+        "next_actions": [
+          {
+            "stage": "task",
+            "skill": "documentation-sync",
+            "action": "execute",
+            "reason": "applicable_stage",
+            "mode": "manual_handoff"
+          }
+        ],
+        "current_stage": "task",
+        "steps": {
+          "task": {
+            "status": "running",
+            "attempts": 1,
+            "evidence_ids": [],
+            "reason": "applicable_stage",
+            "request_binding": "290a95b240126312a39f365274aa7e9681546f127c902c68b6af9aef1757c235",
+            "execution_nonce": "1aac6d4d-2820-4e1e-a491-a77c94694be9",
+            "effect_state": "uncertain"
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "stage": "task",
+            "status": "running",
+            "reason": "applicable_stage"
+          }
+        ]
+      },
+      "run": {
+        "id": "simple",
+        "sandbox": "workspace-write",
+        "host_loaded_skill": {
+          "slug": "documentation-sync",
+          "path": ".agents/skills/documentation-sync/SKILL.md",
+          "sha256": "2a5e71bbd349b12b6988b80e30a396e37cd61c985dc97d77e29c6a08a5cd2fd4"
+        },
+        "permission_violations": [],
+        "exit_code": 1,
+        "timed_out": false,
+        "duration_ms": 19696,
+        "commands": [],
+        "tools": [],
+        "tool_item_count": 0,
+        "final_answer": "",
+        "answer": "",
+        "completed": false,
+        "usage": null,
+        "errors": [
+          {
+            "type": "error",
+            "message": "You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM."
+          },
+          {
+            "type": "turn.failed",
+            "error": {
+              "message": "You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM."
+            }
+          }
+        ],
+        "prompt_sha256": "9641578fea6bb542f922993096b7378bd832691ea84675d33b12d837a22d9e26",
+        "argv": [
+          "exec",
+          "--model",
+          "gpt-6.1-sol",
+          "--ephemeral",
+          "--json",
+          "--color",
+          "never",
+          "--skip-git-repo-check",
+          "--sandbox",
+          "workspace-write",
+          "-C",
+          "$TRIAL_ROOT/simple",
+          "--disable",
+          "plugins",
+          "--disable",
+          "apps",
+          "--disable",
+          "multi_agent",
+          "--disable",
+          "memories",
+          "-c",
+          "approval_policy=\"never\"",
+          "-c",
+          "model_reasoning_effort=\"medium\"",
+          "-c",
+          "analytics.enabled=false",
+          "-c",
+          "sandbox_workspace_write.network_access=false"
+        ]
+      }
+    }
+  ],
+  "cli_version": "codex-cli 0.166.0-alpha.6",
+  "model_selection": "gpt-6.1-sol",
+  "core_sha256": "3cdc7332f3bc11664d30788c34a598b633d0c67f97c3729ed1eb2d4383b5c328",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

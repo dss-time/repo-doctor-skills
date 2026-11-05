@@ -1,4 +1,5 @@
-import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import { randomUUID } from "node:crypto";
+import { readFileSync, renameSync, writeFileSync, rmSync } from "node:fs";
 import { assertLiveEvidenceBinding } from "./live-evidence-binding.mjs";
 
 export function loadCheckpoint(filename, identity) {
@@ -12,8 +13,16 @@ export function loadCheckpoint(filename, identity) {
   return saved;
 }
 
+export function writeAtomicReport(filename, value) {
+  const temporary = `${filename}.${process.pid}.${randomUUID()}.tmp`;
+  try {
+    writeFileSync(temporary, `${JSON.stringify(value, null, 2)}\n`, { flag: "wx", mode: 0o600 });
+    renameSync(temporary, filename);
+  } finally {
+    rmSync(temporary, { force: true });
+  }
+}
+
 export function saveCheckpoint(filename, value) {
-  const temporary = `${filename}.tmp`;
-  writeFileSync(temporary, `${JSON.stringify({ ...value, result: "INCOMPLETE" }, null, 2)}\n`);
-  renameSync(temporary, filename);
+  writeAtomicReport(filename, { ...value, result: "INCOMPLETE" });
 }

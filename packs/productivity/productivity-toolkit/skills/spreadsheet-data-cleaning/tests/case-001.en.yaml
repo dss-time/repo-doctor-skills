@@ -1,9 +1,0 @@
-input: "Clean this spreadsheet into a new file, preserve ambiguous records, and provide before/after counts."
-expected:
-  must_include:
-    - source profile
-    - audit log
-    - validation
-  must_not:
-    - overwrite source
-    - guessed critical value

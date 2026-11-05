@@ -9,4 +9,4 @@ Read `../../references/productivity-evidence-and-file-safety.md` and `references
 5. Report both sides, context, impact, severity, confidence, and proposed authority. Do not silently choose the correct value; select one only when authoritative evidence establishes it.
 6. Summarize systemic patterns and a reconciliation sequence. Keep the source artifacts read-only.
 
-Use `document-review` when the request is primarily structure, logic, grammar, and completeness within one document.
+Requests primarily about structure, logic, grammar, and completeness within one document are outside this Skill’s scope.

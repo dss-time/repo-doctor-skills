@@ -1,0 +1,49 @@
+{
+  "kind": "unified-current-change-validation",
+  "generated_at": "2026-11-05T06:01:48.002Z",
+  "result": "PASS",
+  "model": "gpt-6.1-sol",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "3228e74137f89915ed6e978d9f8f577587ea833e1b7ae72f36a907374f86226a",
+    "runtime_sha256": "4cb268ecf21e157dc01000e60367c8714de75ec6e1c228b135079454fe06fb09"
+  },
+  "coverage": {
+    "active_skills": 33,
+    "core_cases": 165,
+    "workflow_runs": 10,
+    "workflow_steps": 40,
+    "mode_cases": 65,
+    "permission_cases": 14,
+    "security_baseline": 8,
+    "security_contextual": 8,
+    "user_workspace_action_cases": 4,
+    "targeted_change_cases": 8,
+    "total_scored_cases": 312
+  },
+  "local_checks": {
+    "full_npm_test": "PASS",
+    "metadata_schema_workflows": "PASS",
+    "generated_quality": "PASS",
+    "documentation": "PASS",
+    "development_consistency": "PASS",
+    "script_syntax": {
+      "result": "PASS",
+      "count": 65
+    }
+  },
+  "reports": [
+    "advanced.json",
+    "security-contextual.json",
+    "security-baseline.json",
+    "user-safety.json",
+    "change-regression.json"
+  ],
+  "correction": "Initial host verifier /tmp symlink traversal issue corrected; original outputs reverified and all action cases rerun.",
+  "limitations": [
+    "Primary-agent semantic inspection; no independent second model reviewer.",
+    "Synthetic fixtures and supplied-content reviews; no real backend, production, hardware or cross-client integration.",
+    "C code assessed statically by model; no unsafe native execution.",
+    "Context injection is supplied text rather than a malicious native tool-response pipeline."
+  ]
+}

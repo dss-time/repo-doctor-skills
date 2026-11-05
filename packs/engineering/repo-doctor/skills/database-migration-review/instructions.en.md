@@ -15,3 +15,7 @@ Review one concrete migration using repository evidence. Do not execute it or co
 5. Verify expand/migrate/contract ordering and old/new application compatibility.
 6. Recommend backup, dry run, sampling, checksums or invariants, canary/gray rollout, observability, stop conditions, and rollback.
 7. Report evidence, severity, impact, confidence, validation, and unknowns without executing or editing.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

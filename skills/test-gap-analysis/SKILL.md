@@ -47,6 +47,12 @@ Analyze coverage gaps for a requirement, root cause, existing test suite, or Git
 8. Recommend focused test cases and verified commands without writing test code.
 9. State evidence limits and the inputs needed to resolve unknown coverage.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before a separate test-gap pass, map acceptance criteria to current tests and valid execution evidence. Reuse sufficient coverage evidence; request a separate analysis or test change only for missing, stale or unknown coverage. When verification is deferred, retain the pending coverage check instead of reporting coverage as proven.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 
 1. Analysis scope
@@ -105,6 +111,12 @@ Do not include generated test code.
 7. 按故障影响、发生概率、变更风险、可观察性和测试价值排序，而不是只看覆盖率。
 8. 建议聚焦的测试用例和已验证命令，但不编写测试代码。
 9. 说明证据限制和解决未知覆盖所需的输入。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+进入独立测试缺口阶段前，将验收项映射到当前测试和有效执行证据。已有充分覆盖证据直接复用，仅对缺失、过期或未知覆盖进行独立分析或测试修改。延期验证时保留待检查项，不将覆盖声明为已证实。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 

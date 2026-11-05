@@ -93,3 +93,7 @@ Record every executed diagnostic with its exact command, working directory, exit
 8. Separate `trigger_condition`, `direct_cause`, and `systemic_root_cause`. Do not call the trigger or visible exception the root cause unless causal evidence supports that level.
 9. Recommend a regression test or repeatable regression check at the observable boundary, plus the smallest causal repair direction. Do not create the test or implement the fix.
 10. Report `Observed`, `Reproduced`, `Inferred`, `Unverified`, and `Blocked` evidence honestly. State exactly what evidence would raise confidence.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

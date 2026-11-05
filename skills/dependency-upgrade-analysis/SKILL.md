@@ -41,6 +41,8 @@ Analyze one defined dependency upgrade. Keep manifests, lockfiles, code, configu
 5. Assess build, test, configuration, deployment, and rollback impact.
 6. Recommend staged upgrade, focused validation, compatibility controls, rollback point, and stop conditions without editing files.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
 # Output Contract
 1. Scope and versions
 2. Evidence and sources with access dates
@@ -87,6 +89,8 @@ Analyze one defined dependency upgrade. Keep manifests, lockfiles, code, configu
 4. 将主张分类为仓库证据、已验证官方证据、推断或未知。
 5. 评估构建、测试、配置、部署和回滚影响。
 6. 不修改文件，给出分阶段升级、聚焦验证、兼容控制、回滚点和停止条件。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
 
 # 输出契约
 1. 范围与版本

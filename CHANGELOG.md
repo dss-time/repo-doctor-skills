@@ -8,6 +8,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-11-05
+
+### Added
+
+- Language/runtime profiles and user-workspace safety checks with real-model regression fixtures.
+
+### Fixed
+
+- Preserve authorization, data fields, deferred test timing and concurrent user edits in applicable workflows.
+
+### Documentation
+
+- Refresh installation, Skill migration and release validation instructions for the 33-Skill stable distribution.
+
+### Changed
+
+- Consolidate requirements/specification and atomic/work-item planning into their existing owners, leaving 33 active Skills.
+- Remove six PDF/Word/Excel Skills and the empty office Pack.
+- Advance Repo Doctor to 0.12.0, Productivity Toolkit to 0.2.0 and Skill Maintainer to 0.2.1.
+
+### Security
+
+- Apply language/runtime-specific checks, scoped authorization and deferred-validation dispatch.
+- Preserve user permission/business invariants, existing data, isolated command targets and concurrent edits.
+- Strengthen credential scanning, real-model tool/message evidence and history-preserving checkpoint recovery.
+
+### Maintenance
+
+- Retain meaningful regression suites and remove a superseded checkpoint and duplicate development report.
+- Bind final release validation and packaged installation checks to the new version.
+
 ## [0.9.0] - 2026-11-04
 
 ### Added
@@ -582,7 +613,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.10.0...HEAD
 [0.9.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.2...v0.9.0
 [0.9.0-beta.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...v0.9.0-beta.2
 [0.9.0-beta.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...v0.9.0-beta.1
@@ -603,3 +634,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [0.3.0-rc.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.2.0...v0.3.0-rc.1
 [0.2.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.0.1...v0.2.0
 [0.1.0]: https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.0.1
+
+[0.10.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0...v0.10.0

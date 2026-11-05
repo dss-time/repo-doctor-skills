@@ -72,12 +72,24 @@ Read `references/testing-contract.en.md` for mode selection, evidence and public
 
 Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Explicit user-directed deferred verification is an exception to the per-slice test schedule and test-first execution timing above. Apply the execution-boundary deferral protocol, record changes as implemented with verification deferred, and do not claim verified completion.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
+Before test-side edits, recheck file baselines and preserve concurrent changes. Never remove rejection cases or weaken permission/business assertions to get green. Before executing checks, establish actual resource isolation and setup/teardown effects; unknown isolation blocks the command.
+
 # Output Contract
 
 Default `fast`: protected behavior, selected test_mode and actual test command/result. Explain limits when production changes, failures or unverified evidence matter.
 `standard` adds observable_behavior, test_boundary, red/green or sensitivity evidence, regression results and, when applicable, production_change_required and next_recommended_skill.
 `audit` adds command preflight, permissions, mock rationale and the full command ledger.
 Only test_first requires an observed expected failure; never invent red, green or sensitivity. Omit empty fields.
+
+If the user deferred checks, include `verification_status: verification_deferred`, the instruction source and pending acceptance/check mapping. Distinguish implemented changes from verified delivery.
+
+When relevant, briefly state preserved authorization/business behavior, existing-data update evidence, validation target/isolation or unrun reason, and preexisting/concurrent edit protection. Unresolved safety gaps or edit conflicts keep affected work blocked/partial. Omit inapplicable fields and retain deferred-verification status.
 
 # 简体中文
 
@@ -130,10 +142,10 @@ Only test_first requires an observed expected failure; never invent red, green o
 1. 用项目领域语言定义本次唯一受保护行为，并引用需求、测试缺口、根因、已验证修复或观察到的旧行为。
 2. 确认公共测试边界：调用者可见接口、状态转换、输出、错误或副作用；不测试私有方法和内部调用顺序。
 3. 检查现有测试位置、框架、fixture、辅助代码、setup、CI 约定，以及准确的定向与回归命令。
-4. 完成命令预检，确认测试侧写权限，并声明 `test_mode`、输出模式、适用时的 Mock 理由和生产代码停止边界。
+4. 完成命令、实际资源及 setup/teardown 副作用预检；隔离未知时不运行。确认当前文件基线和测试侧写权限，并声明 `test_mode`、输出模式、适用时的 Mock 理由和生产代码停止边界。
 5. 新增一个能针对目标行为可靠失败的最小可信测试；不得先写完全部未来测试形成水平切片。
 6. 按共享测试契约建立并记录所选模式要求的证据；执行命令但出现无关失败，不能证明目标行为。
-7. 只实施最小测试侧改动。行为需要生产代码时，在取得所选模式要求的证据后停止测试侧工作，交给上文选定的生产实施承接者；生产编辑必须已有用户授权。
+7. 写入前复核待改区块并保护已有/并发修改，只实施最小测试侧改动；不删除拒绝场景或削弱权限/业务断言以取得绿灯。行为需要生产代码时，在取得所选模式要求的证据后停止测试侧工作，交给上文选定的生产实施承接者；生产编辑必须已有用户授权。
 8. 授权实施状态存在后，重跑同一定向命令验证绿灯；当前切片未解决前不处理第二个行为。
 9. 所有定向检查变绿后才整理测试代码；只消除当前测试中有价值的重复，不重构生产代码。
 10. 运行有证据支持的最小回归范围，报告命令、文件、证据状态、限制和下一 Skill。
@@ -148,9 +160,19 @@ Only test_first requires an observed expected failure; never invent red, green o
 
 用户请求已明确授权本 Skill 范围时直接完成，不重复索取授权。完整流程需要其他职责时，仅在已有流程授权下交给对应 Skill；本 Skill 自身权限不扩大。
 
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+用户明确要求延期验证时，作为上述逐切片测试及 test-first 执行时序的例外，遵循执行边界中的延期协议。将改动记录为已实施、验证延期，不声明验证完成。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
+
 # 输出契约
 
 默认 `fast`：受保护行为、选择的 test_mode 和实际测试命令/结果。只在需要生产修改或存在失败、未验证项时解释限制。
 `standard` 增加 observable_behavior、test_boundary、红/绿或敏感性证据、回归结果，以及适用时的 production_change_required、next_recommended_skill。
 `audit` 增加命令预检、权限、Mock 理由和完整命令账本。
 只有 test_first 要求实际预期失败；不得编造 red、green 或敏感性。无需输出空字段。
+
+用户要求延期检查时，输出 `verification_status: verification_deferred`、指令来源及待验证验收项/检查映射，区分已实施改动与已验证交付。
+
+仅在相关时简述保留的权限/业务行为、已有数据更新依据、验证目标/隔离或未运行原因，以及已有/并发改动保护情况。未解决安全缺口或编辑冲突使受影响工作保持阻塞/部分完成。省略不适用字段，保留延期验证状态。

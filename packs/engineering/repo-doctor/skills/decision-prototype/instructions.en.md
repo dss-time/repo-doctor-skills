@@ -21,7 +21,7 @@ Read `references/prototype-checklist.en.md` only when designing states, deciding
 - Use in-memory state, synthetic public-safe data, and local stubs. If the question genuinely concerns persistence or an external dependency, stop for a separately approved non-production environment and data boundary.
 - Never install a dependency without explicit authorization. Prefer the existing runtime and components.
 - Do not automatically delete prototype files. Recommend deletion, retention as evidence, or formal reimplementation; execute deletion only on a separate explicit request.
-- For production work, route unsettled decisions/specifications to `requirements-to-spec` after clarification, missing sequencing to `safe-change-plan`, settled feature delivery to `feature-implementation`, and local fixes to `safe-fix-implementation`. Reuse existing production authorization; ask only for missing scope.
+- For production work, route unsettled decisions/specifications to `requirements-clarification` after clarification, missing sequencing to `safe-change-plan`, settled feature delivery to `feature-implementation`, and local fixes to `safe-fix-implementation`. Reuse existing production authorization; ask only for missing scope.
 
 ## Workflow
 
@@ -39,3 +39,7 @@ Read `references/prototype-checklist.en.md` only when designing states, deciding
 ## Stop conditions
 
 Return `Blocked` for missing write authorization, unsafe location, unavailable runtime, required production access, real credentials/data, unapproved dependency installation, destructive cleanup, or a validation question too broad to answer with a minimal prototype.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

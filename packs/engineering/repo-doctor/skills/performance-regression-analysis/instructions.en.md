@@ -15,3 +15,5 @@ Analyze one specific performance regression. Keep production code and configurat
 5. Check variance, sample size, cold/warm effects, environment drift, and measurement bias before attributing cause.
 6. Rank hypotheses by impact, evidence, confidence, and experiment cost; propose falsifiable validation experiments and optimization priorities.
 7. Do not optimize code; report exact evidence, locations, impact, severity/priority, confidence, validation, and unknowns.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.

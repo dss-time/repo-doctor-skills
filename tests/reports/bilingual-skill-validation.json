@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-04T07:41:22.796Z",
-  "project_version": "0.9.0",
+  "generated_at": "2026-11-05T07:42:46.858Z",
+  "project_version": "0.10.0",
   "semantic_parity_method": "Deterministic comparison of localized heading structure, declared backticked modes, evidence states, active-Skill handoffs, and example intent counts. Live Codex semantic review is reported separately.",
   "summary": {
-    "active_skills": 41,
-    "files_complete": 41,
-    "metadata_complete": 41,
-    "semantic_parity": 41,
-    "passed": 41
+    "active_skills": 33,
+    "files_complete": 33,
+    "metadata_complete": 33,
+    "semantic_parity": 33,
+    "passed": 33
   },
   "skills": [
     {
@@ -35,15 +35,7 @@
       "issues": []
     },
     {
-      "skill": "requirements-to-spec",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "spec-to-work-items",
+      "skill": "safe-change-plan",
       "files_complete": true,
       "metadata_complete": true,
       "semantic_parity": true,
@@ -84,14 +76,6 @@
     },
     {
       "skill": "change-impact-analysis",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "safe-change-plan",
       "files_complete": true,
       "metadata_complete": true,
       "semantic_parity": true,
@@ -251,30 +235,6 @@
       "issues": []
     },
     {
-      "skill": "pdf-review-basic",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "word-document-review-basic",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "excel-data-quality-check-basic",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
       "skill": "report-writer",
       "files_complete": true,
       "metadata_complete": true,
@@ -284,30 +244,6 @@
     },
     {
       "skill": "research-brief",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "spreadsheet-data-cleaning",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "document-review",
-      "files_complete": true,
-      "metadata_complete": true,
-      "semantic_parity": true,
-      "broken_links": [],
-      "issues": []
-    },
-    {
-      "skill": "pdf-review",
       "files_complete": true,
       "metadata_complete": true,
       "semantic_parity": true,

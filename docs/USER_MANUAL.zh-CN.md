@@ -1,6 +1,6 @@
 # Repo Doctor Skills 用户手册
 
-> v0.9.0 源码：41 个 Skill / Repo Doctor 28 个。GitHub v0.9.0 包含新增功能实施入口；npm 0.9.0 支持推荐的 7 个及全部 41 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
+> 当前源码：33 个 Skill / Repo Doctor 26 个。GitHub v0.10.0 包含新增功能实施入口；npm 0.10.0 支持推荐的 7 个及全部 33 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
 
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 
@@ -16,9 +16,9 @@
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-按提示选择 Skill 和目标 Agent。这个入口可发现全部 41 个 active Skill，默认安装到当前项目，无需源码构建。加 `-g` 可在所有项目使用。单项安装加 `--skill safe-code-review`；为 Codex 完整安装加 `--skill '*' -a codex`。复制安装的 Skills 使用 `npx skills@latest check` 和 `npx skills@latest update` 检查和更新；新增 Skill 再运行 `add` 选择。
+按提示选择 Skill 和目标 Agent。这个入口可发现全部 33 个 active Skill，默认安装到当前项目，无需源码构建。加 `-g` 可在所有项目使用。单项安装加 `--skill safe-code-review`；为 Codex 完整安装加 `--skill '*' -a codex`。复制安装的 Skills 使用 `npx skills@latest check` 和 `npx skills@latest update` 检查和更新；新增 Skill 再运行 `add` 选择。
 
-也可以安装完整 Codex 工程插件（28 个 Skill）：
+也可以安装完整 Codex 工程插件（26 个 Skill）：
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -47,13 +47,13 @@ npx repo-doctor-skills install
 
 `--agent codex` 会显式选择 Codex。安装器不会仅因为某个目录存在就认定用户正在使用对应 Agent；没有显式参数时，唯一一个已配置的 `CODEX_HOME` 或 `AGENTS_HOME` 会被视为可靠信号。两者同时存在时，安装器在写入前安全退出；两者都不存在时，安全安装到共享 `~/.agents/skills`，并打印准确目标。
 
-### 完整安装：全部 41 个 active Skill
+### 完整安装：全部 33 个 active Skill
 
 ```bash
 npx repo-doctor-skills install --preset full
 ```
 
-v0.9.0 共 41 个 active Skill，其中 Repo Doctor 为 28 个、三个插件合计 38 个。另有 3 个 Document Data Doctor Skill 只进入常规构建。npm 和源码 Full 安装均包含全部 41 个，包括 feature-implementation。
+当前源码共 33 个 active Skill，其中 Repo Doctor 为 26 个，三个插件合计 33 个。PDF、Word、Excel 相关的 6 个 Skill 已删除。npm 0.10.0 Full 安装包含 33 个；本地安装当前源码也可运行 `node scripts/install.mjs --preset full`。
 
 ### Individual
 
@@ -103,7 +103,7 @@ Router 会：
 | 完成一个小范围修复 | `$safe-fix-implementation` | `修复这个已确认问题；只授权修改 <文件>。` |
 | 审查代码 | `$safe-code-review` | `只审查当前 diff，不要修复。` |
 | 澄清需求 | `$requirements-clarification` | `只追问会实质改变这项工作的关键问题。` |
-| 形成可测试规格 | `$requirements-to-spec` | `把这些已确定的需求转成验收标准。` |
+| 形成可测试规格 | `$requirements-clarification` | `把这些已确定的需求转成验收标准。` |
 | 比较不确定方案 | `$decision-prototype` | `用一次性原型比较这两个方案。` |
 | 分析架构摩擦 | `$architecture-deepening-analysis` | `分析这些重复耦合，不要重构。` |
 | 检查候选发布 | `$release-readiness-check` | `检查这个版本能否发布，但不要执行发布。` |
@@ -140,10 +140,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.9.0`，选择该版本时使用：
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.10.0`，选择该版本时使用：
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.9.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

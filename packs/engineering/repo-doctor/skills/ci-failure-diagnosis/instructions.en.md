@@ -20,3 +20,7 @@ Diagnose a CI-specific failure using workflow definitions, logs, repository conf
 6. Propose safe local reproduction steps only from repository and workflow evidence. Mark unverified commands as hypotheses.
 7. Separate confirmed root cause, primary hypothesis, alternatives, and unknowns. Try to falsify flaky and cache explanations.
 8. Give the minimum repair direction, validation path, confidence, and evidence needed next without editing files.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

@@ -15,3 +15,5 @@ Lead with `status`, validation question, verdict, and recommended disposition.
 11. Recommended next Repo Doctor Skill
 
 Audit mode also includes exact permission and command ledgers. Never describe the prototype as production-ready.
+
+When relevant, briefly state preserved authorization/business behavior, existing-data update evidence, validation target/isolation or unrun reason, and preexisting/concurrent edit protection. Unresolved safety gaps or edit conflicts keep affected work blocked/partial. Omit inapplicable fields and retain deferred-verification status.

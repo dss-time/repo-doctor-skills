@@ -64,8 +64,6 @@ const workflowDefinitions = [
     },
     steps: [
       "requirements-clarification",
-      "requirements-to-spec",
-      "spec-to-work-items",
       "safe-change-plan",
       "safe-test-implementation",
       "feature-implementation",

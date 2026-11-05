@@ -36,3 +36,7 @@ Tailor every mode to a user-provided next-session goal. If none is provided, opt
 ## Completion and Failure Conditions
 
 Complete when the brief is sufficient to choose and verify the next action without repeating completed work. Mark unavailable repository state, command results, or intent `Unverified`. Return `Blocked` only for required missing context, an unsafe target path, or unavailable temporary storage; never fall back to the project directory without authorization.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

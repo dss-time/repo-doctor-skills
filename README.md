@@ -8,9 +8,9 @@
 Focused Skills for debugging, code review, fixes, and tests.
 
 
-The current version is **0.9.0**, promoted to a stable release from the validated 0.9.0-beta.2. See [release notes](docs/RELEASE_NOTES_0.9.0.md) and [validation](docs/RELEASE_VALIDATION_0.9.0.md).
+The prepared stable release is **0.10.0** with 33 Skills; final publication is pending release gates. See [release notes](docs/RELEASE_NOTES_0.10.0.md) and [current validation](tests/reports/live-codex-skill-validation-0.10.0.json).
 
-The equivalent Beta Skill content passed **328/328** on GPT-6.1 Sol low. Installation CI passed on Linux, macOS and Windows with Node 18 and current LTS.
+The final release Live-model report covers 284 scored core/workflow/mode/permission cases on GPT-6.1 Sol. Additional development security and user-workspace fixtures are recorded separately. Installation compatibility is checked by CI on Linux, macOS and Windows with Node 18 and current LTS.
 
 ## Start in 30 seconds
 
@@ -32,7 +32,7 @@ Authorized multi-stage tasks can use [serial workflow coordination and evidence 
 
 ## Codex plugin
 
-For the complete engineering collection (28 Skills):
+For the complete engineering collection (26 Skills):
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -63,7 +63,7 @@ npx skills@latest add dss-time/repo-doctor-skills --skill repo-doctor-router req
 
 ## Full
 
-Install all 41 Skills for Codex:
+Install all 33 source Skills for Codex:
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills --skill '*' -a codex
@@ -94,21 +94,21 @@ This alternative installs seven starter Skills by default and supports `en`, `zh
 
 The stable npm installer replaces selected same-name Skill directories by default.
 
-## v0.9.0 stable release
+## v0.10.0 stable release
 
-The source contains 41 Skills (28 in Repo Doctor) and 38 ChatGPT ZIPs. The source Beta GPT-6.1 Sol low validation passed **328/328**: 205 core, 44 workflow steps, 65 mode/verdict and 14 permission cases. [Release notes](docs/RELEASE_NOTES_0.9.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
+Version 0.10.0 contains 33 Skills (26 in Repo Doctor) and 33 ChatGPT ZIPs. Six PDF/Word/Excel Skills have been removed and two requirements/planning pairs have been consolidated. Final Live-model PASS evidence is bound to the release source. [Release notes](docs/RELEASE_NOTES_0.10.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-Pin the GitHub plugin to `v0.9.0`:
+Pin the GitHub plugin to `v0.10.0`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.9.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
-Install the exact npm version (seven recommended Skills, or all 41):
+Install the exact npm version (seven recommended Skills, or all 33):
 
 ```bash
-npx repo-doctor-skills@0.9.0 install --agent codex
-npx repo-doctor-skills@0.9.0 install --preset full --agent codex
+npx repo-doctor-skills@0.10.0 install --agent codex
+npx repo-doctor-skills@0.10.0 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.
@@ -122,3 +122,11 @@ Choose one installation method per agent. The official skills CLI installs from 
 - [Contributing](CONTRIBUTING.md)
 
 [MIT](LICENSE)
+
+## Language-aware security
+
+Engineering Skills select checks per language/runtime and component. Pure JS/TS does not inherit C/C++ memory-management requirements; native boundaries are assessed separately. Shared untrusted-input rules preserve execution scope. See [security evaluation and limitations](evals/security/README.md).
+
+P1 workflow updates reuse existing authorization and valid acceptance evidence. Execution boundaries are shared; language/runtime profiles load only for relevant components. Explicit user-directed batch verification records `verification_deferred` and pending checks until the agreed validation point. Security evaluation adds contextual injection inputs, accepted evidence locations, model binding and atomic checkpoints with separate semantic acceptance. Current validation evidence is recorded in the [unified validation report](tests/reports/unified-validation-2026-11-05/README.md).
+
+User-project safety guidance now covers preserving authorization/business behavior, existing-data update semantics, actual test/build isolation, and preexisting/concurrent edits. Relevant implementation and review Skills load applicable rules; unresolved risks block affected operations. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md). Current validation evidence is recorded in the [unified validation report](tests/reports/unified-validation-2026-11-05/README.md).

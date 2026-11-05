@@ -40,6 +40,8 @@ Verify one defined removal candidate. Default to “not safe to remove” when s
 5. Explain deletion impact, false-negative risks, compatibility concerns, validation tests, staged disablement, and restoration method.
 6. Report evidence, severity/priority, impact, confidence, recommendation, validation, and unknowns without deletion.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
 # Output Contract
 1. Scope and candidate
 2. Evidence and search surfaces
@@ -85,6 +87,8 @@ Verify one defined removal candidate. Default to “not safe to remove” when s
 4. 分类为确认无用、疑似无用、仍在使用或无法证明。
 5. 说明删除影响、假阴性风险、兼容问题、验证测试、分阶段禁用和恢复方法。
 6. 不删除代码，报告证据、严重度/优先级、影响、置信度、建议、验证和未知项。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
 
 # 输出契约
 1. 范围与候选

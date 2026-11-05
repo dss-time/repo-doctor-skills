@@ -6,9 +6,6 @@ Skills:
 
 - `report-writer`
 - `research-brief`
-- `spreadsheet-data-cleaning`
-- `document-review`
-- `pdf-review`
 - `meeting-notes-to-actions`
 - `presentation-outline`
 - `content-consistency-check`

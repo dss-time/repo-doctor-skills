@@ -1,0 +1,4264 @@
+{
+  "schema_version": 1,
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "89e799a9e0858804dbe5ec6dd8423c1a09a5acfcf10bd90848d1b62356120808",
+    "runtime_sha256": "e5f4e537eff2e59527b7bb0ed85236a913d380bbc0b60491ea7594cab5b86a8b"
+  },
+  "generated_at": "2026-11-05T07:44:04.330Z",
+  "started_at": "2026-11-05T07:43:28.159Z",
+  "project_version": "0.10.0",
+  "source_commit": null,
+  "source_worktree": "current uncommitted release candidate",
+  "codex_cli_version": "unrecorded",
+  "requested_model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "isolation": {
+    "home": "host authentication; isolated Skill roots and SQLite state",
+    "codex_home": "host authentication context; Skill installation temporary and redacted",
+    "workspace": "temporary empty Git repository",
+    "source": "temporary installation of canonical-generated Skills",
+    "path_redacted": true,
+    "real_user_skill_directory_read": true,
+    "host_capability_metadata_may_be_visible": true
+  },
+  "installation": {
+    "first_session": {
+      "result": "PASS",
+      "expected_count": 33,
+      "discovered_count": 33,
+      "skills": [
+        {
+          "name": "api-contract-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/api-contract-review/SKILL.md",
+          "sha256": "09da15e0eddeb5f82bbacb6ea215668547d3e486d2eb2cb3ccd799b2606f5111",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-decision-record",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-decision-record/SKILL.md",
+          "sha256": "1f6e0ce78e10a7f4c65ab833f6cbeb8bd42a0f000d45eb37f5b85ef83bf21460",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-deepening-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-deepening-analysis/SKILL.md",
+          "sha256": "966cc9b82c5abc59e68f13b4b07b7aa8275d2fda61cfe10321e682927aa79c79",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "bug-root-cause-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/bug-root-cause-analysis/SKILL.md",
+          "sha256": "e59b0f3ad3a1ed1cb857431383ddd1f3e3c0adcbcd72e8a54f68728559eaad0f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "change-impact-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/change-impact-analysis/SKILL.md",
+          "sha256": "132c6b0628a0b8da3a44eb6618d10287ca5b2f577ed91e2b8d3f8c8238ecc11f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "ci-failure-diagnosis",
+          "path": "$ISOLATED_CODEX_HOME/skills/ci-failure-diagnosis/SKILL.md",
+          "sha256": "7ebce3dcd23c082cd2cf6db1fd06face0abac2acbdc709d671863a9dcd58e12f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "configuration-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/configuration-audit/SKILL.md",
+          "sha256": "68c6b63b23e4e4b199c5a5a1d7a51fa867032f5e0e1657a149e7ed931f5a43dc",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "content-consistency-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/content-consistency-check/SKILL.md",
+          "sha256": "d5c16e487d65d76603060df520ebcaee6b8de67cb907dd7ef1467d9740087e94",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "database-migration-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/database-migration-review/SKILL.md",
+          "sha256": "725fdf87ad7ecea696047d8762210116ebe387672efba7e781405c72916a7769",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dead-code-verification",
+          "path": "$ISOLATED_CODEX_HOME/skills/dead-code-verification/SKILL.md",
+          "sha256": "1f07e0917453617bb3c0b568ee4a9ddb575cf09139158f1d8291da7410ab2733",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "decision-prototype",
+          "path": "$ISOLATED_CODEX_HOME/skills/decision-prototype/SKILL.md",
+          "sha256": "08be9b012c2362619f71760adbc73112856c2befc8f6c6c0e6bf03d6eaff5441",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dependency-upgrade-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/dependency-upgrade-analysis/SKILL.md",
+          "sha256": "97847f9f0a4de41c0143262b1d75898806a02468783d4af6276cb455fb2a8e5b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "documentation-sync",
+          "path": "$ISOLATED_CODEX_HOME/skills/documentation-sync/SKILL.md",
+          "sha256": "2a5e71bbd349b12b6988b80e30a396e37cd61c985dc97d77e29c6a08a5cd2fd4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "feature-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/feature-implementation/SKILL.md",
+          "sha256": "b858a549df20175ea19c035fc1797fb363f6de3fe96b570bedaea377a2ceb997",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "meeting-notes-to-actions",
+          "path": "$ISOLATED_CODEX_HOME/skills/meeting-notes-to-actions/SKILL.md",
+          "sha256": "30a3e74b5c3b582fc7c8c1ec6c594c331468e1355cc2baa8d0dc152b68576377",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "performance-regression-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/performance-regression-analysis/SKILL.md",
+          "sha256": "26e2b8bd1ac2c54a0fe7811b51196a0a5c02238c74641e272fd48ebff7ee6f65",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "presentation-outline",
+          "path": "$ISOLATED_CODEX_HOME/skills/presentation-outline/SKILL.md",
+          "sha256": "b1b8b8f1f42b6965aa1b1d6277ea3b33b7aec6a568bd4ced14492ec9801d9987",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "project-health-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/project-health-check/SKILL.md",
+          "sha256": "b7178ee2847515985dbdacf4a6bec8d5ced059371c6f01d8c8470d39b2dac1c9",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "release-readiness-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/release-readiness-check/SKILL.md",
+          "sha256": "68b532a80f458719dd951d6395bbe9d2ebdbab356f2ff9884bd8127bb761f80c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-doctor-router",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+          "sha256": "44d4085cb5868cf070ebf485e95d4bca30eed11a240bc75d011c01d133306ead",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-onboarding",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-onboarding/SKILL.md",
+          "sha256": "94405b9740f357bbfd4c9a59862fa9f3688aea6fe8eceb9f1480ec81cde6eafa",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "report-writer",
+          "path": "$ISOLATED_CODEX_HOME/skills/report-writer/SKILL.md",
+          "sha256": "12a8a2e8c506a8db58b8e0bf9d8d15402b70f778054b39d61010f1089f74793c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "requirements-clarification",
+          "path": "$ISOLATED_CODEX_HOME/skills/requirements-clarification/SKILL.md",
+          "sha256": "1fb7b31c214d5366460a4acf2f66a3c660d4df9a93bee9f5d893ad3bdf71c065",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "research-brief",
+          "path": "$ISOLATED_CODEX_HOME/skills/research-brief/SKILL.md",
+          "sha256": "39b611b01d5edd6f805672b9663218e1e20e3639716e0f165ac9f749b295c21b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-change-plan",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-change-plan/SKILL.md",
+          "sha256": "207ee1f2857d482fa1e6478a7376880f2f005d9730c3e333a1e45b9cb3a83a3f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-code-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-code-review/SKILL.md",
+          "sha256": "70637bbd76560dee4df1d885848673c796c28a68df64652401edda1966d529ee",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-fix-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-fix-implementation/SKILL.md",
+          "sha256": "1b573e00a7e2c9cf1a442571a262b77a377a48ed6ec7ef4ee5b3ef499963bca2",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-test-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-test-implementation/SKILL.md",
+          "sha256": "2cb4212f53777837630b24c2f2a5a9ef83a122868a32fb5238c878e9c10a26c7",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "security-focused-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/security-focused-review/SKILL.md",
+          "sha256": "85e3b5c9cf0b19d9db3bd3fbf04fb5162b630a0325888e80ffc9773cc49f017c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "session-handoff",
+          "path": "$ISOLATED_CODEX_HOME/skills/session-handoff/SKILL.md",
+          "sha256": "46dcddfe3a2a533d35e1918142a68766b871cf02874eef078acc9ee343095ef2",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-authoring",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-authoring/SKILL.md",
+          "sha256": "7d3077451264fe608c3eed3366085bdbb1a49905d64ae4900b633c4dc230f223",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-quality-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-quality-audit/SKILL.md",
+          "sha256": "cf445a96216ff5e6ccea717948512deddcdb5d1ee7fc9ac90e592e41efea15b4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "test-gap-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/test-gap-analysis/SKILL.md",
+          "sha256": "29c55c95bff9f8949c9cb44f38a687166c3e5048412afc427dcf2c80ea548d17",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        }
+      ],
+      "errors": [],
+      "issues": []
+    },
+    "second_session": {
+      "result": "PASS",
+      "expected_count": 33,
+      "discovered_count": 33,
+      "skills": [
+        {
+          "name": "api-contract-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/api-contract-review/SKILL.md",
+          "sha256": "09da15e0eddeb5f82bbacb6ea215668547d3e486d2eb2cb3ccd799b2606f5111",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-decision-record",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-decision-record/SKILL.md",
+          "sha256": "1f6e0ce78e10a7f4c65ab833f6cbeb8bd42a0f000d45eb37f5b85ef83bf21460",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "architecture-deepening-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/architecture-deepening-analysis/SKILL.md",
+          "sha256": "966cc9b82c5abc59e68f13b4b07b7aa8275d2fda61cfe10321e682927aa79c79",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "bug-root-cause-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/bug-root-cause-analysis/SKILL.md",
+          "sha256": "e59b0f3ad3a1ed1cb857431383ddd1f3e3c0adcbcd72e8a54f68728559eaad0f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "change-impact-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/change-impact-analysis/SKILL.md",
+          "sha256": "132c6b0628a0b8da3a44eb6618d10287ca5b2f577ed91e2b8d3f8c8238ecc11f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "ci-failure-diagnosis",
+          "path": "$ISOLATED_CODEX_HOME/skills/ci-failure-diagnosis/SKILL.md",
+          "sha256": "7ebce3dcd23c082cd2cf6db1fd06face0abac2acbdc709d671863a9dcd58e12f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "configuration-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/configuration-audit/SKILL.md",
+          "sha256": "68c6b63b23e4e4b199c5a5a1d7a51fa867032f5e0e1657a149e7ed931f5a43dc",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "content-consistency-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/content-consistency-check/SKILL.md",
+          "sha256": "d5c16e487d65d76603060df520ebcaee6b8de67cb907dd7ef1467d9740087e94",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "database-migration-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/database-migration-review/SKILL.md",
+          "sha256": "725fdf87ad7ecea696047d8762210116ebe387672efba7e781405c72916a7769",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dead-code-verification",
+          "path": "$ISOLATED_CODEX_HOME/skills/dead-code-verification/SKILL.md",
+          "sha256": "1f07e0917453617bb3c0b568ee4a9ddb575cf09139158f1d8291da7410ab2733",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "decision-prototype",
+          "path": "$ISOLATED_CODEX_HOME/skills/decision-prototype/SKILL.md",
+          "sha256": "08be9b012c2362619f71760adbc73112856c2befc8f6c6c0e6bf03d6eaff5441",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "dependency-upgrade-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/dependency-upgrade-analysis/SKILL.md",
+          "sha256": "97847f9f0a4de41c0143262b1d75898806a02468783d4af6276cb455fb2a8e5b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "documentation-sync",
+          "path": "$ISOLATED_CODEX_HOME/skills/documentation-sync/SKILL.md",
+          "sha256": "2a5e71bbd349b12b6988b80e30a396e37cd61c985dc97d77e29c6a08a5cd2fd4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "feature-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/feature-implementation/SKILL.md",
+          "sha256": "b858a549df20175ea19c035fc1797fb363f6de3fe96b570bedaea377a2ceb997",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "meeting-notes-to-actions",
+          "path": "$ISOLATED_CODEX_HOME/skills/meeting-notes-to-actions/SKILL.md",
+          "sha256": "30a3e74b5c3b582fc7c8c1ec6c594c331468e1355cc2baa8d0dc152b68576377",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "performance-regression-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/performance-regression-analysis/SKILL.md",
+          "sha256": "26e2b8bd1ac2c54a0fe7811b51196a0a5c02238c74641e272fd48ebff7ee6f65",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "presentation-outline",
+          "path": "$ISOLATED_CODEX_HOME/skills/presentation-outline/SKILL.md",
+          "sha256": "b1b8b8f1f42b6965aa1b1d6277ea3b33b7aec6a568bd4ced14492ec9801d9987",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "project-health-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/project-health-check/SKILL.md",
+          "sha256": "b7178ee2847515985dbdacf4a6bec8d5ced059371c6f01d8c8470d39b2dac1c9",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "release-readiness-check",
+          "path": "$ISOLATED_CODEX_HOME/skills/release-readiness-check/SKILL.md",
+          "sha256": "68b532a80f458719dd951d6395bbe9d2ebdbab356f2ff9884bd8127bb761f80c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-doctor-router",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+          "sha256": "44d4085cb5868cf070ebf485e95d4bca30eed11a240bc75d011c01d133306ead",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "repo-onboarding",
+          "path": "$ISOLATED_CODEX_HOME/skills/repo-onboarding/SKILL.md",
+          "sha256": "94405b9740f357bbfd4c9a59862fa9f3688aea6fe8eceb9f1480ec81cde6eafa",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "report-writer",
+          "path": "$ISOLATED_CODEX_HOME/skills/report-writer/SKILL.md",
+          "sha256": "12a8a2e8c506a8db58b8e0bf9d8d15402b70f778054b39d61010f1089f74793c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "requirements-clarification",
+          "path": "$ISOLATED_CODEX_HOME/skills/requirements-clarification/SKILL.md",
+          "sha256": "1fb7b31c214d5366460a4acf2f66a3c660d4df9a93bee9f5d893ad3bdf71c065",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "research-brief",
+          "path": "$ISOLATED_CODEX_HOME/skills/research-brief/SKILL.md",
+          "sha256": "39b611b01d5edd6f805672b9663218e1e20e3639716e0f165ac9f749b295c21b",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-change-plan",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-change-plan/SKILL.md",
+          "sha256": "207ee1f2857d482fa1e6478a7376880f2f005d9730c3e333a1e45b9cb3a83a3f",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-code-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-code-review/SKILL.md",
+          "sha256": "70637bbd76560dee4df1d885848673c796c28a68df64652401edda1966d529ee",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-fix-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-fix-implementation/SKILL.md",
+          "sha256": "1b573e00a7e2c9cf1a442571a262b77a377a48ed6ec7ef4ee5b3ef499963bca2",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "safe-test-implementation",
+          "path": "$ISOLATED_CODEX_HOME/skills/safe-test-implementation/SKILL.md",
+          "sha256": "2cb4212f53777837630b24c2f2a5a9ef83a122868a32fb5238c878e9c10a26c7",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "security-focused-review",
+          "path": "$ISOLATED_CODEX_HOME/skills/security-focused-review/SKILL.md",
+          "sha256": "85e3b5c9cf0b19d9db3bd3fbf04fb5162b630a0325888e80ffc9773cc49f017c",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "session-handoff",
+          "path": "$ISOLATED_CODEX_HOME/skills/session-handoff/SKILL.md",
+          "sha256": "46dcddfe3a2a533d35e1918142a68766b871cf02874eef078acc9ee343095ef2",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-authoring",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-authoring/SKILL.md",
+          "sha256": "7d3077451264fe608c3eed3366085bdbb1a49905d64ae4900b633c4dc230f223",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "skill-quality-audit",
+          "path": "$ISOLATED_CODEX_HOME/skills/skill-quality-audit/SKILL.md",
+          "sha256": "cf445a96216ff5e6ccea717948512deddcdb5d1ee7fc9ac90e592e41efea15b4",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        },
+        {
+          "name": "test-gap-analysis",
+          "path": "$ISOLATED_CODEX_HOME/skills/test-gap-analysis/SKILL.md",
+          "sha256": "29c55c95bff9f8949c9cb44f38a687166c3e5048412afc427dcf2c80ea548d17",
+          "enabled": true,
+          "scope": "user",
+          "bilingual_description": true
+        }
+      ],
+      "errors": [],
+      "issues": []
+    }
+  },
+  "coverage": {
+    "inventory_skills": 33,
+    "required_core_calls": 165,
+    "executed_core_calls": 11,
+    "probe_limit": null,
+    "requested_case": null
+  },
+  "test_corrections": [
+    {
+      "fixture": "docs-adjacent",
+      "classification": "test error",
+      "reason": "The original adjacent fixture expected safe-fix-implementation but did not provide the clear diagnosis that the canonical Skill contract requires. A real call correctly routed the underspecified request to requirements-clarification. The fixture now states a confirmed root cause and bounded production fix while preserving the same documentation-sync boundary."
+    },
+    {
+      "fixture": "rts-adjacent",
+      "classification": "test error",
+      "reason": "The fixture asks about a public API, while the canonical change-impact-analysis contract explicitly hands API contract compatibility to api-contract-review. After a rerun exposed ambiguity between generic impact and contract review, the fixture was sharpened with the canonical server/client/schema and breaking-change criteria, and the expected Skill was corrected to api-contract-review."
+    }
+  ],
+  "summary": {
+    "total": 165,
+    "passed": 6,
+    "failed": 0,
+    "blocked": 159,
+    "pass_rate": "3.64%",
+    "by_invocation": {
+      "explicit": {
+        "total": 66,
+        "passed": 3,
+        "failed": 0,
+        "blocked": 63
+      },
+      "implicit": {
+        "total": 66,
+        "passed": 2,
+        "failed": 0,
+        "blocked": 64
+      },
+      "negative": {
+        "total": 33,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 32
+      }
+    }
+  },
+  "cases": [
+    {
+      "case_id": "repo-doctor-router--explicit-en",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 20816,
+          "inputTokens": 20685,
+          "cachedInputTokens": 9344,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 131,
+          "reasoningOutputTokens": 0
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-doctor-router",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Which Repo Doctor Skill should handle this repository task? Recommend the workflow without running it.",
+      "expected_skill": "repo-doctor-router",
+      "actual_skill": "repo-doctor-router",
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+      "local_skill_sha256": "44d4085cb5868cf070ebf485e95d4bca30eed11a240bc75d011c01d133306ead",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": "repo-doctor-router",
+        "response_language": "en",
+        "decision": "recommended",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "Recommend: $requirements-clarification (Unverified route: registry unavailable)\nReason: No concrete repository task was supplied, so the intended outcome needs clarification first.\nMode: fast\nNeeds: Task description, desired outcome, and any existing evidence.\nTry: Use requirements-clarification in clarification phase for [repository task] to identify missing decisions and acceptance criteria; do not implement changes.",
+          "characters": 422,
+          "sha256": "c549858ddcd213c1d6599c70a83757d5589b5fceb25b759d240286eb82ad10b9",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "requirements-clarification — clarification phase; recommendation only.",
+          "characters": 70,
+          "sha256": "25eeaa3d0ffdd8baf4eb902ef5b2e6b5919319b7d3be951ef35a5185c3b030d3",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 644,
+        "sha256": "6bd5a327454abe4b1e857b5920b9e3ee3ce7464c1ffcd9a86b271ac3cf46f421",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    },
+    {
+      "case_id": "repo-doctor-router--explicit-zh-CN",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 20878,
+          "inputTokens": 20688,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 190,
+          "reasoningOutputTokens": 23
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-doctor-router",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "我不知道该选哪个 Repo Doctor Skill，请先路由当前工程任务但不要执行推荐。",
+      "expected_skill": "repo-doctor-router",
+      "actual_skill": "repo-doctor-router",
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/repo-doctor-router/SKILL.md",
+      "local_skill_sha256": "44d4085cb5868cf070ebf485e95d4bca30eed11a240bc75d011c01d133306ead",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": "repo-doctor-router",
+        "response_language": "zh-CN",
+        "decision": "recommended",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "推荐：$requirements-clarification（Unverified：未核验注册表）\n原因：尚未提供具体工程目标，先澄清任务；该 Skill 已列于可用清单。\n模式：fast\n需要：希望完成的任务或遇到的具体问题。\n下一步：请使用 requirements-clarification 的 clarification 阶段，澄清「[工程任务或问题]」的目标、范围和验收标准，仅作只读澄清。",
+          "characters": 201,
+          "sha256": "b473e96fd67d9e84dfb1e962ddbde7ef05ee1983f52c55fdb1e299d1480cd8ea",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "requirements-clarification（clarification 阶段）；仅推荐，未执行。",
+          "characters": 53,
+          "sha256": "5e5483c77c6f3c580fce46de4f7fb5c11c9cd37eafbea51c15d36be30e158e93",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 409,
+        "sha256": "0c42900f2aaad06e27367f4c10e89430c9806ced1057f6b193f5b227b367acf4",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    },
+    {
+      "case_id": "repo-doctor-router--implicit-en",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 17318,
+          "inputTokens": 17204,
+          "cachedInputTokens": 9344,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 114,
+          "reasoningOutputTokens": 13
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-doctor-router",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Which Repo Doctor Skill should handle this repository task? Recommend the workflow without running it.",
+      "expected_skill": null,
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": null,
+        "response_language": "en",
+        "decision": "recommended",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "Start with repo-doctor-router to match the task to a specialist workflow. Please describe the intended change, symptom, or review goal so I can recommend the specific sequence. No workflow has been run.",
+          "characters": 202,
+          "sha256": "e8af15d257e5a388233f96ee0b2a86a5acbc3f84342b15e3375c9f4f087f46ba",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "Recommend repo-doctor-router for future routing once the repository task is described; it is not active this turn.",
+          "characters": 114,
+          "sha256": "a78e80996c9005bcced5b9ae50597a96ad2e6decdbe7c2d00b46bc3fad853a20",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 448,
+        "sha256": "923fc026587edcd1d2f5208758f6671e19f6d38996a8af154401668c50a8e0ca",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    },
+    {
+      "case_id": "repo-doctor-router--implicit-zh-CN",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 17355,
+          "inputTokens": 17207,
+          "cachedInputTokens": 9344,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 148,
+          "reasoningOutputTokens": 24
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-doctor-router",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "我不知道该选哪个 Repo Doctor Skill，请先路由当前工程任务但不要执行推荐。",
+      "expected_skill": null,
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": null,
+        "response_language": "zh-CN",
+        "decision": "recommended",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "建议使用 repo-doctor-router 帮你选择合适的 Skill，本轮仅推荐。请描述当前工程任务：想达到什么结果、遇到了什么问题，以及希望产出诊断、审查、计划还是代码修改；有报错或 Diff 也可一并提供。",
+          "characters": 108,
+          "sha256": "b019e5a963fa56194e4e9268b15d4b7440ab9d2ba6167d6aa1a3009930fc7a80",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "建议下一步显式调用 repo-doctor-router；本轮未激活或执行该 Skill。",
+          "characters": 45,
+          "sha256": "1370dedb63949d0c77636cc28c8e050d1212f21f41087ac3a2eba50b970891b3",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 288,
+        "sha256": "5f08ef10597b7d4902c2ec682954175817825f72cac884c236173dea257d1120",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    },
+    {
+      "case_id": "repo-doctor-router--negative-zh-CN",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 22414,
+          "inputTokens": 22272,
+          "cachedInputTokens": 9344,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 142,
+          "reasoningOutputTokens": 20
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-doctor-router",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请直接把这个已确认的小型生产 Bug 修好并运行测试。",
+      "expected_skill": "safe-fix-implementation",
+      "actual_skill": "safe-fix-implementation",
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/safe-fix-implementation/SKILL.md",
+      "local_skill_sha256": "1b573e00a7e2c9cf1a442571a262b77a377a48ed6ec7ef4ee5b3ef499963bca2",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": "safe-fix-implementation",
+        "response_language": "zh-CN",
+        "decision": "recommended",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "推荐使用 safe-fix-implementation，适合修复已确认的小型生产 Bug，并运行相关测试验证。实施前需提供已确认的根因、目标代码及预期行为；当前消息未包含这些信息，不能据此确定具体改动。",
+          "characters": 102,
+          "sha256": "1b152843ff4af07f2437d80009b0c676388dc01814187f0c2b7ae166edaecde9",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "推荐交给 safe-fix-implementation；本轮仅推荐，不执行修复或测试。",
+          "characters": 44,
+          "sha256": "d4066ed5c248dbf11920e4a3e8d9d6001836836ac233be1e9636883132ecf61f",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 302,
+        "sha256": "5004059ea21095e1b1f86b1fc73bd5e9c558a475b15fe0ce5b0ea125ef00cd68",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    },
+    {
+      "case_id": "repo-onboarding--explicit-en",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": {
+          "totalTokens": 18828,
+          "inputTokens": 18686,
+          "cachedInputTokens": 9344,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 142,
+          "reasoningOutputTokens": 0
+        },
+        "model_reroutes": []
+      },
+      "skill": "repo-onboarding",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Help me understand this unfamiliar repository",
+      "expected_skill": "repo-onboarding",
+      "actual_skill": "repo-onboarding",
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/repo-onboarding/SKILL.md",
+      "local_skill_sha256": "94405b9740f357bbfd4c9a59862fa9f3688aea6fe8eceb9f1480ec81cde6eafa",
+      "exit_code": 0,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": {
+        "selected_skill": "repo-onboarding",
+        "response_language": "en",
+        "decision": "blocked",
+        "permission_boundary": "respected",
+        "answer_evidence": {
+          "excerpt": "I’m applying repo-onboarding. Repository inspection is unavailable in this read-only validation turn, and no repository contents were supplied, so I can’t reliably identify the stack, entry points, or validation commands. Nothing ran.\n\nPlease provide the top-level file tree, README, and primary package/build manifest. With those, I can produce a concise map of the project, reading order, documented commands, risks, and remaining unknowns.",
+          "characters": 442,
+          "sha256": "5f38426985b94dd1b4c0b4008060095043deee6a8b4dc2d3ccbec61119696929",
+          "truncated": false
+        },
+        "handoff_evidence": {
+          "excerpt": "No handoff needed; continue repo-onboarding when repository evidence is supplied.",
+          "characters": 81,
+          "sha256": "109f78cf8c0e5a2f47b795536c398758e4e32fb78053eb597fad4afcaa5bb4f6",
+          "truncated": false
+        }
+      },
+      "result": "PASS",
+      "notes": "",
+      "output_evidence": {
+        "characters": 666,
+        "sha256": "18480bbd3a6a7a399a01c4e658bfd6bf7c8a0ff98f8944914805acc9066024a7",
+        "storage": "structured fields plus bounded excerpts; full model text intentionally omitted"
+      }
+    },
+    {
+      "case_id": "repo-onboarding--explicit-zh-CN",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": null,
+        "model_reroutes": []
+      },
+      "skill": "repo-onboarding",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "帮我快速理解这个陌生仓库，从哪里开始看",
+      "expected_skill": "repo-onboarding",
+      "actual_skill": null,
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/repo-onboarding/SKILL.md",
+      "local_skill_sha256": "94405b9740f357bbfd4c9a59862fa9f3688aea6fe8eceb9f1480ec81cde6eafa",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "turn status is failed; error={\"message\":\"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM.\",\"codexErrorInfo\":\"usageLimitExceeded\",\"additionalDetails\":null,\"misalignment\":null}; final response is not valid structured JSON; selected_skill=null expected=repo-onboarding; handoff is empty"
+    },
+    {
+      "case_id": "repo-onboarding--implicit-en",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": null,
+        "model_reroutes": []
+      },
+      "skill": "repo-onboarding",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Help me understand this unfamiliar repository",
+      "expected_skill": "repo-onboarding",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "turn status is failed; error={\"message\":\"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM.\",\"codexErrorInfo\":\"usageLimitExceeded\",\"additionalDetails\":null,\"misalignment\":null}; final response is not valid structured JSON; selected_skill=null expected=repo-onboarding; handoff is empty"
+    },
+    {
+      "case_id": "repo-onboarding--implicit-zh-CN",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": null,
+        "model_reroutes": []
+      },
+      "skill": "repo-onboarding",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "帮我快速理解这个陌生仓库，从哪里开始看",
+      "expected_skill": "repo-onboarding",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "turn status is failed; error={\"message\":\"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM.\",\"codexErrorInfo\":\"usageLimitExceeded\",\"additionalDetails\":null,\"misalignment\":null}; final response is not valid structured JSON; selected_skill=null expected=repo-onboarding; handoff is empty"
+    },
+    {
+      "case_id": "repo-onboarding--negative-zh-CN",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": null,
+        "model_reroutes": []
+      },
+      "skill": "repo-onboarding",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "全面检查这个项目的架构、测试、安全和维护性问题，按优先级报告。",
+      "expected_skill": "project-health-check",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "turn status is failed; error={\"message\":\"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM.\",\"codexErrorInfo\":\"usageLimitExceeded\",\"additionalDetails\":null,\"misalignment\":null}; final response is not valid structured JSON; selected_skill=null expected=project-health-check; handoff is empty"
+    },
+    {
+      "case_id": "requirements-clarification--explicit-en",
+      "evaluation_metadata": {
+        "requested_model": "gpt-6.1-sol",
+        "observed_model": "gpt-6.1-sol",
+        "reasoning_effort": "low",
+        "token_usage": null,
+        "model_reroutes": []
+      },
+      "skill": "requirements-clarification",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Clarify the material product and security decisions before anyone writes the specification or code.",
+      "expected_skill": "requirements-clarification",
+      "actual_skill": null,
+      "local_skill_path": "$ISOLATED_CODEX_HOME/skills/requirements-clarification/SKILL.md",
+      "local_skill_sha256": "1fb7b31c214d5366460a4acf2f66a3c660d4df9a93bee9f5d893ad3bdf71c065",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "turn status is failed; error={\"message\":\"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 5:24 PM.\",\"codexErrorInfo\":\"usageLimitExceeded\",\"additionalDetails\":null,\"misalignment\":null}; final response is not valid structured JSON; selected_skill=null expected=requirements-clarification; handoff is empty"
+    },
+    {
+      "case_id": "requirements-clarification--explicit-zh-CN",
+      "skill": "requirements-clarification",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "写规格前先读取仓库，逐个关闭会改变权限、数据边界和兼容性的需求决策。",
+      "expected_skill": "requirements-clarification",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "requirements-clarification--implicit-en",
+      "skill": "requirements-clarification",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Clarify the material product and security decisions before anyone writes the specification or code.",
+      "expected_skill": "requirements-clarification",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "requirements-clarification--implicit-zh-CN",
+      "skill": "requirements-clarification",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "写规格前先读取仓库，逐个关闭会改变权限、数据边界和兼容性的需求决策。",
+      "expected_skill": "requirements-clarification",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "requirements-clarification--negative-zh-CN",
+      "skill": "requirements-clarification",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "规格已经完整。请审查重命名这个公共 REST API 的契约兼容性，跨服务端、客户端、Schema、文档和测试分类破坏性、非破坏性及行为变化。",
+      "expected_skill": "api-contract-review",
+      "must_not_trigger": [
+        "requirements-clarification",
+        "change-impact-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-change-plan--explicit-en",
+      "skill": "safe-change-plan",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Split this settled multi-behavior specification into vertical work items with acceptance criteria, dependencies, conflicts, and tests.",
+      "expected_skill": "safe-change-plan",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-change-plan--explicit-zh-CN",
+      "skill": "safe-change-plan",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "把这个已批准的大规格按可交付行为拆成可独立验证、标明依赖和并行机会的工作项。",
+      "expected_skill": "safe-change-plan",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-change-plan--implicit-en",
+      "skill": "safe-change-plan",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Split this settled multi-behavior specification into vertical work items with acceptance criteria, dependencies, conflicts, and tests.",
+      "expected_skill": "safe-change-plan",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-change-plan--implicit-zh-CN",
+      "skill": "safe-change-plan",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "把这个已批准的大规格按可交付行为拆成可独立验证、标明依赖和并行机会的工作项。",
+      "expected_skill": "safe-change-plan",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-change-plan--negative-zh-CN",
+      "skill": "safe-change-plan",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "需求仍有会改变兼容性的开放决策，请先逐项澄清。",
+      "expected_skill": "requirements-clarification",
+      "must_not_trigger": [
+        "safe-change-plan"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "decision-prototype--explicit-en",
+      "skill": "decision-prototype",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Build a disposable UI prototype to compare two structurally different settings flows before formal implementation.",
+      "expected_skill": "decision-prototype",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "safe-code-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "decision-prototype--explicit-zh-CN",
+      "skill": "decision-prototype",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "用一个明确可丢弃的逻辑原型验证这个审批状态转换是否合理，只回答这一个问题。",
+      "expected_skill": "decision-prototype",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "requirements-clarification"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "decision-prototype--implicit-en",
+      "skill": "decision-prototype",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Build a disposable UI prototype to compare two structurally different settings flows before formal implementation.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "decision-prototype"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "decision-prototype--implicit-zh-CN",
+      "skill": "decision-prototype",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "用一个明确可丢弃的逻辑原型验证这个审批状态转换是否合理，只回答这一个问题。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "decision-prototype"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "decision-prototype--negative-zh-CN",
+      "skill": "decision-prototype",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "这个功能连目标用户和业务规则都没想清楚，请先通过访谈关闭关键选择，不要写原型。",
+      "expected_skill": "requirements-clarification",
+      "must_not_trigger": [
+        "decision-prototype"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "bug-root-cause-analysis--explicit-en",
+      "skill": "bug-root-cause-analysis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Reproduce this timeout and trace the first trustworthy failure to its root cause without fixing it.",
+      "expected_skill": "bug-root-cause-analysis",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "bug-root-cause-analysis--explicit-zh-CN",
+      "skill": "bug-root-cause-analysis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "这个接口只在空 tags 时返回 500，请复现并定位根因，不要修。",
+      "expected_skill": "bug-root-cause-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "bug-root-cause-analysis--implicit-en",
+      "skill": "bug-root-cause-analysis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Reproduce this timeout and trace the first trustworthy failure to its root cause without fixing it.",
+      "expected_skill": "bug-root-cause-analysis",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "bug-root-cause-analysis--implicit-zh-CN",
+      "skill": "bug-root-cause-analysis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "这个接口只在空 tags 时返回 500，请复现并定位根因，不要修。",
+      "expected_skill": "bug-root-cause-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "bug-root-cause-analysis--negative-zh-CN",
+      "skill": "bug-root-cause-analysis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请审查当前 PR 是否存在正确性和安全问题。",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "bug-root-cause-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "project-health-check--explicit-en",
+      "skill": "project-health-check",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Run a broad health check on this repository",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "safe-code-review",
+        "release-readiness-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "project-health-check--explicit-zh-CN",
+      "skill": "project-health-check",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "全面检查这个项目的架构、测试、安全和维护性",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "repo-onboarding",
+        "safe-code-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "project-health-check--implicit-en",
+      "skill": "project-health-check",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Run a broad health check on this repository",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "project-health-check"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "project-health-check--implicit-zh-CN",
+      "skill": "project-health-check",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "全面检查这个项目的架构、测试、安全和维护性",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "project-health-check"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "project-health-check--negative-zh-CN",
+      "skill": "project-health-check",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "审计这个 Skill 的 description 是否过宽，会不会抢占普通代码审查和项目健康检查请求。",
+      "expected_skill": "skill-quality-audit",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-code-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-code-review--explicit-en",
+      "skill": "safe-code-review",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Review this pull request for bugs and risks",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-code-review--explicit-zh-CN",
+      "skill": "safe-code-review",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "审查当前 Git Diff，找出 Bug 和设计问题",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-code-review--implicit-en",
+      "skill": "safe-code-review",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Review this pull request for bugs and risks",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-code-review--implicit-zh-CN",
+      "skill": "safe-code-review",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "审查当前 Git Diff，找出 Bug 和设计问题",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-code-review--negative-zh-CN",
+      "skill": "safe-code-review",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "审计这个 Skill 的 description 是否过宽，会不会抢占普通代码审查和项目健康检查请求。",
+      "expected_skill": "skill-quality-audit",
+      "must_not_trigger": [
+        "safe-code-review",
+        "project-health-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "change-impact-analysis--explicit-en",
+      "skill": "change-impact-analysis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "What will be affected if I move this module?",
+      "expected_skill": "change-impact-analysis",
+      "must_not_trigger": [
+        "safe-change-plan",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "change-impact-analysis--explicit-zh-CN",
+      "skill": "change-impact-analysis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "重命名这个公共函数会影响哪些调用方",
+      "expected_skill": "change-impact-analysis",
+      "must_not_trigger": [
+        "safe-change-plan",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "change-impact-analysis--implicit-en",
+      "skill": "change-impact-analysis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "What will be affected if I move this module?",
+      "expected_skill": "change-impact-analysis",
+      "must_not_trigger": [
+        "safe-change-plan",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "change-impact-analysis--implicit-zh-CN",
+      "skill": "change-impact-analysis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "重命名这个公共函数会影响哪些调用方",
+      "expected_skill": "change-impact-analysis",
+      "must_not_trigger": [
+        "safe-change-plan",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "change-impact-analysis--negative-zh-CN",
+      "skill": "change-impact-analysis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "规格已经完整。请审查重命名这个公共 REST API 的契约兼容性，跨服务端、客户端、Schema、文档和测试分类破坏性、非破坏性及行为变化。",
+      "expected_skill": "api-contract-review",
+      "must_not_trigger": [
+        "change-impact-analysis",
+        "requirements-clarification"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "test-gap-analysis--explicit-en",
+      "skill": "test-gap-analysis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Analyze test gaps for this requirement and current suite across unit, integration, and end-to-end layers.",
+      "expected_skill": "test-gap-analysis",
+      "must_not_trigger": [
+        "project-health-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "test-gap-analysis--explicit-zh-CN",
+      "skill": "test-gap-analysis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "把这个认证 diff 映射到现有测试并分析缺口，不要写测试。",
+      "expected_skill": "test-gap-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "test-gap-analysis--implicit-en",
+      "skill": "test-gap-analysis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Analyze test gaps for this requirement and current suite across unit, integration, and end-to-end layers.",
+      "expected_skill": "test-gap-analysis",
+      "must_not_trigger": [
+        "project-health-check"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "test-gap-analysis--implicit-zh-CN",
+      "skill": "test-gap-analysis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "把这个认证 diff 映射到现有测试并分析缺口，不要写测试。",
+      "expected_skill": "test-gap-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "test-gap-analysis--negative-zh-CN",
+      "skill": "test-gap-analysis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "对整个仓库做健康检查，包括架构、安全、依赖和测试风险。",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "test-gap-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-test-implementation--explicit-en",
+      "skill": "safe-test-implementation",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "The fix is already verified; use regression_after_fix to add the test, modify tests only, and do not fabricate a pre-fix red run.",
+      "expected_skill": "safe-test-implementation",
+      "must_not_trigger": [
+        "test-gap-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-test-implementation--explicit-zh-CN",
+      "skill": "safe-test-implementation",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "修复尚未实现，请用 test_first 模式补最小测试，只修改测试和 fixture，并记录真实预期失败。",
+      "expected_skill": "safe-test-implementation",
+      "must_not_trigger": [
+        "test-gap-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-test-implementation--implicit-en",
+      "skill": "safe-test-implementation",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "The fix is already verified; use regression_after_fix to add the test, modify tests only, and do not fabricate a pre-fix red run.",
+      "expected_skill": "safe-test-implementation",
+      "must_not_trigger": [
+        "test-gap-analysis",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-test-implementation--implicit-zh-CN",
+      "skill": "safe-test-implementation",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "修复尚未实现，请用 test_first 模式补最小测试，只修改测试和 fixture，并记录真实预期失败。",
+      "expected_skill": "safe-test-implementation",
+      "must_not_trigger": [
+        "test-gap-analysis",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-test-implementation--negative-zh-CN",
+      "skill": "safe-test-implementation",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "分析这个 diff 还缺哪些单元、集成和端到端测试，不要写测试。",
+      "expected_skill": "test-gap-analysis",
+      "must_not_trigger": [
+        "safe-test-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "ci-failure-diagnosis--explicit-en",
+      "skill": "ci-failure-diagnosis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Diagnose this failed CI workflow and compare its runner environment with local execution without editing files.",
+      "expected_skill": "ci-failure-diagnosis",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "ci-failure-diagnosis--explicit-zh-CN",
+      "skill": "ci-failure-diagnosis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "这个 GitHub Actions job 本地通过但 CI 失败，请找第一个可信错误并诊断，不要修。",
+      "expected_skill": "ci-failure-diagnosis",
+      "must_not_trigger": [
+        "bug-root-cause-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "ci-failure-diagnosis--implicit-en",
+      "skill": "ci-failure-diagnosis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Diagnose this failed CI workflow and compare its runner environment with local execution without editing files.",
+      "expected_skill": "ci-failure-diagnosis",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "ci-failure-diagnosis--implicit-zh-CN",
+      "skill": "ci-failure-diagnosis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "这个 GitHub Actions job 本地通过但 CI 失败，请找第一个可信错误并诊断，不要修。",
+      "expected_skill": "ci-failure-diagnosis",
+      "must_not_trigger": [
+        "bug-root-cause-analysis",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "ci-failure-diagnosis--negative-zh-CN",
+      "skill": "ci-failure-diagnosis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "API 在本地运行时稳定返回 500，没有 CI 上下文，请定位根因。",
+      "expected_skill": "bug-root-cause-analysis",
+      "must_not_trigger": [
+        "ci-failure-diagnosis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "documentation-sync--explicit-en",
+      "skill": "documentation-sync",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Sync affected documentation from this confirmed implementation and preserve each file's language and style.",
+      "expected_skill": "documentation-sync",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "documentation-sync--explicit-zh-CN",
+      "skill": "documentation-sync",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "实现和测试已经确认，请同步 README、API 文档、示例和 CHANGELOG，只改文档。",
+      "expected_skill": "documentation-sync",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "safe-code-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "documentation-sync--implicit-en",
+      "skill": "documentation-sync",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Sync affected documentation from this confirmed implementation and preserve each file's language and style.",
+      "expected_skill": "documentation-sync",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "documentation-sync--implicit-zh-CN",
+      "skill": "documentation-sync",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "实现和测试已经确认，请同步 README、API 文档、示例和 CHANGELOG，只改文档。",
+      "expected_skill": "documentation-sync",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "safe-code-review"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "documentation-sync--negative-zh-CN",
+      "skill": "documentation-sync",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "根因已确认：CLI 的成功分支把 exitCode 错设为 1。请实施这个最小生产修复、运行现有回归测试，再同步相应文档。",
+      "expected_skill": "safe-fix-implementation",
+      "must_not_trigger": [
+        "documentation-sync"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "release-readiness-check--explicit-en",
+      "skill": "release-readiness-check",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Check whether version 1.4.0 at this commit is release-ready and return one evidence-backed gate decision.",
+      "expected_skill": "release-readiness-check",
+      "must_not_trigger": [
+        "project-health-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "release-readiness-check--explicit-zh-CN",
+      "skill": "release-readiness-check",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "对候选 commit 执行发布门禁并给出 GO 或 NO-GO，不要 tag、push 或修改版本。",
+      "expected_skill": "release-readiness-check",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "release-readiness-check--implicit-en",
+      "skill": "release-readiness-check",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Check whether version 1.4.0 at this commit is release-ready and return one evidence-backed gate decision.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "release-readiness-check"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "release-readiness-check--implicit-zh-CN",
+      "skill": "release-readiness-check",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "对候选 commit 执行发布门禁并给出 GO 或 NO-GO，不要 tag、push 或修改版本。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "release-readiness-check"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "release-readiness-check--negative-zh-CN",
+      "skill": "release-readiness-check",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "对整个仓库做广泛健康检查，包括架构、安全、依赖和长期维护风险。",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "release-readiness-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dependency-upgrade-analysis--explicit-en",
+      "skill": "dependency-upgrade-analysis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Analyze this dependency upgrade, including transitive packages, runtime requirements, advisories, licenses, and rollback, without editing manifests.",
+      "expected_skill": "dependency-upgrade-analysis",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dependency-upgrade-analysis--explicit-zh-CN",
+      "skill": "dependency-upgrade-analysis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "分析把 React 18 升级到目标版本的破坏性变化、生态兼容性和回滚方案，不要改依赖。",
+      "expected_skill": "dependency-upgrade-analysis",
+      "must_not_trigger": [
+        "change-impact-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dependency-upgrade-analysis--implicit-en",
+      "skill": "dependency-upgrade-analysis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Analyze this dependency upgrade, including transitive packages, runtime requirements, advisories, licenses, and rollback, without editing manifests.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "dependency-upgrade-analysis"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dependency-upgrade-analysis--implicit-zh-CN",
+      "skill": "dependency-upgrade-analysis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "分析把 React 18 升级到目标版本的破坏性变化、生态兼容性和回滚方案，不要改依赖。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "dependency-upgrade-analysis"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dependency-upgrade-analysis--negative-zh-CN",
+      "skill": "dependency-upgrade-analysis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "我要重命名内部模块，请分析调用方和普通代码影响。",
+      "expected_skill": "change-impact-analysis",
+      "must_not_trigger": [
+        "dependency-upgrade-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "api-contract-review--explicit-en",
+      "skill": "api-contract-review",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Review this GraphQL contract change and classify breaking, non-breaking, and behavioral differences across server, clients, docs, and tests.",
+      "expected_skill": "api-contract-review",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "api-contract-review--explicit-zh-CN",
+      "skill": "api-contract-review",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "专项审查这个 REST 接口的字段、错误码、分页、幂等和鉴权是否与客户端及 Schema 一致，不要改接口。",
+      "expected_skill": "api-contract-review",
+      "must_not_trigger": [
+        "safe-code-review",
+        "change-impact-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "api-contract-review--implicit-en",
+      "skill": "api-contract-review",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Review this GraphQL contract change and classify breaking, non-breaking, and behavioral differences across server, clients, docs, and tests.",
+      "expected_skill": "api-contract-review",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "api-contract-review--implicit-zh-CN",
+      "skill": "api-contract-review",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "专项审查这个 REST 接口的字段、错误码、分页、幂等和鉴权是否与客户端及 Schema 一致，不要改接口。",
+      "expected_skill": "api-contract-review",
+      "must_not_trigger": [
+        "safe-code-review",
+        "change-impact-analysis"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "api-contract-review--negative-zh-CN",
+      "skill": "api-contract-review",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请对整个 PR 做普通正确性和可维护性代码审查。",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "api-contract-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "database-migration-review--explicit-en",
+      "skill": "database-migration-review",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Review this schema and data migration for reversibility, data loss, indexes, long transactions, rollout order, and rollback without connecting to production.",
+      "expected_skill": "database-migration-review",
+      "must_not_trigger": [
+        "safe-change-plan",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "database-migration-review--explicit-zh-CN",
+      "skill": "database-migration-review",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "审查这次数据库迁移的 up/down、回填、锁表、复制延迟和零停机发布顺序，不执行迁移。",
+      "expected_skill": "database-migration-review",
+      "must_not_trigger": [
+        "change-impact-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "database-migration-review--implicit-en",
+      "skill": "database-migration-review",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Review this schema and data migration for reversibility, data loss, indexes, long transactions, rollout order, and rollback without connecting to production.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "database-migration-review"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "database-migration-review--implicit-zh-CN",
+      "skill": "database-migration-review",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "审查这次数据库迁移的 up/down、回填、锁表、复制延迟和零停机发布顺序，不执行迁移。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "database-migration-review"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "database-migration-review--negative-zh-CN",
+      "skill": "database-migration-review",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "需求和影响已经确认，请生成通用原子实施计划。",
+      "expected_skill": "safe-change-plan",
+      "must_not_trigger": [
+        "database-migration-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dead-code-verification--explicit-en",
+      "skill": "dead-code-verification",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Verify whether this module is unused across static references, reflection, configuration, plugins, build entries, and external consumers; do not delete it.",
+      "expected_skill": "dead-code-verification",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dead-code-verification--explicit-zh-CN",
+      "skill": "dead-code-verification",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "验证这个 handler 是否真是死代码，检查动态导入、路由、注册器和外部 API，证据不足不要建议删除。",
+      "expected_skill": "dead-code-verification",
+      "must_not_trigger": [
+        "change-impact-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dead-code-verification--implicit-en",
+      "skill": "dead-code-verification",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Verify whether this module is unused across static references, reflection, configuration, plugins, build entries, and external consumers; do not delete it.",
+      "expected_skill": "dead-code-verification",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dead-code-verification--implicit-zh-CN",
+      "skill": "dead-code-verification",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "验证这个 handler 是否真是死代码，检查动态导入、路由、注册器和外部 API，证据不足不要建议删除。",
+      "expected_skill": "dead-code-verification",
+      "must_not_trigger": [
+        "change-impact-analysis",
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "dead-code-verification--negative-zh-CN",
+      "skill": "dead-code-verification",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "我已经决定删除这个公共函数，请分析删除会影响哪些调用方。",
+      "expected_skill": "change-impact-analysis",
+      "must_not_trigger": [
+        "dead-code-verification"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "security-focused-review--explicit-en",
+      "skill": "security-focused-review",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Perform a scoped security review of this upload path with trust boundaries, exploit prerequisites, severity, evidence, and remediation direction only.",
+      "expected_skill": "security-focused-review",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "security-focused-review--explicit-zh-CN",
+      "skill": "security-focused-review",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "对认证边界做安全专项审查，先建立威胁模型并检查授权、注入和日志泄漏，不要攻击或修复。",
+      "expected_skill": "security-focused-review",
+      "must_not_trigger": [
+        "safe-code-review",
+        "project-health-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "security-focused-review--implicit-en",
+      "skill": "security-focused-review",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Perform a scoped security review of this upload path with trust boundaries, exploit prerequisites, severity, evidence, and remediation direction only.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "security-focused-review"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "security-focused-review--implicit-zh-CN",
+      "skill": "security-focused-review",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "对认证边界做安全专项审查，先建立威胁模型并检查授权、注入和日志泄漏，不要攻击或修复。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "security-focused-review"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "security-focused-review--negative-zh-CN",
+      "skill": "security-focused-review",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请对整个仓库做架构、依赖、测试、安全和维护性健康体检。",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "security-focused-review"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "performance-regression-analysis--explicit-en",
+      "skill": "performance-regression-analysis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Analyze the measured latency regression using benchmarks, traces, database queries, cache behavior, and a reproducible experiment without editing code.",
+      "expected_skill": "performance-regression-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "performance-regression-analysis--explicit-zh-CN",
+      "skill": "performance-regression-analysis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "基于基线、工作负载和 profile 分析这个接口的性能回归，区分测量与推断，不要优化代码。",
+      "expected_skill": "performance-regression-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "project-health-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "performance-regression-analysis--implicit-en",
+      "skill": "performance-regression-analysis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Analyze the measured latency regression using benchmarks, traces, database queries, cache behavior, and a reproducible experiment without editing code.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "performance-regression-analysis"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "performance-regression-analysis--implicit-zh-CN",
+      "skill": "performance-regression-analysis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "基于基线、工作负载和 profile 分析这个接口的性能回归，区分测量与推断，不要优化代码。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "performance-regression-analysis"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "performance-regression-analysis--negative-zh-CN",
+      "skill": "performance-regression-analysis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请普通审查这个 PR 的正确性、类型和可维护性问题。",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "performance-regression-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-deepening-analysis--explicit-en",
+      "skill": "architecture-deepening-analysis",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Analyze this broad interface and caller knowledge burden, compare at least two reversible architecture options, and stay read-only.",
+      "expected_skill": "architecture-deepening-analysis",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-deepening-analysis--explicit-zh-CN",
+      "skill": "architecture-deepening-analysis",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "分析三个调用方重复适配同一领域规则造成的架构摩擦，比较可迁移、可回滚的深化方案，不要重构。",
+      "expected_skill": "architecture-deepening-analysis",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-deepening-analysis--implicit-en",
+      "skill": "architecture-deepening-analysis",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Analyze this broad interface and caller knowledge burden, compare at least two reversible architecture options, and stay read-only.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "architecture-deepening-analysis"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-deepening-analysis--implicit-zh-CN",
+      "skill": "architecture-deepening-analysis",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "分析三个调用方重复适配同一领域规则造成的架构摩擦，比较可迁移、可回滚的深化方案，不要重构。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "architecture-deepening-analysis"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-deepening-analysis--negative-zh-CN",
+      "skill": "architecture-deepening-analysis",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "全面检查整个仓库的架构、测试、安全和发布风险，不聚焦某个具体架构摩擦。",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "architecture-deepening-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-decision-record--explicit-en",
+      "skill": "architecture-decision-record",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Update the existing ADR with the evidenced architecture decision, alternatives, consequences, risks, and review conditions; edit architecture docs only.",
+      "expected_skill": "architecture-decision-record",
+      "must_not_trigger": [
+        "documentation-sync",
+        "safe-change-plan"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-decision-record--explicit-zh-CN",
+      "skill": "architecture-decision-record",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "根据仓库真实约定创建一份 Proposed ADR，记录队列选型的候选方案、理由、后果和复审条件，只改架构文档。",
+      "expected_skill": "architecture-decision-record",
+      "must_not_trigger": [
+        "safe-change-plan",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-decision-record--implicit-en",
+      "skill": "architecture-decision-record",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Update the existing ADR with the evidenced architecture decision, alternatives, consequences, risks, and review conditions; edit architecture docs only.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "architecture-decision-record"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-decision-record--implicit-zh-CN",
+      "skill": "architecture-decision-record",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "根据仓库真实约定创建一份 Proposed ADR，记录队列选型的候选方案、理由、后果和复审条件，只改架构文档。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "architecture-decision-record"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "architecture-decision-record--negative-zh-CN",
+      "skill": "architecture-decision-record",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "决策已经确定，请拆成逐步验证和回滚的代码实施计划。",
+      "expected_skill": "safe-change-plan",
+      "must_not_trigger": [
+        "architecture-decision-record"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "configuration-audit--explicit-en",
+      "skill": "configuration-audit",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Audit configuration sources, precedence, validation, environment drift, undocumented variables, and credential commit risk without editing configuration.",
+      "expected_skill": "configuration-audit",
+      "must_not_trigger": [
+        "change-impact-analysis",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "configuration-audit--explicit-zh-CN",
+      "skill": "configuration-audit",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "审计配置来源、覆盖优先级、危险默认值和环境漂移，只报告凭据名称与位置，不显示值或改配置。",
+      "expected_skill": "configuration-audit",
+      "must_not_trigger": [
+        "project-health-check",
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "configuration-audit--implicit-en",
+      "skill": "configuration-audit",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Audit configuration sources, precedence, validation, environment drift, undocumented variables, and credential commit risk without editing configuration.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "configuration-audit"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "configuration-audit--implicit-zh-CN",
+      "skill": "configuration-audit",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "审计配置来源、覆盖优先级、危险默认值和环境漂移，只报告凭据名称与位置，不显示值或改配置。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "configuration-audit"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "configuration-audit--negative-zh-CN",
+      "skill": "configuration-audit",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请对整个项目做广泛健康检查，包括架构、测试、依赖和配置。",
+      "expected_skill": "project-health-check",
+      "must_not_trigger": [
+        "configuration-audit"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "session-handoff--explicit-en",
+      "skill": "session-handoff",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Prepare a sanitized continuation brief for the next agent with current state, results, risks, and a copyable start prompt.",
+      "expected_skill": "session-handoff",
+      "must_not_trigger": [
+        "documentation-sync"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "session-handoff--explicit-zh-CN",
+      "skill": "session-handoff",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "当前会话太长，请生成脱敏交接摘要，让下一个 Agent 可以继续且不重复已完成工作。",
+      "expected_skill": "session-handoff",
+      "must_not_trigger": [
+        "documentation-sync"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "session-handoff--implicit-en",
+      "skill": "session-handoff",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Prepare a sanitized continuation brief for the next agent with current state, results, risks, and a copyable start prompt.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "session-handoff"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "session-handoff--implicit-zh-CN",
+      "skill": "session-handoff",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "当前会话太长，请生成脱敏交接摘要，让下一个 Agent 可以继续且不重复已完成工作。",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "session-handoff"
+      ],
+      "expected_implicit_policy": "explicit_only",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "session-handoff--negative-zh-CN",
+      "skill": "session-handoff",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请审查当前 diff 是否符合规格并检查实现质量。",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "session-handoff"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-fix-implementation--explicit-en",
+      "skill": "safe-fix-implementation",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Apply the smallest safe fix for the confirmed issue",
+      "expected_skill": "safe-fix-implementation",
+      "must_not_trigger": [
+        "safe-code-review",
+        "bug-root-cause-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-fix-implementation--explicit-zh-CN",
+      "skill": "safe-fix-implementation",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "根据刚才确认的 P1 实施最小安全修复",
+      "expected_skill": "safe-fix-implementation",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-change-plan"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-fix-implementation--implicit-en",
+      "skill": "safe-fix-implementation",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Apply the smallest safe fix for the confirmed issue",
+      "expected_skill": "safe-fix-implementation",
+      "must_not_trigger": [
+        "safe-code-review",
+        "bug-root-cause-analysis"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-fix-implementation--implicit-zh-CN",
+      "skill": "safe-fix-implementation",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "根据刚才确认的 P1 实施最小安全修复",
+      "expected_skill": "safe-fix-implementation",
+      "must_not_trigger": [
+        "safe-code-review",
+        "safe-change-plan"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "safe-fix-implementation--negative-zh-CN",
+      "skill": "safe-fix-implementation",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请为刚确认的空指针 Bug 新增一个回归测试并运行它，只修改测试文件。",
+      "expected_skill": "safe-test-implementation",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "bug-root-cause-analysis"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "feature-implementation--explicit-en",
+      "skill": "feature-implementation",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Use $feature-implementation to implement the settled export spec; related source, tests and docs are authorized.",
+      "expected_skill": "feature-implementation",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "feature-implementation--explicit-zh-CN",
+      "skill": "feature-implementation",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "请根据已确认规格交付 CSV 导出功能，逐项完成验收，已授权相关生产代码和配套测试文档。",
+      "expected_skill": "feature-implementation",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "feature-implementation--implicit-en",
+      "skill": "feature-implementation",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Use $feature-implementation to implement the settled export spec; related source, tests and docs are authorized.",
+      "expected_skill": "feature-implementation",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "feature-implementation--implicit-zh-CN",
+      "skill": "feature-implementation",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "请根据已确认规格交付 CSV 导出功能，逐项完成验收，已授权相关生产代码和配套测试文档。",
+      "expected_skill": "feature-implementation",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "feature-implementation--negative-en",
+      "skill": "feature-implementation",
+      "language": "en",
+      "invocation": "negative",
+      "input": "Only add tests for the verified export implementation; do not change production code.",
+      "expected_skill": "safe-test-implementation",
+      "must_not_trigger": [
+        "feature-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-authoring--explicit-en",
+      "skill": "skill-authoring",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Engineer one bilingual repository-standard Skill from these repeated use cases through activation tests and generated-output inspection.",
+      "expected_skill": "skill-authoring",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "skill-quality-audit"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-authoring--explicit-zh-CN",
+      "skill": "skill-authoring",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "请按这个仓库现有脚手架工程化创建一个双语 AI Skill，包含真实触发例、反例、UI 元数据和跨平台验证。",
+      "expected_skill": "skill-authoring",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "documentation-sync"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-authoring--implicit-en",
+      "skill": "skill-authoring",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Engineer one bilingual repository-standard Skill from these repeated use cases through activation tests and generated-output inspection.",
+      "expected_skill": "skill-authoring",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "skill-quality-audit"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-authoring--implicit-zh-CN",
+      "skill": "skill-authoring",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "请按这个仓库现有脚手架工程化创建一个双语 AI Skill，包含真实触发例、反例、UI 元数据和跨平台验证。",
+      "expected_skill": "skill-authoring",
+      "must_not_trigger": [
+        "safe-fix-implementation",
+        "documentation-sync"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-authoring--negative-en",
+      "skill": "skill-authoring",
+      "language": "en",
+      "invocation": "negative",
+      "input": "Use the existing report-writer Skill to draft a report from these materials; do not add a new Skill.",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "skill-authoring"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-quality-audit--explicit-en",
+      "skill": "skill-quality-audit",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Audit this AI Skill whose SKILL.md frontmatter has an extra field and a name that differs from its folder; report only.",
+      "expected_skill": "skill-quality-audit",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-quality-audit--explicit-zh-CN",
+      "skill": "skill-quality-audit",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "发布前只读审计这个结构合法的 AI Skill，并在没有问题时也给出有证据的评分卡和发布建议。",
+      "expected_skill": "skill-quality-audit",
+      "must_not_trigger": [
+        "safe-code-review",
+        "release-readiness-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-quality-audit--implicit-en",
+      "skill": "skill-quality-audit",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Audit this AI Skill whose SKILL.md frontmatter has an extra field and a name that differs from its folder; report only.",
+      "expected_skill": "skill-quality-audit",
+      "must_not_trigger": [
+        "safe-fix-implementation"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-quality-audit--implicit-zh-CN",
+      "skill": "skill-quality-audit",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "发布前只读审计这个结构合法的 AI Skill，并在没有问题时也给出有证据的评分卡和发布建议。",
+      "expected_skill": "skill-quality-audit",
+      "must_not_trigger": [
+        "safe-code-review",
+        "release-readiness-check"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "skill-quality-audit--negative-en",
+      "skill": "skill-quality-audit",
+      "language": "en",
+      "invocation": "negative",
+      "input": "Review this ordinary application pull request for correctness, regressions, and maintainability; it contains no AI Skill artifacts.",
+      "expected_skill": "safe-code-review",
+      "must_not_trigger": [
+        "skill-quality-audit"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "report-writer--explicit-en",
+      "skill": "report-writer",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Turn this supplied evidence into a structured report for executives, preserving citations and figures.",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "report-writer--explicit-zh-CN",
+      "skill": "report-writer",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "根据这些已经提供的访谈和数据撰写结构化报告，区分事实、推断和未知。",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "report-writer--implicit-en",
+      "skill": "report-writer",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Turn this supplied evidence into a structured report for executives, preserving citations and figures.",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "report-writer--implicit-zh-CN",
+      "skill": "report-writer",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "根据这些已经提供的访谈和数据撰写结构化报告，区分事实、推断和未知。",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "report-writer--negative-zh-CN",
+      "skill": "report-writer",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "请先联网搜集当前官方资料、交叉验证冲突并制作研究简报。",
+      "expected_skill": "research-brief",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "research-brief--explicit-en",
+      "skill": "research-brief",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Prepare a sourced research brief, cross-check conflicting evidence, and separate facts from inference.",
+      "expected_skill": "research-brief",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "research-brief--explicit-zh-CN",
+      "skill": "research-brief",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "围绕这个明确问题研究官方和原始来源，记录发布、事件和访问日期并制作简报。",
+      "expected_skill": "research-brief",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "research-brief--implicit-en",
+      "skill": "research-brief",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Prepare a sourced research brief, cross-check conflicting evidence, and separate facts from inference.",
+      "expected_skill": "research-brief",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "research-brief--implicit-zh-CN",
+      "skill": "research-brief",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "围绕这个明确问题研究官方和原始来源，记录发布、事件和访问日期并制作简报。",
+      "expected_skill": "research-brief",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "research-brief--negative-zh-CN",
+      "skill": "research-brief",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "资料已经全部提供，请直接整理成正式五页报告，不需要外部研究。",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "meeting-notes-to-actions--explicit-en",
+      "skill": "meeting-notes-to-actions",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Extract explicit decisions and commitments from these meeting notes with owners, dates, dependencies, and evidence.",
+      "expected_skill": "meeting-notes-to-actions",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "meeting-notes-to-actions--explicit-zh-CN",
+      "skill": "meeting-notes-to-actions",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "把会议记录整理成摘要、决定和行动项，缺失负责人或日期全部写 TBD。",
+      "expected_skill": "meeting-notes-to-actions",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "meeting-notes-to-actions--implicit-en",
+      "skill": "meeting-notes-to-actions",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Extract explicit decisions and commitments from these meeting notes with owners, dates, dependencies, and evidence.",
+      "expected_skill": "meeting-notes-to-actions",
+      "must_not_trigger": [
+        "research-brief"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "meeting-notes-to-actions--implicit-zh-CN",
+      "skill": "meeting-notes-to-actions",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "把会议记录整理成摘要、决定和行动项，缺失负责人或日期全部写 TBD。",
+      "expected_skill": "meeting-notes-to-actions",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "meeting-notes-to-actions--negative-zh-CN",
+      "skill": "meeting-notes-to-actions",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "把已经确认的行动计划写成正式项目报告，而不是提取会议任务。",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "meeting-notes-to-actions"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "presentation-outline--explicit-en",
+      "skill": "presentation-outline",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Create a slide-by-slide outline for this audience with message titles, evidence needs, visuals, and timing.",
+      "expected_skill": "presentation-outline",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "presentation-outline--explicit-zh-CN",
+      "skill": "presentation-outline",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "为十五分钟演示设计故事线和逐页大纲，包括每页目的、证据和视觉建议，不生成 PPTX。",
+      "expected_skill": "presentation-outline",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "presentation-outline--implicit-en",
+      "skill": "presentation-outline",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Create a slide-by-slide outline for this audience with message titles, evidence needs, visuals, and timing.",
+      "expected_skill": "presentation-outline",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "presentation-outline--implicit-zh-CN",
+      "skill": "presentation-outline",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "为十五分钟演示设计故事线和逐页大纲，包括每页目的、证据和视觉建议，不生成 PPTX。",
+      "expected_skill": "presentation-outline",
+      "must_not_trigger": [
+        "report-writer"
+      ],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "presentation-outline--negative-zh-CN",
+      "skill": "presentation-outline",
+      "language": "zh-CN",
+      "invocation": "negative",
+      "input": "根据完整材料撰写带摘要、方法、发现和建议的正式报告。",
+      "expected_skill": "report-writer",
+      "must_not_trigger": [
+        "presentation-outline"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "content-consistency-check--explicit-en",
+      "skill": "content-consistency-check",
+      "language": "en",
+      "invocation": "explicit",
+      "input": "Compare these artifacts for inconsistent figures, dates, links, versions, and conclusions, showing both locations.",
+      "expected_skill": "content-consistency-check",
+      "must_not_trigger": [],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "content-consistency-check--explicit-zh-CN",
+      "skill": "content-consistency-check",
+      "language": "zh-CN",
+      "invocation": "explicit",
+      "input": "对比报告、表格、PDF 和演示中的术语、数字、日期、单位、版本和结论冲突。",
+      "expected_skill": "content-consistency-check",
+      "must_not_trigger": [],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "content-consistency-check--implicit-en",
+      "skill": "content-consistency-check",
+      "language": "en",
+      "invocation": "implicit",
+      "input": "Compare these artifacts for inconsistent figures, dates, links, versions, and conclusions, showing both locations.",
+      "expected_skill": "content-consistency-check",
+      "must_not_trigger": [],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "content-consistency-check--implicit-zh-CN",
+      "skill": "content-consistency-check",
+      "language": "zh-CN",
+      "invocation": "implicit",
+      "input": "对比报告、表格、PDF 和演示中的术语、数字、日期、单位、版本和结论冲突。",
+      "expected_skill": "content-consistency-check",
+      "must_not_trigger": [],
+      "expected_implicit_policy": "allowed",
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    },
+    {
+      "case_id": "content-consistency-check--negative-en",
+      "skill": "content-consistency-check",
+      "language": "en",
+      "invocation": "negative",
+      "input": "Clean and normalize the source workbook into a new audited file.",
+      "expected_skill": null,
+      "must_not_trigger": [
+        "content-consistency-check"
+      ],
+      "actual_skill": null,
+      "local_skill_path": "",
+      "local_skill_sha256": "",
+      "exit_code": 1,
+      "permission_violation": false,
+      "tool_activity": [],
+      "output": null,
+      "result": "BLOCKED",
+      "notes": "Not attempted after external service block: usageLimitExceeded"
+    }
+  ],
+  "result": "FAIL",
+  "evidence_storage": {
+    "model_output_policy": "bounded excerpts and SHA-256 digests; no bulk full-model transcript",
+    "all_cases_retained": true
+  }
+}

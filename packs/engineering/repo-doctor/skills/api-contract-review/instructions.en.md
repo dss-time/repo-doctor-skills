@@ -14,3 +14,7 @@ Review one defined API or module contract. Keep server, client, schemas, documen
 4. Classify each difference as breaking, non-breaking, behavioral, documentation-only, or unknown.
 5. State affected consumers, migration and deprecation needs, compatibility layers, versioning options, and contract-test recommendations.
 6. Report evidence, impact, severity, confidence, validation, and unknowns without editing the interface.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

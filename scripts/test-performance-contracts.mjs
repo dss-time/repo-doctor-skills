@@ -28,7 +28,7 @@ for (const entry of cases) {
   assert.ok(["fast", "standard", "audit"].includes(entry.expected_mode), `${entry.case_id}: invalid expected_mode`);
   assert.equal(entry.max_primary_skills, 1, `${entry.case_id}: one primary Skill is required`);
   assert.ok(entry.expected_primary_skill === null || active.has(entry.expected_primary_skill)
-    || ["report-writer", "excel-data-quality-check-basic"].includes(entry.expected_primary_skill),
+    || ["report-writer"].includes(entry.expected_primary_skill),
   `${entry.case_id}: expected_primary_skill must be active, an approved adjacent Skill, or null`);
   assert.equal(typeof entry.input_en, "string", `${entry.case_id}: input_en is required`);
   assert.equal(typeof entry.input_zh_CN, "string", `${entry.case_id}: input_zh_CN is required`);

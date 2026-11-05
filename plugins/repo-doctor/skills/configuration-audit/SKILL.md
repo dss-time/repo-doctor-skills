@@ -42,6 +42,10 @@ Audit a defined configuration surface from repository evidence. Keep configurati
 5. Trace configuration to consumers, startup behavior, deployment templates, tests, and documentation.
 6. Report evidence, severity/priority, impact, confidence, recommendations, validation, and unknowns without showing values or editing config.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 1. Scope and configuration source/precedence map
 2. Evidence
@@ -87,6 +91,10 @@ Audit a defined configuration surface from repository evidence. Keep configurati
 4. 检查漂移、过期键、冲突默认值、危险 fail-open、未文档化变量、名称/类型不一致、敏感文件误提交模式和缺失校验。
 5. 将配置追踪到消费者、启动行为、部署模板、测试和文档。
 6. 不显示值或修改配置，报告证据、严重度/优先级、影响、置信度、建议、验证和未知项。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 1. 范围与配置来源/优先级映射

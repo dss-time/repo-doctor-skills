@@ -28,7 +28,7 @@ Validate according to actual risk; security, production, migrations, releases an
 Create or update one ADR when the user explicitly authorizes architecture-document edits. Do not modify business code.
 
 ## Boundary
-- Route requirements to `requirements-to-spec`, implementation sequencing to `safe-change-plan`, and technical risk reviews to the relevant specialized skill.
+- Route requirements to `requirements-clarification`, implementation sequencing to `safe-change-plan`, and technical risk reviews to the relevant specialized skill.
 - Search for an existing ADR directory, index, numbering scheme, status vocabulary, template, and supersession rules before writing.
 - Never present a proposal as accepted consensus. Use `Proposed` when approval evidence is absent.
 - Use official standards only when allowed and necessary, recording source and access date; mark unavailable evidence unverified.
@@ -40,6 +40,10 @@ Create or update one ADR when the user explicitly authorizes architecture-docume
 4. Record status, date, context, drivers, options, decision, rationale, positive/negative consequences, risks, validation, and review conditions.
 5. Preserve repository naming, location, numbering, links, language, and template. If none exists, use `assets/adr-template.md`.
 6. Modify only the ADR or architecture index explicitly in scope. Report assumptions, unresolved questions, confidence, and implementation handoff without executing it.
+
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
 
 # Output Contract
 1. Target ADR path and action
@@ -75,7 +79,7 @@ Create or update one ADR when the user explicitly authorizes architecture-docume
 仅在用户明确授权架构文档修改时创建或更新一个 ADR，不修改业务代码。
 
 ## 职责边界
-- 需求交给 `requirements-to-spec`，实施顺序交给 `safe-change-plan`，技术风险交给相应专项 Skill。
+- 需求交给 `requirements-clarification`，实施顺序交给 `safe-change-plan`，技术风险交给相应专项 Skill。
 - 写入前搜索现有 ADR 目录、索引、编号、状态词、模板和替代规则。
 - 不得把提案写成已接受共识；没有批准证据时使用 `Proposed`。
 - 仅在允许且必要时使用官方标准，记录来源和访问日期；不可访问时标为未验证。
@@ -87,6 +91,10 @@ Create or update one ADR when the user explicitly authorizes architecture-docume
 4. 记录状态、日期、背景、驱动、方案、决策、理由、正负后果、风险、验证和复审条件。
 5. 保留仓库命名、目录、编号、链接、语言和模板；不存在时使用 `assets/adr-template.md`。
 6. 只修改范围内 ADR 或架构索引，报告假设、未决问题、置信度和实施转交，不执行实施。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 1. 目标 ADR 路径与动作

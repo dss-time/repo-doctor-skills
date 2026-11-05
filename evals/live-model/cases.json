@@ -44,14 +44,14 @@
       "locale": "en",
       "prompt": "SSO provider, migration, compatibility, and acceptance criteria are settled. Route to a testable specification.",
       "expected_workflow_id": "feature-delivery",
-      "expected_skill": "requirements-to-spec",
+      "expected_skill": "requirements-clarification",
       "acceptable_alternatives": [],
       "forbidden_skills": [
         "project-health-check"
       ],
       "expected_workflow": [
         "repo-doctor-router",
-        "requirements-to-spec"
+        "requirements-clarification"
       ],
       "expected_permission": "read_only",
       "expected_stop_condition": "material_decision_reopened"
@@ -62,14 +62,14 @@
       "locale": "zh-CN",
       "prompt": "SSO 提供商、迁移、兼容性和验收标准都已确定，请路由到可测试规格。",
       "expected_workflow_id": "feature-delivery",
-      "expected_skill": "requirements-to-spec",
+      "expected_skill": "requirements-clarification",
       "acceptable_alternatives": [],
       "forbidden_skills": [
         "project-health-check"
       ],
       "expected_workflow": [
         "repo-doctor-router",
-        "requirements-to-spec"
+        "requirements-clarification"
       ],
       "expected_permission": "read_only",
       "expected_stop_condition": "material_decision_reopened"

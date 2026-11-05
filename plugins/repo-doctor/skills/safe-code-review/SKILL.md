@@ -62,6 +62,12 @@ Evaluate only operational consequences: data migration and integrity, compatibil
 5. Rank by user impact and likelihood. Do not inflate severity because multiple axes observed the same root problem.
 6. Report commands/tests actually run, skipped validation, residual risks, and a bounded next action. Review-only authority never permits a fix.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
+For applicable changes, Axis B checks preserved authorization/business behavior against original intent. Axis C checks omission/clear/replacement and concurrency semantics, actual test/build isolation, and whether edits/rollback overwrite preexisting or later user work. Evaluate evidence and the actual diff; missing relevant evidence remains unknown.
+
 # Output Contract
 
 Default `fast`: conclusion, scope and evidence-backed P0/P1/P2 findings. Each finding includes severity, file/location, problem and impact, decisive evidence and an actionable recommendation without duplicate fields.
@@ -126,6 +132,12 @@ Complete all three checks; never invent findings or implement fixes.
 4. 三轴完成后再聚合；按根问题合并重复项，同时保留所有贡献轴和最强直接证据。
 5. 按用户影响和发生可能性排序；同一根问题被多轴发现不得自动抬高严重度。
 6. 报告实际运行的命令/测试、跳过验证、剩余风险和有边界的下一动作。只审查权限永远不包含修复权限。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
+
+对适用改动，轴 B 根据原始意图核对权限/业务行为是否保留；轴 C 核对省略/清空/替换及并发语义、测试/构建实际隔离，以及修改或回滚是否覆盖用户原有/后续改动。依据证据和实际 diff 判断，相关证据缺失保持未知。
 
 # 输出契约
 

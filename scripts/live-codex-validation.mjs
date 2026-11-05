@@ -467,9 +467,10 @@ export class AppServer {
     sandbox = "read-only",
     developerInstructions = validationInstructions,
     ephemeral = true,
+    cwd = workspace,
   } = {}) {
     const threadResult = await this.request("thread/start", {
-      cwd: workspace,
+      cwd,
       ...(requestedModel ? { model: requestedModel } : {}),
       sandbox,
       approvalPolicy: "never",

@@ -66,9 +66,7 @@
 | 排查 CI 失败 | **ci-failure-diagnosis** | 首个真实错误和修复分支确认 |
 | API、数据库、安全等高风险变更 | **change-impact-analysis** | 专项证据和原子计划确认 |
 | 从研究材料形成报告 | **research-brief** | 来源核验和输出文件授权 |
-| 清洗表格数据 | **excel-data-quality-check-basic** 或 **spreadsheet-data-cleaning** | 清洗规则和新输出位置确认 |
 | 会议纪要变成行动和演示 | **meeting-notes-to-actions** | 负责人、日期和文件输出确认 |
-| 文档、PDF 或表格审查 | Basic Skill 或增强 Skill | 工具能力和是否允许修改确认 |
 | 创建并发布前审计 Skill | **skill-authoring** | 创建范围、生成物和发布操作确认 |
 
 ## 1. 第一次接触陌生仓库
@@ -102,15 +100,14 @@
 ## 2. 从模糊需求走到发布门禁
 
 **适合：** 用户提出了一个还不完整的功能需求，希望最终安全落地。  
-**流程：** **requirements-clarification [R]** → **requirements-to-spec [R]** → 可选 **spec-to-work-items [A]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **feature-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → 可选 **[GATE] safe-test-implementation [W]** → 可选 **documentation-sync [W]** → **release-readiness-check [A/GATE]**。
+**流程：** **requirements-clarification [R]** → **change-impact-analysis [R]** → **safe-change-plan [A]** → **[GATE]** → **feature-implementation [W]** → **safe-code-review [R]** → **test-gap-analysis [R]** → 可选 **[GATE] safe-test-implementation [W]** → 可选 **documentation-sync [W]** → **release-readiness-check [A/GATE]**。
 
 | 阶段 | 为什么这样排 | 关键边界 |
 |---|---|---|
-| 决策澄清 | **requirements-clarification** 读取仓库证据，只关闭会实质影响行为、兼容、安全、数据、迁移或验收的选择。 | 一次只问一个关键决策，在规格或代码前停止。 |
-| 规格化 | **requirements-to-spec** 把已闭合的重大决策转换为范围、约束、流程和可测试验收标准。 | 发现重大未决选择时停止并退回澄清；不规划代码，也不写文件。 |
-| 交付切片 | 大规格使用 **spec-to-work-items** 创建垂直、可独立验证的工作项，标明依赖、冲突、测试和并行组。 | 不创建外部 Issue，也不替代代码级 `safe-change-plan`。 |
+| 决策澄清 | **requirements-clarification** 读取仓库证据，只关闭会实质影响行为、兼容、安全、数据、迁移或验收的选择。 | clarification 阶段逐项关闭关键决策；用户请求规格时进入 specification 阶段。 |
+| 规格化 | **requirements-clarification** 把已闭合的重大决策转换为范围、约束、流程和可测试验收标准。 | 发现重大未决选择时停止并退回澄清；不规划代码，也不写文件。 |
 | 影响分析 | **change-impact-analysis** 用仓库证据识别受影响模块、接口、测试和风险。 | 不实施变更。 |
-| 实施计划 | **safe-change-plan** 将已确认输入拆成原子步骤、验证和回滚。 | 需求仍模糊或影响未知时应停止并退回前一步。 |
+| 实施计划 | **safe-change-plan** 选择 atomic-steps 或 work-items，将必要代码步骤嵌入交付切片，配套验证和回滚。 | 需求仍模糊或影响未知时应停止并退回前一步。 |
 | 实现 | **feature-implementation** 逐个实施已批准功能切片和配套测试/文档，验证后才继续依赖项。 | 写代码和运行命令前必须确认计划与文件范围。 |
 | 审查与测试 | **safe-code-review** 审查变更；**test-gap-analysis** 分析缺口；只有用户同意后 **safe-test-implementation** 才写测试。 | 代码审查和缺口分析都不能被当成写入授权。 |
 | 文档与门禁 | 用户可见行为变化时使用 **documentation-sync**；最后由 **release-readiness-check** 给出 GO、GO WITH CONDITIONS 或 NO-GO。 | 发布门禁不发布、不改版本、不打 tag、不提交、不推送。 |
@@ -118,7 +115,7 @@
 先关闭重大决策，再形成规格：
 
 ```text
-请先使用 requirements-clarification 关闭重大决策。决策闭合后，再使用 requirements-to-spec 把已确认内容整理成可实施、可验证的规格：
+请使用 requirements-clarification，先在 clarification 阶段关闭重大决策，再进入 specification 阶段形成可实施、可验证的规格：
 
 <粘贴原始需求>
 
@@ -359,16 +356,15 @@ CI 日志：
 
 ## 6. 从研究问题到可交付报告
 
+**流程：** **research-brief [R+N]** → 可选 **content-consistency-check [R+T]** → **[GATE] report-writer [W]**。
+
 **适合：** 需要基于材料或网络来源完成研究简报，再形成报告或 PDF 审查结果。  
-**流程：** **research-brief [R+N]** → 可选 **content-consistency-check [R+T]** → **[GATE] report-writer [W]** → 可选 **document-review [W]** → 若已有真实 PDF，再用 **pdf-review [R+T]**。
 
 | 步骤 | 为什么 | 关键边界 |
 |---|---|---|
 | 研究简报 | **research-brief** 明确研究问题、证据标准、日期，并优先收集原始或官方来源。 | 无网络或资料时不得假装完成实时研究。 |
 | 一致性核对 | 多份材料之间存在数字、日期、版本或结论差异时，用 **content-consistency-check**。 | 没有权威证据时不擅自选择“正确值”。 |
 | 报告撰写 | **report-writer** 将已核验材料组织成面向读者的结构化报告。 | 写文件或导出前确认格式和输出位置；不补造事实。 |
-| 文档审查 | **document-review** 检查结构、逻辑、事实、数字、引用和格式；默认给问题清单。 | 只有用户要求时才修改副本，并保留原意和结构。 |
-| PDF 审查 | 只有真实 PDF 已存在且工具可用时，用 **pdf-review** 做文本、页码、表格和视觉检查。 | 无渲染/OCR 能力时必须说明限制，不能虚构页码或视觉验证。 |
 
 研究提示词：
 
@@ -405,65 +401,8 @@ CI 日志：
 区分事实、引用、推断、建议和未知；保持数字、日期、术语与引用一致。材料不足处写限制，不要自行补造。
 ```
 
-审查和 PDF 交接：
-
-```text
-请使用 document-review 审查这份报告，先给必须修改、建议修改和可选润色清单。除非我再次明确授权，否则不要整篇重写或覆盖原文件。
-```
-
-```text
-请使用 pdf-review 审查这个已生成的 PDF。
-
-请说明文件是可搜索 PDF、扫描件还是 OCR 结果，尽量保留页码定位，并检查缺页、乱码、表格错位、数字矛盾、引用和版式。无法渲染或 OCR 时明确标记未验证。
-```
 
 **安全交接：** 来源清单必须随研究结果进入报告阶段。网络访问、文档写入和文件导出是不同权限；前一步能联网不代表后一步可以创建或覆盖文件。
-
-## 7. 清洗表格但保留原始数据
-
-**适合：** 想先了解数据质量，再按可追踪规则生成清洗后的新文件。  
-**流程：** 只需审计时 **excel-data-quality-check-basic [R]**；需要清洗时 **spreadsheet-data-cleaning [W]** → 可选 **content-consistency-check [R+T]** → 可选 **report-writer [W]** 或 **presentation-outline [W]**。
-
-| 选择 | 什么时候用 | 边界 |
-|---|---|---|
-| **excel-data-quality-check-basic** | 只需要只读地检查缺失、重复、类型、公式和异常。 | 不写文件、不运行脚本；不生成清洗结果。 |
-| **spreadsheet-data-cleaning** | 用户明确要求清洗，并且平台具备表格处理能力。 | 原始文件保持只读；清洗结果另存；每条规则进入审计日志。 |
-| **content-consistency-check** | 清洗结果还要和其他文档、报表或版本核对。 | 只报告冲突，不猜测权威值。 |
-
-先做只读画像：
-
-```text
-请使用 excel-data-quality-check-basic 对 <文件> 做只读数据质量检查。
-
-请报告工作表、列、类型、缺失、重复、异常、公式风险和无法判断项。不要修改原文件，也不要创建清洗副本。
-```
-
-若确定要清洗，先确认规则和输出位置：
-
-```text
-请使用 spreadsheet-data-cleaning 清洗 <原始文件>。
-
-允许的清洗规则：
-- <规则 1>
-- <规则 2>
-
-禁止猜测或填补的关键字段：
-输出新文件：
-审计日志：
-需要保持的公式、行列和关键汇总：
-
-原始文件必须保持不变。先给数据画像和规则预览；若规则会删除可能有效的数据、改变公式语义或覆盖原文件，请停止并征求确认。
-```
-
-清洗后验证：
-
-```text
-请对清洗结果和原始数据执行一致性核对。
-
-请比较行列数、关键字段、日期/数字格式、公式、重复与缺失统计、关键汇总和审计日志。区分预期变化、意外变化和无法判断项。
-```
-
-**[GATE]：** 删除行、填补关键字段、修正规则性异常、改变公式、覆盖文件都必须单独确认。若表格工具不可用，Skill 应提供规则和限制，不得声称已生成或验证 XLSX/CSV。
 
 ## 8. 从会议记录到行动项和演示
 
@@ -514,56 +453,6 @@ CI 日志：
 ```
 
 **安全交接：** 先把原始记录保存为证据，再保存结构化结果。人工确认是事实质量闸门；写报告或生成文件是权限闸门，两者不能合并。
-
-## 9. Basic 与增强型文档、PDF、表格审查
-
-**适合：** 你有 Word、PDF 或 Excel 文件，但不确定应选择低能力只读检查还是增强处理。  
-**流程：** 先按任务意图和工具能力路由；不要因为工具不可用就假装完成增强审查。
-
-### 路由决策
-
-1. **只需基于可访问文本或结构做保守、只读检查？**
-   - PDF：**pdf-review-basic [R]**
-   - Word：**word-document-review-basic [R]**
-   - Excel：**excel-data-quality-check-basic [R]**
-2. **需要结构、逻辑、引用和格式审查，且可能在明确授权后修改文档副本？**
-   - 使用 **document-review [W]**。
-3. **需要 PDF 页码、表格、缺页、乱码、OCR 状态或视觉版式检查？**
-   - 使用 **pdf-review [R+T]**；必须具备相应提取、渲染或 OCR 工具。
-4. **需要实际清洗 Excel/CSV 并生成新文件？**
-   - 使用 **spreadsheet-data-cleaning [W]**。
-5. **需要跨多个文件核对术语、数字、日期、链接或结论？**
-   - 使用 **content-consistency-check [R+T]**。
-
-Basic PDF 示例：
-
-```text
-请使用 pdf-review-basic 对 <文件> 做只读基础审查。
-
-只基于当前可可靠访问的文本和结构给出问题、证据和未知项。不要声称做过 OCR、页面渲染或视觉检查，也不要修改文件。
-```
-
-增强 PDF 示例：
-
-```text
-请使用 pdf-review 审查 <文件>。
-
-我需要页码定位、表格和版式检查。请先确认是否能可靠提取文本、渲染页面和执行 OCR；能力缺失时明确降级范围。不要虚构页码、缺页或视觉结论。
-```
-
-Word 基础与增强：
-
-```text
-请使用 word-document-review-basic 对 <文件> 做只读基础审查，报告可证实的结构、术语、数字和明显问题。不要修改文件或声称验证了不可访问的格式。
-```
-
-```text
-请使用 document-review 审查 <文件> 的结构、逻辑、完整性、术语、事实、数字、引用、语法和格式一致性。
-
-默认只给问题清单和修改建议。若需要修改，请先说明可保持的格式能力、输出副本位置和无法验证的项目，未经授权不要覆盖原文件。
-```
-
-**[GATE]：** “只读”与“无需工具”不是同一个概念。工具不可用时应缩小结论或停止，而不是自动改用 Basic Skill 后仍声称完成 OCR、渲染、公式验证或格式保真。原始文件默认只读，任何转换或修订都写到新位置。
 
 ## 10. 创建 Skill 并做发布前质量审计
 
@@ -662,4 +551,4 @@ Word 基础与增强：
 | `session-handoff` | 带产物引用的脱敏续接摘要。 | 默认写系统临时目录；项目路径需明确授权 |
 | `release-preparation` | 只读发布门禁。 | 无；发布是外部动作 |
 
-只读输出只是证据，绝不构成写入授权。`decision-prototype` 必须经过明确写门禁且不得访问生产系统。`session-handoff` 默认只创建脱敏的系统临时摘要；项目写入需要明确授权。`spec-to-work-items` 只返回响应 Markdown，不能落盘或创建任务。Golden Workflow fixture 验证契约，不代表真实模型路由准确率。
+只读输出只是证据，绝不构成写入授权。`decision-prototype` 必须经过明确写门禁且不得访问生产系统。`session-handoff` 默认只创建脱敏的系统临时摘要；项目写入需要明确授权。`safe-change-plan` 只返回响应 Markdown，不能落盘或创建任务。Golden Workflow fixture 验证契约，不代表真实模型路由准确率。

@@ -3,7 +3,7 @@
 Repo Doctor Skills keeps release versions, component versions, and maturity statuses separate. A matching number in two places is not evidence that they share a lifecycle.
 
 
-The current project release is 0.9.0 on the stable channel, promoted from 0.9.0-beta.2. Project channels and component maturity are managed separately.
+The next prepared project release is stable 0.10.0. The published 0.9.0 release was promoted from 0.9.0-beta.2. Project channels and component maturity are managed separately.
 
 ## 1. Project release version
 

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Document Review（文档审查）"
-  short_description: "审查文档结构、逻辑、证据、语言和格式并分级问题"
-  default_prompt: "使用 $document-review 审查这份文档，区分必须修改、建议修改和可选润色。"

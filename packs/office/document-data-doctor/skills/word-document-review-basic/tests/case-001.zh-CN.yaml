@@ -1,9 +1,0 @@
-input: "只检查 Word 的文字和标题，不修改文件或处理修订痕迹。"
-expected:
-  must_include:
-    - 纯文本
-    - 标题
-    - 人工确认
-  must_not:
-    - 内部模板
-    - 已修改文件

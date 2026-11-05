@@ -26,7 +26,7 @@ function setup(t, selector = { skill_id: 'documentation-sync' }) {
     skillChecks: {}, recoveryChecks: new Map(), risks: [], reviewBinding: 'diff-1', deliveryRequirements: [], reuse: {} };
   function evidence(id, claims = [], extra = {}) {
     const e = captureEvidence(root, { id, operation_binding: operationBinding(host), task_binding: taskBinding(task), kind: 'analysis', source: `fixture:${id}`, summary: id, dependencies: ['facts.txt'], coverage_complete: true,
-      result: 'pass', claims, ...extra, ...(claims.some(c => c.startsWith('stage:')) ? { request_binding: digest(host.requests[claims.find(c => c.startsWith('stage:')).slice(6)]), execution_attempt: task.steps[claims.find(c => c.startsWith('stage:')).slice(6)].attempts } : {}) }, host.environment);
+      result: 'pass', claims, ...extra, ...(claims.some(c => c.startsWith('stage:')) ? { request_binding: digest(host.requests[claims.find(c => c.startsWith('stage:')).slice(6)]), execution_attempt: task.steps[claims.find(c => c.startsWith('stage:')).slice(6)].attempts, execution_nonce: task.steps[claims.find(c => c.startsWith('stage:')).slice(6)].execution_nonce } : {}) }, host.environment);
     task.evidence.push(e); host.trustedEvidence.add(digest(e)); return e;
   }
   const facts = evidence('facts');
@@ -117,7 +117,7 @@ test('D: cross-module delivery retains specification, impact, implementation, te
   const f = setup(t, { workflow_id: 'feature-delivery' });
   f.setCondition('material_decisions_open', false); f.setCondition('candidate_available', false);
   f.setCondition('test_changes_required', false); f.setCondition('test_changes_authorized', false);
-  const spec = f.evidence('existing-spec', ['stage:specification'], { skill: 'requirements-to-spec' }); f.host.reuse.specification = [spec.id];
+  const spec = f.evidence('existing-spec', ['stage:specification'], { skill: 'requirements-clarification' }); f.host.reuse.specification = [spec.id];
   f.host.requests.implementation.paths.push('src/math.mjs');
   for (const grant of f.host.grants.filter(g => g.skills.includes('feature-implementation'))) grant.paths.push('src/math.mjs');
   f.host.skillChecks.implementation.request_binding = digest(f.host.requests.implementation);
@@ -130,7 +130,7 @@ test('D: cross-module delivery retains specification, impact, implementation, te
   f.host.reviewBinding = reviewBinding(f.root, f.task, 'fixture-base', ['src', 'tests']);
   const actions = f.pump(); assert.equal(actions.at(-1).action, 'complete');
   assert.equal(f.task.steps.specification.status, 'reused'); assert.equal(f.task.steps.clarification.status, 'skipped');
-  for (const id of ['work-items', 'impact', 'plan', 'implementation', 'review', 'test-gap']) assert.equal(f.task.steps[id].status, 'completed');
+  for (const id of ['impact', 'plan', 'implementation', 'review', 'test-gap']) assert.equal(f.task.steps[id].status, 'completed');
   writeFileSync(path.join(f.root, 'tests/extra.mjs'), 'export {};');
   f.host.reviewBinding = reviewBinding(f.root, f.task, 'fixture-base', ['src', 'tests']);
   assert.equal(nextAction(f.task, f.host).stage, 'review');
@@ -573,4 +573,77 @@ test('Acceptance and risk claims cannot cross an authorized operation scope chan
   const b = advance(f.task, f.host); f.complete(b);
   assert.equal(evidenceValidity(prior, f.host).status, 'valid');
   assert.equal(nextAction(f.task, f.host).reason, 'delivery_not_proven');
+});
+
+
+test('Deferred verification blocks command dispatch while independent edits remain available', t => {
+  const f = setup(t, {skill_id:'safe-test-implementation'});
+  f.host.verificationDeferral = {active:true,source:'User requested final batch validation',pending:['behavior check']};
+  assert.equal(nextAction(f.task,f.host).action,'execute');
+  const request = f.host.requests.task;
+  request.capabilities.push('run_shell_commands');
+  request.operation = 'node tests/main.mjs';
+  request.preflight = 'safe';
+  f.host.grants.push({task_id:f.task.id,capability:'run_shell_commands',skills:['safe-test-implementation'],operations:[request.operation],source:'fixture authorized command'});
+  function refreshScope() {
+    f.host.skillChecks.task.request_binding = digest(request);
+  }
+  refreshScope();
+  assert.equal(nextAction(f.task,f.host).reason,'command_verification_purpose_unknown');
+  request.verification = true;
+  refreshScope();
+  assert.equal(nextAction(f.task,f.host).reason,'verification_deferred');
+  assert.equal(advance(f.task,f.host).reason,'verification_deferred');
+  assert.equal(f.task.steps.task.status,'pending');
+  request.verification = false;
+  refreshScope();
+  assert.equal(nextAction(f.task,f.host).action,'execute');
+  request.verification = true;
+  f.host.verificationDeferral.active = false;
+  refreshScope();
+  assert.equal(nextAction(f.task,f.host).action,'execute');
+});
+
+test('Restoring a pending checkpoint cannot reuse a prior attempt identity', t => {
+  const f = setup(t);
+  const pending = encodeTask(f.task);
+  const action = advance(f.task, f.host);
+  const old = f.complete(action, { claims: ['stage:task', 'acceptance:behavior'] });
+  const restored = restoreTask(pending, registry, inventory);
+  restored.evidence.push(old);
+  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), {source:'Host reconciled actual prior effects',reconciled:true});
+  assert.equal(advance(restored, f.host).action,'execute');
+  assert.equal(restored.steps.task.attempts,1);
+  assert.notEqual(restored.steps.task.execution_nonce,old.execution_nonce);
+  assert.throws(()=>finishStep(restored,'task',[old.id],f.host),/current-attempt/);
+});
+
+test('Imported completed stages reject old receipts and require explicit historical reuse', t => {
+  const f = setup(t);
+  const first = advance(f.task,f.host);
+  const old = f.complete(first,{claims:['stage:task','acceptance:behavior']});
+  f.host.reconciled = new Set([reconciliationBinding(f.task,'task',f.host)]);
+  reopen(f.task,'task',f.host,{reason:'Retry current operation',source:'host',safeToRetry:true});
+  advance(f.task,f.host);
+  f.complete({stage:'task',skill:'documentation-sync'},{claims:['stage:task','acceptance:behavior']});
+  const tampered = JSON.parse(encodeTask(f.task));
+  tampered.steps.task.evidence_ids=[old.id];
+  const restored = restoreTask(JSON.stringify(tampered),registry,inventory);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host checked recovered effects',reconciled:true});
+  assert.notEqual(nextAction(restored,f.host).action,'complete');
+  f.host.reconciled = new Set([reconciliationBinding(restored,'task',f.host)]);
+  reopen(restored,'task',f.host,{reason:'Explicitly reuse historical verified result',source:'host',safeToRetry:true});
+  f.host.reuse.task=[old.id];
+  assert.equal(advance(restored,f.host).action,'reuse');
+  assert.equal(nextAction(restored,f.host).action,'complete');
+});
+
+test('Known dependency changes outrank absent environment metadata', t => {
+  const f=setup(t);
+  const failed=f.evidence('historical-failure',[],{kind:'test',command:'synthetic check',cwd:'.',exit_code:1,result:'fail'});
+  failed.environment={};
+  f.host.trustedEvidence.add(digest(failed));
+  assert.equal(evidenceValidity(failed,f.host).status,'unknown');
+  writeFileSync(path.join(f.root,'facts.txt'),'demonstrably changed');
+  assert.equal(evidenceValidity(failed,f.host).status,'stale');
 });

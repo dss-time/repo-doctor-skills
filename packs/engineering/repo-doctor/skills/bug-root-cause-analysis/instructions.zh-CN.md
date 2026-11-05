@@ -94,3 +94,7 @@
 8. 区分 `trigger_condition`、`direct_cause` 和 `systemic_root_cause`；没有因果证据时，不得把触发条件或可见异常写成根因。
 9. 在外部可观察边界给出回归测试或可重复回归检查建议，以及最小因果修复方向；不创建测试，也不实施修复。
 10. 如实报告 `Observed`、`Reproduced`、`Inferred`、`Unverified` 和 `Blocked`，并列出提高置信度所需的确切证据。
+
+读取[执行边界](../../references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](../../references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](../../references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。

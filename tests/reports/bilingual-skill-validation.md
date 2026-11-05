@@ -1,22 +1,20 @@
 # Bilingual Skill Validation
 
-Generated: 2026-11-04T07:41:22.796Z
+Generated: 2026-11-05T07:42:46.858Z
 
-Result: 41/41 Skills passed all deterministic bilingual checks.
+Result: 33/33 Skills passed all deterministic bilingual checks.
 
 | Skill | Files | Metadata | Semantic parity | Issues |
 |---|---:|---:|---:|---|
 | `repo-doctor-router` | PASS | PASS | PASS | none |
 | `repo-onboarding` | PASS | PASS | PASS | none |
 | `requirements-clarification` | PASS | PASS | PASS | none |
-| `requirements-to-spec` | PASS | PASS | PASS | none |
-| `spec-to-work-items` | PASS | PASS | PASS | none |
+| `safe-change-plan` | PASS | PASS | PASS | none |
 | `decision-prototype` | PASS | PASS | PASS | none |
 | `bug-root-cause-analysis` | PASS | PASS | PASS | none |
 | `project-health-check` | PASS | PASS | PASS | none |
 | `safe-code-review` | PASS | PASS | PASS | none |
 | `change-impact-analysis` | PASS | PASS | PASS | none |
-| `safe-change-plan` | PASS | PASS | PASS | none |
 | `test-gap-analysis` | PASS | PASS | PASS | none |
 | `safe-test-implementation` | PASS | PASS | PASS | none |
 | `ci-failure-diagnosis` | PASS | PASS | PASS | none |
@@ -36,14 +34,8 @@ Result: 41/41 Skills passed all deterministic bilingual checks.
 | `feature-implementation` | PASS | PASS | PASS | none |
 | `skill-authoring` | PASS | PASS | PASS | none |
 | `skill-quality-audit` | PASS | PASS | PASS | none |
-| `pdf-review-basic` | PASS | PASS | PASS | none |
-| `word-document-review-basic` | PASS | PASS | PASS | none |
-| `excel-data-quality-check-basic` | PASS | PASS | PASS | none |
 | `report-writer` | PASS | PASS | PASS | none |
 | `research-brief` | PASS | PASS | PASS | none |
-| `spreadsheet-data-cleaning` | PASS | PASS | PASS | none |
-| `document-review` | PASS | PASS | PASS | none |
-| `pdf-review` | PASS | PASS | PASS | none |
 | `meeting-notes-to-actions` | PASS | PASS | PASS | none |
 | `presentation-outline` | PASS | PASS | PASS | none |
 | `content-consistency-check` | PASS | PASS | PASS | none |

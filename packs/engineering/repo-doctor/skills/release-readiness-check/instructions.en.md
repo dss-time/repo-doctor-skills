@@ -27,3 +27,7 @@ If the request says to run the full local test, typecheck, or build gates, execu
 7. Classify findings as blockers, pre-release conditions, recommendations, or post-release observations. Attach evidence and an owner/action when available.
 8. Evaluate rollback readiness, observability, monitoring signals, and stop or rollback thresholds.
 9. Return exactly one decision: `GO`, `GO WITH CONDITIONS`, or `NO-GO`, with conditions and next steps tied to evidence.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

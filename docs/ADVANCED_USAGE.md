@@ -19,11 +19,11 @@ Start with `npx skills@latest add dss-time/repo-doctor-skills` for interactive s
 Add the stable source:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.9.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-This example pins the v0.9.0 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
+This example pins the v0.10.0 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
 
 - **Repo Doctor** for repository engineering;
 - **Productivity Toolkit** for reports, research, spreadsheets, documents, meetings, and presentations;
@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 See [Legacy Codex Plugin](LEGACY_CODEX_PLUGIN.md) for the compatibility path and host-specific notes.
 
-v0.9.0 contains 41 Skills: Repo Doctor has 28, the three plugins contain 38 together, and three Document Data Doctor Skills are regular-build-only. A Full source installation includes all 41. Published v0.7.3 remains at 40 / 27 / 37 respectively; its archives and npm package do not contain feature-implementation yet.
+Current source contains 33 Skills: Repo Doctor has 26 and the three plugins contain 33 together. A Full source installation includes all 33. Release 0.10.0 distributes these 33 Skills and 33 ChatGPT ZIPs, including the six PDF/Word/Excel removals and two requirements/planning consolidations.
 
 ## 3. ChatGPT single-Skill ZIPs
 
@@ -59,7 +59,7 @@ Prefixes identify the source library:
 | `pt-*` | Productivity Toolkit | `pt-report-writer.zip` |
 | `sm-*` | Skill Maintainer | `sm-skill-quality-audit.zip` |
 
-The `$slug` syntax is not guaranteed for personally uploaded ChatGPT Skills. The three Document Data Doctor Basic Skills participate in regular builds but do not have standalone ChatGPT ZIPs.
+The `$slug` syntax is not guaranteed for personally uploaded ChatGPT Skills. All 33 current source Skills have standalone ChatGPT ZIPs.
 
 ## 4. Other platform outputs
 

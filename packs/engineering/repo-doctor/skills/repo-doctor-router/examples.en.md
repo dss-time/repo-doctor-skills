@@ -1,7 +1,7 @@
 # Examples
 
 - “The feature request still has compatibility choices. Which workflow?” -> `feature-delivery`, next `requirements-clarification`.
-- “Behavior and acceptance criteria are settled; make the specification.” -> `feature-delivery`, next `requirements-to-spec`.
+- “Behavior and acceptance criteria are settled; make the specification.” -> `feature-delivery`, next `requirements-clarification`.
 - “I only want to compare two UI directions before committing to implementation.” -> `decision-prototype`, mode `standard`.
 - “Caller burden and duplicated adapters are growing; analyze options but do not refactor.” -> `architecture-deepening-analysis`, mode `standard`.
 - “Implement this clearly scoped one-file fix; writes are authorized.” -> preserve the registered write gate, then recommend `safe-fix-implementation`.

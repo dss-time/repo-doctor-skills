@@ -1,9 +1,0 @@
-input: "Turn this vague export request into a testable specification without changing code."
-expected:
-  must_include:
-    - users and goals
-    - assumptions
-    - acceptance criteria
-  must_not:
-    - modify files
-    - implementation plan

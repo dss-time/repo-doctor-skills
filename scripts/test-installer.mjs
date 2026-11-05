@@ -59,8 +59,8 @@ try {
     fullTarget,
   ], { cwd: root, encoding: "utf8", env: { ...process.env, HOME: path.join(tempRoot, "isolated-home") }, timeout: 15000 });
   assert.equal(full.status, 0, full.stderr || full.stdout);
-  assert.equal(readdirSync(fullTarget, { withFileTypes: true }).filter((entry) => entry.isDirectory()).length, 41);
-  assert.match(full.stdout, /Installed: 41 Skills/);
+  assert.equal(readdirSync(fullTarget, { withFileTypes: true }).filter((entry) => entry.isDirectory()).length, 33);
+  assert.match(full.stdout, /Installed: 33 Skills/);
   assert.match(full.stdout, /Preset: Full/);
 
   const cli = (args) => spawnSync(process.execPath, [path.join(root, "scripts/install.mjs"), ...args], {
@@ -71,8 +71,8 @@ try {
   assert.match(repeated.stdout, /Installed: 0 Skills; unchanged: 7/);
   const expansion = cli(["--preset", "full", "--target-dir", target]);
   assert.equal(expansion.status, 0, expansion.stderr);
-  assert.match(expansion.stdout, /Installed: 34 Skills; unchanged: 7/);
-  assert.equal(readdirSync(target).length, 41);
+  assert.match(expansion.stdout, /Installed: 26 Skills; unchanged: 7/);
+  assert.equal(readdirSync(target).length, 33);
 
   const featureTarget = path.join(tempRoot, "feature-only");
   const featureInstall = cli(["--skill", "feature-implementation", "--language", "zh-CN", "--target-dir", featureTarget]);
@@ -131,7 +131,7 @@ try {
   assert.equal(readFileSync(changedFile, "utf8"), originalContent);
   assert.ok(!existsSync(staleResource), "replacement must remove stale resources");
   assert.equal(readFileSync(unselectedFile, "utf8"), "unselected local edit\n");
-  assert.equal(readdirSync(target).length, 41, "replacement must reuse the same Skill directory");
+  assert.equal(readdirSync(target).length, 33, "replacement must reuse the same Skill directory");
 
   writeFileSync(changedFile, "legacy force edit\n");
   const legacyForce = cli(["--skill", "safe-code-review", "--target-dir", target, "--force"]);
@@ -217,4 +217,4 @@ try {
 }
 
 assert.ok(!existsSync(tempRoot), "installer test temp directory was not cleaned");
-console.log("Installer tests passed: Recommended 7/7, Full 41/41, explicit Codex target, ambiguous-target safety, and cleanup.");
+console.log("Installer tests passed: Recommended 7/7, Full 33/33, explicit Codex target, ambiguous-target safety, and cleanup.");

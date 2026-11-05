@@ -41,6 +41,8 @@ Analyze one specific performance regression. Keep production code and configurat
 6. Rank hypotheses by impact, evidence, confidence, and experiment cost; propose falsifiable validation experiments and optimization priorities.
 7. Do not optimize code; report exact evidence, locations, impact, severity/priority, confidence, validation, and unknowns.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
 # Output Contract
 1. Scope, baseline, workload, and metrics
 2. Evidence and measurement quality
@@ -87,6 +89,8 @@ Analyze one specific performance regression. Keep production code and configurat
 5. 归因前检查方差、样本量、冷热效应、环境漂移和测量偏差。
 6. 按影响、证据、置信度和实验成本排序假设，提出可证伪实验和优化优先级。
 7. 不优化代码，报告准确证据、位置、影响、严重度/优先级、置信度、验证和未知项。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
 
 # 输出契约
 1. 范围、基线、工作负载和指标

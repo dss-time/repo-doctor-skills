@@ -13,17 +13,16 @@ import {
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const model = collectCatalogModel(root);
 
-assert.equal(model.projectVersion, "0.9.0", "expected prepared project version 0.9.0");
-assert.equal(model.counts.packs, 4, "expected four active Packs");
-assert.equal(model.counts.skills, 41, "expected 41 active Skills");
-assert.equal(model.counts.pluginSkills, 38, "expected 38 plugin/ChatGPT-distributed Skills");
-assert.equal(model.counts.regularOnlySkills, 3, "expected three regular-build-only Skills");
+assert.equal(model.projectVersion, "0.10.0", "expected prepared project version 0.10.0");
+assert.equal(model.counts.packs, 3, "expected three active Packs");
+assert.equal(model.counts.skills, 33, "expected 33 active Skills");
+assert.equal(model.counts.pluginSkills, 33, "expected 33 plugin/ChatGPT-distributed Skills");
+assert.equal(model.counts.regularOnlySkills, 0, "expected zero regular-build-only Skills");
 
 const expectedPackCounts = new Map([
-  ["engineering.repo-doctor", 28],
-  ["productivity.productivity-toolkit", 8],
+  ["engineering.repo-doctor", 26],
+  ["productivity.productivity-toolkit", 5],
   ["engineering.skill-maintainer", 2],
-  ["office.document-data-doctor", 3],
 ]);
 for (const pack of model.packs) {
   assert.equal(
@@ -62,7 +61,7 @@ for (const pack of model.packs) {
     publishedSlugs.add(skill.interface.publishedSlug);
   }
 }
-assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 28, pt: 8, sm: 2 });
+assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 26, pt: 5, sm: 2 });
 
 for (const locale of ["en", "zh-CN"]) {
   const first = renderCatalog(model, locale);
@@ -79,4 +78,4 @@ for (const [filename, expected] of Object.entries(generatedCatalogs(model))) {
 }
 assert.deepEqual(checkCatalogs(root), [], "generated catalogs must be current");
 
-console.log("User documentation catalog tests passed (4 Packs, 41 Skills, 38 plugin/ZIP distributions).");
+console.log("User documentation catalog tests passed (3 Packs, 33 Skills, 33 plugin/ZIP distributions).");

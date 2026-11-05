@@ -6,9 +6,6 @@ Productivity Toolkit 是独立、公开安全的通用办公与研究 Pack，不
 
 - `report-writer`
 - `research-brief`
-- `spreadsheet-data-cleaning`
-- `document-review`
-- `pdf-review`
 - `meeting-notes-to-actions`
 - `presentation-outline`
 - `content-consistency-check`

@@ -1,5 +1,7 @@
 # Release 资产选择指南
 
+> 本页记录历史 v0.6.0 产物。当前源码已删除 6 个 PDF、Word、Excel Skill，请参见[当前目录](../SKILL_CATALOG.zh-CN.md)。
+
 本指南帮助你选择一个真实发布的 Repo Doctor Skills 资产，避免编造聚合包，也避免混用 ChatGPT 与 Codex 安装路径。
 
 ## Release 资产清单

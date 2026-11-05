@@ -34,3 +34,9 @@ Evaluate only operational consequences: data migration and integrity, compatibil
 4. Aggregate only after all axes finish. Merge duplicates by root problem while retaining every contributing axis and the strongest direct evidence.
 5. Rank by user impact and likelihood. Do not inflate severity because multiple axes observed the same root problem.
 6. Report commands/tests actually run, skipped validation, residual risks, and a bounded next action. Review-only authority never permits a fix.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
+For applicable changes, Axis B checks preserved authorization/business behavior against original intent. Axis C checks omission/clear/replacement and concurrency semantics, actual test/build isolation, and whether edits/rollback overwrite preexisting or later user work. Evaluate evidence and the actual diff; missing relevant evidence remains unknown.

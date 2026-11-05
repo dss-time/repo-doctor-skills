@@ -24,9 +24,9 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
 2. Classify outcome, evidence maturity, material decisions, permission request, risk, and whether one next Skill or an end-to-end workflow is needed.
 3. Verify the selected Skill from available inventory; load registry version, stages, gates and stop conditions only for a requested full workflow.
 4. Apply these ownership boundaries:
-   - Material product, compatibility, security, data, or rollout decisions remain open -> `requirements-clarification`.
-   - Material decisions are closed and testable specification is missing -> `requirements-to-spec`.
-   - A settled large specification needs vertical delivery slices -> `spec-to-work-items`.
+   - Material product, compatibility, security, data, or rollout decisions remain open -> `requirements-clarification` in clarification phase.
+   - Material decisions are closed and testable specification is missing -> `requirements-clarification` in specification phase, skipping the interview.
+   - A settled large specification needs vertical delivery slices -> `safe-change-plan` with work-items granularity.
    - Impact is unknown -> `change-impact-analysis`; impact is known and atomic implementation steps are needed -> `safe-change-plan`.
    - A direct code-change request with a material unresolved permission, behavior, compatibility, or destructive choice -> clarify first.
    - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and implementation owner below; never treat clarity as permission.
@@ -46,3 +46,5 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
 ## Completion
 
 Return one verified recommendation and never execute it. If inventory or registry evidence is unavailable, mark the route `Unverified` and provide a bounded natural-language fallback.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.

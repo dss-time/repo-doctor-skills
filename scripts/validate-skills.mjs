@@ -1,3 +1,4 @@
+import { credentialFindings } from "./credential-findings.mjs";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { compareNames, walkFiles } from "./deterministic-files.mjs";
@@ -39,9 +40,6 @@ const requiredMetadata = [
 ];
 
 const sensitiveTerms = [
-  "API_KEY",
-  "SECRET",
-  "TOKEN",
   "买入",
   "卖出",
   "持有",
@@ -72,7 +70,7 @@ const pluginSkills = Object.fromEntries(
     discoverActivePackSkills(path.join(packsDir, ...segments)),
   ]),
 );
-const conditionallyWritableReviewSkills = new Set(["document-review"]);
+const conditionallyWritableReviewSkills = new Set();
 
 function walk(dir, predicate, results = []) {
   return walkFiles(dir, predicate, results);
@@ -149,6 +147,11 @@ function validateSkill(skillDir) {
     const files = walk(skillDir, () => true);
     for (const file of files) {
       const text = readFileSync(file, "utf8");
+      for (const finding of credentialFindings(text)) {
+        const message = `${path.relative(root, file)}:${finding.line}: ${finding.kind}; inspect locally without disclosing values`;
+        if (finding.severity === "error") errors.push(message);
+        else errors.push(`Unresolved credential finding: ${message}; replace examples with explicit synthetic placeholders or remove real credentials`);
+      }
       for (const term of sensitiveTerms) {
         if (text.toLowerCase().includes(term.toLowerCase())) {
           errors.push(`${path.relative(root, file)}: public skill contains sensitive term "${term}"`);

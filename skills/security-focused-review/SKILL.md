@@ -41,6 +41,18 @@ Perform a defensive, scoped security review. Do not attack systems, access produ
 5. For every finding report location, evidence, attack prerequisites, exploitability, impact, severity, confidence, repair direction, and safe validation.
 6. Avoid active exploitation; propose non-destructive tests or review evidence only.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+## Evidence-driven checks
+- Separate authentication from server-side object and tenant authorization. Trace actor, resource lookup, policy check and effect; client UI restrictions alone are not enforcement.
+- For each relevant input, trace validation/canonicalization to the database, filesystem, network, template, process or deserializer sink. Check ordering before effects, fail-closed errors and actual framework safeguards before reporting a vulnerability.
+- For uploads and paths, inspect resolved containment, platform separators, symlink handling and check/use races when relevant. For outbound requests, inspect destination/redirect controls and internal-network exposure.
+- Inspect credential handling through configuration references and redacted evidence only. Dependency findings require affected version and reachable conditions; unavailable advisory lookup remains unknown.
+- Compare negative cases with positive controls: an unauthorized actor must fail while an authorized actor still succeeds. Identify the exact violated invariant, source location and minimum safe regression test. Never infer exploitability from a dangerous API name alone.
+- Report selected language/runtime profiles and exclusions. Distinguish confirmed, potential, defense-in-depth and unknown results; do not label the whole project secure from bounded coverage.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 1. Scope, assets, and trust boundaries
 2. Evidence and sources
@@ -48,6 +60,8 @@ Perform a defensive, scoped security review. Do not attack systems, access produ
 4. Repair direction and safe validation
 5. Positive controls observed
 6. Unknowns and excluded attack surfaces
+
+7. Selected language/runtime profiles, excluded checks and regression expectations
 
 # 简体中文
 
@@ -87,6 +101,18 @@ Perform a defensive, scoped security review. Do not attack systems, access produ
 5. 每项报告位置、证据、攻击前提、可利用性、影响、严重度、置信度、修复方向和安全验证。
 6. 避免主动利用，只建议非破坏测试或审查证据。
 
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+## 基于证据的检查
+- 区分认证与服务端对象/租户授权。追踪操作者、资源查询、策略判断和副作用；客户端 UI 限制不等于权限执行。
+- 对相关输入追踪验证/规范化到数据库、文件、网络、模板、进程或反序列化操作。报告前检查副作用前的执行顺序、错误时失败关闭及框架实际防护。
+- 对上传和路径检查解析后的包含关系、平台分隔符、相关符号链接处理及检查/使用竞态。对外发请求检查目标/重定向限制和内网暴露。
+- 仅通过配置引用及脱敏证据检查秘密处理。依赖漏洞需要受影响版本和可达条件，无法查询公告时保留未知。
+- 对照拒绝案例和正向控制：未授权者应失败，已授权者仍应成功。指出违反的不变量、源码位置及最小安全回归测试。不能仅凭危险 API 名称推断可利用性。
+- 报告选择的语言/运行时规则和排除项。区分已确认、潜在、纵深防御和未知结果，不将有限检查表述为整个项目安全。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
+
 # 输出契约
 1. 范围、资产与信任边界
 2. 证据与来源
@@ -94,3 +120,5 @@ Perform a defensive, scoped security review. Do not attack systems, access produ
 4. 修复方向与安全验证
 5. 已观察到的正向控制
 6. 未知项与排除攻击面
+
+7. 已选语言/运行时规则、排除检查及回归预期

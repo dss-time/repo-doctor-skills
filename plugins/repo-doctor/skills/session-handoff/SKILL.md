@@ -64,6 +64,10 @@ Tailor every mode to a user-provided next-session goal. If none is provided, opt
 
 Complete when the brief is sufficient to choose and verify the next action without repeating completed work. Mark unavailable repository state, command results, or intent `Unverified`. Return `Blocked` only for required missing context, an unsafe target path, or unavailable temporary storage; never fall back to the project directory without authorization.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 
 Lead with `status`, next-session goal, saved path, and recommended first action.
@@ -132,6 +136,10 @@ Use references for specifications, ADRs, issues, commits, and diffs. Do not incl
 ## 完成与失败条件
 
 摘要足以让下一会话不重复已完成工作并选择、验证下一动作时完成。仓库状态、命令结果或原始意图无法核实时标为 `Unverified`。只有必要上下文缺失、目标路径不安全或系统临时存储不可用时返回 `Blocked`；不得在未授权时改写到项目目录。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 

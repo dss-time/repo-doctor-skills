@@ -248,28 +248,37 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.9.0");
+assert.equal(releaseContract.projectVersion, "0.10.0");
 assert.equal(releaseContract.releaseChannel, "stable");
 assert.equal(releaseContract.liveModelStatus, "PASS");
 assert.equal(releaseContract.liveModelWaiver, null);
-assert.equal(releaseContract.expectedLiveModelCases, 328);
-assert.equal(releaseContract.liveModelEvidenceVersion, "0.9.0-beta.2");
+assert.equal(releaseContract.expectedLiveModelCases, 284);
+assert.equal(releaseContract.liveModelEvidenceVersion, "0.10.0");
 
+const promotionContract = { ...releaseContract, projectVersion: "0.9.0", liveModelEvidenceVersion: "0.9.0-beta.2", promotionRecord: "tests/reports/release-promotion-0.9.0.json", liveModelReport: "tests/reports/live-codex-skill-validation-0.9.0-beta.2.json", coordinationReport: "tests/reports/coordination-release-0.9.0-beta.2.json" };
 const promotionRoot = mkdtempSync(path.join(tmpdir(), "release-promotion-"));
 try {
   for (const name of ["packs", "skills", "package.json", "bin/repo-doctor-skills.mjs", "scripts/install.mjs",
-    releaseContract.promotionRecord, releaseContract.liveModelReport, releaseContract.coordinationReport]) {
+    promotionContract.promotionRecord, promotionContract.liveModelReport, promotionContract.coordinationReport]) {
     const destination = path.join(promotionRoot, name);
     mkdirSync(path.dirname(destination), { recursive: true });
     cpSync(path.join(repositoryRoot, name), destination, { recursive: true });
   }
   const checkPromotion = () => {
     const errors = [];
-    promotionEvidenceVersion(promotionRoot, releaseContract, errors);
+    promotionEvidenceVersion(promotionRoot, promotionContract, errors);
     return errors;
   };
-  assert.deepEqual(checkPromotion(), [], "equivalent promotion accepts original prerelease evidence");
-  for (const filename of ["scripts/install.mjs", "bin/repo-doctor-skills.mjs", releaseContract.liveModelReport,
+  assert.ok(checkPromotion().length > 0, "changed source cannot reuse the published promotion evidence");
+  // Bind only this isolated synthetic fixture, preserving the historical record on disk.
+  const fixtureRecordPath = path.join(promotionRoot, promotionContract.promotionRecord);
+  const fixtureRecord = JSON.parse(readFileSync(fixtureRecordPath, "utf8"));
+  fixtureRecord.content_binding = liveEvidenceBinding(promotionRoot);
+  const { version: fixtureVersion, ...fixtureManifest } = JSON.parse(readFileSync(path.join(promotionRoot, "package.json"), "utf8"));
+  fixtureRecord.package_manifest_without_version = fixtureManifest;
+  writeFileSync(fixtureRecordPath, JSON.stringify(fixtureRecord));
+  assert.deepEqual(checkPromotion(), [], "equivalent fixture accepts matching evidence");
+  for (const filename of ["scripts/install.mjs", "bin/repo-doctor-skills.mjs", promotionContract.liveModelReport,
     "packs/engineering/repo-doctor/skills/repo-onboarding/instructions.en.md", "skills/repo-onboarding/SKILL.md"]) {
     const absolute = path.join(promotionRoot, filename);
     const original = readFileSync(absolute);
@@ -284,7 +293,7 @@ try {
   writeFileSync(packagePath, JSON.stringify(changedPackage));
   assert.ok(checkPromotion().some(error => error.includes("manifest changed")));
   writeFileSync(packagePath, originalPackage);
-  const recordPath = path.join(promotionRoot, releaseContract.promotionRecord);
+  const recordPath = path.join(promotionRoot, promotionContract.promotionRecord);
   const originalRecord = readFileSync(recordPath);
   const invalidRecord = JSON.parse(originalRecord);
   invalidRecord.target_version = "1.0.0";
@@ -299,10 +308,9 @@ try {
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.11.1",
-    "productivity.productivity-toolkit": "0.1.0",
-    "engineering.skill-maintainer": "0.2.0",
-    "office.document-data-doctor": "0.1.1",
+    "engineering.repo-doctor": "0.12.0",
+    "productivity.productivity-toolkit": "0.2.0",
+    "engineering.skill-maintainer": "0.2.1",
   },
   "default contract must preserve the confirmed two-layer Pack versions",
 );

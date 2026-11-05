@@ -22,3 +22,5 @@ Use this skill for a broad repository diagnosis. Do not start by rewriting code.
 4. Check test coverage signals and release commands when available.
 5. Prioritize by real user or release risk.
 6. Assess every review dimension; report findings and evidence using the output contract, marking any unassessed dimension.
+
+Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.

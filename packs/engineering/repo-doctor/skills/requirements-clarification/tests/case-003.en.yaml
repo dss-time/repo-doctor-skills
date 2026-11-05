@@ -2,7 +2,7 @@ input: "Finish this fast clarification: the goal, CSV format, export scope, perm
 expected:
   must_include:
     - closed conclusion
-    - requirements-to-spec
+    - closed decision summary
   must_not:
     - start an interview
     - reopen confirmed decisions

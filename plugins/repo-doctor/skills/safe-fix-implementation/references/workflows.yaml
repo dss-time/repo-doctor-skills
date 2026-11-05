@@ -1,4 +1,4 @@
-version: 4
+version: 6
 registry_id: repo-doctor.workflows
 supported_platforms: [codex, claude-code, cursor, qwen, kimi, generic, chatgpt-skill]
 coordination:
@@ -66,34 +66,22 @@ workflows:
       -
         id: specification
         type: skill
-        skill: requirements-to-spec
+        skill: requirements-clarification
         optional: false
         condition: material_decisions_closed
         prerequisites: [clarification]
-        next: [work-items]
+        next: [impact]
         alternatives: []
         permission: read_only
         approval_gate: none
         stop_conditions: [material_decision_reopened]
-      -
-        id: work-items
-        type: skill
-        skill: spec-to-work-items
-        optional: true
-        condition: multi_step_delivery
-        prerequisites: [specification]
-        next: [impact]
-        alternatives: [safe-change-plan]
-        permission: read_only
-        approval_gate: none
-        stop_conditions: [specification_missing]
       -
         id: impact
         type: skill
         skill: change-impact-analysis
         optional: false
         condition: change_target_known
-        prerequisites: [work-items]
+        prerequisites: [specification]
         next: [plan]
         alternatives: []
         permission: read_only
@@ -151,8 +139,8 @@ workflows:
         id: test-gap
         type: skill
         skill: test-gap-analysis
-        optional: false
-        condition: reviewed_change
+        optional: true
+        condition: test_coverage_missing_or_unknown
         prerequisites: [review]
         next: [test-approval]
         alternatives: []
@@ -374,7 +362,7 @@ workflows:
       -
         id: specification
         type: skill
-        skill: requirements-to-spec
+        skill: requirements-clarification
         optional: false
         condition: material_decisions_closed
         prerequisites: [clarification]
@@ -953,7 +941,7 @@ workflows:
         condition: prototype_scope_authorized
         prerequisites: [prototype-approval]
         next: []
-        alternatives: [requirements-to-spec]
+        alternatives: [requirements-clarification]
         permission: write_scoped
         approval_gate: prototype-approval
         stop_conditions: [production_access_required, prototype_question_unresolved]

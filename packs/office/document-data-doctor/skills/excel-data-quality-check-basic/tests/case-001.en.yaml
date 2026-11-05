@@ -1,9 +1,0 @@
-input: "Audit this Excel file for missing values, duplicates, and format issues without changing it."
-expected:
-  must_include:
-    - sheet
-    - column
-    - manual confirmation
-  must_not:
-    - investment advice
-    - modified spreadsheet

@@ -24,10 +24,10 @@
 2. 按目标、证据成熟度、重大决策、权限请求、风险，以及需要单一步骤还是端到端工作流进行分类。
 3. 从可用清单核验推荐 Skill；只有请求完整工作流时才读取注册表版本、阶段、门禁和停止条件。
 4. 应用职责边界：
-   - 产品、兼容性、安全、数据或发布方式仍有重大未决选择 -> `requirements-clarification`。
-   - 重大决策已闭合但缺少可测试规格 -> `requirements-to-spec`。
-   - 大型已闭合规格需要垂直交付切片 -> `spec-to-work-items`。
-   - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan`。
+   - 产品、兼容性、安全、数据或发布方式仍有重大未决选择 -> `requirements-clarification` 的 clarification 阶段。
+   - 重大决策已闭合但缺少可测试规格 -> `requirements-clarification` 的 specification 阶段，跳过访谈。
+   - 大型已闭合规格需要垂直交付切片 -> `safe-change-plan` 的 work-items 粒度。
+   - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan` 的 atomic-steps 粒度。
    - 直接改代码请求仍有重大权限、行为、兼容性或破坏性选择 -> 先澄清。
    - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和下述实施承接者；清晰不等于授权。
    - 已确认新功能规格/工作项且已有写授权 -> `feature-implementation`；已诊断局部缺陷仍交给 `safe-fix-implementation`。
@@ -46,3 +46,5 @@
 ## 完成条件
 
 只返回一个已核验推荐，绝不执行。清单或注册表无法核实时，将路由标为 `Unverified` 并给出边界明确的自然语言后备指令。
+
+读取[执行边界](../../references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](../../references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。

@@ -1,9 +1,0 @@
-# 文档数据医生技能包
-
-Document Data Doctor 包含公开安全的办公工作流 skills。
-
-这些 skills 只提供通用流程，不包含法律结论、公司内部模板、财务投资建议或客户案例。
-
-所有审查都应尽量标注证据来源，例如页码、段落编号、工作表名称、列名、字段或来源章节。
-
-原基础版 `report-writer` 已迁移到独立 `productivity-toolkit` Pack，并只保留一份增强 canonical 实现；公开调用名仍为 `report-writer`。

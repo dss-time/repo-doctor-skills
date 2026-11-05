@@ -12,7 +12,7 @@ A Pack is a group of related skills. For example:
 
 ```text
 packs/engineering/repo-doctor/
-packs/office/document-data-doctor/
+packs/productivity/productivity-toolkit/
 ```
 
 ## Where To Add a Skill

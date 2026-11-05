@@ -1,7 +1,7 @@
 {
   "name": "repo-doctor-skills",
-  "version": "0.9.0",
-  "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, document review, and safe agent workflows.",
+  "version": "0.10.0",
+  "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, and safe agent workflows.",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -30,9 +30,6 @@
     "requirements-analysis",
     "feature-implementation",
     "documentation",
-    "document-review",
-    "pdf-review",
-    "spreadsheet-data-cleaning",
     "report-writing",
     "skill-authoring",
     "bilingual",
@@ -69,7 +66,7 @@
     "test:plugin-sync": "node scripts/test-repo-doctor-sync.mjs",
     "test:docs": "node scripts/test-user-docs.mjs",
     "test:release": "node scripts/test-release-metadata.mjs && node scripts/test-verify-release-assets.mjs",
-    "test:eval": "node scripts/test-eval-tools.mjs",
+    "test:eval": "node scripts/test-eval-tools.mjs && node scripts/test-security-eval.mjs",
     "test:doctor": "node scripts/test-doctor.mjs",
     "test:ux": "node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs",
     "test:npm": "node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs",
@@ -96,7 +93,8 @@
     "install:skills": "node scripts/install.mjs",
     "prepack": "node scripts/prepare-npm-package.mjs",
     "create:skill": "node scripts/create-skill.mjs",
-    "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs"
+    "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs",
+    "eval:security": "node scripts/live-security-eval.mjs"
   },
   "engines": {
     "node": ">=18"

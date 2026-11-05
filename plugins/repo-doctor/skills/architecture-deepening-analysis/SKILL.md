@@ -70,6 +70,10 @@ Each reported candidate must include observed friction, code evidence, root caus
 
 Return `Blocked` when scope is undefined, callers cannot be inspected, essential ADRs are unavailable, or command safety is uncertain. Return `no qualified candidates` when evidence does not support a recommendation; do not manufacture one.
 
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
+
 # Output Contract
 
 Lead with `status`, top recommendation or `no qualified candidates`, risk, and next Skill.
@@ -156,6 +160,10 @@ Audit mode also lists command evidence, rejected candidates, unknowns, and permi
 每个报告候选必须包含：观察到的摩擦、代码证据、根本原因、影响范围、至少两个方案、推荐方案、其他方案不采用理由、迁移顺序、测试策略、回滚策略、风险、是否需要 ADR 和下一 Skill。
 
 范围未定义、调用方无法检查、关键 ADR 不可用或命令安全不确定时返回 `Blocked`。证据不足时返回“无合格候选”，不得制造建议。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 

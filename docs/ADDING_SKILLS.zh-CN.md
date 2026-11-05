@@ -12,7 +12,7 @@ Pack 是一组相关 skills。例如：
 
 ```text
 packs/engineering/repo-doctor/
-packs/office/document-data-doctor/
+packs/productivity/productivity-toolkit/
 ```
 
 ## 新增 Skill 应该放在哪里

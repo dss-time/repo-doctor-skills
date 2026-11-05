@@ -133,6 +133,10 @@
               "type": "string",
               "minLength": 1
             }
+          },
+          "execution_nonce": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }

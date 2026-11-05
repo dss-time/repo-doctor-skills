@@ -1,5 +1,7 @@
 # Release Asset Selection Guide
 
+> Historical v0.6.0 asset guide. Current source has removed six PDF, Word, and Excel Skills. See the [current catalog](../SKILL_CATALOG.md).
+
 Use this guide to choose one published Repo Doctor Skills asset without inventing an aggregate package or mixing ChatGPT and Codex installation paths.
 
 ## Release inventory

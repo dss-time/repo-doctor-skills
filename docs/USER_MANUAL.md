@@ -1,6 +1,6 @@
 # Repo Doctor Skills User Manual
 
-> v0.9.0 source: 41 Skills / Repo Doctor 28. GitHub release v0.9.0 includes the new feature implementation owner; npm 0.9.0 supports Recommended 7 and Full 41. [Examples](guides/delivery-examples.md).
+> Current source: 33 Skills / Repo Doctor 26. GitHub release v0.10.0 includes the new feature implementation owner; npm 0.10.0 supports Recommended 7 and Full 33. [Examples](guides/delivery-examples.md).
 
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 
@@ -16,9 +16,9 @@ From your project directory:
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-Choose the Skills and target agent in the installer. This path exposes all 41 active Skills, installs into the current project by default, and needs no source build. Add `-g` for user-wide use. Install one Skill with `--skill safe-code-review`, or all Skills for Codex with `--skill '*' -a codex`. Use `npx skills@latest check` and `npx skills@latest update` for installed copies; re-run `add` to select newly added Skills.
+Choose the Skills and target agent in the installer. This path exposes all 33 active Skills, installs into the current project by default, and needs no source build. Add `-g` for user-wide use. Install one Skill with `--skill safe-code-review`, or all Skills for Codex with `--skill '*' -a codex`. Use `npx skills@latest check` and `npx skills@latest update` for installed copies; re-run `add` to select newly added Skills.
 
-For the complete Codex engineering plugin (28 Skills):
+For the complete Codex engineering plugin (26 Skills):
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -47,13 +47,13 @@ This non-interactive installer writes the seven Recommended Skills to the user-w
 
 Use `--agent codex` to choose Codex explicitly. The installer does not identify an Agent merely because a directory exists. With no explicit agent, exactly one configured `CODEX_HOME` or `AGENTS_HOME` is treated as a reliable signal. If both are present, it exits without writing; if neither is present, it safely installs to the shared `~/.agents/skills` location and prints that exact target.
 
-### Full: all 41 active Skills
+### Full: all 33 active Skills
 
 ```bash
 npx repo-doctor-skills install --preset full
 ```
 
-v0.9.0 contains 41 active Skills: 28 in Repo Doctor and 38 across the three plugins. The three Document Data Doctor Skills remain regular-build-only. Both npm and source Full installations include all 41, including feature-implementation.
+Current source contains 33 active Skills, including 26 in Repo Doctor and 33 across the three plugins. Six PDF, Word, and Excel Skills have been removed. Published npm 0.10.0 Full installs 33 Skills. To install current local source, run `node scripts/install.mjs --preset full`.
 
 ### Individual
 
@@ -103,7 +103,7 @@ It is a fallback, not a mandatory gateway. If you already know you need `$safe-c
 | Make one scoped fix | `$safe-fix-implementation` | `Fix this confirmed issue; writes are authorized only in <files>.` |
 | Review code | `$safe-code-review` | `Review the current diff only; do not fix it.` |
 | Clarify a requirement | `$requirements-clarification` | `Ask only the questions that materially change this work.` |
-| Produce a testable specification | `$requirements-to-spec` | `Turn these settled requirements into acceptance criteria.` |
+| Produce a testable specification | `$requirements-clarification` | `Turn these settled requirements into acceptance criteria.` |
 | Compare an uncertain approach | `$decision-prototype` | `Build a throwaway prototype to compare these two options.` |
 | Analyze architecture friction | `$architecture-deepening-analysis` | `Analyze the repeated coupling; do not refactor.` |
 | Gate a candidate release | `$release-readiness-check` | `Check whether this version is release-ready; do not release it.` |
@@ -140,10 +140,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.9.0`; to select that version, use:
+2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.10.0`; to select that version, use:
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.9.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

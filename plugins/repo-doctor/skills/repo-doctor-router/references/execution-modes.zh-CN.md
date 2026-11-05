@@ -54,3 +54,5 @@
 - 只有出现对应决策或证据缺口时，才读取 Skill 专项检查清单。
 
 Skill 启动时不得预读全部 references。
+
+用户明确指定延期验证时，优先于逐切片测试时序。记录 `verification_status: verification_deferred` 及待验证项，继续安全且已授权的独立工作，保留完成和安全门禁。已有有效证据与授权可以复用。

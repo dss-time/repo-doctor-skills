@@ -54,3 +54,5 @@ Read only references required by the current risk and artifact:
 - Skill-specific checklists only when their named decision or evidence gap is present.
 
 Do not preload every reference when a Skill starts.
+
+User-directed verification deferral takes precedence over per-slice test timing. Record `verification_status: verification_deferred` and pending checks, continue safe authorized independent work, and retain all completion and safety gates. Existing valid evidence and authorization may be reused.

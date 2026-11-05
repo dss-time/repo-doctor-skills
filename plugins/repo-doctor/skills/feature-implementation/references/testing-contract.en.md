@@ -6,3 +6,7 @@
 - Assert caller-visible outputs, errors, state transitions or side effects, not private methods or internal call order. Do not expose private APIs for tests. Justify mocks by system boundaries; prefer real local substitutes when practical.
 - Complete one behavior slice at a time using existing tooling. Inspect commands and hooks, run focused checks, record actual evidence, then organize only after green. Never invent red, green or sensitivity evidence. Missing tools or unsafe commands block the affected check, not independent authorized work.
 - This reference grants no permissions. The calling Skill owns its authorized edit scope; test-only work never authorizes production edits, dependency installation or release actions.
+
+User-directed verification deferral takes precedence over per-slice test timing. Record `verification_status: verification_deferred` and pending checks, continue safe authorized independent work, and retain all completion and safety gates. Existing valid evidence and authorization may be reused.
+
+Command preflight must establish actual resources and side effects through setup/teardown and build hooks. Test/build names, localhost and NODE_ENV do not prove isolation. Use existing stubs or demonstrably disposable resources; block commands when actual isolation is unknown. Inspect configuration names and non-sensitive targets only, without credential values or environment dumps.

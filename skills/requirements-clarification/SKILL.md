@@ -1,6 +1,6 @@
 ---
 name: requirements-clarification
-description: "Close consequential product, behavior, data, permission, compatibility, and acceptance decisions through an evidence-first decision-tree interview. Use for a vague or disputed request before specification; choose fast, standard, or documented mode. Do not use when a testable specification already exists or to implement code. Automatic invocation is appropriate only when material ambiguity is evident; durable terminology or ADR edits require explicit write authorization. 通过证据优先的问题树访谈，关闭会影响产品、行为、数据、权限、兼容性和验收的重要决策。用于规格化前仍模糊或存在争议的需求，可选 fast、standard 或 documented 模式。已有可测试规格或需要实施代码时不使用；仅在明显存在重大歧义时适合自动调用，持久术语或 ADR 修改必须获得明确写权限。"
+description: "Clarify material product, behavior, data, permission, compatibility, migration, and acceptance decisions or turn settled requirements into a testable specification. Select clarification or specification phase from evidence and the requested outcome, skipping interviews for settled decisions. Use fast, standard, or documented output. Specification stays read-only and optional documented clarification edits require path-scoped authorization. Do not implement code or rework a complete specification without a requested change. 澄清产品、行为、数据、权限、兼容、迁移和验收的重要决策，或把已确认需求整理成可测试规格。依据证据和目标选择 clarification 或 specification 阶段，已确认决策跳过访谈。可选 fast、standard、documented 输出。规格阶段保持只读，documented 澄清阶段可选文档修改需要路径级授权。不实施代码，也不在没有修订需求时重做完整规格。"
 ---
 
 # English
@@ -23,53 +23,85 @@ For authorized multi-stage work, evidence reuse or recovery, read `references/wo
 For a human-only blocker, give location, action, success signal and resume step; never request secret values or assume completion.
 Validate according to actual risk; security, production, migrations, releases and other high-risk work use `audit`. Read `references/execution-modes.en.md` only when mode selection is unclear.
 
-# Requirements Clarification
+# Requirements Clarification and Specification
 
-Every question must close a named decision; repository facts are discovered, while product choices are decided by the user.
+Every question must close a named decision. Discover repository facts, let the user decide product choices, and reuse confirmed decisions directly in the specification.
 
-## Modes
+## Phase selection
 
-- `fast` (default): prioritize direction-changing decisions without a minimum question count. Keep the response short and read-only.
-- `standard`: close the full decision surface: goal, non-goals, users, current and expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance conditions, and open decisions.
-- `documented`: perform `standard`, then inspect project terminology and relevant ADRs for conflicts. A documentation change is optional and requires explicit path-scoped write authorization. Record why each edit is necessary and which evidence supports it.
+- `clarification`: use an evidence-first decision-tree interview when material product, behavior, data, security, permission, compatibility, migration, or acceptance decisions remain open.
+- `specification`: produce an implementable, testable specification directly when material decisions are already closed and the user needs settled discussion or clarification results organized.
+- Declare `phase`. Skip the interview when material decisions are closed. A clarification-only request ends with a decision summary. Continue to specification only when the user requests complete requirements preparation or a specification.
+- When a complete specification already exists and needs no clarification or revision, route to `change-impact-analysis`, `safe-change-plan`, or an already authorized implementation workflow.
 
-Do not silently change mode. Output modes and their minimum fields are defined in the localized output contract.
+## Output modes
+
+- `fast` (default): show only facts, conclusions, and unknowns needed for the current decision or specification, without a minimum question count.
+- `standard`: cover goal, non-goals, users, current/expected behavior, business rules, data boundary, exceptional paths, compatibility, migration, and acceptance.
+- `documented`: add terminology and ADR checks to standard. Optional domain-document synchronization is permitted only during clarification with explicit path-scoped write authorization. The specification phase stays read-only in every mode and returns its specification only in the response.
+
+Do not silently change output mode. Phase selection and output mode are independent dimensions.
 
 ## Permission and scope boundary
 
-- Read user-provided material and relevant repository files before asking. Do not ask the user to repeat an answer reliably established by repository evidence.
-- Never edit code, tests, configuration, task systems, or production data.
-- In `fast` and `standard`, stay read-only. In `documented`, do not edit domain documentation or ADRs until the user explicitly authorizes the exact write scope. A request to clarify requirements is not write authorization.
-- Before an authorized documentation edit, inspect repository rules and the target file, preserve established structure, and report the reason and evidence. Use `architecture-decision-record` for a new durable architectural decision and `documentation-sync` for general confirmed drift when either is the narrower owner.
-- Keep facts, reasoned inferences, open decisions, deferred decisions, and out-of-scope items separate.
-- Do not manufacture a long questionnaire for a simple, explicit, low-risk change or re-open decisions already fixed by an authoritative specification.
+- Read user material, related repository files, and confirmed decisions before asking. Do not ask the user to repeat answers established by repository evidence.
+- Never edit code, tests, configuration, external tasks, or production data. Do not invoke Shell or access the network.
+- Keep fast, standard, and the specification phase read-only. Before a documented-mode edit, inspect repository rules and the target file, preserve structure, and record reason and evidence.
+- Route new durable architecture decisions to `architecture-decision-record` and general documentation drift to `documentation-sync`.
+- Separate facts, inferences, open decisions, deferred decisions, and out-of-scope items. Existing code does not prove the user approved a requirement.
+- Route settled feature delivery to `feature-implementation` and diagnosed local repairs to `safe-fix-implementation`. This Skill never implements.
 
-## Decision-tree workflow
+## Clarification phase
 
-1. Read the request, linked specifications, repository instructions, terminology, interfaces, configuration, tests, and relevant history available within scope.
-2. Create a decision ledger with `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`. Cite sources for facts and the basis and confidence for inferences.
-3. Build a question tree only for actual unresolved decisions. Record each decision, its impact, dependencies, answer source (`repository` or `user`), and applicable branches; do not invent nodes.
-4. Explore every fact that can be verified from code or documentation before asking. Ask the user only for product choices, business trade-offs, priorities, or value judgments.
-5. Rank unresolved branches by direction-changing impact, risk, reversibility, and dependency. In `fast`, select at most five highest-gain branches.
-6. Work one branch at a time. Ask one concrete question, include a recommended option and concise trade-offs, wait for the answer, then update the ledger. Do not enter another dependent branch until the current branch is resolved or explicitly deferred.
-7. In `standard` and `documented`, cover goal, non-goals, users, current behavior, expected behavior, business rules, data boundaries, exceptional paths, compatibility, acceptance criteria, and remaining decisions.
-8. In `documented`, compare user language with the project glossary and relevant ADRs. Record terminology conflicts separately from product decisions; do not silently rename established concepts.
-9. Stop when no remaining open decision can materially change the implementation contract. Mark lesser unknowns `deferred` with a revisit condition.
-10. Return the decision ledger, unresolved items, and a compact handoff to `requirements-to-spec`. Do not implement.
+1. Read the request, linked specifications, repository instructions, terminology, interfaces, configuration, tests, and relevant available history.
+2. Build a ledger of `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`, citing fact sources and inference basis and confidence.
+3. Build a question tree only for actual unresolved decisions, recording decision, impact, dependencies, answer source, and applicable branches.
+4. Verify repository facts first, then rank user choices by impact, risk, reversibility, and dependency. In fast, select at most five highest-gain branches.
+5. Handle one branch at a time. Ask one concrete question with a recommendation and trade-offs, wait for the answer, then update the ledger. Do not enter a dependent branch until the current branch is resolved or explicitly deferred.
+6. In standard and documented, cover the complete decision surface. In documented, record terminology and ADR conflicts separately without silently renaming concepts.
+7. Complete clarification when material decisions are closed, marking lesser unknowns deferred with revisit conditions. If the user already requested a specification, reuse the ledger and enter specification.
 
-## Stop conditions
+## Specification phase
 
-Return `Blocked` when essential evidence is unavailable, the user declines a required choice, authoritative sources conflict, or a requested durable edit lacks explicit write authorization. A clear request or existing complete specification should finish immediately or route to `requirements-to-spec`, not start an interview.
+1. Cite settled discussion, a clarification ledger, or authoritative source and verify material decisions are already closed, including when entering this phase directly.
+2. Reuse confirmed goals, users, business rules, and constraints. Use repository evidence for current behavior, desired behavior, and measurable success criteria.
+3. Define scope, exclusions, dependencies, non-blocking assumptions, deferred items, and unknown evidence. Give each assumption confidence and a verification method.
+4. Describe normal, exceptional, boundary, permission, compatibility, and migration requirements. Write acceptance criteria using Given/When/Then or equally observable conditions.
+5. Recheck open decisions. If a material unknown changes the contract, stop specification work and return to clarification for that decision rather than presenting it as a non-blocking assumption.
+6. Return the specification only in the response. Do not append a file-by-file implementation plan. Route delivery slices or code steps to `safe-change-plan`, and unknown impact to `change-impact-analysis`.
+
+## Completion and stop conditions
+
+Clarification completes when material decisions are closed and the ledger has evidence. Specification completes when desired behavior, scope, constraints, and testable acceptance are complete with no material open decisions.
+Block affected work when essential evidence is missing, the user declines a required choice, authoritative sources conflict, or an optional documentation edit lacks authorization. State the minimum input needed. Do not interview a complete specification or a simple explicit request, and never ask questions to meet a quota.
+
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
 
 # Output Contract
 
-Lead with `status`, the current conclusion, and any remaining decision.
+Lead with `status`, `phase`, output mode, current conclusion, and remaining decisions. Return the requested phase, recording shared facts and the ledger once.
 
-- `fast`: mode, relevant facts/inferences with evidence, and only the unresolved nodes needed for the current question. Omit resolved branches.
-- `standard`: goal, non-goals, users, current/expected behavior, business rules, data boundary, exceptional paths, compatibility, acceptance criteria, decision tree, and ledger (`confirmed`, `inferred`, `open`, `deferred`, `out_of_scope`).
-- `documented`: all `standard` fields plus terminology/ADR evidence, conflicts, write-authorization state, and each authorized document change with reason and evidence.
+## Clarification output
 
-When clarification completes, give a compact handoff to `requirements-to-spec`; while waiting or blocked, state the pending decision or missing evidence instead of repeating the handoff. If a material decision remains, ask one question with a recommendation and trade-offs; otherwise finish without a question. Do not present an inference as fact or begin implementation.
+- `fast` returns relevant facts, inferences, evidence, and current unresolved nodes, omitting resolved branches.
+- `standard` returns goal, non-goals, users, current/expected behavior, rules, data boundary, exceptional paths, compatibility, migration, acceptance, question tree, and a ledger of `confirmed`, `inferred`, `open`, `deferred`, and `out_of_scope`.
+- `documented` adds terminology/ADR evidence, conflicts, authorization state, and the reason and evidence for authorized documentation edits.
+
+Ask one question with a recommendation and trade-offs only while a material decision remains open. If specification was not requested, finish clarification with a compact decision summary. If specification was requested, reuse the ledger and continue without repeating the interview.
+
+## Specification output
+
+1. Settled source and evidence.
+2. Target users, goals, current behavior, and desired behavior.
+3. Scope, exclusions, constraints, and dependencies.
+4. Normal, exceptional, boundary, permission, compatibility, and migration requirements.
+5. Non-blocking assumptions, confidence, verification methods, deferred items, and unknown evidence.
+6. Testable acceptance criteria using Given/When/Then or equally observable conditions.
+7. Risks, completion status, and necessary next action.
+
+Fast still covers applicable essential requirements, combining fields concisely. Standard and documented expand evidence. Specification returns only in the response, without file writes or a file-by-file implementation plan. Reopened material decisions mean specification is incomplete and returns to clarification.
 
 # 简体中文
 
@@ -91,50 +123,82 @@ When clarification completes, give a compact handoff to `requirements-to-spec`; 
 必须由用户完成的阻塞步骤：给出操作位置、具体动作、成功标志、恢复步骤；不要求粘贴秘密值，不代替用户确认完成。
 按实际风险选择验证；安全、生产、迁移、发布等高风险工作使用 `audit`。模式不明确时才读取 `references/execution-modes.zh-CN.md`。
 
-# Requirements Clarification（需求决策澄清）
+# 需求澄清与规格化
 
-每个问题都必须关闭一个明确决策：仓库事实由探索获得，产品选择由用户决定。
+每个问题必须关闭一个明确决策。仓库事实由探索获得，产品选择由用户决定，已确认决策在规格中直接复用。
 
-## 模式
+## 阶段选择
 
-- `fast`（默认）：优先关闭会改变方案方向的决策，不设最低问题数量；输出简短，保持只读。
-- `standard`：完整关闭目标、非目标、用户、当前与期望行为、业务规则、数据边界、异常路径、兼容性、验收条件和未决决策。
-- `documented`：在 `standard` 基础上检查项目术语和相关 ADR 的冲突。只有获得精确到路径的明确写权限后，才可选择性修改领域文档；每项改动必须记录原因和证据。
+- `clarification`：存在会改变产品、行为、数据、安全、权限、兼容、迁移或验收的重要未决选择时，进行证据优先的问题树访谈。
+- `specification`：重大决策已经闭合，用户需要将讨论或澄清结果整理为可实施、可测试的规格时，直接输出规格。
+- 声明所选 `phase`。重大决策已闭合时跳过访谈，不重新提问。只请求澄清时完成决策摘要即可。只有用户请求完整需求整理或规格时才继续规格化。
+- 已有完整规格且没有澄清或修订需求时，交给 `change-impact-analysis`、`safe-change-plan` 或已有授权的实施流程。
 
-不得静默切换模式。各模式最小输出字段见本地化输出契约。
+## 输出模式
+
+- `fast`（默认）：只展示本次决策或规格所需的事实、结论和未知项，不设最低问题数量。
+- `standard`：完整覆盖目标、非目标、用户、当前/期望行为、业务规则、数据边界、异常路径、兼容、迁移和验收。
+- `documented`：在 `standard` 基础上核对术语与 ADR。只有 clarification 阶段获得精确到路径的写授权后，才可选择性同步领域文档。specification 阶段在所有模式下保持只读，规格只在当前响应中输出。
+
+不得静默切换输出模式。阶段选择与输出模式是独立维度。
 
 ## 权限与职责边界
 
-- 提问前先阅读用户材料和相关仓库文件；仓库证据能够可靠回答的问题，不再要求用户重复。
-- 不修改代码、测试、配置、外部任务系统或生产数据。
-- `fast` 和 `standard` 始终只读。`documented` 在用户明确授权具体写入范围前，不得修改领域文档或 ADR；“请澄清需求”本身不等于写权限。
-- 获得文档写权限后，先检查仓库规范与目标文件，保持原有结构，并记录修改原因和支持证据。新增长期架构决策优先转给 `architecture-decision-record`，一般已确认文档漂移优先转给 `documentation-sync`。
-- 明确区分事实、合理推断、开放决策、延期决策和范围外事项。
-- 对简单、明确、低风险的小改动不制造长问卷，也不重新打开权威规格已经关闭的决策。
+- 提问前先阅读用户材料、相关仓库文件和已确认决策，仓库证据能回答的问题不再要求用户重复。
+- 不修改代码、测试、配置、外部任务或生产数据，不调用 Shell，不联网。
+- `fast`、`standard` 和 specification 阶段保持只读。documented 模式的文档写入先检查仓库规范和目标文件，保留结构，记录原因和证据。
+- 新增长期架构决策交给 `architecture-decision-record`，一般文档漂移交给 `documentation-sync`。
+- 事实、推断、开放决策、延期决策和范围外事项分别记录。不得从现有代码反推用户已经批准的需求。
+- 已确认功能交给 `feature-implementation`，已诊断局部修复交给 `safe-fix-implementation`。本 Skill 不执行实施。
 
-## 问题树流程
+## 澄清阶段
 
-1. 阅读需求、关联规格、仓库指令、术语、接口、配置、测试，以及范围内可用历史。
-2. 建立五态决策台账：`confirmed`、`inferred`、`open`、`deferred`、`out_of_scope`；事实注明来源，推断注明依据与置信度。
-3. 只为真实未决决策建立问题树，记录决策、影响、依赖、答案来源（`repository` 或 `user`）及适用分支；不凑节点。
-4. 先从代码或文档验证所有可验证事实；只把产品选择、业务取舍、优先级和价值判断交给用户。
-5. 按方案影响、风险、可逆性和依赖排列未决分支；`fast` 最多选择五个最高信息增益分支。
-6. 一次只处理一个分支：提出一个具体问题，给出推荐项和简洁取舍，等待回答后更新台账；当前分支未解决或未明确延期前，不进入依赖分支。
-7. `standard` 与 `documented` 必须覆盖目标、非目标、用户、当前行为、期望行为、业务规则、数据边界、异常路径、兼容性、验收条件和剩余决策。
-8. `documented` 比对用户语言、项目词汇与相关 ADR；术语冲突与产品决策分别记录，不擅自重命名已有概念。
-9. 剩余开放决策不会实质改变实现契约时停止；较小未知标为 `deferred` 并注明重新讨论条件。
-10. 输出决策台账、未决项及交给 `requirements-to-spec` 的简洁摘要；不进入实施。
+1. 阅读需求、关联规格、仓库指令、术语、接口、配置、测试和范围内可用历史。
+2. 建立 `confirmed`、`inferred`、`open`、`deferred`、`out_of_scope` 五态台账，事实注明来源，推断注明依据与置信度。
+3. 只为真实未决决策建立问题树，记录决策、影响、依赖、答案来源和适用分支。
+4. 先验证仓库事实，再按影响、风险、可逆性和依赖排列用户选择。fast 最多选择五个最高信息增益分支。
+5. 一次处理一个分支，问一个具体问题并给推荐和取舍，等待答案后更新台账。当前分支未解决或未明确延期前，不进入依赖分支。
+6. standard 与 documented 覆盖完整决策面。documented 单独记录术语和 ADR 冲突，不擅自重命名概念。
+7. 重大决策全部闭合时完成澄清，较小未知标为 deferred 并附重新讨论条件。用户已请求规格时，复用台账进入 specification 阶段。
 
-## 停止条件
+## 规格阶段
 
-关键证据缺失、用户拒绝必要选择、权威来源冲突，或请求持久文档改动但没有明确写权限时，返回 `Blocked`。需求已经清楚或已有完整规格时，应直接完成简短台账或转给 `requirements-to-spec`，不要重新访谈。
+1. 引用已定稿讨论、澄清台账或正式来源，确认重大决策已经闭合。直接从本阶段进入时也执行该检查。
+2. 复用已确认目标、用户、业务规则和约束，结合仓库证据说明当前行为、目标行为及可衡量成功标准。
+3. 明确范围内、范围外、依赖、非阻塞假设、延期事项和未知证据。每个假设包含置信度和验证方式。
+4. 描述正常、异常、边界、权限、兼容和迁移要求，以 Given/When/Then 或等价可观察结构编写验收标准。
+5. 再检查开放决策。出现会改变契约的重要未知时停止规格化，返回 clarification 阶段处理该决策，不把它包装为非阻塞假设。
+6. 完整规格只在当前响应输出。不要附逐文件实施计划。需要交付切片或代码步骤时转给 `safe-change-plan`，影响未知时转给 `change-impact-analysis`。
+
+## 完成与停止条件
+
+clarification 在重大决策闭合且台账有证据时完成。specification 在目标行为、范围、约束及可测试验收齐全且没有重大开放决策时完成。
+关键证据缺失、用户拒绝必要选择、权威来源冲突或可选文档改动缺少授权时，阻塞相关工作并说明最小所需输入。已有完整规格或简单明确请求不启动访谈，不为凑问题而提问。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 
-先给 `status`、当前结论和仍需解决的决策（如有）。
+先给出 `status`、`phase`、输出模式、当前结论和仍需解决的决策。按用户本次请求输出对应阶段，共享事实和台账只记录一次。
 
-- `fast`：模式、相关事实/推断及证据，只展示理解当前问题所需的未决节点，不重复已解决分支。
-- `standard`：目标、非目标、用户、当前/期望行为、业务规则、数据边界、异常路径、兼容性、验收条件、问题树，以及 `confirmed`、`inferred`、`open`、`deferred`、`out_of_scope` 台账。
-- `documented`：包含全部 `standard` 字段，并增加术语/ADR 证据、冲突、写权限状态，以及每项获授权文档改动的原因和证据。
+## 澄清输出
 
-澄清完成时给出交给 `requirements-to-spec` 的简洁摘要；等待回答或受阻时只说明待决项或缺失证据，不重复交接。仍有重大未决项时问一个问题并给出推荐和取舍，否则不提问。不得把推断写成事实，也不得开始实施。
+- `fast` 输出相关事实、推断、证据和当前未决节点，省略已解决分支。
+- `standard` 输出目标、非目标、用户、当前/期望行为、规则、数据边界、异常路径、兼容、迁移、验收和问题树，以及 `confirmed`、`inferred`、`open`、`deferred`、`out_of_scope` 台账。
+- `documented` 增加术语/ADR 证据、冲突、写权限状态和已授权文档改动的原因与证据。
+
+重大决策未闭合时只问一个有推荐和取舍的问题。澄清完成且用户未请求规格时，以简短决策摘要结束。已请求规格时复用台账继续，不重新访谈。
+
+## 规格输出
+
+1. 已定稿来源和证据。
+2. 目标用户、目标、当前行为和目标行为。
+3. 范围、排除项、约束和依赖。
+4. 正常、异常、边界、权限、兼容和迁移要求。
+5. 非阻塞假设、置信度、验证方式、延期项和未知证据。
+6. 可测试验收标准，使用 Given/When/Then 或等价可观察条件。
+7. 风险、完成状态和必要下一步。
+
+fast 仍须涵盖适用的必要要求，可合并表达。standard 和 documented 展开证据。规格阶段只在响应中输出，不写文件、不附逐文件实施计划。重大决策重新开放时标记未完成并返回澄清，不声称规格完成。

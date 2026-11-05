@@ -4,22 +4,26 @@ name:
   zh-CN: 安全变更计划
 category: engineering
 visibility: public
-version: 0.1.4
+version: 0.2.1
 status: beta
 default_locale: zh-CN
 supported_locales:
   - en
   - zh-CN
 description:
-  en: Turn a confirmed specification, root-cause finding, or impact analysis into an atomic, verifiable, reversible implementation plan with explicit scope and risk controls. Use only when material decisions are closed and blast radius is sufficiently known; route open decisions to requirements-clarification, settled requirements needing a specification to requirements-to-spec, unknown impact to change-impact-analysis, architecture rationale or decision documentation to architecture-decision-record, and execution to safe-fix-implementation.
-  zh-CN: 将已确认规格、根因结论或影响分析转为原子化、可验证、可回滚且范围明确的实施计划。仅在重大决策已闭合且影响范围足够明确时使用；未决需求交给 requirements-clarification，已闭合但尚需规格化的需求交给 requirements-to-spec，影响未知交给 change-impact-analysis，架构理由或决策文档交给 architecture-decision-record，执行交给 safe-fix-implementation。
+  en: Plan a confirmed change, repair, or multi-behavior delivery as atomic-steps or independently verifiable vertical work-items with dependencies, safe parallelism, conflict areas, acceptance, tests, risks, and rollback. Nest necessary code steps within work items for a complete plan. Use settled requirements and sufficient impact evidence; route unknown decisions or missing specifications to requirements-clarification and unknown impact to change-impact-analysis. Return Markdown only without file writes, Shell, external tasks, or implementation.
+  zh-CN: 将已确认变更、修复或多行为交付规划为 atomic-steps 原子步骤或可独立验证的 work-items 垂直工作项，覆盖依赖、安全并行、冲突区域、验收、测试、风险和回滚。完整计划将必要代码步骤嵌入工作项。需要已闭合需求和充分影响证据。未决需求或缺少规格交给 requirements-clarification，未知影响交给 change-impact-analysis。只返回 Markdown，不写文件、不调用 Shell、不创建外部任务或执行实施。
 triggers:
   en:
+    - split the approved specification into vertical work items
+    - plan dependencies and safe parallel delivery
     - create a safe implementation plan
     - plan this confirmed change
     - make an atomic rollback-ready change plan
     - safe change plan
   zh-CN:
+    - 把已确认规格拆成垂直交付工作项
+    - 规划依赖与安全并行交付
     - 制定安全实施计划
     - 为这个已确认变更拆解步骤
     - 生成可回滚的原子变更计划

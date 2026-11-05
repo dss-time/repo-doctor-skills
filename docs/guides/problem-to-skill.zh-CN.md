@@ -40,9 +40,9 @@
 ## 需求转规格
 
 - **问题：** 决策已经确定，但还缺少可测试的实施规格。
-- **Skill：** `$requirements-to-spec`
+- **Skill：** `$requirements-clarification`
 - **说明：** 把已确认需求转成边界明确、可验证的规格。
-- **最短示例：** `$requirements-to-spec — 把这些已确定的需求整理成验收标准和约束。`
+- **最短示例：** `$requirements-clarification — 把这些已确定的需求整理成验收标准和约束。`
 
 ## 验证方案
 

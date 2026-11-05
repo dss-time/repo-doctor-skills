@@ -4,3 +4,7 @@ dist/*
 package-assets/
 .DS_Store
 **/.DS_Store
+
+# Local personal Skill installations
+.agents/skills/
+skills-lock.json

@@ -11,18 +11,6 @@ const interfaces = {
     shortDescription: "围绕研究问题建立来源台账、交叉验证并输出简报",
     defaultPrompt: "使用 $research-brief 有来源地研究这个问题；无法联网时明确降级。",
   },
-  "spreadsheet-data-cleaning": {
-    shortDescription: "画像并清洗表格，另存结果并提供前后统计和审计日志",
-    defaultPrompt: "使用 $spreadsheet-data-cleaning 清洗这份表格，保留原文件并输出审计记录。",
-  },
-  "document-review": {
-    shortDescription: "审查文档结构、逻辑、证据、语言和格式并分级问题",
-    defaultPrompt: "使用 $document-review 审查这份文档，区分必须修改、建议修改和可选润色。",
-  },
-  "pdf-review": {
-    shortDescription: "按真实提取、页码、OCR 和渲染能力执行 PDF 专项审查",
-    defaultPrompt: "使用 $pdf-review 审查这份 PDF，不要虚构页码、OCR 或视觉验证。",
-  },
   "meeting-notes-to-actions": {
     shortDescription: "将会议记录整理成决定、行动项、负责人、日期和待确认项",
     defaultPrompt: "使用 $meeting-notes-to-actions 提取会议决定和行动项，缺失负责人或日期标记 TBD。",
@@ -41,4 +29,5 @@ syncPackPlugin({
   packRoot: path.join(root, "packs", "productivity", "productivity-toolkit"),
   pluginRoot: path.join(root, "plugins", "productivity-toolkit"),
   interfaces,
+  prune: true,
 });

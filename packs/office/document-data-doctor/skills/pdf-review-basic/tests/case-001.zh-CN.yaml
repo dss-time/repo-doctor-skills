@@ -1,9 +1,0 @@
-input: "只做基础 PDF 文字检查，不需要 OCR 或页面渲染。"
-expected:
-  must_include:
-    - 纯文本
-    - 提取限制
-    - 人工确认
-  must_not:
-    - 法律结论
-    - 视觉检查已完成

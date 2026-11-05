@@ -52,10 +52,9 @@ export function captureEvidence(root, input, environment) {
 export function evidenceValidity(evidence, host) {
   if (!evidence || !host.trustedEvidence?.has(digest(evidence))) return { status: 'unknown', reason: 'source_not_attested' };
   if (!['pass', 'fail'].includes(evidence.result)) return { status: 'unknown', reason: 'result_not_observed' };
-  if (evidence.coverage_complete !== true || !evidence.bindings || !Object.keys(evidence.bindings).length
-      || !evidence.environment || !Object.keys(evidence.environment).length) {
-    return { status: 'unknown', reason: 'dependency_or_environment_coverage_unknown' };
-  }
+  let unknownReason = evidence.coverage_complete !== true || !evidence.bindings || !Object.keys(evidence.bindings).length
+    || !evidence.environment || !Object.keys(evidence.environment).length
+    ? 'dependency_or_environment_coverage_unknown' : null;
   if (evidence.kind === 'test' && (!evidence.command || !evidence.cwd || !Number.isInteger(evidence.exit_code) || (evidence.result === 'pass' ? evidence.exit_code !== 0 : evidence.exit_code === 0))) {
     return { status: 'unknown', reason: 'execution_receipt_missing' };
   }
@@ -63,12 +62,11 @@ export function evidenceValidity(evidence, host) {
       || evidence.observed_target_failure !== true || !evidence.success_criterion || !evidence.failure_criterion)) {
     return { status: 'unknown', reason: 'reliable_failure_signal_missing' };
   }
-  let unknownReason = null;
-  for (const [key, value] of Object.entries(evidence.environment)) {
+  for (const [key, value] of Object.entries(evidence.environment ?? {})) {
     if (!(key in (host.environment ?? {}))) { unknownReason ??= `environment_unknown:${key}`; continue; }
     if (host.environment[key] !== value) return { status: 'stale', reason: `environment_changed:${key}` };
   }
-  for (const [file, hash] of Object.entries(evidence.bindings)) {
+  for (const [file, hash] of Object.entries(evidence.bindings ?? {})) {
     try {
       if (fingerprint(host.root, file) !== hash) return { status: 'stale', reason: `dependency_changed:${file}` };
     } catch (error) { unknownReason ??= error.message; }
@@ -176,12 +174,15 @@ function requirement(task, requirement, host) {
     && evidenceValidity(e, host).status === 'valid');
 }
 
-function stepEvidence(task, stage, host, executionAttempt = null) {
+function stepEvidence(task, stage, host) {
   const step = task.steps[stage.id];
   if (!evidenceFor(task, step.evidence_ids, host)) return false;
+  const explicitReuse = step.status === 'reused'
+    && Array.isArray(host.reuse?.[stage.id]) && digest(host.reuse[stage.id]) === digest(step.evidence_ids);
   const evidence = step.evidence_ids.map(id => task.evidence.find(e => e.id === id));
   const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(host.requests[stage.id]) && e.claims?.includes(`stage:${stage.id}`)
-    && (executionAttempt === null || e.execution_attempt === executionAttempt));
+    && (explicitReuse || (typeof step.execution_nonce === 'string' && e.execution_attempt === step.attempts
+      && e.execution_nonce === step.execution_nonce)));
   if (!scoped.length) return false;
   if (stage.skill === 'safe-code-review' && !scoped.some(e => e.kind === 'review' && e.independent === true
       && e.review_basis && e.review_basis === host.reviewBinding)) return false;
@@ -287,11 +288,25 @@ export function nextAction(task, host) {
     }
     const candidate = host.reuse?.[stage.id];
     if (candidate) {
-      const provisional = copy(task); provisional.steps[stage.id].evidence_ids = candidate;
+      const provisional = copy(task); provisional.steps[stage.id].evidence_ids = candidate; provisional.steps[stage.id].status = 'reused';
       if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: candidate, reason: 'valid_existing_result' };
     }
     if ((writes(stage, host) || step.effect_state === 'known' || host.requests[stage.id].capabilities.some(c => c !== 'read_files')) && ['completed', 'reused'].includes(step.status)) {
       return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
+    }
+    if (host.verificationDeferral?.active === true) {
+      const request = host.requests[stage.id];
+      if (!host.verificationDeferral.source) {
+        return { ...decision, action: 'evidence_insufficient', reason: 'verification_deferral_source_missing' };
+      }
+      if (request.capabilities.includes('run_shell_commands') && typeof request.verification !== 'boolean') {
+        return { ...decision, action: 'evidence_insufficient', reason: 'command_verification_purpose_unknown' };
+      }
+      if (request.verification === true) {
+        return { ...decision, action: 'evidence_insufficient', reason: 'verification_deferred',
+          verification_status: 'verification_deferred', source: host.verificationDeferral.source,
+          pending: host.verificationDeferral.pending ?? [], release_authorized: false };
+      }
     }
     const unresolved = unresolvedFailures(task, host).find(failed => {
       const repair = host.failureRepairs?.get(digest(failed));
@@ -317,6 +332,13 @@ export function nextAction(task, host) {
   const failure = unresolvedFailures(task, host)[0];
   if (failure) return { action: evidenceValidity(failure, host).status === 'unknown' ? 'evidence_insufficient' : 'validation_failed', reason: 'unresolved_current_test_failure', evidence_id: failure.id };
   const missing = obligations.filter(r => !requirement(task, r, host));
+  if (host.verificationDeferral?.active === true) {
+    return { action: 'evidence_insufficient', reason: 'verification_deferred',
+      verification_status: 'verification_deferred',
+      source: host.verificationDeferral.source ?? null,
+      pending: host.verificationDeferral.pending ?? [], missing,
+      unresolved: [...task.unresolved], release_authorized: false };
+  }
   if (task.unresolved.length || missing.length) return { action: 'evidence_insufficient', reason: 'delivery_not_proven', missing };
   return { action: 'complete', reason: 'applicable_stages_and_acceptance_proven', release_authorized: false };
 }
@@ -335,6 +357,7 @@ export function advance(task, host) {
     if (['execute', 'reuse'].includes(action.action)) step.request_binding = digest(host.requests[action.stage]);
     if (action.action === 'execute') {
       step.attempts++;
+      step.execution_nonce = randomUUID();
       step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'uncertain' : 'none';
     }
     if (action.action === 'skip') {
@@ -359,7 +382,7 @@ export function finishStep(task, stageId, evidenceIds, host, failureReason = nul
   if (failureReason) { step.status = 'validation_failed'; step.reason = failureReason; step.evidence_ids = [...evidenceIds]; }
   else {
     const provisional = copy(task); provisional.steps[stageId].evidence_ids = evidenceIds;
-    assert(stepEvidence(provisional, stage, host, step.attempts), 'Completion requires valid, scoped current-attempt evidence and independent review');
+    assert(stepEvidence(provisional, stage, host), 'Completion requires valid, scoped current-attempt evidence and independent review');
     step.evidence_ids = [...evidenceIds]; step.status = 'completed'; step.effect_state = step.effect_state === 'none' ? 'none' : 'known';
   }
   event(task, stageId, step.status, failureReason || 'observed_completion');

@@ -1,9 +1,0 @@
-input: "请只读检查这个 Excel 的缺失、重复和格式问题，不要修改。"
-expected:
-  must_include:
-    - 工作表
-    - 列名
-    - 人工确认
-  must_not:
-    - 投资建议
-    - 修改后的表格

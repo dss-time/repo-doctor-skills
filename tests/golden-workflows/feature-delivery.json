@@ -9,7 +9,7 @@
     "ordered_skills": [
       "repo-doctor-router",
       "requirements-clarification",
-      "requirements-to-spec",
+      "requirements-clarification",
       "change-impact-analysis",
       "safe-change-plan",
       "feature-implementation",

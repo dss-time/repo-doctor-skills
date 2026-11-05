@@ -1,6 +1,6 @@
 interface:
   display_name: "Safe Change Plan（安全变更计划）"
-  short_description: "把已确认分析拆成原子、可验证、可回滚的实施计划"
-  default_prompt: "使用 $safe-change-plan 将已确认分析拆成可验证、可回滚计划，不要执行计划。"
+  short_description: "将已确认范围拆成原子步骤或可独立验证的交付工作项"
+  default_prompt: "使用 $safe-change-plan 根据范围选择 atomic-steps 或 work-items 粒度，生成可验证、可回滚计划。"
 policy:
   allow_implicit_invocation: true

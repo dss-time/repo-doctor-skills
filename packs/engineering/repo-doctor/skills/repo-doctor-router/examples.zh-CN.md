@@ -1,7 +1,7 @@
 # 示例
 
 - “功能需求仍有兼容性选择，我该走哪个流程？” -> `feature-delivery`，下一步 `requirements-clarification`。
-- “行为和验收标准已经确定，请形成规格。” -> `feature-delivery`，下一步 `requirements-to-spec`。
+- “行为和验收标准已经确定，请形成规格。” -> `feature-delivery`，下一步 `requirements-clarification`。
 - “只想先比较两个 UI 方向，不进入正式实施。” -> `decision-prototype`，模式 `standard`。
 - “调用方负担和重复适配越来越多，只分析方案不要重构。” -> `architecture-deepening-analysis`，模式 `standard`。
 - “实现这个范围明确的单文件修复，已授权写入。” -> 保留注册的写权限门禁，再推荐 `safe-fix-implementation`。

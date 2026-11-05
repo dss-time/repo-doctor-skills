@@ -45,19 +45,29 @@ A clear, exact, low-risk edit request that names the target and desired result i
 ## Workflow
 
 1. Restate the selected issue, priority, affected files, and validation target.
-2. Check impact before editing.
-3. Confirm or identify the smallest test seam or validation method.
-4. Make the smallest practical fix.
+2. Check impact, current file baselines and preexisting edits. Identify the intended change and authorization, business and error behavior to preserve. For existing-data updates, verify payload and omission/clear/replacement semantics.
+3. Identify the smallest test seam with applicable allowed/rejected cases. Preflight actual test/build targets and side effects; command names do not establish isolation.
+4. Recheck the target and edited region immediately before writing. Make the smallest fix on current contents, preserving permission/business checks and unrelated data. Pause conflicting writes instead of overwriting with stale snapshots.
 5. Preflight and run the minimum relevant validation when safe, authorized, and available. If blocked by permissions, missing tools or prerequisites, mark the fix unverified, state the reason and pending command; a suggestion is not a passed check.
 6. Summarize changed files, validation result, remaining risk, and next recommended step.
 
 Complete work already authorized within this Skill without asking again. In an authorized end-to-end workflow, hand other responsibilities to the appropriate Skill; this Skill's own permissions do not expand.
+
+Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+
+Explicit user-directed deferred verification is an exception to the per-slice test schedule and test-first execution timing above. Apply the execution-boundary deferral protocol, record changes as implemented with verification deferred, and do not claim verified completion.
+
+Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
 
 # Output Format
 
 Default `fast`: report the fix and the actual verification command/result, usually in one short paragraph.
 Add material unverified scope, failures or residual risks only when present. Omit empty sections and unnecessary next-Skill recommendations.
 `standard` adds relevant impact; `audit` adds scope, permissions and the full verification record.
+
+If the user deferred checks, include `verification_status: verification_deferred`, the instruction source and pending acceptance/check mapping. Distinguish implemented changes from verified delivery.
+
+When relevant, briefly state preserved authorization/business behavior, existing-data update evidence, validation target/isolation or unrun reason, and preexisting/concurrent edit protection. Unresolved safety gaps or edit conflicts keep affected work blocked/partial. Omit inapplicable fields and retain deferred-verification status.
 
 # 简体中文
 
@@ -101,16 +111,26 @@ Add material unverified scope, failures or residual risks only when present. Omi
 ## 工作流程
 
 1. 重述选中的问题、优先级、影响文件和验证目标。
-2. 修改前检查影响范围。
-3. 确认或识别最小测试切入点或验证方式。
-4. 做最小可行修复。
+2. 修改前检查影响范围、当前文件基线和用户已有改动，明确目标变化及必须保留的权限、业务与错误行为；涉及已有数据更新时核对载荷和省略/清空/替换语义。
+3. 确认最小测试切入点，按适用边界覆盖允许与拒绝场景；预检实际测试/构建目标及副作用，不能以命令名称认定隔离。
+4. 写入前复核目标与待改区块，基于当前内容做最小修复，保留已有权限、业务检查及无关数据。并发冲突时暂停受影响写入，不用旧快照覆盖。
 5. 预检最小相关验证；安全、已授权且具备执行条件时必须运行。权限、工具或前置条件阻塞时，明确标记修复尚未验证，说明原因和待运行命令；建议不等于验证通过。
 6. 总结修改文件、验证结果、剩余风险和下一步建议。
 
 用户请求已明确授权本 Skill 范围时直接完成，不重复索取授权。完整流程需要其他职责时，仅在已有流程授权下交给对应 Skill；本 Skill 自身权限不扩大。
+
+读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+
+用户明确要求延期验证时，作为上述逐切片测试及 test-first 执行时序的例外，遵循执行边界中的延期协议。将改动记录为已实施、验证延期，不声明验证完成。
+
+修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出格式
 
 默认 `fast`：报告修复结果和实际验证命令/结果，通常一小段即可。
 有重要未验证范围、失败或剩余风险时才补充。不要输出空栏目或强行推荐下一 Skill。
 `standard` 增加必要的影响说明；`audit` 增加范围、权限和完整验证记录。
+
+用户要求延期检查时，输出 `verification_status: verification_deferred`、指令来源及待验证验收项/检查映射，区分已实施改动与已验证交付。
+
+仅在相关时简述保留的权限/业务行为、已有数据更新依据、验证目标/隔离或未运行原因，以及已有/并发改动保护情况。未解决安全缺口或编辑冲突使受影响工作保持阻塞/部分完成。省略不适用字段，保留延期验证状态。
