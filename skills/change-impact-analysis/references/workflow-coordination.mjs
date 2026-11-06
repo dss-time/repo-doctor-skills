@@ -12,6 +12,7 @@ const copy = value => JSON.parse(JSON.stringify(value));
 const assert = (ok, message) => { if (!ok) throw new Error(message); };
 const recovered = new WeakMap();
 const runtimeTasks = new WeakSet();
+const runtimeExecutions = new WeakMap();
 const states = new Set(['pending', 'running', 'completed', 'reused', 'skipped', 'evidence_insufficient', 'permission_blocked', 'validation_failed', 'interrupted']);
 const allowedCapabilities = ['read_files', 'write_files', 'run_shell_commands', 'access_network', 'destructive_actions_allowed'];
 const safePath = p => typeof p === 'string' && p !== '' && !path.isAbsolute(p) && !p.split(/[\\/]/).includes('..');
@@ -178,7 +179,7 @@ function requirement(task, requirement, host) {
     && evidenceValidity(e, host).status === 'valid');
 }
 
-function stepEvidence(task, stage, host) {
+function stepEvidence(task, stage, host, executionOwner = task) {
   const step = task.steps[stage.id];
   if (!evidenceFor(task, step.evidence_ids, host)) return false;
   const explicitReuse = step.status === 'reused'
@@ -186,7 +187,8 @@ function stepEvidence(task, stage, host) {
   if (step.status === 'reused' && !explicitReuse) return false;
   const evidence = step.evidence_ids.map(id => task.evidence.find(e => e.id === id));
   const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(host.requests[stage.id]) && e.claims?.includes(`stage:${stage.id}`)
-    && (explicitReuse || (typeof step.execution_nonce === 'string' && e.execution_attempt === step.attempts
+    && (explicitReuse || (runtimeExecutions.get(executionOwner)?.get(stage.id) === step.execution_nonce
+      && typeof step.execution_nonce === 'string' && e.execution_attempt === step.attempts
       && e.execution_nonce === step.execution_nonce)));
   if (!scoped.length) return false;
   if (stage.skill === 'safe-code-review' && !scoped.some(e => e.kind === 'review' && e.independent === true
@@ -258,7 +260,17 @@ export function nextAction(task, host) {
     if (stage.type === 'skill' && wasCompleted) {
       const denied = permission(stage.skill, stage, task, host);
       if (denied) return { ...decision, action: 'permission_blocked', reason: denied };
-      if (!stepEvidence(task, stage, host) && effectful) return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
+      if (!stepEvidence(task, stage, host)) {
+        if (effectful && !evidenceFor(task, step.evidence_ids, host)) return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
+        const reusable = host.reuse?.[stage.id];
+        if (reusable) {
+          const provisional = copy(task);
+          provisional.steps[stage.id].status = 'reused';
+          provisional.steps[stage.id].evidence_ids = reusable;
+          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: reusable, reason: 'explicit_recovered_or_historical_result_reuse' };
+        }
+        if (effectful) return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
+      }
     }
     if (!applies) {
       if (!stage.optional) return { ...decision, action: 'evidence_insufficient', reason: `required_condition_false:${stage.condition}` };
@@ -370,6 +382,8 @@ export function advance(task, host) {
     if (action.action === 'execute') {
       step.attempts++;
       step.execution_nonce = randomUUID();
+      if (!runtimeExecutions.has(task)) runtimeExecutions.set(task, new Map());
+      runtimeExecutions.get(task).set(action.stage, step.execution_nonce);
       step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'uncertain' : 'none';
     }
     if (action.action === 'skip') {
@@ -394,7 +408,7 @@ export function finishStep(task, stageId, evidenceIds, host, failureReason = nul
   if (failureReason) { step.status = 'validation_failed'; step.reason = failureReason; step.evidence_ids = [...evidenceIds]; }
   else {
     const provisional = copy(task); provisional.steps[stageId].evidence_ids = evidenceIds;
-    assert(stepEvidence(provisional, stage, host), 'Completion requires valid, scoped current-attempt evidence and independent review');
+    assert(stepEvidence(provisional, stage, host, task), 'Completion requires valid, scoped current-attempt evidence and independent review');
     step.evidence_ids = [...evidenceIds]; step.status = 'completed'; step.effect_state = step.effect_state === 'none' ? 'none' : 'known';
   }
   event(task, stageId, step.status, failureReason || 'observed_completion');

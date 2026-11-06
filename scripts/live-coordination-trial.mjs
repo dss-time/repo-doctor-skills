@@ -168,6 +168,8 @@ async function workflow() {
   const resumed = restoreTask(encodeTask(task), registry, inventory);
   task = resumed;
   host.recoveryChecks.set(recoveryBinding(task, host), { source: 'Host verified unchanged fixture after read-only gap phase and no previous write attempt', reconciled: true });
+  host.reuse['test-gap'] = ['gap'];
+  if (advance(task, host).action !== 'reuse') throw new Error('Recovered gap requires explicit host result reuse');
   host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(task, 'regression-test', host), {source:'Host inspected unchanged test baseline and actual attempt log: no previous test write',disposition:'not_executed'}]]);
   const gate = advance(task, host); if (gate.action !== 'approve') throw new Error(`Gate failed: ${JSON.stringify(gate)}`);
   action = advance(task, host); if (action.action !== 'execute') throw new Error('Test stage not ready');

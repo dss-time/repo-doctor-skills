@@ -71,3 +71,5 @@
 每次 execute 除次数外还生成全新的随机 `execution_nonce`，宿主观察凭据须绑定两者。完成阶段在恢复后仍核对次数与 nonce；历史结果须由当前可信宿主提供匹配的 `reuse[stageId]`，导入的 reused 状态本身不授予复用权。缺少 nonce 的旧凭据不能完成新的执行。
 
 恢复后 pending 不证明副作用从未发生。每次有副作用的执行前，宿主须核对实际工作区与可信尝试记录，再设置 `recoveredExecutionChecks.set(recoveredExecutionBinding(task, stageId, host), {source, disposition: "not_executed" | "safe_retry"})`。通用 reconciled 标记不够。safe_retry 还要求当前 reconciliationBinding 位于 host.reconciled。已经完成时应明确核验并复用结果，不重放。许可绑定本次导入、当前阶段及精确请求，不从 Task Context 复制。只读分析无需该副作用执行许可。
+
+当前执行身份保存在内部运行时 WeakMap，不从 Task Context 恢复。导入的完成凭据即使次数和 nonce 匹配仍属于历史结果，须由当前宿主明确核验并复用；新的完成凭据必须匹配 advance 为该内存任务实际签发的 nonce。

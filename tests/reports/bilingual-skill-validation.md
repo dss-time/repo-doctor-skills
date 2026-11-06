@@ -1,6 +1,6 @@
 # Bilingual Skill Validation
 
-Generated: 2026-11-06T00:58:23.418Z
+Generated: 2026-11-06T01:06:51.921Z
 
 Result: 33/33 Skills passed all deterministic bilingual checks.
 

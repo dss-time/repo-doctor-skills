@@ -683,3 +683,23 @@ test('Malformed test receipts become stale when a known dependency changes', t =
   writeFileSync(path.join(f.root,'facts.txt'),'changed input');
   assert.equal(evidenceValidity(receipt,f.host).status,'stale');
 });
+
+test('Imported attempt count and nonce cannot impersonate runtime execution authority', t => {
+  const f=setup(t);
+  const first=advance(f.task,f.host);
+  const old=f.complete(first,{claims:['stage:task','acceptance:behavior']});
+  f.host.reconciled=new Set([reconciliationBinding(f.task,'task',f.host)]);
+  reopen(f.task,'task',f.host,{reason:'Second observed attempt',source:'host',safeToRetry:true});
+  advance(f.task,f.host);
+  f.complete({stage:'task',skill:'documentation-sync'},{claims:['stage:task','acceptance:behavior']});
+  const raw=JSON.parse(encodeTask(f.task));
+  raw.steps.task.attempts=old.execution_attempt;
+  raw.steps.task.execution_nonce=old.execution_nonce;
+  raw.steps.task.evidence_ids=[old.id];
+  const restored=restoreTask(JSON.stringify(raw),registry,inventory);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host inspected recovered state',reconciled:true});
+  assert.notEqual(nextAction(restored,f.host).action,'complete');
+  f.host.reuse.task=[old.id];
+  assert.equal(advance(restored,f.host).action,'reuse');
+  assert.equal(nextAction(restored,f.host).action,'complete');
+});
