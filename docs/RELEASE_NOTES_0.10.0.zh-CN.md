@@ -20,3 +20,7 @@ npx repo-doctor-skills@0.10.0 install --skill safe-fix-implementation --agent co
 ```
 
 GitHub Release 提供 33 个独立 Skill ZIP、发布说明、绑定提交的清单及 SHA256 校验文件。npm 仅分发 CLI 与独立运行资源，仓库测试和历史报告不进入 npm 包。
+
+## 已有安装升级
+
+重复安装会覆盖选中的同名 Skill，但不会自动删除本版本已移除名称对应的旧安装目录。清理前请核对目录及其中的自定义内容。requirements-to-spec 改用 requirements-clarification，spec-to-work-items 改用 safe-change-plan；已移除的 PDF/Word/Excel 入口可在 0.9.0 到 0.10.0 的源码差异中核对。

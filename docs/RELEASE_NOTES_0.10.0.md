@@ -26,3 +26,7 @@ npx repo-doctor-skills@0.10.0 install --skill safe-fix-implementation --agent co
 ```
 
 Release assets include 33 standalone Skill ZIPs, release notes, a commit-bound manifest and SHA256 checksums. npm ships the CLI and self-contained runtime resources; repository tests and historical reports stay outside the published package.
+
+## Existing installations
+
+Reinstallation replaces selected same-name Skills. It does not automatically delete previously installed Skills whose names were removed in this release. Review those old directories and any local customization before removing them. Use requirements-clarification instead of requirements-to-spec, and safe-change-plan instead of spec-to-work-items. The removed PDF/Word/Excel entries are listed in the 0.9.0-to-0.10.0 source diff.

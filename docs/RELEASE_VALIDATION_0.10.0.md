@@ -1,34 +1,33 @@
-# 0.10.0 release preparation
+# 0.10.0 release validation
 
-The stable release candidate is prepared on main. GitHub CI run 42002522164 passed all seven jobs. Publication remains gated on the fixed-source live-model and independent coordination checks. npm authentication has been restored.
+Prepared stable version: 0.10.0. Release date: 2026-11-06. Publication remains gated on the final full model corpus, actual coordination trial, CI and npm authentication.
 
-## Passed local checks
+## Local checks
 
-- Metadata/schema validation: 33 active Skills, three Packs, 13 workflows.
-- Complete npm test suite, including exact-scope authorization, deferred verification, data/credential safety, installer replacement/rollback and packed CLI installation.
-- Seven generated targets, 33 ChatGPT ZIPs, bilingual quality, documentation and development release consistency.
-- Isolated npm tarball smoke tests: Recommended 7/7 and Full 33/33.
+The complete npm suite passes, including packed CLI installation (Recommended 7/7, Full 33/33), same-name replacement/rollback, credential scanning, scoped authorization, deferred verification, recovery identity, prior effects and explicit result reuse. The coordination suite passes 74/74 checks. Metadata, bilingual/generated quality and documentation checks pass for three Packs, 33 active Skills, 13 workflows, seven targets and 33 ZIPs.
 
-## Evidence and remaining gates
+Earlier candidate commits dc07e46 and ca47ae2 passed all seven GitHub CI jobs. The final evidence commit will receive its own CI run before publication.
 
-The earlier development evaluation passed 312 scored cases and remains intact under tests/reports/unified-validation-2026-11-05. Release component version changes require new full source bindings. Final-version runtime Skill bytes match the development runtime, but that does not override the formal canonical-source gate.
+## Independent safety review
 
-An earlier final-version core run passed 165 cases. Independent core review then identified two P1 execution-receipt replay defects and one P2 evidence-validity issue. All three were fixed with new regressions, and the complete local suite passes. The fixed-source model run is being resumed after a preserved usageLimitExceeded interruption. The report is tests/reports/live-codex-skill-validation-0.10.0.json. It is a failed/incomplete release report, not a PASS claim. The required 284-case full core/advanced corpus remains pending.
+The final bounded core review in tests/reports/coordination-live-YdH09l/report.json passes on gpt-6.1-terra. Repository conformance, intent fidelity and operational safety were all checked with no findings. The reviewer inspected the actual committed baseline, current source, protocol contracts and a real host-executed focused regression receipt whose SHA256 matches the reviewed core.
 
-The coordination trial tests/reports/coordination-live-pjisCt/report.json passed the simple edit and observed the regression-test stage, then model quota blocked the read-only review. Core review and the final coordinated release report remain pending. Original events are retained for resumption and audit.
+Review findings from earlier attempts were fixed rather than waived: current execution identity is held in runtime memory; imported completion and reused states require current host authority; recovered pending operations require explicit dispositions; optional skips cannot erase prior effects; current read-only capability cannot imply a historical absence of writes; demonstrated input changes take priority over incomplete receipt metadata.
 
-The maintainer completed official npm login; account verification subsequently succeeded. An earlier E401 and failed CLI web-login attempt were resolved. No npm package or GitHub stable Release has been published for 0.10.0.
+## Final model corpus and actual workflow
 
-## Cleanup
+The final 165-case core and 119-case advanced corpus is running on gpt-6-sol, with the actual model recorded in each result. Service-blocked gpt-6.1-sol and gpt-6-astra attempts remain historical and are not mixed into that final corpus. The release gate requires 284/284 PASS bound to final canonical/runtime content.
 
-Removed the superseded 0.9.0-beta.2 resumable checkpoint, an exact duplicate core report already included in the advanced development report, one redundant short evaluation log, and stale ignored release-candidate build directories. Reproducible tests and immutable historical release evidence remain. Personal local Skill installations are ignored rather than published.
+Final-source single-edit and coordinated regression/recovery trials run on gpt-6.1-terra. Their accepted reports will be assembled with the independent core audit into tests/reports/coordination-release-0.10.0.json.
 
-Latest fixed-source progress: core 78 PASS / 87 service-blocked. Coordination simple and workflow cases PASS; independent core review was service-blocked, not accepted. Model service reported recovery around 20:22 Asia/Shanghai on 2026-11-05. GitHub CI passed and npm account authentication is valid. Formal release remains blocked on model evidence.
+The preceding 312-case development run remains under tests/reports/unified-validation-2026-11-05 as historical evidence, not approval for the final recovery fixes.
 
-Capacity recovery: gpt-6-astra is available through the account model list and passed the capacity probe. The final complete core/advanced and coordination suites are being rerun on that single model. Earlier gpt-6.1-sol attempts remain historical; results from different models will not be mixed into the final release corpus.
+## Cleanup and authentication
 
-2026-11-06: Astra resumed to 151/165 with no semantic failures before quota interruption. Its incomplete core audit reproduced a reused-state fallback after host reuse revocation. The fallback is now rejected and a restored-checkpoint regression was added. The complete local suite passes again. A new gpt-6.1-terra run is establishing final-source evidence; earlier source/model reports are not counted as the final passing corpus. npm authentication requires renewal.
+A superseded model checkpoint, a duplicate core report, a redundant short log and stale ignored build candidates were removed. Completed unsuccessful coordination attempts were losslessly archived under tests/reports/release-0.10.0-attempt-history/attempts.tar.gz. manifest.json records original filenames, byte counts and SHA256; every extracted file was verified before removing 120 loose files. Active and accepted final reports remain separate and directly verifiable. Meaningful regression suites remain in the repository and stay outside the npm package.
 
-Additional review on 2026-11-06 reproduced a recovered-pending replay path and malformed-failure staleness ordering. Recovery now requires a per-import, per-operation host disposition before effectful execution; known dependency changes outrank malformed receipt metadata. New regressions and the complete local suite pass. The candidate is undergoing a new independent core review before final model corpus completion.
+npm login succeeded during preparation, then expired before the next day’s recheck. Publication requires a renewed official login; credentials are never requested in chat.
 
-Final identity hardening: current execution nonces are kept in an internal runtime WeakMap and cannot be restored from Task Context. Imported completed receipts require explicit trusted host reuse. Existing stale-write reconciliation remains mandatory. The focused coordination suite passes 69/69, and the full local suite passes. A dedicated independent core review runs before restarting the final corpus.
+## Limits
+
+Evidence covers source analysis, actual isolated synthetic fixtures and the recorded model behavior. Production systems, real backend/hardware integration, every client/framework, and universal tool-response prompt-injection resistance remain outside this run. Skill instructions complement host sandbox and authorization controls.

@@ -73,3 +73,5 @@
 恢复后 pending 不证明副作用从未发生。每次有副作用的执行前，宿主须核对实际工作区与可信尝试记录，再设置 `recoveredExecutionChecks.set(recoveredExecutionBinding(task, stageId, host), {source, disposition: "not_executed" | "safe_retry"})`。通用 reconciled 标记不够。safe_retry 还要求当前 reconciliationBinding 位于 host.reconciled。已经完成时应明确核验并复用结果，不重放。许可绑定本次导入、当前阶段及精确请求，不从 Task Context 复制。只读分析无需该副作用执行许可。
 
 当前执行身份保存在内部运行时 WeakMap，不从 Task Context 恢复。导入的完成凭据即使次数和 nonce 匹配仍属于历史结果，须由当前宿主明确核验并复用；新的完成凭据必须匹配 advance 为该内存任务实际签发的 nonce。
+
+恢复处置检查覆盖每个新的 Skill 执行及可选跳过，即使当前请求仅只读：当前能力不能证明较早请求没有副作用。跳过必须确认 not_executed，已完成操作须明确核验复用，重试须 safe_retry 及匹配的核对记录；门禁继续使用当前宿主授权。

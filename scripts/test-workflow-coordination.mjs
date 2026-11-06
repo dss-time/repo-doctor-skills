@@ -703,3 +703,80 @@ test('Imported attempt count and nonce cannot impersonate runtime execution auth
   assert.equal(advance(restored,f.host).action,'reuse');
   assert.equal(nextAction(restored,f.host).action,'complete');
 });
+
+test('A false optional condition cannot authorize imported historical completion', t => {
+  const f=setup(t,{workflow_id:'feature-delivery'});
+  f.pump('impact');
+  const restored=restoreTask(encodeTask(f.task),registry,inventory);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host inspected prior read-only phases',reconciled:true});
+  f.setCondition('material_decisions_open',false);
+  f.host.reuse.route=[...restored.steps.route.evidence_ids];
+  assert.equal(advance(restored,f.host).action,'reuse');
+  const decision=nextAction(restored,f.host);
+  assert.equal(decision.stage,'clarification');
+  assert.equal(decision.reason,'historical_stage_requires_explicit_reuse');
+  f.host.reuse.clarification=[...restored.steps.clarification.evidence_ids];
+  assert.equal(advance(restored,f.host).action,'reuse');
+});
+
+test('Recovery cannot erase an effect by skipping a formerly pending optional stage', t => {
+  const f=setup(t,{workflow_id:'feature-delivery'});
+  f.pump('test-implementation');
+  const checkpoint=encodeTask(f.task);
+  const action=advance(f.task,f.host);
+  const receipt=f.complete(action);
+  const restored=restoreTask(checkpoint,registry,inventory);
+  restored.evidence.push(receipt);
+  f.setCondition('test_changes_authorized',false);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw the later completed test edit',reconciled:true});
+  for(const [id,step] of Object.entries(restored.steps)) {
+    if(step.status==='completed' && step.evidence_ids.length) f.host.reuse[id]=[...step.evidence_ids];
+  }
+  let decision;
+  for(let i=0;i<20;i++) {
+    decision=nextAction(restored,f.host);
+    if(decision.stage==='test-implementation')break;
+    assert.ok(['reuse','approve','skip'].includes(decision.action));
+    advance(restored,f.host);
+  }
+  assert.equal(decision.reason,'recovered_skipped_effect_needs_disposition');
+  f.host.reuse['test-implementation']=[receipt.id];
+  assert.equal(advance(restored,f.host).action,'reuse');
+});
+
+test('A verified not-executed disposition remains valid through the skip transition', t => {
+  const f=setup(t,{workflow_id:'feature-delivery'});
+  f.pump('test-implementation');
+  const restored=restoreTask(encodeTask(f.task),registry,inventory);
+  f.setCondition('test_changes_authorized',false);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host verified no later writes',reconciled:true});
+  for(const [id,step] of Object.entries(restored.steps))if(step.status==='completed'&&step.evidence_ids.length)f.host.reuse[id]=[...step.evidence_ids];
+  for(let i=0;i<20;i++){const a=nextAction(restored,f.host);if(a.stage==='test-implementation')break;assert.ok(['reuse','approve','skip'].includes(a.action));advance(restored,f.host);}
+  f.host.recoveredExecutionChecks=new Map([[recoveredExecutionBinding(restored,'test-implementation',f.host),{source:'Host checked actual attempt ledger: never executed',disposition:'not_executed'}]]);
+  assert.equal(advance(restored,f.host).action,'skip');
+  assert.notEqual(nextAction(restored,f.host).reason,'recovered_skipped_effect_needs_disposition');
+});
+
+test('Current read-only scope cannot hide earlier effects when recovery skips a stage', t => {
+  const f=setup(t,{workflow_id:'feature-delivery'});
+  f.pump('clarification');
+  const checkpoint=encodeTask(f.task);
+  const restored=restoreTask(checkpoint,registry,inventory);
+  f.setCondition('material_decisions_open',false);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host discovered a later historical effect under older scope',reconciled:true});
+  f.host.reuse.route=[...restored.steps.route.evidence_ids];
+  assert.equal(advance(restored,f.host).action,'reuse');
+  assert.equal(nextAction(restored,f.host).reason,'recovered_skipped_effect_needs_disposition');
+  f.host.recoveredExecutionChecks=new Map([[recoveredExecutionBinding(restored,'clarification',f.host),{source:'Historical effect cannot be omitted',disposition:'completed'}]]);
+  assert.equal(nextAction(restored,f.host).reason,'recovered_skipped_effect_needs_disposition');
+});
+
+test('Recovered execution needs a disposition even after its request becomes read-only', t => {
+  const f=setup(t);const checkpoint=encodeTask(f.task);
+  const first=advance(f.task,f.host);f.complete(first,{claims:['stage:task','acceptance:behavior']});
+  const restored=restoreTask(checkpoint,registry,inventory);
+  f.host.requests.task={capabilities:['read_files'],paths:['README.md']};
+  f.host.skillChecks.task.request_binding=digest(f.host.requests.task);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw earlier write and current narrower request',reconciled:true});
+  assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
+});

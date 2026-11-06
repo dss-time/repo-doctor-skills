@@ -171,6 +171,7 @@ async function workflow() {
   host.reuse['test-gap'] = ['gap'];
   if (advance(task, host).action !== 'reuse') throw new Error('Recovered gap requires explicit host result reuse');
   host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(task, 'regression-test', host), {source:'Host inspected unchanged test baseline and actual attempt log: no previous test write',disposition:'not_executed'}]]);
+  host.recoveredExecutionChecks.set(recoveredExecutionBinding(task, 'review', host), {source:'Host verified no prior review attempt after this checkpoint',disposition:'not_executed'});
   const gate = advance(task, host); if (gate.action !== 'approve') throw new Error(`Gate failed: ${JSON.stringify(gate)}`);
   action = advance(task, host); if (action.action !== 'execute') throw new Error('Test stage not ready');
   beforeTest = tree(root);
@@ -210,6 +211,8 @@ async function workflow() {
   const reviewEvidence = attest(task, host, { id: 'review', source: 'separate fresh Codex read-only review plus host inspection', summary: review.answer, skill: 'safe-code-review', kind: 'review', independent: true,
     review_basis: host.reviewBinding, dependencies: ['src', 'tests', 'SPEC.md', 'baseline'], claims: ['stage:review'] });
   finishStep(task, action.stage, [reviewEvidence.id], host);
+  host.recoveredExecutionChecks ??= new Map();
+  host.recoveredExecutionChecks.set(recoveredExecutionBinding(task, 'release', host), {source:'Host inspected the actual ledger: no release-stage attempt occurred',disposition:'not_executed'});
   const release = advance(task, host); if (release.action !== 'skip') failures.push('Non-release stage did not skip');
   const final = nextAction(task, host);
   const beforeUnrelated = validationPlan([testEvidence], host); writeFileSync(path.join(root, 'unrelated.txt'), 'Unrelated host fixture edit.');
@@ -222,7 +225,11 @@ async function workflow() {
     mutation_sensitivity: { exit_code: mutation.status, output: mutation.stdout }, incremental: { beforeUnrelated, afterUnrelated, afterRelated }, changed_files: edits, observed_test_source: currentTest };
 }
 async function reviewCore() {
+  const regression = spawnSync(process.execPath, ['--test', 'scripts/test-workflow-coordination.mjs'], {cwd:repo,encoding:'utf8',timeout:30000});
+  if (regression.status !== 0) throw new Error('Core regression prerequisite failed: ' + regression.stderr);
+  const coreHash = createHash('sha256').update(readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.mjs'))).digest('hex');
   const root = fixture('core-review', {
+    'executed-regressions.txt': JSON.stringify({command:'node --test scripts/test-workflow-coordination.mjs',exit_code:regression.status,core_sha256:coreHash,node:process.version,stdout:regression.stdout},null,2),
     'baseline-core.mjs': execFileSync('git', ['show', 'HEAD:packs/engineering/repo-doctor/references/workflow-coordination.mjs'], {cwd:repo,encoding:'utf8'}),
     'core.mjs': readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.mjs'), 'utf8'),
     'requirements.md': readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.en.md'), 'utf8'),
@@ -231,7 +238,7 @@ async function reviewCore() {
     'existing-tests.mjs': readFileSync(path.join(repo, 'scripts/test-workflow-coordination.mjs'), 'utf8')
   }, ['safe-code-review']);
   const before = tree(root);
-  const run = await runCodex('core-review', root, 'Use $safe-code-review in audit mode, loading .agents/skills/safe-code-review/SKILL.md first. Independently audit core.mjs against requirements.md, contracts.md and contracts.skill.yaml, using baseline-core.mjs as the actual committed comparison. Repository conformance is scoped to supplied AGENTS.md and contracts; do not infer absent global conventions; existing-tests.mjs is context only, its imports do not resolve in this isolated copy. Focus on correctness, authorization, evidence validity, state transitions, retries and recovery. Assume host inputs really come from a trusted host, but Task Context may be stale or imported. Check all three review axes separately. Produce evidence-backed actionable findings with line numbers/severity and concrete failure sequences. Read-only: do not modify files. You may run only local non-mutating Node snippets using core.mjs if useful; no dependencies or external access.', 'read-only');
+  const run = await runCodex('core-review', root, 'Use $safe-code-review in audit mode, loading .agents/skills/safe-code-review/SKILL.md first. Independently audit core.mjs against requirements.md, contracts.md and contracts.skill.yaml, using baseline-core.mjs as the actual committed comparison. Repository conformance is scoped to supplied AGENTS.md and contracts; do not infer absent global conventions; existing-tests.mjs is context only, its imports do not resolve in this isolated copy. executed-regressions.txt contains the actual host-executed focused regression receipt bound to core.mjs bytes. Assess the supplied scope using this evidence and report unverified broader integration separately. Focus on correctness, authorization, evidence validity, state transitions, retries and recovery. Assume host inputs really come from a trusted host, but Task Context may be stale or imported. Check all three review axes separately. Produce evidence-backed actionable findings with line numbers/severity and concrete failure sequences. The verdict concerns the bounded core implementation and supplied verified synthetic regressions. Production systems, external clients, backends and hardware integration are explicitly outside this review. An axis is checked when its supplied-scope evidence has been assessed; do not mark it insufficient solely because excluded integration was not run. Use blocked for a concrete missing item that prevents a defensible conclusion within the supplied core scope, and name that item. Passing regressions alone do not prove there are no defects. Read-only: do not modify files. You may run only local non-mutating Node snippets using core.mjs if useful; no dependencies or external access.', 'read-only');
   return { case: 'core-review', result: run.completed && !run.permission_violations.length && reviewAccepted(run.final_answer) && loaded(run, 'safe-code-review') && !changed(before, tree(root)).length ? 'REVIEW_COMPLETED' : run.completed ? 'FAIL' : 'BLOCKED',
     changed_files: changed(before, tree(root)), run };
 }

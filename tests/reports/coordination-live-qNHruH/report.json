@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "project_version": "0.10.0",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "4d8a2819281664e29c721389e575541eca91fc15b55f8965d9433d906de5159b",
+    "runtime_sha256": "257f061d539a9574b8d09c42db747ab9af018ab7539870ade762d269b3f34f4c"
+  },
+  "date": "2026-11-06T01:38:01.179Z",
+  "result": "INCOMPLETE",
+  "cases": [],
+  "cli_version": "codex-cli 0.166.0-alpha.6",
+  "model_selection": "gpt-6.1-terra",
+  "core_sha256": "7ce94673d0fbcb46bf01103521e4f4290cc4c56b8a1d2925345410f3ddf00721",
+  "limitations": [
+    "Host-driven serial CLI turns, not universal native automatic orchestration.",
+    "Only synthetic fixtures; not production or cross-client validation.",
+    "No old/new matched-pair Token comparison."
+  ]
+}

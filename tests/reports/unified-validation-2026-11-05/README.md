@@ -1,6 +1,8 @@
-# Unified validation — 2026-11-05
+# Historical development validation — 2026-11-05
 
-Validation uses the actual authenticated Codex model `gpt-6.1-sol` and the current canonical/runtime content binding recorded in each JSON report. All active Skills are installed in an isolated Skill home. Model fixture workspaces use synthetic data. The original interrupted attempts are retained under `attempts/`.
+This retained development snapshot predates the final 0.10.0 recovery fixes. It must not be used as final release approval. Final release evidence is selected by scripts/release-metadata.mjs.
+
+Validation used the actual authenticated Codex model `gpt-6.1-sol` and the current canonical/runtime content binding recorded in each JSON report. All active Skills are installed in an isolated Skill home. Model fixture workspaces use synthetic data. The original interrupted attempts are retained under `attempts/`.
 
 ## Completed coverage
 

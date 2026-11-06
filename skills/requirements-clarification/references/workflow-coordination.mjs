@@ -167,7 +167,7 @@ export function recoveryBinding(task, host) {
 }
 
 export function recoveredExecutionBinding(task, stageId, host) {
-  return digest({ recovery: recoveryBinding(task, host), stage: stageId, step: task.steps[stageId], request: host.requests?.[stageId] });
+  return digest({ recovery: recoveryBinding(task, host), stage: stageId, attempts: task.steps[stageId]?.attempts, execution_nonce: task.steps[stageId]?.execution_nonce, request: host.requests?.[stageId] });
 }
 
 function requirement(task, requirement, host) {
@@ -275,7 +275,25 @@ export function nextAction(task, host) {
     if (!applies) {
       if (!stage.optional) return { ...decision, action: 'evidence_insufficient', reason: `required_condition_false:${stage.condition}` };
       // Applicability must not erase a completed operation or its known effects.
-      if (['completed', 'reused'].includes(step.status)) { completed.add(stage.id); continue; }
+      if (['completed', 'reused'].includes(step.status)) {
+        if (stage.type === 'skill' && !stepEvidence(task, stage, host)) return { ...decision, action: 'evidence_insufficient', reason: 'historical_stage_requires_explicit_reuse' };
+        completed.add(stage.id); continue;
+      }
+      if (recovery && stage.type === 'skill') {
+        const reusable = host.reuse?.[stage.id];
+        if (reusable) {
+          const provisional = copy(task);
+          provisional.steps[stage.id].status = 'reused';
+          provisional.steps[stage.id].evidence_ids = reusable;
+          const denied = permission(stage.skill, stage, task, host);
+          if (denied) return { ...decision, action: 'permission_blocked', reason: denied };
+          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: reusable, reason: 'observed_effect_before_checkpoint_recovery' };
+        }
+        const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
+        if (!disposition?.source || disposition.disposition !== 'not_executed') {
+          return { ...decision, action: 'blocked', reason: 'recovered_skipped_effect_needs_disposition' };
+        }
+      }
       if (step.status !== 'skipped' || step.condition_binding !== digest(host.conditions[stage.condition])) return { ...decision, action: 'skip', reason: `not_applicable:${stage.condition}` };
       completed.add(stage.id); continue;
     }
@@ -325,7 +343,7 @@ export function nextAction(task, host) {
           pending: host.verificationDeferral.pending ?? [], release_authorized: false };
       }
     }
-    if (recovery && potentiallyEffectful(stage, host)) {
+    if (recovery && stage.type === 'skill') {
       const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
       if (!disposition?.source || !['not_executed', 'safe_retry'].includes(disposition.disposition)
           || (disposition.disposition === 'safe_retry' && !host.reconciled?.has(reconciliationBinding(task, stage.id, host)))) {
