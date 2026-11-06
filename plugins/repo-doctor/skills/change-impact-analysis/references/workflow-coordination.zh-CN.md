@@ -69,3 +69,5 @@
 存在有效延期时，宿主在派发操作前须根据已检查的命令定义及钩子，为每个 Shell 请求设置布尔值 `requests[stageId].verification`。测试、检查及模型评测设为 true，并在执行前暂缓；非验证实施动作设为 false；用途未知则阻塞该动作。将混合的编辑加测试请求拆开，以便继续独立修改。已有有效证据仍可复用，仅到约定验证节点才解除用户指定的延期。
 
 每次 execute 除次数外还生成全新的随机 `execution_nonce`，宿主观察凭据须绑定两者。完成阶段在恢复后仍核对次数与 nonce；历史结果须由当前可信宿主提供匹配的 `reuse[stageId]`，导入的 reused 状态本身不授予复用权。缺少 nonce 的旧凭据不能完成新的执行。
+
+恢复后 pending 不证明副作用从未发生。每次有副作用的执行前，宿主须核对实际工作区与可信尝试记录，再设置 `recoveredExecutionChecks.set(recoveredExecutionBinding(task, stageId, host), {source, disposition: "not_executed" | "safe_retry"})`。通用 reconciled 标记不够。safe_retry 还要求当前 reconciliationBinding 位于 host.reconciled。已经完成时应明确核验并复用结果，不重放。许可绑定本次导入、当前阶段及精确请求，不从 Task Context 复制。只读分析无需该副作用执行许可。

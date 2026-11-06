@@ -1,6 +1,6 @@
 # Repo Doctor Skills 0.10.0
 
-Stable release, non-prerelease. Tag: `v0.10.0`. Date: 2026-11-05.
+Stable release, non-prerelease. Tag: `v0.10.0`. Date: 2026-11-06.
 
 ## Changes
 

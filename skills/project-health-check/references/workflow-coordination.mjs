@@ -56,11 +56,11 @@ export function evidenceValidity(evidence, host) {
     || !evidence.environment || !Object.keys(evidence.environment).length
     ? 'dependency_or_environment_coverage_unknown' : null;
   if (evidence.kind === 'test' && (!evidence.command || !evidence.cwd || !Number.isInteger(evidence.exit_code) || (evidence.result === 'pass' ? evidence.exit_code !== 0 : evidence.exit_code === 0))) {
-    return { status: 'unknown', reason: 'execution_receipt_missing' };
+    unknownReason ??= 'execution_receipt_missing';
   }
   if (evidence.kind === 'signal' && (!evidence.command || !evidence.cwd || !Number.isInteger(evidence.exit_code)
       || evidence.observed_target_failure !== true || !evidence.success_criterion || !evidence.failure_criterion)) {
-    return { status: 'unknown', reason: 'reliable_failure_signal_missing' };
+    unknownReason ??= 'reliable_failure_signal_missing';
   }
   for (const [key, value] of Object.entries(evidence.environment ?? {})) {
     if (!(key in (host.environment ?? {}))) { unknownReason ??= `environment_unknown:${key}`; continue; }
@@ -165,6 +165,10 @@ export function recoveryBinding(task, host) {
   return checkpoint ? digest({ checkpoint, intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks }) : null;
 }
 
+export function recoveredExecutionBinding(task, stageId, host) {
+  return digest({ recovery: recoveryBinding(task, host), stage: stageId, step: task.steps[stageId], request: host.requests?.[stageId] });
+}
+
 function requirement(task, requirement, host) {
   return task.evidence.some(e => e.claims?.includes(requirement.claim)
     && e.task_binding === taskBinding(task) && e.operation_binding === operationBinding(host)
@@ -179,6 +183,7 @@ function stepEvidence(task, stage, host) {
   if (!evidenceFor(task, step.evidence_ids, host)) return false;
   const explicitReuse = step.status === 'reused'
     && Array.isArray(host.reuse?.[stage.id]) && digest(host.reuse[stage.id]) === digest(step.evidence_ids);
+  if (step.status === 'reused' && !explicitReuse) return false;
   const evidence = step.evidence_ids.map(id => task.evidence.find(e => e.id === id));
   const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(host.requests[stage.id]) && e.claims?.includes(`stage:${stage.id}`)
     && (explicitReuse || (typeof step.execution_nonce === 'string' && e.execution_attempt === step.attempts
@@ -306,6 +311,13 @@ export function nextAction(task, host) {
         return { ...decision, action: 'evidence_insufficient', reason: 'verification_deferred',
           verification_status: 'verification_deferred', source: host.verificationDeferral.source,
           pending: host.verificationDeferral.pending ?? [], release_authorized: false };
+      }
+    }
+    if (recovery && potentiallyEffectful(stage, host)) {
+      const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
+      if (!disposition?.source || !['not_executed', 'safe_retry'].includes(disposition.disposition)
+          || (disposition.disposition === 'safe_retry' && !host.reconciled?.has(reconciliationBinding(task, stage.id, host)))) {
+        return { ...decision, action: 'blocked', reason: 'recovered_execution_needs_explicit_disposition' };
       }
     }
     const unresolved = unresolvedFailures(task, host).find(failed => {

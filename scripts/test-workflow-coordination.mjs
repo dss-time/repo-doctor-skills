@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { parseYamlSubset, validateSchema } from './validate-yaml-schemas.mjs';
 import { discoverSkillInventory } from './validate-workflows.mjs';
 import { createTask, captureEvidence, operationBinding, evidenceValidity, validationPlan, digest, taskBinding, reviewBinding, nextAction, advance,
-  finishStep, reopen, recoveryBinding, reconciliationBinding, encodeTask, restoreTask, fingerprint } from '../packs/engineering/repo-doctor/references/workflow-coordination.mjs';
+  finishStep, reopen, recoveredExecutionBinding, recoveryBinding, reconciliationBinding, encodeTask, restoreTask, fingerprint } from '../packs/engineering/repo-doctor/references/workflow-coordination.mjs';
 
 const registry = parseYamlSubset(readFileSync('packs/engineering/repo-doctor/workflows.yaml', 'utf8'));
 const inventory = discoverSkillInventory(process.cwd());
@@ -158,6 +158,7 @@ test('F: interrupted writes never replay; restored context cannot restore author
   assert.throws(() => reopen(restored, 'task', f.host, { reason: 'resume', source: 'host' }), /reconciled/);
   f.host.recoveryChecks.set(recoveryBinding(restored, f.host), { source: 'Fixture inspected all checkpoint effects', reconciled: true });
   f.host.reconciled = new Set([reconciliationBinding(restored, 'task', f.host)]); reopen(restored, 'task', f.host, { reason: 'no mutation occurred', source: 'inspection', safeToRetry: true });
+  f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(restored,'task',f.host),{source:'Fixture verified no mutation occurred',disposition:'not_executed'}]]);
   assert.equal(nextAction(restored, f.host).action, 'execute');
   f.host.trustedEvidence.clear(); assert.equal(evidenceValidity(f.task.evidence[0], f.host).status, 'unknown');
   f.host.grants = []; assert.equal(nextAction(restored, f.host).action, 'permission_blocked');
@@ -331,6 +332,7 @@ test('Recovery approval cannot be reused for another import of the same pending 
   const f = setup(t); const checkpoint = encodeTask(f.task);
   const first = restoreTask(checkpoint, registry, inventory);
   f.host.recoveryChecks.set(recoveryBinding(first, f.host), { source: 'Workspace and attempt ledger inspected', reconciled: true });
+  f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(first,'task',f.host),{source:'Fixture verified no earlier execution',disposition:'not_executed'}]]);
   assert.equal(nextAction(first, f.host).action, 'execute');
   const second = restoreTask(checkpoint, registry, inventory);
   assert.equal(nextAction(second, f.host).reason, 'recovered_execution_state_needs_reconciliation');
@@ -612,6 +614,8 @@ test('Restoring a pending checkpoint cannot reuse a prior attempt identity', t =
   const restored = restoreTask(pending, registry, inventory);
   restored.evidence.push(old);
   f.host.recoveryChecks.set(recoveryBinding(restored, f.host), {source:'Host reconciled actual prior effects',reconciled:true});
+  f.host.reconciled = new Set([reconciliationBinding(restored,'task',f.host)]);
+  f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(restored,'task',f.host),{source:'Fixture explicitly authorizes inspected safe retry',disposition:'safe_retry'}]]);
   assert.equal(advance(restored, f.host).action,'execute');
   assert.equal(restored.steps.task.attempts,1);
   assert.notEqual(restored.steps.task.execution_nonce,old.execution_nonce);
@@ -646,4 +650,36 @@ test('Known dependency changes outrank absent environment metadata', t => {
   assert.equal(evidenceValidity(failed,f.host).status,'unknown');
   writeFileSync(path.join(f.root,'facts.txt'),'demonstrably changed');
   assert.equal(evidenceValidity(failed,f.host).status,'stale');
+});
+
+test('Reused receipts cannot fall back to execution identity after host reuse is withdrawn', t => {
+  const f=setup(t);
+  const action=advance(f.task,f.host);
+  const receipt=f.complete(action,{claims:['stage:task','acceptance:behavior']});
+  f.host.reconciled=new Set([reconciliationBinding(f.task,'task',f.host)]);
+  reopen(f.task,'task',f.host,{reason:'Explicitly reuse completed result',source:'host',safeToRetry:true});
+  f.host.reuse.task=[receipt.id];
+  assert.equal(advance(f.task,f.host).action,'reuse');
+  assert.equal(nextAction(f.task,f.host).action,'complete');
+  const restored=restoreTask(encodeTask(f.task),registry,inventory);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host reconciled actual prior state',reconciled:true});
+  delete f.host.reuse.task;
+  assert.notEqual(nextAction(restored,f.host).action,'complete');
+});
+
+test('Old pending checkpoint requires an explicit per-operation disposition', t => {
+  const f=setup(t);const checkpoint=encodeTask(f.task);
+  const action=advance(f.task,f.host);f.complete(action,{claims:['stage:task','acceptance:behavior']});
+  const restored=restoreTask(checkpoint,registry,inventory);
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host observed prior completed effect',reconciled:true});
+  assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
+  f.host.recoveredExecutionChecks=new Map([[recoveredExecutionBinding(restored,'task',f.host),{source:'Already completed',disposition:'completed'}]]);
+  assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
+});
+
+test('Malformed test receipts become stale when a known dependency changes', t => {
+  const f=setup(t);const receipt=f.evidence('malformed-failure',[],{kind:'test',result:'fail',command:'check',cwd:'.'});
+  assert.equal(evidenceValidity(receipt,f.host).status,'unknown');
+  writeFileSync(path.join(f.root,'facts.txt'),'changed input');
+  assert.equal(evidenceValidity(receipt,f.host).status,'stale');
 });

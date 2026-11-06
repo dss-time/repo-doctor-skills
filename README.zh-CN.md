@@ -7,7 +7,7 @@
 
 当前准备发布的稳定版本为 **0.10.0**，包含 33 个 Skill，尚待最终发布门禁。查看[发布说明](docs/RELEASE_NOTES_0.10.0.zh-CN.md)和[验证记录](tests/reports/live-codex-skill-validation-0.10.0.json)。
 
-正式发布的 GPT-6.1 Sol 模型报告覆盖 284 个基础、工作流、模式和权限案例；开发阶段安全与用户项目场景另有完整记录。安装兼容性由 Linux、macOS、Windows 的 Node 18 与当前 LTS CI 检查。
+正式发布的模型报告记录实际使用模型，覆盖 284 个基础、工作流、模式和权限案例；开发阶段安全与用户项目场景另有完整记录。安装兼容性由 Linux、macOS、Windows 的 Node 18 与当前 LTS CI 检查。
 
 ## 30 秒开始
 

@@ -1,6 +1,6 @@
 # Repo Doctor Skills 0.10.0
 
-正式稳定版本，非预发布。Tag 为 `v0.10.0`，日期为 2026-11-05。
+正式稳定版本，非预发布。Tag 为 `v0.10.0`，日期为 2026-11-06。
 
 - 共 33 个 Skill，Repo Doctor 26 个、Productivity Toolkit 5 个、Skill Maintainer 2 个。
 - 删除 6 个 PDF、Word、Excel Skill；requirements-to-spec 合并至 requirements-clarification，spec-to-work-items 合并至 safe-change-plan。旧工作流请改用合并后的入口。

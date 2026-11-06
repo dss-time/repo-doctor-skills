@@ -1,6 +1,6 @@
 # 0.10.0 release preparation
 
-The stable release candidate is prepared on main. Publication is BLOCKED until the final-source live-model and coordination gates pass and npm authentication is restored.
+The stable release candidate is prepared on main. GitHub CI run 42002522164 passed all seven jobs. Publication remains gated on the fixed-source live-model and independent coordination checks. npm authentication has been restored.
 
 ## Passed local checks
 
@@ -22,3 +22,11 @@ The maintainer completed official npm login; account verification subsequently s
 ## Cleanup
 
 Removed the superseded 0.9.0-beta.2 resumable checkpoint, an exact duplicate core report already included in the advanced development report, one redundant short evaluation log, and stale ignored release-candidate build directories. Reproducible tests and immutable historical release evidence remain. Personal local Skill installations are ignored rather than published.
+
+Latest fixed-source progress: core 78 PASS / 87 service-blocked. Coordination simple and workflow cases PASS; independent core review was service-blocked, not accepted. Model service reported recovery around 20:22 Asia/Shanghai on 2026-11-05. GitHub CI passed and npm account authentication is valid. Formal release remains blocked on model evidence.
+
+Capacity recovery: gpt-6-astra is available through the account model list and passed the capacity probe. The final complete core/advanced and coordination suites are being rerun on that single model. Earlier gpt-6.1-sol attempts remain historical; results from different models will not be mixed into the final release corpus.
+
+2026-11-06: Astra resumed to 151/165 with no semantic failures before quota interruption. Its incomplete core audit reproduced a reused-state fallback after host reuse revocation. The fallback is now rejected and a restored-checkpoint regression was added. The complete local suite passes again. A new gpt-6.1-terra run is establishing final-source evidence; earlier source/model reports are not counted as the final passing corpus. npm authentication requires renewal.
+
+Additional review on 2026-11-06 reproduced a recovered-pending replay path and malformed-failure staleness ordering. Recovery now requires a per-import, per-operation host disposition before effectful execution; known dependency changes outrank malformed receipt metadata. New regressions and the complete local suite pass. The candidate is undergoing a new independent core review before final model corpus completion.

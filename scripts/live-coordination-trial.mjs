@@ -1,7 +1,7 @@
 /** Explicit live opt-in trial. Uses configured Codex authentication/model, not mock outputs.
  * Synthetic temporary workspaces only. Core is exercised as an external host adapter.
  */
-import { spawn, spawnSync } from 'node:child_process';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -11,7 +11,7 @@ import { parseTrialEvents, observedSkillLoad, observedNodeTestCount, observedPer
 import { parseYamlSubset } from './validate-yaml-schemas.mjs';
 import { liveEvidenceBinding } from './live-evidence-binding.mjs';
 import { discoverSkillInventory } from './validate-workflows.mjs';
-import { createTask, captureEvidence, operationBinding, digest, taskBinding, nextAction, advance, finishStep, restoreTask, encodeTask, reviewBinding, validationPlan, reopen, recoveryBinding, reconciliationBinding } from '../packs/engineering/repo-doctor/references/workflow-coordination.mjs';
+import { createTask, captureEvidence, operationBinding, digest, taskBinding, nextAction, advance, finishStep, restoreTask, encodeTask, reviewBinding, validationPlan, reopen, recoveredExecutionBinding, recoveryBinding, reconciliationBinding } from '../packs/engineering/repo-doctor/references/workflow-coordination.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const option = (name, fallback) => { const i = process.argv.indexOf(name); return i < 0 ? fallback : process.argv[i + 1]; };
@@ -168,6 +168,7 @@ async function workflow() {
   const resumed = restoreTask(encodeTask(task), registry, inventory);
   task = resumed;
   host.recoveryChecks.set(recoveryBinding(task, host), { source: 'Host verified unchanged fixture after read-only gap phase and no previous write attempt', reconciled: true });
+  host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(task, 'regression-test', host), {source:'Host inspected unchanged test baseline and actual attempt log: no previous test write',disposition:'not_executed'}]]);
   const gate = advance(task, host); if (gate.action !== 'approve') throw new Error(`Gate failed: ${JSON.stringify(gate)}`);
   action = advance(task, host); if (action.action !== 'execute') throw new Error('Test stage not ready');
   beforeTest = tree(root);
@@ -220,6 +221,7 @@ async function workflow() {
 }
 async function reviewCore() {
   const root = fixture('core-review', {
+    'baseline-core.mjs': execFileSync('git', ['show', 'HEAD:packs/engineering/repo-doctor/references/workflow-coordination.mjs'], {cwd:repo,encoding:'utf8'}),
     'core.mjs': readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.mjs'), 'utf8'),
     'requirements.md': readFileSync(path.join(repo, 'packs/engineering/repo-doctor/references/workflow-coordination.en.md'), 'utf8'),
     'contracts.skill.yaml': readFileSync(path.join(repo, 'packs/engineering/repo-doctor/skills/requirements-clarification/skill.yaml'), 'utf8'),
@@ -227,7 +229,7 @@ async function reviewCore() {
     'existing-tests.mjs': readFileSync(path.join(repo, 'scripts/test-workflow-coordination.mjs'), 'utf8')
   }, ['safe-code-review']);
   const before = tree(root);
-  const run = await runCodex('core-review', root, 'Use $safe-code-review in audit mode, loading .agents/skills/safe-code-review/SKILL.md first. Independently audit core.mjs against requirements.md, contracts.md and contracts.skill.yaml; existing-tests.mjs is context only, its imports do not resolve in this isolated copy. Focus on correctness, authorization, evidence validity, state transitions, retries and recovery. Assume host inputs really come from a trusted host, but Task Context may be stale or imported. Check all three review axes separately. Produce evidence-backed actionable findings with line numbers/severity and concrete failure sequences. Read-only: do not modify files. You may run only local non-mutating Node snippets using core.mjs if useful; no dependencies or external access.', 'read-only');
+  const run = await runCodex('core-review', root, 'Use $safe-code-review in audit mode, loading .agents/skills/safe-code-review/SKILL.md first. Independently audit core.mjs against requirements.md, contracts.md and contracts.skill.yaml, using baseline-core.mjs as the actual committed comparison. Repository conformance is scoped to supplied AGENTS.md and contracts; do not infer absent global conventions; existing-tests.mjs is context only, its imports do not resolve in this isolated copy. Focus on correctness, authorization, evidence validity, state transitions, retries and recovery. Assume host inputs really come from a trusted host, but Task Context may be stale or imported. Check all three review axes separately. Produce evidence-backed actionable findings with line numbers/severity and concrete failure sequences. Read-only: do not modify files. You may run only local non-mutating Node snippets using core.mjs if useful; no dependencies or external access.', 'read-only');
   return { case: 'core-review', result: run.completed && !run.permission_violations.length && reviewAccepted(run.final_answer) && loaded(run, 'safe-code-review') && !changed(before, tree(root)).length ? 'REVIEW_COMPLETED' : run.completed ? 'FAIL' : 'BLOCKED',
     changed_files: changed(before, tree(root)), run };
 }

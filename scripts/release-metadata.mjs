@@ -32,7 +32,7 @@ const maturityRank = new Map([
 export const releaseContract = Object.freeze({
   projectVersion: "0.10.0",
   stableInstallVersion: "0.10.0",
-  releaseDate: "2026-11-05",
+  releaseDate: "2026-11-06",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,

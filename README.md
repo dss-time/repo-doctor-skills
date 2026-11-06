@@ -10,7 +10,7 @@ Focused Skills for debugging, code review, fixes, and tests.
 
 The prepared stable release is **0.10.0** with 33 Skills; final publication is pending release gates. See [release notes](docs/RELEASE_NOTES_0.10.0.md) and [current validation](tests/reports/live-codex-skill-validation-0.10.0.json).
 
-The final release Live-model report covers 284 scored core/workflow/mode/permission cases on GPT-6.1 Sol. Additional development security and user-workspace fixtures are recorded separately. Installation compatibility is checked by CI on Linux, macOS and Windows with Node 18 and current LTS.
+The final release Live-model report covers 284 scored core/workflow/mode/permission cases on the model recorded in the final report. Additional development security and user-workspace fixtures are recorded separately. Installation compatibility is checked by CI on Linux, macOS and Windows with Node 18 and current LTS.
 
 ## Start in 30 seconds
 
