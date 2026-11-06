@@ -13,7 +13,25 @@ import {
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const model = collectCatalogModel(root);
 
-assert.equal(model.projectVersion, "0.10.0", "expected prepared project version 0.10.0");
+for (const filename of ["README.md", "README.zh-CN.md"]) {
+  const content = readFileSync(path.join(root, filename), "utf8");
+  assert.doesNotMatch(content, /prepared stable release|publication is pending|准备发布的稳定版本|尚待最终发布门禁/,
+    `${filename} must describe the completed stable publication`);
+}
+for (const filename of ["docs/WORKFLOW_COORDINATION.md", "docs/WORKFLOW_COORDINATION.zh-CN.md"]) {
+  const content = readFileSync(path.join(root, filename), "utf8");
+  assert.doesNotMatch(content, /Unpublished 0\.9\.0-beta\.1|0\.9\.0-beta\.1 候选，尚未发布/,
+    `${filename} must identify the shipped coordination implementation`);
+}
+for (const filename of ["docs/WORKFLOW_COOKBOOK.md", "docs/WORKFLOW_COOKBOOK.zh-CN.md"]) {
+  const content = readFileSync(path.join(root, filename), "utf8");
+  assert.doesNotMatch(content, /Document Data Doctor.*(?:Basic Skills|Basic Skill)/,
+    `${filename} must not advertise removed Basic Skills`);
+  assert.doesNotMatch(content, /every write or high-risk gate still requires its own authorization|每个写入或高风险门禁仍需独立授权|always need separate authorization|始终需要独立授权/,
+    `${filename} must allow reuse of valid scoped authorization`);
+}
+
+assert.equal(model.projectVersion, "0.10.1", "expected prepared project version 0.10.1");
 assert.equal(model.counts.packs, 3, "expected three active Packs");
 assert.equal(model.counts.skills, 33, "expected 33 active Skills");
 assert.equal(model.counts.pluginSkills, 33, "expected 33 plugin/ChatGPT-distributed Skills");

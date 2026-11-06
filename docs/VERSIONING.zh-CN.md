@@ -19,6 +19,8 @@ Repo Doctor Skills 将项目发布版本、组件版本和成熟度状态分开�
 - 保证 tag、GitHub Release 名称、package 版本、CHANGELOG 版本和发布说明一致；
 - 只有外部发布动作真正成功后，才能称为“已发布”。
 
+相邻稳定补丁版本仅修改文档时，可在完整 Skill 源码与运行内容、安装器和 CLI 字节、除版本外的包元数据及原评测摘要完全匹配的前提下复用原证据。原报告保留原版本，相关输入改变时需重新评测。0.10.1 对应记录为 tests/reports/release-promotion-0.10.1.json。
+
 ## 2. 组件版本
 
 Pack、插件和 Skill 使用独立于项目发布版本的组件版本：

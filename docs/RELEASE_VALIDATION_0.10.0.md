@@ -1,6 +1,6 @@
 # 0.10.0 release validation
 
-Prepared stable version: 0.10.0. Release date: 2026-11-06. The final full model corpus and actual coordination trial pass. Publication remains gated on CI for the final evidence commit.
+Prepared stable version: 0.10.0. Release date: 2026-11-06. The final full model corpus and actual coordination trial pass. GitHub and npm publication completed on 2026-11-06. The main and tag CI runs passed all seven jobs. Remote verification passed for 36 GitHub assets, npm latest=0.10.0 at publication, tarball SHA512 equality, isolated 33-Skill installation and same-name replacement.
 
 ## Local checks
 

@@ -30,8 +30,8 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.10.0",
-  stableInstallVersion: "0.10.0",
+  projectVersion: "0.10.1",
+  stableInstallVersion: "0.10.1",
   releaseDate: "2026-11-06",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
@@ -85,8 +85,8 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.10.0.md",
-  promotionRecord: null,
+  releaseDocument: "docs/RELEASE_NOTES_0.10.1.md",
+  promotionRecord: "tests/reports/release-promotion-0.10.1.json",
   coordinationReport: "tests/reports/coordination-release-0.10.0.json",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
@@ -564,12 +564,20 @@ export function promotionEvidenceVersion(root, contract, errors) {
   const record = readJson(root, contract.promotionRecord, errors);
   if (!record) return contract.projectVersion;
   const fail = message => errors.push(`${contract.promotionRecord}: ${message}`);
+  const sourceVersion = version.match(semverPattern);
+  const targetVersion = contract.projectVersion.match(semverPattern);
+  const prereleasePromotion = record.scope === "equivalent-prerelease-promotion"
+    && version.includes("-") && version.split("-")[0] === contract.projectVersion;
+  const documentationPatch = record.scope === "equivalent-documentation-patch"
+    && sourceVersion && targetVersion && !sourceVersion[4] && !targetVersion[4]
+    && sourceVersion[1] === targetVersion[1] && sourceVersion[2] === targetVersion[2]
+    && Number(targetVersion[3]) === Number(sourceVersion[3]) + 1;
   if (record.schema_version !== 1 || contract.releaseChannel !== "stable"
       || record.target_version !== contract.projectVersion || record.source_version !== version
-      || !version.includes("-") || version.split("-")[0] !== contract.projectVersion
+      || !(prereleasePromotion || documentationPatch)
       || record.source_tag !== `v${version}` || !/^[0-9a-f]{40}$/.test(record.source_commit ?? "")
-      || record.scope !== "equivalent-prerelease-promotion" || !record.authorization) {
-    fail("invalid version-scoped prerelease promotion");
+      || !record.authorization) {
+    fail("invalid version-scoped evidence promotion");
   }
   try { assertLiveEvidenceBinding(record.content_binding, liveEvidenceBinding(root)); }
   catch (error) { fail(error.message); }

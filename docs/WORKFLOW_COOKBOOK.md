@@ -4,7 +4,7 @@
 
 This guide starts with real tasks instead of assuming that you already know every Skill name. Each workflow explains the sequence, why each Skill belongs there, copyable prompts, permission transitions, stop conditions, and safe handoffs.
 
-These sequences are recipes, not automatic pipelines. Use one primary Skill for a normal request. Continue to another step only when the user explicitly invokes it or asks for an end-to-end flow; every write or high-risk gate still requires its own authorization. See [Execution Modes](guides/execution-modes.md).
+Use one primary Skill for a normal request. For an explicitly requested end-to-end flow, continue within the existing authorization and each Skill’s capability limits. At each gate, verify that the current operation is covered by that authorization. Ask for additional authorization only when the scope expands, authority is missing, or a separate restriction applies. Automated progression depends on the host. See [Execution Modes](guides/execution-modes.md).
 
 For the purpose of an individual Skill, open the [Complete Skill Catalog](SKILL_CATALOG.md). If you have not installed or built the project yet, start with the [User Manual](USER_MANUAL.md).
 
@@ -18,7 +18,6 @@ The prompts in this guide say “Use skill-name...” so they can be copied acro
 - ChatGPT single-Skill ZIPs have plugin prefixes: Repo Doctor uses **rd-***, Productivity Toolkit uses **pt-***, and Skill Maintainer uses **sm-***. For example, the canonical **repo-onboarding** Skill is published as **rd-repo-onboarding**. After upload, use the Skill selection mechanism shown by the current interface or ask in natural language; do not assume every ChatGPT surface supports **$**.
 - When using a ChatGPT plugin, supported surfaces can select a plugin or bundled Skill through **@**.
 - Invocation on Claude Code, Cursor, Qwen, Kimi, and the generic Prompt Pack depends on the host. If there is no native selector, keep the canonical name in the prompt and describe the task in natural language.
-- The three Document Data Doctor Basic Skills are included in regular cross-platform outputs, but they have no standalone plugin or ChatGPT ZIP.
 
 Platform names can vary. The canonical slug, responsibility boundary, and handoff content in a workflow should not.
 
@@ -31,7 +30,7 @@ Platform names can vary. The canonical slug, responsibility boundary, and handof
 | **[R+N]** | Read-only with network access | Uses sources only when the host allows it; without network access, findings must be marked unverified. |
 | **[A]** | Advice or gate decision | Produces a specification, plan, action list, or GO/NO-GO decision without implementation. |
 | **[W]** | Controlled write | Writes only within the Skill contract and the scope explicitly authorized by the user. |
-| **[GATE]** | Explicit approval point | The next phase moves from analysis to writing, execution, or a release-related action, so scope must be confirmed first. |
+| **[GATE]** | Authorization check | Verify that existing authorization covers the operation and satisfies Skill and host limits. Request additional authorization only for an uncovered action or separately restricted operation. |
 
 These labels summarize canonical metadata and Skill contracts; they do not grant host permissions. Host controls for files, commands, and network access still apply. Every active Skill in this repository disallows destructive actions.
 
@@ -596,7 +595,7 @@ Potential future work may evaluate large-project decision maps, explicitly autho
 - **Out-of-scope finding:** Preserve and report the evidence; do not fix it opportunistically.
 - **Existing worktree changes:** Identify and protect them first; stop if the work cannot be isolated safely.
 - **Failed validation:** Preserve the failure and return to the smallest responsible step; do not substitute “looks fine” for a passing result.
-- **Release-related request:** **release-readiness-check** provides a gate decision only. Release, version, tag, commit, and push actions always need separate authorization.
+- **Release-related request:** **release-readiness-check** provides a gate decision only. Release, version, tag, commit, and push actions require explicit authorization for those operations, which can be reused while valid.
 
 ## Next Steps
 

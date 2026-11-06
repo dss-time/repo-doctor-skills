@@ -1,6 +1,6 @@
-# 工作流协同与增量执行（第一版）
+# 工作流协同与增量执行
 
-状态：0.9.0-beta.1 候选，尚未发布。串行协同、结构化交接和确定性证据检查已实现。限定 Codex CLI 串行宿主适配已通过当前 Beta 验收；通用多 Skill 自动执行、子 Agent 调度、跨会话自动唤醒未实现，也未据此作兼容性承诺。
+串行协同、结构化交接和确定性证据检查已随稳定版 0.10.0 发布，采用 Task Context v2。Codex CLI 单点修改、协调恢复试验及独立核心审查已通过。当前文档补丁沿用这些运行组件，实际验证范围为 Codex CLI 串行宿主适配。
 
 ## 现状与增量设计
 
@@ -13,7 +13,7 @@
 | live-evidence-binding 与 live-evidence-checkpoint | 面向模型评估、整树绑定，不能替代开发任务局部验证 | 沿用内容绑定/不自动重试语义失败的原则，新增任务依赖范围绑定 |
 | session-handoff | 摘要本身不能证明恢复时仍有效 | JSON 续接、当前来源/环境/授权重新核验 |
 
-没有新增 Skill、Router、外部依赖或后台编排服务。沿用 Node.js ESM；不顺带迁移 TypeScript。Registry 从版本 3 升到 4，原有 13 条工作流和 41 个 active Skills 保留。普通开发流程的发布阶段改成有条件适用，明确的 release-preparation 发布检查仍为必需；Bug 工作流的回归测试编写允许在已有充分测试时不适用，但目标行为验证仍必须提供。
+协调模块采用 Node.js ESM。当前 Registry 为版本 6，定义 13 条工作流，分发包含 33 个 active Skills。普通开发流程的发布阶段改成有条件适用，明确的 release-preparation 发布检查仍为必需；Bug 工作流的回归测试编写允许在已有充分测试时不适用，但目标行为验证仍必须提供。
 
 ## 模块与权威
 
@@ -126,8 +126,8 @@ D/E/G 中的专家语义判断使用明确的宿主 fixture，不声称真实模
 | Token | 历史版本有独立评估，但不适用本改动 | 未测 | 不报告节省比例 |
 | 验证覆盖 | 原有工作流/构建/权限契约 | 保留并增加 A—G、失效、篡改、重试、路径与审查反例 | 详见本次本地验证记录；不是业务代码覆盖率 |
 
-下一步真实比较需固定任务、起始代码、模型、reasoning、工具和授权，对同一任务分别运行两版，保存命令/结果/Token 原始记录，先比较质量与安全，再比较成本。当前不调用付费模型服务、不发布新版本。
+如需比较两版效率，应固定任务、起始代码、模型、reasoning、工具和授权，对同一任务分别运行两版，保存命令、结果和 Token 原始记录，先比较质量与安全，再比较成本。
 
-本次运行的完整命令、结果及未执行检查见[本地验证记录](WORKFLOW_COORDINATION_VALIDATION.md)。
+早期开发阶段的命令和结果见[历史本地验证记录](WORKFLOW_COORDINATION_VALIDATION.md)。当前运行组件的发布证据见 [0.10.0 协调报告](../tests/reports/coordination-release-0.10.0.json)和[发布验证记录](RELEASE_VALIDATION_0.10.0.md)。
 
-Task Context v2 新增当前范围/正文检查、每次导入的恢复核验与具体尝试核验。完整接入以[中文协议](../packs/engineering/repo-doctor/references/workflow-coordination.zh-CN.md)为准；当前候选门禁见[验证记录](WORKFLOW_COORDINATION_BETA_VALIDATION.md)。
+Task Context v2 新增当前范围/正文检查、每次导入的恢复核验与具体尝试核验。完整接入以[中文协议](../packs/engineering/repo-doctor/references/workflow-coordination.zh-CN.md)为准；早期 Beta 验收保留在[历史验证记录](WORKFLOW_COORDINATION_BETA_VALIDATION.md)。

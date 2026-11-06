@@ -8,9 +8,9 @@
 Focused Skills for debugging, code review, fixes, and tests.
 
 
-The prepared stable release is **0.10.0** with 33 Skills; final publication is pending release gates. See [release notes](docs/RELEASE_NOTES_0.10.0.md) and [current validation](tests/reports/live-codex-skill-validation-0.10.0.json).
+The current stable release is **0.10.1** with 33 Skills, published on GitHub and npm. The npm `latest` tag points to `0.10.1`. [GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.10.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.10.1) · [Release notes](docs/RELEASE_NOTES_0.10.1.md).
 
-The final release Live-model report covers 284 scored core/workflow/mode/permission cases on the model recorded in the final report. Additional development security and user-workspace fixtures are recorded separately. Installation compatibility is checked by CI on Linux, macOS and Windows with Node 18 and current LTS.
+Version 0.10.1 is a documentation patch that reuses the source-bound 0.10.0 runtime evidence. The 0.10.0 release validation passed **284/284** core, workflow, mode and permission cases on `gpt-6.1-terra`. Actual single-edit and coordinated recovery trials also passed. Installation compatibility passed CI on Linux, macOS and Windows with Node 18 and current LTS. [Final model report](tests/reports/live-codex-skill-validation-0.10.0.json) · [Coordination report](tests/reports/coordination-release-0.10.0.json).
 
 ## Start in 30 seconds
 
@@ -92,23 +92,23 @@ npx repo-doctor-skills install --language en
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. Reinstalling replaces selected same-name Skills in the target directory, including local edits and old resources. Identical content is skipped. The bundled installer supports Node.js 18 and later. CI covers installation on Linux, macOS and Windows using Node 18 and current LTS, with full repository checks on Linux. The external skills CLI has its own Node requirements.
 
 
-The stable npm installer replaces selected same-name Skill directories by default.
+## v0.10.1 stable release
 
-## v0.10.0 stable release
+Version 0.10.1 contains 33 Skills (26 in Repo Doctor) and 33 ChatGPT ZIPs. Six PDF/Word/Excel Skills have been removed and two requirements/planning pairs have been consolidated. Final Live-model PASS evidence is bound to the release source. [Release notes](docs/RELEASE_NOTES_0.10.1.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-Version 0.10.0 contains 33 Skills (26 in Repo Doctor) and 33 ChatGPT ZIPs. Six PDF/Word/Excel Skills have been removed and two requirements/planning pairs have been consolidated. Final Live-model PASS evidence is bound to the release source. [Release notes](docs/RELEASE_NOTES_0.10.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
+When upgrading, use `requirements-clarification` for the former `requirements-to-spec` tasks and `safe-change-plan` for the former `spec-to-work-items` tasks. Previously installed directories for removed or merged Skills require manual cleanup after reviewing any local customizations. See the [migration notes](docs/RELEASE_NOTES_0.10.1.md#existing-installations).
 
-Pin the GitHub plugin to `v0.10.0`:
+Pin the GitHub plugin to `v0.10.1`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 Install the exact npm version (seven recommended Skills, or all 33):
 
 ```bash
-npx repo-doctor-skills@0.10.0 install --agent codex
-npx repo-doctor-skills@0.10.0 install --preset full --agent codex
+npx repo-doctor-skills@0.10.1 install --agent codex
+npx repo-doctor-skills@0.10.1 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.
@@ -127,6 +127,8 @@ Choose one installation method per agent. The official skills CLI installs from 
 
 Engineering Skills select checks per language/runtime and component. Pure JS/TS does not inherit C/C++ memory-management requirements; native boundaries are assessed separately. Shared untrusted-input rules preserve execution scope. See [security evaluation and limitations](evals/security/README.md).
 
-P1 workflow updates reuse existing authorization and valid acceptance evidence. Execution boundaries are shared; language/runtime profiles load only for relevant components. Explicit user-directed batch verification records `verification_deferred` and pending checks until the agreed validation point. Security evaluation adds contextual injection inputs, accepted evidence locations, model binding and atomic checkpoints with separate semantic acceptance. Current validation evidence is recorded in the [unified validation report](tests/reports/unified-validation-2026-11-05/README.md).
+Workflows reuse existing authorization within its scope and valid acceptance evidence. Language/runtime profiles load for relevant components. When the user explicitly requests batch verification, Skills record `verification_deferred` and pending checks until the agreed validation point.
 
-User-project safety guidance now covers preserving authorization/business behavior, existing-data update semantics, actual test/build isolation, and preexisting/concurrent edits. Relevant implementation and review Skills load applicable rules; unresolved risks block affected operations. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md). Current validation evidence is recorded in the [unified validation report](tests/reports/unified-validation-2026-11-05/README.md).
+User-project safety guidance covers preserving authorization/business behavior, existing-data update semantics, actual test/build isolation, and preexisting/concurrent edits. Relevant implementation and review Skills load applicable rules. Unresolved risks block affected operations. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md).
+
+The [0.10.1 evidence reuse record](tests/reports/release-promotion-0.10.1.json) binds the source reports, complete Skill content and installer runtime. Evaluation scope and limits are described in the [0.10.0 validation record](docs/RELEASE_VALIDATION_0.10.0.md). Earlier security and user-workspace evaluations are retained as [historical development evidence](tests/reports/unified-validation-2026-11-05/README.md).

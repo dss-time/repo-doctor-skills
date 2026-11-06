@@ -1,6 +1,6 @@
 # Repo Doctor Skills 用户手册
 
-> 当前源码：33 个 Skill / Repo Doctor 26 个。GitHub v0.10.0 包含新增功能实施入口；npm 0.10.0 支持推荐的 7 个及全部 33 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
+> 当前源码：33 个 Skill / Repo Doctor 26 个。GitHub v0.10.1 包含新增功能实施入口；npm 0.10.1 支持推荐的 7 个及全部 33 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
 
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 
@@ -53,7 +53,7 @@ npx repo-doctor-skills install
 npx repo-doctor-skills install --preset full
 ```
 
-当前源码共 33 个 active Skill，其中 Repo Doctor 为 26 个，三个插件合计 33 个。PDF、Word、Excel 相关的 6 个 Skill 已删除。npm 0.10.0 Full 安装包含 33 个；本地安装当前源码也可运行 `node scripts/install.mjs --preset full`。
+当前源码共 33 个 active Skill，其中 Repo Doctor 为 26 个，三个插件合计 33 个。PDF、Word、Excel 相关的 6 个 Skill 已删除。npm 0.10.1 Full 安装包含 33 个；本地安装当前源码也可运行 `node scripts/install.mjs --preset full`。
 
 ### Individual
 
@@ -140,10 +140,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.10.0`，选择该版本时使用：
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.10.1`，选择该版本时使用：
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.1
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

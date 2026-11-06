@@ -3,7 +3,7 @@
 Repo Doctor Skills keeps release versions, component versions, and maturity statuses separate. A matching number in two places is not evidence that they share a lifecycle.
 
 
-The next prepared project release is stable 0.10.0. The published 0.9.0 release was promoted from 0.9.0-beta.2. Project channels and component maturity are managed separately.
+The current documentation patch is 0.10.1, based on the published 0.10.0 runtime. The published 0.9.0 release was promoted from 0.9.0-beta.2. Project channels and component maturity are managed separately.
 
 ## 1. Project release version
 
@@ -18,6 +18,8 @@ For future releases:
 - use the tag format `v<project-version>`;
 - require the tag, GitHub Release name, package version, changelog version, and release notes to agree;
 - treat a release as published only after the external release action succeeds.
+
+An adjacent stable documentation patch may reuse source evidence when the complete Skill source/runtime, installer and CLI bytes, package manifest except version, and original evidence digests match. The source reports retain their original version. Changes to these inputs require fresh evaluation. The 0.10.1 record is tests/reports/release-promotion-0.10.1.json.
 
 ## 2. Component versions
 

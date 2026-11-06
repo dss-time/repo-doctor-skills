@@ -5,9 +5,9 @@
 用职责明确的 Skill 排查 Bug、审查代码、完成修复和测试。
 
 
-当前准备发布的稳定版本为 **0.10.0**，包含 33 个 Skill，尚待最终发布门禁。查看[发布说明](docs/RELEASE_NOTES_0.10.0.zh-CN.md)和[验证记录](tests/reports/live-codex-skill-validation-0.10.0.json)。
+当前稳定版本为 **0.10.1**，包含 33 个 Skill，已发布至 GitHub 和 npm。npm 的 `latest` 标签已指向 `0.10.1`。[GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.10.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.10.1) · [发布说明](docs/RELEASE_NOTES_0.10.1.zh-CN.md)。
 
-正式发布的模型报告记录实际使用模型，覆盖 284 个基础、工作流、模式和权限案例；开发阶段安全与用户项目场景另有完整记录。安装兼容性由 Linux、macOS、Windows 的 Node 18 与当前 LTS CI 检查。
+0.10.1 为文档补丁，复用与源码绑定的 0.10.0 运行组件证据。0.10.0 发布评测使用 `gpt-6.1-terra`，基础、工作流、模式和权限案例 **284/284 全部通过**。实际单点修改和协调恢复试验也已通过。安装兼容性已通过 Linux、macOS、Windows 的 Node 18 与当前 LTS CI 检查。[最终模型报告](tests/reports/live-codex-skill-validation-0.10.0.json) · [协调试验报告](tests/reports/coordination-release-0.10.0.json)。
 
 ## 30 秒开始
 
@@ -89,23 +89,23 @@ npx repo-doctor-skills install --language zh-CN
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。重复安装会替换目标目录中选中的同名 Skill，包括本地修改和旧资源；内容相同则跳过。自带安装器支持 Node.js 18 及以上版本。CI 使用 Node 18 和当前 LTS 检查 Linux、macOS、Windows 安装，完整仓库检查运行于 Linux。外部 skills CLI 的 Node 要求由其自身版本决定。
 
 
-稳定版 npm 安装器默认原位替换选中的同名 Skill 目录。
+## v0.10.1 正式版
 
-## v0.10.0 正式版
+v0.10.1 包含 33 个 Skill（Repo Doctor 26 个）和 33 个 ChatGPT ZIP。删除了 6 个 PDF、Word、Excel Skill，并合并两组需求/规划入口。正式 Live-model PASS 证据绑定发布源码。[发布说明](docs/RELEASE_NOTES_0.10.1.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
 
-v0.10.0 包含 33 个 Skill（Repo Doctor 26 个）和 33 个 ChatGPT ZIP。删除了 6 个 PDF、Word、Excel Skill，并合并两组需求/规划入口。正式 Live-model PASS 证据绑定发布源码。[发布说明](docs/RELEASE_NOTES_0.10.0.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
+升级时，原 `requirements-to-spec` 的任务改用 `requirements-clarification`，原 `spec-to-work-items` 的任务改用 `safe-change-plan`。已删除或合并的 Skill 如曾安装，其旧目录需要检查本地自定义内容后手动清理。详见[升级说明](docs/RELEASE_NOTES_0.10.1.zh-CN.md#已有安装升级)。
 
-将 GitHub 插件固定到 `v0.10.0`：
+将 GitHub 插件固定到 `v0.10.1`：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 安装指定 npm 版本（默认 7 个常用 Skill，也可安装全部 33 个）：
 
 ```bash
-npx repo-doctor-skills@0.10.0 install --agent codex
-npx repo-doctor-skills@0.10.0 install --preset full --agent codex
+npx repo-doctor-skills@0.10.1 install --agent codex
+npx repo-doctor-skills@0.10.1 install --preset full --agent codex
 ```
 
 同一 Agent 选择一种安装方式。官方 skills CLI 从公开 GitHub 源码安装。
@@ -124,6 +124,8 @@ npx repo-doctor-skills@0.10.0 install --preset full --agent codex
 
 工程 Skill 按实际语言、运行时和组件选择检查。纯 JS/TS 不套用 C/C++ 内存管理限制，原生边界单独评估；共享的不可信输入规则约束执行范围。详见[安全评测及局限](evals/security/README.md)。
 
-P1 工作流调整支持已有授权和有效验收证据复用。执行边界为公共规则，语言与运行时规则按相关组件加载。用户明确要求最后统一测试时，记录 `verification_deferred` 和待验证清单，到约定节点统一验证。安全评测新增上下文注入组、可接受证据位置、模型绑定及原子检查点，语义验收另行记录。当前统一验证结果见[验证报告](tests/reports/unified-validation-2026-11-05/README.md)。
+工作流在既有授权范围内复用授权及有效验收证据，语言与运行时规则按相关组件加载。用户明确要求最后统一测试时，记录 `verification_deferred` 和待验证清单，到约定节点统一验证。
 
-用户项目安全规则已补充四类适用检查：保留原有权限与业务行为，核对已有数据更新语义，确认测试/构建实际环境隔离，以及保护已有和并发修改。相关实施与审查 Skill 按任务加载规则，未确认的风险只阻塞受影响操作。详见[用户项目修改与验证安全](packs/engineering/repo-doctor/references/user-workspace-safety.zh-CN.md)。本轮统一验证结果见[验证报告](tests/reports/unified-validation-2026-11-05/README.md)。
+用户项目安全规则涵盖保留原有权限与业务行为、核对已有数据更新语义、确认测试/构建实际环境隔离，以及保护已有和并发修改。相关实施与审查 Skill 按任务加载规则，未确认的风险只阻塞受影响操作。详见[用户项目修改与验证安全](packs/engineering/repo-doctor/references/user-workspace-safety.zh-CN.md)。
+
+[0.10.1 证据复用记录](tests/reports/release-promotion-0.10.1.json)绑定原报告、完整 Skill 内容和安装器运行文件。评测范围及局限见 [0.10.0 验证记录](docs/RELEASE_VALIDATION_0.10.0.md)。此前的安全与用户项目评测保留为[历史开发阶段记录](tests/reports/unified-validation-2026-11-05/README.md)。

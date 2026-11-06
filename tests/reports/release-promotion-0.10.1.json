@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "target_version": "0.10.1",
+  "source_version": "0.10.0",
+  "source_tag": "v0.10.0",
+  "source_commit": "e3aa22fbc5dc2a84f9cee529fc5453e5ef4957b2",
+  "authorization": "Maintainer requested correcting the four documentation issues and updating npm on 2026-11-06. This adjacent documentation patch reuses unchanged runtime evidence.",
+  "scope": "equivalent-documentation-patch",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "4d8a2819281664e29c721389e575541eca91fc15b55f8965d9433d906de5159b",
+    "runtime_sha256": "257f061d539a9574b8d09c42db747ab9af018ab7539870ade762d269b3f34f4c"
+  },
+  "package_manifest_without_version": {
+    "name": "repo-doctor-skills",
+    "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, and safe agent workflows.",
+    "type": "module",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/dss-time/repo-doctor-skills.git"
+    },
+    "homepage": "https://github.com/dss-time/repo-doctor-skills#readme",
+    "bugs": {
+      "url": "https://github.com/dss-time/repo-doctor-skills/issues"
+    },
+    "keywords": [
+      "ai",
+      "agent-skills",
+      "skills",
+      "codex",
+      "claude-code",
+      "workbuddy",
+      "cursor",
+      "qwen",
+      "kimi",
+      "chatgpt",
+      "code-review",
+      "debugging",
+      "root-cause-analysis",
+      "test-driven-development",
+      "requirements-analysis",
+      "feature-implementation",
+      "documentation",
+      "report-writing",
+      "skill-authoring",
+      "bilingual",
+      "workflow",
+      "developer-tools"
+    ],
+    "bin": {
+      "repo-doctor-skills": "bin/repo-doctor-skills.mjs"
+    },
+    "files": [
+      "bin/",
+      "scripts/install.mjs",
+      "package-assets/",
+      "README.md",
+      "LICENSE"
+    ],
+    "publishConfig": {
+      "access": "public",
+      "registry": "https://registry.npmjs.org/"
+    },
+    "scripts": {
+      "validate:schema": "node scripts/validate-yaml-schemas.mjs",
+      "validate:skills": "node scripts/validate-skills.mjs",
+      "workflow:validate": "node scripts/validate-workflows.mjs",
+      "validate": "npm run validate:schema && npm run validate:skills && npm run workflow:validate",
+      "test:activation": "node scripts/test-skill-activation.mjs",
+      "test:performance": "node scripts/test-performance-contracts.mjs",
+      "benchmark:performance": "node scripts/live-performance-benchmark.mjs",
+      "test:ci": "node scripts/test-ci-workflow.mjs",
+      "test:workflow": "node scripts/test-repo-doctor-workflows.mjs && node scripts/test-workflow-registry.mjs && node scripts/test-golden-workflows.mjs && npm run test:coordination",
+      "test:maintainer": "node scripts/test-maintainer-tools.mjs",
+      "test:build-integrity": "node scripts/test-build-integrity.mjs",
+      "test:skills-sh": "node scripts/test-skills-sh-compatibility.mjs",
+      "test:plugin-sync": "node scripts/test-repo-doctor-sync.mjs",
+      "test:docs": "node scripts/test-user-docs.mjs",
+      "test:release": "node scripts/test-release-metadata.mjs && node scripts/test-verify-release-assets.mjs",
+      "test:eval": "node scripts/test-eval-tools.mjs && node scripts/test-security-eval.mjs",
+      "test:doctor": "node scripts/test-doctor.mjs",
+      "test:ux": "node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs",
+      "test:npm": "node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs",
+      "test:core": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:skills-sh && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor",
+      "test": "npm run test:core && npm run test:ux && npm run test:npm",
+      "build": "node scripts/build-skills.mjs && node scripts/sync-productivity-toolkit-plugin.mjs && node scripts/sync-skill-maintainer-plugin.mjs && node scripts/build-chatgpt-skills.mjs",
+      "build:chatgpt": "node scripts/build-chatgpt-skills.mjs",
+      "sync:plugin": "node scripts/sync-repo-doctor-plugin.mjs",
+      "sync:productivity": "node scripts/sync-productivity-toolkit-plugin.mjs",
+      "sync:maintainer": "node scripts/sync-skill-maintainer-plugin.mjs",
+      "quality:check": "node scripts/check-skill-quality.mjs --check-dist",
+      "docs:generate": "node scripts/generate-skill-catalog.mjs",
+      "docs:check": "node scripts/check-user-docs.mjs",
+      "release:check": "node scripts/release-metadata.mjs --check",
+      "release:inventory": "node scripts/release-validation-reports.mjs inventory",
+      "release:bilingual": "node scripts/release-validation-reports.mjs bilingual",
+      "release:artifacts": "node scripts/release-validation-reports.mjs artifacts",
+      "release:reports": "node scripts/release-validation-reports.mjs all",
+      "release:verify-remote": "node scripts/verify-release-assets.mjs",
+      "eval:prepare": "node scripts/eval-prepare.mjs",
+      "eval:validate": "node scripts/eval-validate.mjs",
+      "eval:report": "node scripts/eval-report.mjs",
+      "doctor": "node scripts/doctor.mjs",
+      "install:skills": "node scripts/install.mjs",
+      "prepack": "node scripts/prepare-npm-package.mjs",
+      "create:skill": "node scripts/create-skill.mjs",
+      "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs",
+      "eval:security": "node scripts/live-security-eval.mjs"
+    },
+    "engines": {
+      "node": ">=18"
+    },
+    "devDependencies": {
+      "yaml": "^2.8.1"
+    }
+  },
+  "runtime_files": {
+    "bin/repo-doctor-skills.mjs": "e3d9f5b58ba08edc628a9f9c6ba90f9f991b4003c3c5cd0253d228bd36c7b414",
+    "scripts/install.mjs": "5e2a9c9922a4beea01dfb6703f4462bc1fe00422b5c860e4e38eed78404f0b71"
+  },
+  "evidence_reports": {
+    "tests/reports/live-codex-skill-validation-0.10.0.json": "7e52c7e78efd68cb6fa8dbc441c464e52aa3cdeba82c194ae124cb0ebc331cb1",
+    "tests/reports/coordination-release-0.10.0.json": "c26ab859e945b33136dd4a15a21adabe505a934228c43a1efe95d5d04f66d81f"
+  }
+}

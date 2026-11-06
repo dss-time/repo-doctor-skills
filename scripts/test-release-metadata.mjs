@@ -248,7 +248,7 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.10.0");
+assert.equal(releaseContract.projectVersion, "0.10.1");
 assert.equal(releaseContract.releaseChannel, "stable");
 assert.equal(releaseContract.liveModelStatus, "PASS");
 assert.equal(releaseContract.liveModelWaiver, null);
@@ -300,6 +300,37 @@ try {
   writeFileSync(recordPath, JSON.stringify(invalidRecord));
   assert.ok(checkPromotion().some(error => error.includes("invalid version-scoped")));
   writeFileSync(recordPath, originalRecord);
+
+  const patchContract = { ...promotionContract, projectVersion: "0.10.1", liveModelEvidenceVersion: "0.10.0" };
+  const patchRecord = {
+    ...JSON.parse(originalRecord), target_version: "0.10.1", source_version: "0.10.0",
+    source_tag: "v0.10.0", scope: "equivalent-documentation-patch",
+  };
+  writeFileSync(recordPath, JSON.stringify(patchRecord));
+  const checkPatch = (contract = patchContract) => {
+    const errors = [];
+    promotionEvidenceVersion(promotionRoot, contract, errors);
+    return errors;
+  };
+  assert.deepEqual(checkPatch(), [], "documentation patch reuses equivalent source evidence");
+  for (const target of ["0.10.0", "0.10.2", "0.11.0", "0.10.1-beta.1"]) {
+    writeFileSync(recordPath, JSON.stringify({ ...patchRecord, target_version: target }));
+    assert.ok(checkPatch({ ...patchContract, projectVersion: target }).length > 0,
+      `${target} cannot use the adjacent stable documentation-patch path`);
+  }
+  writeFileSync(recordPath, JSON.stringify(patchRecord));
+  for (const filename of ["scripts/install.mjs", "bin/repo-doctor-skills.mjs", patchContract.liveModelReport,
+    patchContract.coordinationReport, "packs/engineering/repo-doctor/skills/repo-onboarding/instructions.en.md",
+    "skills/repo-onboarding/SKILL.md"]) {
+    const absolute = path.join(promotionRoot, filename);
+    const original = readFileSync(absolute);
+    writeFileSync(absolute, Buffer.concat([original, Buffer.from("\nchanged\n")]));
+    assert.ok(checkPatch().length > 0, `${filename} changes must block documentation-patch evidence reuse`);
+    writeFileSync(absolute, original);
+  }
+  writeFileSync(packagePath, JSON.stringify(changedPackage));
+  assert.ok(checkPatch().some(error => error.includes("manifest changed")));
+  writeFileSync(packagePath, originalPackage);
   rmSync(recordPath);
   assert.ok(checkPromotion().length > 0, "promotion requires its explicit record");
 } finally {
