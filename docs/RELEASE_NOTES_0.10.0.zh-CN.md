@@ -9,7 +9,7 @@
 - 加强原有权限/业务行为、已有数据、测试/构建隔离及用户已有/并发修改的保护。
 - 完善凭据扫描、真实模型输出与工具尝试记录、断点恢复和报告绑定。保留有回归价值的测试，清理已失效检查点及重复报告。
 
-发布前须完成绑定最终源码和分发文件的 Live-model PASS 评测。此前开发阶段已完成 gpt-6.1-sol 312 个计分案例，全部通过。正式发布记录见 tests/reports/live-codex-skill-validation-0.10.0.json 和 tests/reports/coordination-release-0.10.0.json。
+绑定最终源码和分发文件的 gpt-6.1-terra 真实模型评测已通过 284/284，并通过实际单点修改、协调恢复流程及独立核心安全审查。较早的 gpt-6-sol 首轮为 161/165，4 项语义失败记录已保留；未修改源码或预期结果，完整更强模型复核全部通过。此前开发阶段已完成 gpt-6.1-sol 312 个计分案例，全部通过。正式发布记录见 tests/reports/live-codex-skill-validation-0.10.0.json 和 tests/reports/coordination-release-0.10.0.json。
 
 验证使用隔离合成项目及模型指令评测，真实后端、硬件与全部客户端/框架集成仍需各自验证。项目稳定版本与组件成熟度独立管理。
 

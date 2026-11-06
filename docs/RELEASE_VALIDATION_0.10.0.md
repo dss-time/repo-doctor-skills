@@ -1,6 +1,6 @@
 # 0.10.0 release validation
 
-Prepared stable version: 0.10.0. Release date: 2026-11-06. Publication remains gated on the final full model corpus, actual coordination trial, CI and npm authentication.
+Prepared stable version: 0.10.0. Release date: 2026-11-06. The final full model corpus and actual coordination trial pass. Publication remains gated on CI for the final evidence commit.
 
 ## Local checks
 
@@ -16,9 +16,9 @@ Review findings from earlier attempts were fixed rather than waived: current exe
 
 ## Final model corpus and actual workflow
 
-The final 165-case core and 119-case advanced corpus is running on gpt-6-sol, with the actual model recorded in each result. Service-blocked gpt-6.1-sol and gpt-6-astra attempts remain historical and are not mixed into that final corpus. The release gate requires 284/284 PASS bound to final canonical/runtime content.
+The gpt-6-sol core first pass scored 161/165: three explicit selections returned an incorrect null protocol field, and one workbook-cleaning negative case selected content-consistency-check. These semantic failures remain preserved and are not accepted as passing evidence. A fresh full gpt-6.1-terra run passed 55 cases before the service returned usageLimitExceeded for the remaining 110; its checkpoint resumed only the externally blocked cases and completed 165/165 PASS without changing source or expectations. The final gpt-6.1-terra corpus passes 284/284: 165 core cases, 40 workflow steps, 65 mode cases and 14 permission cases. The actual model is recorded in each result. The complete report is tests/reports/live-codex-skill-validation-0.10.0.json. Service-blocked gpt-6.1-sol and gpt-6-astra attempts remain historical and are not mixed into that final corpus. The release gate requires 284/284 PASS bound to final canonical/runtime content.
 
-Final-source single-edit and coordinated regression/recovery trials run on gpt-6.1-terra. Their accepted reports will be assembled with the independent core audit into tests/reports/coordination-release-0.10.0.json.
+Final-source single-edit and coordinated regression/recovery trials run on gpt-6.1-terra. Their accepted reports have been assembled with the independent core audit into tests/reports/coordination-release-0.10.0.json and pass its release checker.
 
 The preceding 312-case development run remains under tests/reports/unified-validation-2026-11-05 as historical evidence, not approval for the final recovery fixes.
 
@@ -26,7 +26,7 @@ The preceding 312-case development run remains under tests/reports/unified-valid
 
 A superseded model checkpoint, a duplicate core report, a redundant short log and stale ignored build candidates were removed. Completed unsuccessful coordination attempts were losslessly archived under tests/reports/release-0.10.0-attempt-history/attempts.tar.gz. manifest.json records original filenames, byte counts and SHA256; every extracted file was verified before removing 120 loose files. Active and accepted final reports remain separate and directly verifiable. Meaningful regression suites remain in the repository and stay outside the npm package.
 
-npm login succeeded during preparation, then expired before the next day’s recheck. Publication requires a renewed official login; credentials are never requested in chat.
+npm authentication was rechecked successfully on 2026-11-06 as beideng000001. Authentication will be checked again immediately before publication; credentials are never requested in chat.
 
 ## Limits
 

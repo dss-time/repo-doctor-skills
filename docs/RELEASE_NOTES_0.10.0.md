@@ -13,7 +13,7 @@ Stable release, non-prerelease. Tag: `v0.10.0`. Date: 2026-11-06.
 
 ## Validation
 
-Live-model release validation must be PASS against the final 0.10.0 source/runtime binding before publication. The preceding development run passed 312 scored cases on gpt-6.1-sol, including all 33 Skills, modes, permissions, security code pairs, targeted language/flow cases and actual synthetic-workspace edits. Final release results are recorded in tests/reports/live-codex-skill-validation-0.10.0.json and tests/reports/coordination-release-0.10.0.json.
+Live-model validation: PASS, 284/284 cases against final source/runtime on gpt-6.1-terra, plus actual single-edit and coordinated recovery trials and an independent core safety review. An earlier gpt-6-sol first pass scored 161/165; its four semantic failures are preserved, and the complete stronger-model run passed without changing source or expectations. The preceding development run passed 312 scored cases on gpt-6.1-sol, including all 33 Skills, modes, permissions, security code pairs, targeted language/flow cases and actual synthetic-workspace edits. Final release results are recorded in tests/reports/live-codex-skill-validation-0.10.0.json and tests/reports/coordination-release-0.10.0.json.
 
 Evidence covers isolated synthetic fixtures and model instruction behavior. It does not claim production/backend/hardware or every client/framework integration. Component maturity remains independent of this stable project release.
 
