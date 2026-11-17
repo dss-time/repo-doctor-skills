@@ -2,7 +2,7 @@
 
 [简体中文](PROJECT_STATE.zh-CN.md)
 
-These development commands are available through the current checkout's CLI. Published npm 0.10.1 predates these additions. The existing Skills remain usable individually; setup is optional. All commands return JSON. A successful command exit means the state operation completed, while the returned status describes whether evidence is current, stale or unverified.
+These commands are included in the 0.11.0 CLI and can also run from a checkout. Version 0.10.1 predates these additions. The existing Skills remain usable individually; setup is optional. All commands return JSON. A successful command exit means the state operation completed, while the returned status describes whether evidence is current, stale or unverified.
 
 ## Project setup and reuse
 

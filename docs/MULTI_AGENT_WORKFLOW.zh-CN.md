@@ -21,7 +21,7 @@
 
 ## 使用
 
-同时安装本入口和任务需要的现有 Skills。当前 npm 0.10.1 为已发布的 33 个 Skill，开发源码包含 34 个。
+同时安装本入口和任务需要的现有 Skills。0.11.0 包含 34 个 Skill；npm 0.10.1 保留较早的 33 个 Skill。
 
 ```sh
 node bin/repo-doctor-skills.mjs install --skill multi-agent-workflow --agent codex
@@ -51,8 +51,8 @@ $multi-agent-workflow 用独立只读子 Agent 分别检查当前 diff 的需求
 
 ## 验证范围
 
-开发回归检查保存原 33 个 Skill 源码与运行内容、共享协议和 Registry 的固定基线，并核对原推荐 7 个 Skill。检查新增分发和触发用例完整性。模式选择语义及真实原生委派需要模型/宿主试验。已发布的 0.10.0/0.10.1 评测报告对应原发布内容，本项新增能力单独验证。
+开发回归检查保存原 33 个 Skill 源码与运行内容、共享协议（除明确固定的项目规范新增段落）和 Registry 的固定基线，并核对原推荐 7 个 Skill。检查新增分发和触发用例完整性。模式选择语义及真实原生委派需要模型/宿主试验。已发布的 0.10.0/0.10.1 评测报告对应原发布内容，本项新增能力单独验证。
 
 行为与子任务契约的权威来源为 [Skill 正文](../packs/engineering/repo-doctor/skills/multi-agent-workflow/instructions.zh-CN.md)和[子任务协议](../packs/engineering/repo-doctor/skills/multi-agent-workflow/references/worker-protocol.zh-CN.md)。
 
-[开发验证记录](../tests/reports/multi-agent-workflow-development.json)保存了 8 项模式选择场景、独立安全审查和原生双子 Agent 隔离实施试验。主 Agent 核对准确修改集合及用户备注，集成两个已验收产物后通过 5 项组合测试和 6 项补充边界断言。全新独立审查者加载 safe-code-review 检查了集成结果。试验范围外包括逐子任务工具过滤、真实 Git 合并及中断恢复故障注入。
+历史[开发验证记录](../tests/reports/multi-agent-workflow-development.json)保存了 8 项模式选择场景、独立安全审查和原生双子 Agent 隔离实施试验。主 Agent 核对准确修改集合及用户备注，集成两个已验收产物后通过 5 项组合测试和 6 项补充边界断言。全新独立审查者加载 safe-code-review 检查了集成结果。试验范围外包括逐子任务工具过滤、真实 Git 合并及中断恢复故障注入。

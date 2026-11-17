@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T01:29:09.632Z",
-  "project_version": "0.10.0",
+  "generated_at": "2026-11-17T07:18:10.759Z",
+  "project_version": "0.11.0",
   "packs": [
     {
       "id": "engineering.repo-doctor",
@@ -8,7 +8,7 @@
         "en": "Repo Doctor",
         "zh-CN": "Repo Doctor / 仓库医生"
       },
-      "version": "0.12.0",
+      "version": "0.13.0",
       "status": "beta",
       "path": "packs/engineering/repo-doctor",
       "skills": [
@@ -37,7 +37,8 @@
         "configuration-audit",
         "session-handoff",
         "safe-fix-implementation",
-        "feature-implementation"
+        "feature-implementation",
+        "multi-agent-workflow"
       ]
     },
     {
@@ -1062,6 +1063,44 @@
       }
     },
     {
+      "slug": "multi-agent-workflow",
+      "id": "repo.multi-agent-workflow",
+      "pack": "engineering.repo-doctor",
+      "path": "packs/engineering/repo-doctor/skills/multi-agent-workflow",
+      "version": "0.1.0",
+      "status": "beta",
+      "name": {
+        "en": "Multi-Agent Workflow",
+        "zh-CN": "多 Agent 工作流"
+      },
+      "description": {
+        "en": "Select single-agent or multi-agent execution for a repository task when the user asks to choose the mode, explicitly requests delegation, or provides multiple genuinely independent implementation slices or review assignments that need coordination. Coordinate existing Skills, scoped workers and integration evidence. Keep ordinary small fixes, ordinary reviews and single-Skill tasks with their existing owner; do not activate merely because a task is called complex. Host-native subagents are required for parallel execution.",
+        "zh-CN": "用户要求自动选执行模式、明确要求委派，或提供需要协调的多个真正独立实施切片或审查分工时，为仓库任务选择单 Agent 或多 Agent 执行，并协调现有 Skills、受限子任务和集成证据。普通小修复、普通审查和单 Skill 任务继续由原能力处理，不能仅凭“复杂”启动。并行执行需要宿主原生子 Agent 能力。"
+      },
+      "supported_locales": [
+        "en",
+        "zh-CN"
+      ],
+      "permissions": {
+        "read_files": true,
+        "write_files": true,
+        "run_shell_commands": true,
+        "access_network": false,
+        "destructive_actions_allowed": false
+      },
+      "tool_requirements": {
+        "filesystem": "write",
+        "git": "optional",
+        "shell": "optional",
+        "web": "none"
+      },
+      "execution": {
+        "classification": "standard",
+        "default_mode": "standard",
+        "allow_implicit_invocation": true
+      }
+    },
+    {
       "slug": "skill-authoring",
       "id": "maintainer.skill-authoring",
       "pack": "engineering.skill-maintainer",
@@ -1326,7 +1365,8 @@
     "configuration-audit",
     "session-handoff",
     "safe-fix-implementation",
-    "feature-implementation"
+    "feature-implementation",
+    "multi-agent-workflow"
   ],
   "workflows": [
     "api-contract-change",
@@ -1397,6 +1437,7 @@
     "rd-dependency-upgrade-analysis.zip",
     "rd-documentation-sync.zip",
     "rd-feature-implementation.zip",
+    "rd-multi-agent-workflow.zip",
     "rd-performance-regression-analysis.zip",
     "rd-project-health-check.zip",
     "rd-release-readiness-check.zip",
@@ -1413,7 +1454,7 @@
     "sm-skill-authoring.zip",
     "sm-skill-quality-audit.zip"
   ],
-  "activation_contract_count": 267,
+  "activation_contract_count": 281,
   "activation_contracts": [
     "rdr-zh-positive",
     "rdr-en-positive",
@@ -1681,6 +1722,20 @@
     "fi-adjacent",
     "fi-negative",
     "fi-assumption",
-    "fi-blocking"
+    "fi-blocking",
+    "ma-zh-mode",
+    "ma-en-mode",
+    "ma-zh-review",
+    "ma-en-explicit",
+    "ma-zh-explicit",
+    "ma-en-adjacent",
+    "ma-zh-adjacent",
+    "ma-en-negative",
+    "ma-zh-negative",
+    "ma-en-assumption",
+    "ma-zh-blocking",
+    "ma-en-single",
+    "ma-en-implicit-slices",
+    "ma-zh-implicit-slices"
   ]
 }

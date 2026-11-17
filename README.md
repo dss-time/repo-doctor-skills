@@ -9,9 +9,9 @@ Help your AI agent diagnose bugs, implement features, review code and verify res
 
 From a local fix to authorized multi-stage delivery: use one Skill for a small task, or reuse existing authorization and valid evidence to move through dependent stages.
 
-The current stable release is **0.10.1** with 33 Skills, published on GitHub and npm. The npm `latest` tag points to `0.10.1`. [GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.10.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.10.1) · [Release notes](docs/RELEASE_NOTES_0.10.1.md).
+Version **0.11.0** contains 34 Skills, including 27 Repo Doctor engineering Skills. [GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.0) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.0) · [Release notes](docs/RELEASE_NOTES_0.11.0.md).
 
-Version 0.10.1 is a documentation patch that reuses the source-bound 0.10.0 runtime evidence. The 0.10.0 release validation passed **284/284** core, workflow, mode and permission cases on `gpt-6.1-terra`. Actual single-edit and coordinated recovery trials also passed. Installation compatibility passed CI on Linux, macOS and Windows with Node 18 and current LTS. [Final model report](tests/reports/live-codex-skill-validation-0.10.0.json) · [Coordination report](tests/reports/coordination-release-0.10.0.json).
+Release validation uses fresh source-bound model cases and isolated coordination trials. See the [validation record](docs/RELEASE_VALIDATION_0.11.0.md) for results and limits. Earlier 0.10.0/0.10.1 reports remain historical evidence for their original content.
 
 ## Start in 30 seconds
 
@@ -52,9 +52,9 @@ Name and description → Match the task → Read the selected Skill → Read ref
 
 For example, feature implementation selects rules for the actual stack, reads the testing contract when authoring tests, and loads the workflow protocol for multi-stage continuation or recovery. Installing all Skills does not mean loading all bodies for every task. Loading behavior depends on the host; generic prompt imports do not guarantee automatic disclosure, and the current bilingual bodies add context when a Skill is activated. No universal Token savings percentage has been measured.
 
-**Enhancements under development:** This checkout also provides [adaptive single-agent / multi-agent execution](docs/MULTI_AGENT_WORKFLOW.md), plus [project initialization, task checkpoints and read-only installation diagnosis](docs/PROJECT_STATE.md). Existing Skills remain independently usable. These additions are not included in npm 0.10.1.
+**Included in 0.11.0:** [adaptive single-agent / multi-agent execution](docs/MULTI_AGENT_WORKFLOW.md), plus [project initialization, task checkpoints and read-only installation diagnosis](docs/PROJECT_STATE.md). Existing Skills remain independently usable. Project setup remains optional.
 
-Current source also strengthens **project convention adaptation**: direct implementation, fix, test and documentation calls check applicable instructions, configuration and nearby style for the target directory and stack before editing, without project initialization. Changes stay within the task; configuration discovery does not execute configuration code, format the whole repository or silently store personal preferences. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md#5-adapt-to-project-conventions-within-the-edit-scope). This addition is not included in npm 0.10.1; actual adherence depends on the host and model.
+Current source also strengthens **project convention adaptation**: direct implementation, fix, test and documentation calls check applicable instructions, configuration and nearby style for the target directory and stack before editing, without project initialization. Changes stay within the task; configuration discovery does not execute configuration code, format the whole repository or silently store personal preferences. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md#5-adapt-to-project-conventions-within-the-edit-scope). Actual adherence depends on the host and model.
 
 ## Codex plugin
 
@@ -118,33 +118,33 @@ npx repo-doctor-skills install --language en
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. Reinstalling replaces selected same-name Skills in the target directory, including local edits and old resources. Identical content is skipped. The bundled installer supports Node.js 18 and later. CI covers installation on Linux, macOS and Windows using Node 18 and current LTS, with full repository checks on Linux. The external skills CLI has its own Node requirements.
 
 
-## v0.10.1 stable release
+## v0.11.0 stable release
 
-Version 0.10.1 contains 33 Skills (26 in Repo Doctor) and 33 ChatGPT ZIPs. Six PDF/Word/Excel Skills have been removed and two requirements/planning pairs have been consolidated. Final Live-model PASS evidence is bound to the release source. [Release notes](docs/RELEASE_NOTES_0.10.1.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
+Version 0.11.0 contains 34 Skills (27 in Repo Doctor) and 34 ChatGPT ZIPs. It adds adaptive execution, project/task state, installation diagnosis and scoped project convention rules. Earlier PDF/Word/Excel removals and requirements/planning consolidations remain in effect. [Release notes](docs/RELEASE_NOTES_0.11.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-When upgrading, use `requirements-clarification` for the former `requirements-to-spec` tasks and `safe-change-plan` for the former `spec-to-work-items` tasks. Previously installed directories for removed or merged Skills require manual cleanup after reviewing any local customizations. See the [migration notes](docs/RELEASE_NOTES_0.10.1.md#existing-installations).
+When upgrading, use `requirements-clarification` for the former `requirements-to-spec` tasks and `safe-change-plan` for the former `spec-to-work-items` tasks. Previously installed directories for removed or merged Skills require manual cleanup after reviewing any local customizations. See the [migration notes](docs/RELEASE_NOTES_0.11.0.md#install-and-upgrade).
 
-Pin the GitHub plugin to `v0.10.1`:
+Pin the GitHub plugin to `v0.11.0`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.10.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
-Install the exact npm version (seven recommended Skills, or all 33):
+Install the exact npm version (seven recommended Skills, or all 34):
 
 ```bash
-npx repo-doctor-skills@0.10.1 install --agent codex
-npx repo-doctor-skills@0.10.1 install --preset full --agent codex
+npx repo-doctor-skills@0.11.0 install --agent codex
+npx repo-doctor-skills@0.11.0 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.
 
 ## Adaptive execution mode
 
-Current source adds `multi-agent-workflow` to the original 33 Skills. The published npm 0.10.1 package contains 33 Skills. Install the new entry from this checkout:
+Version 0.11.0 adds `multi-agent-workflow` to the previous 33 Skills. Install it with the CLI:
 
 ```bash
-node bin/repo-doctor-skills.mjs install --skill multi-agent-workflow --agent codex
+npx repo-doctor-skills@0.11.0 install --skill multi-agent-workflow --agent codex
 ```
 
 Keep the existing Skills needed by your task installed alongside it. Ask for automatic mode selection, or let the agent select this entry for independent work that needs coordination. Small fixes and ordinary direct Skill calls use their existing owner. Parallel execution requires host subagents; concurrent writers require isolated workspaces. The seven Recommended Skills remain the default selection.
@@ -153,19 +153,19 @@ Keep the existing Skills needed by your task installed alongside it. Ask for aut
 $multi-agent-workflow Choose single or multi for this task, then complete the authorized work. Reuse existing Skills, preserve my edits and verify the integrated result.
 ```
 
-See [mode selection and examples](docs/MULTI_AGENT_WORKFLOW.md). This addition is under development and has separate validation from the published release.
+See [mode selection and examples](docs/MULTI_AGENT_WORKFLOW.md). Host capabilities determine whether native parallel execution is available.
 
 ## Local project and installation state
 
-Development source adds optional project initialization, revision-checked task checkpoints and read-only installation diagnosis. Preview setup before applying it, and revalidate saved task evidence before continuation.
+Version 0.11.0 adds optional project initialization, revision-checked task checkpoints and read-only installation diagnosis. Preview setup before applying it, and revalidate saved task evidence before continuation.
 
 ```sh
-node bin/repo-doctor-skills.mjs project init
-node bin/repo-doctor-skills.mjs task list
-node bin/repo-doctor-skills.mjs installations check
+npx repo-doctor-skills@0.11.0 project init
+npx repo-doctor-skills@0.11.0 task list
+npx repo-doctor-skills@0.11.0 installations check
 ```
 
-See [setup, task and migration commands](docs/PROJECT_STATE.md). These additions are available in the checkout and will require a new npm release.
+See [setup, task and migration commands](docs/PROJECT_STATE.md). The same commands can run from a local checkout.
 
 ## Documentation
 
@@ -185,4 +185,4 @@ Workflows reuse existing authorization within its scope and valid acceptance evi
 
 User-project safety guidance covers preserving authorization/business behavior, existing-data update semantics, actual test/build isolation, and preexisting/concurrent edits. Relevant implementation and review Skills load applicable rules. Unresolved risks block affected operations. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md).
 
-The [0.10.1 evidence reuse record](tests/reports/release-promotion-0.10.1.json) binds the source reports, complete Skill content and installer runtime. Evaluation scope and limits are described in the [0.10.0 validation record](docs/RELEASE_VALIDATION_0.10.0.md). Earlier security and user-workspace evaluations are retained as [historical development evidence](tests/reports/unified-validation-2026-11-05/README.md).
+Current source-bound evaluation and local checks are recorded in [0.11.0 validation](docs/RELEASE_VALIDATION_0.11.0.md). The [0.10.1 evidence reuse record](tests/reports/release-promotion-0.10.1.json) and earlier [development evaluations](tests/reports/unified-validation-2026-11-05/README.md) remain historical.

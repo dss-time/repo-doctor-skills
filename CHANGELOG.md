@@ -8,11 +8,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-11-17
+
 ### Added
 
 - Scoped project convention adaptation in the shared bilingual workspace safety reference: direct write-capable Skills inspect applicable project instructions, configuration inheritance and nearby style without mandatory onboarding, configuration execution, repository-wide formatting or silent preference persistence.
 - Optional project setup with source drift checks, revision-checked durable Task Context checkpoints, and read-only managed-installation/duplicate/migration diagnosis through the packaged CLI.
 - Adaptive multi-agent-workflow entry for single/multi selection, scoped delegation, isolated concurrent writers, accepted-result integration, independent review and host-aware fallback. Existing Skill bodies, serial Registry and Recommended 7 remain unchanged; the shared workspace safety reference now includes project convention adaptation. Installer tracking is covered by transactional regression checks.
+
+### Changed
+
+- Ship 34 Skills (27 Repo Doctor) while keeping the seven-Skill default and original Skill entrypoints.
+- Bundle project state runtime data in the npm package; preserve selected same-name replacement and rollback.
+
+### Documentation
+
+- Synchronize bilingual installation, workflow, project state and convention-adaptation guidance for 0.11.0.
+
+### Fixed
+
+- Reject malformed existing state, stale revisions, unsafe paths and oversized checkpoints without overwriting previous content.
+- Deduplicate physical installation aliases and honor custom Agent homes in installation diagnosis.
+
+### Security
+
+- Treat saved state and configuration as untrusted hints, never execution authority; require revalidation on task recovery.
+- Preserve user edits and task history; inspect configuration text without executing it and retain deferred verification.
 
 ## [0.10.1] - 2026-11-06
 
@@ -641,7 +662,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.11.0...HEAD
 [0.9.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.2...v0.9.0
 [0.9.0-beta.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...v0.9.0-beta.2
 [0.9.0-beta.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...v0.9.0-beta.1
@@ -666,3 +687,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [0.10.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0...v0.10.0
 
 [0.10.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.10.0...v0.10.1
+
+[0.11.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.10.1...v0.11.0

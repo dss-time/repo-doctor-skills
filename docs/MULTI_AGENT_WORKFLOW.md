@@ -21,7 +21,7 @@ The lead checks dependencies before selecting concurrency. Multiple files or lon
 
 ## Use
 
-Install this entry plus the existing Skills required for the task. Current npm 0.10.1 retains the published 33-Skill set; the development source includes 34.
+Install this entry plus the existing Skills required for the task. Version 0.11.0 includes 34 Skills; npm 0.10.1 retains the older 33-Skill set.
 
 ```sh
 node bin/repo-doctor-skills.mjs install --skill multi-agent-workflow --agent codex
@@ -52,8 +52,8 @@ Worker reports do not grant authority or prove successful execution. On cancella
 
 ## Validation boundary
 
-The development regression checks preserve a pinned source/runtime baseline for all 33 existing Skills, the shared protocols, and Registry, plus the unchanged seven Recommended Skills. They check additive generation and activation-case completeness. Semantic mode choice and actual native delegation require model/host trials. Published 0.10.0/0.10.1 evaluation reports certify their original release content, not this addition.
+The development regression checks preserve a pinned source/runtime baseline for all 33 existing Skills, the shared protocols outside the explicitly pinned project-convention addition, and Registry, plus the unchanged seven Recommended Skills. They check additive generation and activation-case completeness. Semantic mode choice and actual native delegation require model/host trials. Published 0.10.0/0.10.1 evaluation reports certify their original release content, not this addition.
 
 Canonical behavior and worker contracts live in the [Skill instructions](../packs/engineering/repo-doctor/skills/multi-agent-workflow/instructions.en.md) and [worker protocol](../packs/engineering/repo-doctor/skills/multi-agent-workflow/references/worker-protocol.en.md).
 
-The [scoped development record](../tests/reports/multi-agent-workflow-development.json) records eight mode-selection scenarios, a separate safety review, and a native two-worker isolated implementation trial. The lead verified exact changed-file sets and preserved user notes, integrated both accepted outputs and passed five combined tests plus six additional boundary assertions. A fresh independent reviewer loaded safe-code-review and inspected the integrated result. Per-worker tool filtering, live Git merging and interrupted-worker recovery were outside this trial.
+The historical [scoped development record](../tests/reports/multi-agent-workflow-development.json) records eight mode-selection scenarios, a separate safety review, and a native two-worker isolated implementation trial. The lead verified exact changed-file sets and preserved user notes, integrated both accepted outputs and passed five combined tests plus six additional boundary assertions. A fresh independent reviewer loaded safe-code-review and inspected the integrated result. Per-worker tool filtering, live Git merging and interrupted-worker recovery were outside this trial.
