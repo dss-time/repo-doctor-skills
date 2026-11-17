@@ -13,6 +13,24 @@ The current stable release is **0.10.1** with 33 Skills, published on GitHub and
 
 Version 0.10.1 is a documentation patch that reuses the source-bound 0.10.0 runtime evidence. The 0.10.0 release validation passed **284/284** core, workflow, mode and permission cases on `gpt-6.1-terra`. Actual single-edit and coordinated recovery trials also passed. Installation compatibility passed CI on Linux, macOS and Windows with Node 18 and current LTS. [Final model report](tests/reports/live-codex-skill-validation-0.10.0.json) · [Coordination report](tests/reports/coordination-release-0.10.0.json).
 
+## Start in 30 seconds
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills
+```
+
+Use current Node.js LTS (Node 24 was tested). Run from your project, follow the installer's Skill and agent selection, then start a new task. No repository clone or build is needed. Installs are project-local by default; add `-g` for all projects.
+
+## Minimal example
+
+```text
+$safe-code-review Review the current changes.
+```
+
+Use `$repo-doctor-router` when unsure. It recommends a Skill and gives a copyable next request; invoke a known Skill directly.
+
+Authorized multi-stage tasks can use [serial workflow coordination and evidence reuse](docs/WORKFLOW_COORDINATION.md). Simple tasks still use one Skill; automatic execution depends on the host.
+
 ## Why Repo Doctor Skills
 
 | Advantage | What it means for your work |
@@ -36,23 +54,7 @@ For example, feature implementation selects rules for the actual stack, reads th
 
 **Enhancements under development:** This checkout also provides [adaptive single-agent / multi-agent execution](docs/MULTI_AGENT_WORKFLOW.md), plus [project initialization, task checkpoints and read-only installation diagnosis](docs/PROJECT_STATE.md). Existing Skills remain independently usable. These additions are not included in npm 0.10.1.
 
-## Start in 30 seconds
-
-```bash
-npx skills@latest add dss-time/repo-doctor-skills
-```
-
-Use current Node.js LTS (Node 24 was tested). Run from your project, follow the installer's Skill and agent selection, then start a new task. No repository clone or build is needed. Installs are project-local by default; add `-g` for all projects.
-
-## Minimal example
-
-```text
-$safe-code-review Review the current changes.
-```
-
-Use `$repo-doctor-router` when unsure. It recommends a Skill and gives a copyable next request; invoke a known Skill directly.
-
-Authorized multi-stage tasks can use [serial workflow coordination and evidence reuse](docs/WORKFLOW_COORDINATION.md). Simple tasks still use one Skill; automatic execution depends on the host.
+Current source also strengthens **project convention adaptation**: direct implementation, fix, test and documentation calls check applicable instructions, configuration and nearby style for the target directory and stack before editing, without project initialization. Changes stay within the task; configuration discovery does not execute configuration code, format the whole repository or silently store personal preferences. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md#5-adapt-to-project-conventions-within-the-edit-scope). This addition is not included in npm 0.10.1; actual adherence depends on the host and model.
 
 ## Codex plugin
 

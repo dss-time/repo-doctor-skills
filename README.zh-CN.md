@@ -10,6 +10,24 @@
 
 0.10.1 为文档补丁，复用与源码绑定的 0.10.0 运行组件证据。0.10.0 发布评测使用 `gpt-6.1-terra`，基础、工作流、模式和权限案例 **284/284 全部通过**。实际单点修改和协调恢复试验也已通过。安装兼容性已通过 Linux、macOS、Windows 的 Node 18 与当前 LTS CI 检查。[最终模型报告](tests/reports/live-codex-skill-validation-0.10.0.json) · [协调试验报告](tests/reports/coordination-release-0.10.0.json)。
 
+## 30 秒开始
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills
+```
+
+使用当前 Node.js LTS（已测试 Node 24）。在你的项目目录运行，按安装器提示选择 Skill 和 Agent，然后新建任务即可使用。无需克隆或构建仓库。默认安装到当前项目；加 `-g` 可在所有项目使用。
+
+## 最小示例
+
+```text
+$safe-code-review 审查当前修改。
+```
+
+不知道选哪个时，使用 `$repo-doctor-router`。它会推荐 Skill 并给出可复制的下一步请求；知道 Skill 名时直接调用。
+
+已授权的连续任务可使用[串行工作流协同与证据复用](docs/WORKFLOW_COORDINATION.zh-CN.md)。简单任务仍直接调用一个 Skill；自动执行能力取决于宿主。
+
 ## 为什么选择 Repo Doctor Skills
 
 | 优势 | 对实际开发的帮助 |
@@ -33,23 +51,7 @@
 
 **开发中的增强能力：** 当前检出目录另提供[自适应单 Agent / 多 Agent 模式](docs/MULTI_AGENT_WORKFLOW.zh-CN.md)，以及[项目初始化、任务存档与只读安装诊断](docs/PROJECT_STATE.zh-CN.md)。原有 Skill 保持可独立使用；这些新增能力尚未包含在 npm 0.10.1 中。
 
-## 30 秒开始
-
-```bash
-npx skills@latest add dss-time/repo-doctor-skills
-```
-
-使用当前 Node.js LTS（已测试 Node 24）。在你的项目目录运行，按安装器提示选择 Skill 和 Agent，然后新建任务即可使用。无需克隆或构建仓库。默认安装到当前项目；加 `-g` 可在所有项目使用。
-
-## 最小示例
-
-```text
-$safe-code-review 审查当前修改。
-```
-
-不知道选哪个时，使用 `$repo-doctor-router`。它会推荐 Skill 并给出可复制的下一步请求；知道 Skill 名时直接调用。
-
-已授权的连续任务可使用[串行工作流协同与证据复用](docs/WORKFLOW_COORDINATION.zh-CN.md)。简单任务仍直接调用一个 Skill；自动执行能力取决于宿主。
+当前源码还补强了**项目规范自适应**：直接调用实施、修复、测试或文档 Skill 时，在修改前按目标目录与技术栈核对适用的项目指令、配置和邻近风格，无需先初始化项目。仅调整任务相关内容，不执行配置代码来发现规则、不全仓格式化，也不静默记录个人偏好。规则见[用户项目安全参考](packs/engineering/repo-doctor/references/user-workspace-safety.zh-CN.md#5-按修改范围适配项目规范)，尚未包含在 npm 0.10.1 中；实际遵循情况取决于宿主与模型。
 
 ## Codex 插件
 

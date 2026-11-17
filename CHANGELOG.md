@@ -10,8 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Scoped project convention adaptation in the shared bilingual workspace safety reference: direct write-capable Skills inspect applicable project instructions, configuration inheritance and nearby style without mandatory onboarding, configuration execution, repository-wide formatting or silent preference persistence.
 - Optional project setup with source drift checks, revision-checked durable Task Context checkpoints, and read-only managed-installation/duplicate/migration diagnosis through the packaged CLI.
-- Adaptive multi-agent-workflow entry for single/multi selection, scoped delegation, isolated concurrent writers, accepted-result integration, independent review and host-aware fallback. Existing Skill bodies, serial Registry and Recommended 7 remain byte-identical; installer tracking is covered by transactional regression checks.
+- Adaptive multi-agent-workflow entry for single/multi selection, scoped delegation, isolated concurrent writers, accepted-result integration, independent review and host-aware fallback. Existing Skill bodies, serial Registry and Recommended 7 remain unchanged; the shared workspace safety reference now includes project convention adaptation. Installer tracking is covered by transactional regression checks.
 
 ## [0.10.1] - 2026-11-06
 

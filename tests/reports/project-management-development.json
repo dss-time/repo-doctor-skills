@@ -89,5 +89,7 @@
     "Automatic cross-session wakeup and native per-worker hard permission boundaries require host integration.",
     "Receipts and checkpoints are local untrusted records, not cryptographic provenance or current authorization.",
     "Current npm 0.10.1 predates these development changes; no new release was performed."
-  ]
+  ],
+  "current_source_status": "HISTORICAL_SOURCE_BINDING_CHANGED",
+  "followup_note": "Project convention adaptation changes the shared workspace safety references after this run. Preserve original hashes and results; they do not certify the new instructions."
 }

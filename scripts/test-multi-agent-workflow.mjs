@@ -11,14 +11,30 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = relative => readFileSync(path.join(root, relative), "utf8");
 const baseline = JSON.parse(read("tests/skill-quality/single-agent-compatibility.json"));
 
-// Preserve the existing user-facing behavior, including support resources and routing.
+// Preserve the baseline outside explicitly pinned, additive shared-reference sections.
+// Never refresh the historical hashes to conceal unrelated behavior changes.
+function baselineBytes(filename) {
+  const bytes = readFileSync(path.join(root, filename));
+  const addition = baseline.reference_additions?.[path.basename(filename)];
+  if (!addition || !filename.includes('/references/')) return bytes;
+  const content = bytes.toString('utf8');
+  const start = content.indexOf(addition.heading + '\n');
+  assert.ok(start >= 0, `${filename}: missing pinned convention section`);
+  const end = content.indexOf('\n## ', start + addition.heading.length);
+  assert.ok(end > start, `${filename}: missing following section`);
+  const section = content.slice(start, end + 1);
+  assert.equal(createHash('sha256').update(section).digest('hex'), addition.sha256,
+    `${filename}: convention addition changed; review it explicitly`);
+  return Buffer.from(content.slice(0, start) + content.slice(end + 1));
+}
+
 for (const [group, expected] of Object.entries(baseline.trees)) {
   const absolute = path.join(root, group);
   const entries = statSync(absolute).isFile() ? [absolute] : walkFiles(absolute);
   const files = entries.map(file => path.relative(root, file).split(path.sep).join("/")).sort();
   const hash = createHash("sha256");
   for (const filename of files) {
-    const digest = createHash("sha256").update(readFileSync(path.join(root, filename))).digest("hex");
+    const digest = createHash("sha256").update(baselineBytes(filename)).digest("hex");
     hash.update(JSON.stringify([filename, digest]) + "\n");
   }
   assert.equal(files.length, expected.file_count, `${group}: existing file inventory changed`);
@@ -55,4 +71,4 @@ for (const folder of ["skills", "plugins/repo-doctor/skills"]) {
   }
 }
 
-console.log(`Multi-agent integration contracts passed: ${Object.keys(baseline.trees).length} existing source/runtime/protocol groups identical, Recommended 7 unchanged, additive distribution and bilingual activation boundaries.`);
+console.log(`Multi-agent integration contracts passed: ${Object.keys(baseline.trees).length} baseline groups preserved outside pinned convention additions, Recommended 7 unchanged, additive distribution and bilingual activation boundaries.`);

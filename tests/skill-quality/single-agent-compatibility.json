@@ -281,5 +281,15 @@
       "sha256": "f93f7bf3bb56fbd58acbeb7e078af8f2f8b9dc5a4d657039d37ca0aa54ea784e",
       "file_count": 14
     }
+  },
+  "reference_additions": {
+    "user-workspace-safety.en.md": {
+      "heading": "## 5. Adapt to project conventions within the edit scope",
+      "sha256": "d46f0285d3ecc5bebe3cdee708cd44a9afb15834ebf407f285a66cd95160d5d6"
+    },
+    "user-workspace-safety.zh-CN.md": {
+      "heading": "## 5. 按修改范围适配项目规范",
+      "sha256": "fc113c84d5acd407439daabcc981f0a4862a0790dc4d6a8ad35c726b26169064"
+    }
   }
 }

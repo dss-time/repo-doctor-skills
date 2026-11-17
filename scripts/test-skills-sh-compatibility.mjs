@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
+import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 import { discoverCanonicalSkillDirs, renderCodexSkill, writeInstallableCodexSkill } from "./build-skills.mjs";
 import { compareNames, walkFiles } from "./deterministic-files.mjs";
 
@@ -23,6 +24,19 @@ function frontmatter(filename) {
 }
 
 const canonicalDirs = discoverCanonicalSkillDirs(path.join(root, "packs"));
+// Direct write-capable engineering calls must ship the shared convention rules;
+// relying on a separate onboarding Skill would fail for isolated installations.
+for (const directory of canonicalDirs.filter(directory => directory.includes(`${path.sep}repo-doctor${path.sep}`))) {
+  const metadata = parseYamlSubset(readFileSync(path.join(directory, "skill.yaml"), "utf8"));
+  if (!metadata.permissions.write_files) continue;
+  for (const [locale, heading] of [["en", "## 5. Adapt to project conventions within the edit scope"], ["zh-CN", "## 5. 按修改范围适配项目规范"]]) {
+    const resource = `user-workspace-safety.${locale}.md`;
+    assert.ok(readFileSync(path.join(directory, `instructions.${locale}.md`), "utf8").includes(`references/${resource}`),
+      `${metadata.id}: direct invocation cannot reach convention guidance`);
+    assert.ok(readFileSync(path.join(compatibilityRoot, path.basename(directory), "references", resource), "utf8").includes(heading),
+      `${metadata.id}: isolated installation lacks convention guidance`);
+  }
+}
 const expectedSlugs = canonicalDirs.map((directory) => path.basename(directory)).sort(compareNames);
 assert.equal(new Set(expectedSlugs).size, expectedSlugs.length, "canonical active Skill slugs must be unique across Packs");
 
