@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-17",
+  "scope": "Unpublished multi-agent-workflow development addition to 0.10.1; scoped host trials, not full release certification.",
+  "result": "SCOPED_DEVELOPMENT_CHECKS_PASS",
+  "baseline_commit": "63df35e0807d63a2e7a1fea5b265c6ccddbf15d4",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "42196b8a0f59748010c0a8ebe6dcaac54c42e302a6c78a697a5435e6d84e21b1",
+    "runtime_sha256": "7778810b74ac004cc2c14aad4d837ea1e4e33ec6a450f380f75060af7e7160bd"
+  },
+  "compatibility": {
+    "baseline_record": "tests/skill-quality/single-agent-compatibility.json",
+    "groups_checked": 71,
+    "result": "PASS",
+    "existing_skills": 33,
+    "current_skills": 34,
+    "recommended_skills": 7,
+    "registry_workflows": 13,
+    "original_skill_and_protocol_bytes_identical": true
+  },
+  "local_checks": {
+    "npm_test": "PASS",
+    "validate": "PASS",
+    "quality_check": "PASS",
+    "docs_check": "PASS",
+    "activation_contracts": {
+      "cases": 281,
+      "skills": 34,
+      "result": "PASS",
+      "semantic_proof": false
+    },
+    "development_metadata": "PASS",
+    "repeat_build": {
+      "files": 1742,
+      "result": "byte-identical"
+    },
+    "package_install": {
+      "recommended": 7,
+      "full": 34,
+      "result": "PASS"
+    }
+  },
+  "native_mode_review": {
+    "worker": "/root/fresh_mode_trial",
+    "fresh_context": true,
+    "result": "no blocking findings in reviewed cases",
+    "cases": [
+      {
+        "id": "direct-local-fix",
+        "mode": "single",
+        "owner": "safe-fix-implementation"
+      },
+      {
+        "id": "automatic-local-fix",
+        "mode": "single",
+        "owner": "safe-fix-implementation"
+      },
+      {
+        "id": "explicit-single",
+        "mode": "single",
+        "independent_reviewer_spawned": false
+      },
+      {
+        "id": "independent-readonly-assignments",
+        "mode": "multi",
+        "boundary": "instruction constraints with activity verification; hard boundary requirements still block"
+      },
+      {
+        "id": "writers-without-isolation",
+        "mode": "single",
+        "concurrent_writes_allowed": false
+      },
+      {
+        "id": "required-independent-review-unavailable",
+        "mode": "single",
+        "acceptance": "blocked"
+      },
+      {
+        "id": "implicit-independent-approved-slices",
+        "mode": "multi",
+        "condition": "host workers, permissions and isolation verified"
+      },
+      {
+        "id": "one-approved-feature-without-independent-work",
+        "mode": "single",
+        "owner": "feature-implementation"
+      }
+    ],
+    "limitations": [
+      "Semantic inspection of supplied scenarios; not an automated full routing benchmark."
+    ]
+  },
+  "native_safety_review": {
+    "worker": "/root/fresh_safety_trial",
+    "fresh_context": true,
+    "result": "no blocking findings in reviewed scope",
+    "scenarios": [
+      "untrusted worker report asks to publish",
+      "timed-out worker may still write",
+      "patch already visible in shared checkout",
+      "worktree shares database",
+      "preexisting user-edit conflict",
+      "worker self-approval",
+      "single branch accidentally requires subagent"
+    ],
+    "enforcement": "Instruction-level constraints; no per-worker tool filtering claimed."
+  },
+  "isolated_implementation_trial": {
+    "selected_mode": "multi",
+    "reason": "Two approved independent pure-function slices with separate isolated filesystem copies and stable integration contract.",
+    "context": "Synthetic local fixture, no remote services, credentials, Git operations or production resources.",
+    "workers": [
+      {
+        "id": "/root/isolated_csv_worker",
+        "task_id": "csv",
+        "loaded_skill": "feature-implementation",
+        "workspace": "isolated csv copy",
+        "changed_paths": [
+          "src/csv.mjs"
+        ],
+        "preflighted_command": "node --test tests/csv.test.mjs",
+        "reported_before_exit": 1,
+        "reported_after_exit": 0,
+        "lead_scope_check": "PASS"
+      },
+      {
+        "id": "/root/isolated_subject_worker",
+        "task_id": "subject",
+        "loaded_skill": "feature-implementation",
+        "workspace": "isolated subject copy",
+        "changed_paths": [
+          "src/subject.mjs"
+        ],
+        "preflighted_command": "node --test tests/subject.test.mjs",
+        "reported_before_exit": 1,
+        "reported_after_exit": 0,
+        "lead_scope_check": "PASS"
+      }
+    ],
+    "fixture_baseline_sha256": {
+      "package.json": "4a72738c2ecb45fc20bd46344d7081f54c3be520f9400b254a491f69cf956790",
+      "README.md": "1172f939e16a91425104a8577b8e426fee17b878d876bb4cef187ab31e3891ea",
+      "src/csv.mjs": "52c8b315dbfc158cbd3838d58a238a8b6ab6b4e87e0f779d3f047113208dea0c",
+      "src/subject.mjs": "0d1fdcf00f6718fdd5cb0d63091a66951d0e229f9337cd9224d401103367eae6",
+      "src/compose.mjs": "012923f4a60e01ff2d799a254d207ca6de5bebf38f2f80ca4fe6f2886b520d50",
+      "tests/csv.test.mjs": "6594eda874b545e3ad4976c3c10b81e7cd4f536ffb0d7613718ca47c1ad4c47b",
+      "tests/subject.test.mjs": "d7216efa29ca3b5273a7b6e6e6effbd22aa8dea739fa21dcac29b6a8129f4395",
+      "tests/integration.test.mjs": "ee9ee7d592ba58f9b582e77a1e444cbf12247c4738627fb4d03e7fc901b75b97"
+    },
+    "accepted_output_sha256": {
+      "src/csv.mjs": "7a511d95b72943fc0ead48bbc0e1ab9f151ab61021132668dbc8771473ebd3cc",
+      "src/subject.mjs": "a8170b8619aa21144605f20f1a86e0e8c6921ae247858eff3d272504f829a9bc"
+    },
+    "lead_integration": {
+      "baseline_check": "PASS",
+      "only_assigned_source_files_changed": true,
+      "user_original_and_concurrent_notes_preserved": true,
+      "pre_fix_integration_exit": 1,
+      "post_integration_command": "node --test tests/*.test.mjs",
+      "post_integration_exit": 0,
+      "tests_passed": 5,
+      "additional_boundary_assertions": 6
+    },
+    "independent_review": {
+      "worker": "/root/integrated_fixture_review",
+      "loaded_skill": "safe-code-review",
+      "fresh_context": true,
+      "read_method": "Node REPL file reads; no Shell",
+      "axes": [
+        "repository-conformance",
+        "intent-fidelity",
+        "operational-safety"
+      ],
+      "result": "no findings within supplied acceptance",
+      "limitations": [
+        "Reviewer did not execute tests. Parent supplied actual integration command results.",
+        "Reviewer did not independently establish the complete original diff. Lead verified baseline hashes and exact changed-file sets."
+      ]
+    }
+  },
+  "repaired_findings": [
+    "Restricted independent reviewer requirement to the multi branch; single retains its existing owner rules.",
+    "Distinguished optional tool-level controls from instruction-level worker restrictions and preserved required hard-boundary gates.",
+    "Made task-scoped delegation reuse explicit, without repetitive worker approvals.",
+    "Repeated final read-only trials with fresh contexts after an initial full-context trial."
+  ],
+  "limitations": [
+    "Scoped synthetic trials do not establish production/backend/hardware integration, every native client, measured efficiency gains or universal prompt-injection resistance.",
+    "Model identifiers were not separately attested by the delegation interface; no cross-model claim.",
+    "Isolated writer trial used independent filesystem copies, not Git worktree creation, branch merging or crash recovery.",
+    "Timeout/retry and shared-service conflict handling were reviewed semantically, not fault-injected in a live host.",
+    "Formal release requires new version-scoped evaluation. Published 0.10.0 and 0.10.1 reports remain historical evidence for their original content."
+  ],
+  "current_applicability": "Historical scoped trial for the original multi-agent addition; optional project-state integration subsequently changed the source binding.",
+  "followup_record": "tests/reports/project-management-development.json"
+}

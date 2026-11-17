@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -96,6 +96,21 @@ try {
   assert.equal(help.status, 0, help.stderr || help.stdout);
   assert.match(help.stdout, /repo-doctor-skills install/);
 
+  const projectTarget = path.join(tempRoot, "project-state");
+  mkdirSync(projectTarget);
+  const runState = (args) => {
+    const result = runNpx(tarball, args);
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    return JSON.parse(result.stdout);
+  };
+  assert.equal(runState(["project", "init", "--root", projectTarget]).status, "PREVIEW");
+  assert.equal(existsSync(path.join(projectTarget, ".repo-doctor")), false);
+  assert.equal(runState(["project", "init", "--root", projectTarget, "--apply"]).applied, true);
+  assert.equal(runState(["project", "check", "--root", projectTarget]).status, "CURRENT");
+  assert.equal(runState(["task", "create", "--root", projectTarget, "--id", "packed-task", "--goal", "Verify packed state", "--acceptance", "state-ready", "--skill", "safe-fix-implementation"]).revision, 1);
+  assert.equal(runState(["task", "list", "--root", projectTarget]).tasks.length, 1);
+  assert.equal(runState(["task", "resume", "--root", projectTarget, "--id", "packed-task"]).requires_host_revalidation, true);
+
   const recommendedTarget = path.join(tempRoot, "recommended");
   const recommended = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
   assert.equal(recommended.status, 0, recommended.stderr || recommended.stdout);
@@ -107,9 +122,12 @@ try {
   const fullTarget = path.join(tempRoot, "full");
   const full = runNpx(tarball, ["install", "--preset", "full", "--target-dir", fullTarget]);
   assert.equal(full.status, 0, full.stderr || full.stdout);
-  assert.equal(installedCount(fullTarget), 33);
-  assert.match(full.stdout, /Installed: 33 Skills/);
+  assert.equal(installedCount(fullTarget), 34);
+  assert.match(full.stdout, /Installed: 34 Skills/);
   assert.match(full.stdout, /Preset: Full/);
+  const installedState = runState(["installations", "check", "--target-dir", fullTarget]);
+  assert.equal(installedState.targets[0].ledger_status, "valid");
+  assert.equal(installedState.targets[0].records.length, 34);
 
   const collision = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
   assert.equal(collision.status, 0, collision.stderr);
@@ -158,4 +176,4 @@ try {
 }
 
 assert.ok(!existsSync(tempRoot), "npm tarball test temp directory was not cleaned");
-console.log("npm tarball tests passed: minimal contents, isolated CLI, Recommended 7/7, Full 33/33, options, safety, and cleanup.");
+console.log("npm tarball tests passed: minimal contents, isolated CLI, Recommended 7/7, Full 34/34, options, safety, and cleanup.");

@@ -13,7 +13,7 @@
 | live-evidence-binding 与 live-evidence-checkpoint | 面向模型评估、整树绑定，不能替代开发任务局部验证 | 沿用内容绑定/不自动重试语义失败的原则，新增任务依赖范围绑定 |
 | session-handoff | 摘要本身不能证明恢复时仍有效 | JSON 续接、当前来源/环境/授权重新核验 |
 
-协调模块采用 Node.js ESM。当前 Registry 为版本 6，定义 13 条工作流，分发包含 33 个 active Skills。普通开发流程的发布阶段改成有条件适用，明确的 release-preparation 发布检查仍为必需；Bug 工作流的回归测试编写允许在已有充分测试时不适用，但目标行为验证仍必须提供。
+协调模块采用 Node.js ESM。当前 Registry 为版本 6，定义 13 条工作流，当前源码分发包含 34 个 active Skills。新增 multi-agent-workflow 入口在已有主能力上选择执行模式，见单独验证的[模式协议](MULTI_AGENT_WORKFLOW.zh-CN.md)。普通开发流程的发布阶段改成有条件适用，明确的 release-preparation 发布检查仍为必需；Bug 工作流的回归测试编写允许在已有充分测试时不适用，但目标行为验证仍必须提供。
 
 ## 模块与权威
 

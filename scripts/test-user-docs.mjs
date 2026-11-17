@@ -33,12 +33,12 @@ for (const filename of ["docs/WORKFLOW_COOKBOOK.md", "docs/WORKFLOW_COOKBOOK.zh-
 
 assert.equal(model.projectVersion, "0.10.1", "expected prepared project version 0.10.1");
 assert.equal(model.counts.packs, 3, "expected three active Packs");
-assert.equal(model.counts.skills, 33, "expected 33 active Skills");
-assert.equal(model.counts.pluginSkills, 33, "expected 33 plugin/ChatGPT-distributed Skills");
+assert.equal(model.counts.skills, 34, "expected 34 active Skills");
+assert.equal(model.counts.pluginSkills, 34, "expected 34 plugin/ChatGPT-distributed Skills");
 assert.equal(model.counts.regularOnlySkills, 0, "expected zero regular-build-only Skills");
 
 const expectedPackCounts = new Map([
-  ["engineering.repo-doctor", 26],
+  ["engineering.repo-doctor", 27],
   ["productivity.productivity-toolkit", 5],
   ["engineering.skill-maintainer", 2],
 ]);
@@ -79,7 +79,7 @@ for (const pack of model.packs) {
     publishedSlugs.add(skill.interface.publishedSlug);
   }
 }
-assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 26, pt: 5, sm: 2 });
+assert.deepEqual(Object.fromEntries(prefixCounts), { rd: 27, pt: 5, sm: 2 });
 
 for (const locale of ["en", "zh-CN"]) {
   const first = renderCatalog(model, locale);
@@ -96,4 +96,4 @@ for (const [filename, expected] of Object.entries(generatedCatalogs(model))) {
 }
 assert.deepEqual(checkCatalogs(root), [], "generated catalogs must be current");
 
-console.log("User documentation catalog tests passed (3 Packs, 33 Skills, 33 plugin/ZIP distributions).");
+console.log("User documentation catalog tests passed (3 Packs, 34 Skills, 34 plugin/ZIP distributions).");

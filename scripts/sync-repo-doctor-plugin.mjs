@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { discoverActivePackSkills, syncPackPlugin } from "./sync-pack-plugin.mjs";
 
 const uiDescriptions = {
+  "multi-agent-workflow": "按独立任务、依赖与宿主能力自动选择单 Agent 或多 Agent 并安全集成",
   "feature-implementation": "按已确认规格逐个交付功能切片并完成定向验证",
   "repo-doctor-router": "分析当前工程状态并推荐现有 Repo Doctor Skill 或安全工作流",
   "repo-onboarding": "快速理解陌生项目的结构、技术栈、入口、命令与核心模块",
@@ -31,6 +32,7 @@ const uiDescriptions = {
   "safe-fix-implementation": "一次只实施一个小而安全、可验证的生产代码修复",
 };
 const uiPrompts = {
+  "multi-agent-workflow": "使用 $multi-agent-workflow 按实际任务选择 single 或 multi，复用现有 Skill、保护已有修改并核验集成结果。",
   "feature-implementation": "使用 $feature-implementation 在已有授权范围内实施已确认功能规格，逐项验证；不提交或发布。",
   "repo-doctor-router": "使用 $repo-doctor-router 从 canonical 工作流注册表推荐下一 Skill 或 workflow_id，但不要执行推荐。",
   "repo-onboarding": "使用 $repo-onboarding 帮我理解这个陌生仓库的结构、入口和真实命令。",

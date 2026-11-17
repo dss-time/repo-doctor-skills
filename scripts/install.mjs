@@ -13,6 +13,8 @@ import {
 import { homedir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { installationStatePaths, readInstallationState, recordInstallation } from "./installation-state.mjs";
+import { withLock } from "./local-state-files.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -71,7 +73,7 @@ function sameTree(left, right) {
     && names.every((name) => sameTree(path.join(left, name), path.join(right, name)));
 }
 
-function targetFromAgent(agent, env, home) {
+export function targetFromAgent(agent, env, home) {
   if (agent === "codex") return path.join(path.resolve(env.CODEX_HOME || path.join(home, ".codex")), "skills");
   if (agent === "shared") return path.join(path.resolve(env.AGENTS_HOME || path.join(home, ".agents")), "skills");
   return null;
@@ -144,66 +146,75 @@ export async function install({ preset = "recommended", skill = null, language =
 
   const parent = path.dirname(resolvedTarget);
   mkdirSync(parent, { recursive: true });
-  const staging = mkdtempSync(path.join(parent, ".repo-doctor-install-"));
-  let preserveStaging = false;
-  try {
-    for (const slug of slugs) {
-      const destination = path.join(staging, slug);
-      sources.write(bySlug.get(slug), destination);
-      if (language !== "bilingual") {
-        const filename = path.join(destination, "SKILL.md");
-        const content = readFileSync(filename, "utf8");
-        const en = content.indexOf("\n# English\n");
-        const zh = content.indexOf("\n# 简体中文\n", en + 1);
-        if (en < 0 || zh < en) throw new Error(`Missing language sections for ${slug}`);
-        writeFileSync(filename, content.slice(0, en) + (language === "en" ? content.slice(en, zh) : content.slice(zh)));
-      }
-    }
-    verifyInstalled(staging, slugs);
-    const unchanged = slugs.filter((slug) => {
-      const destination = path.join(resolvedTarget, slug);
-      return existsSync(destination) && sameTree(path.join(staging, slug), destination);
-    });
-    const pending = slugs.filter((slug) => !unchanged.includes(slug));
-    const conflicts = pending.filter((slug) => {
-      try { lstatSync(path.join(resolvedTarget, slug)); return true; } catch (error) { if (error.code === "ENOENT") return false; throw error; }
-    });
-    mkdirSync(resolvedTarget, { recursive: true });
-    const changes = [];
-    const backupRoot = path.join(staging, ".backup");
-    mkdirSync(backupRoot);
+  const statePaths = installationStatePaths(resolvedTarget);
+  return withLock(statePaths.root, statePaths.lock, () => {
+    const previousState = readInstallationState(resolvedTarget);
+    const staging = mkdtempSync(path.join(parent, ".repo-doctor-install-"));
+    let preserveStaging = false;
     try {
-      for (const slug of pending) {
-        const change = { destination: path.join(resolvedTarget, slug), backup: path.join(backupRoot, slug), backedUp: false, installed: false };
-        changes.push(change);
-        if (conflicts.includes(slug)) {
-          renameSync(change.destination, change.backup);
-          change.backedUp = true;
-        }
-        renameSync(path.join(staging, slug), change.destination);
-        change.installed = true;
-      }
-      verifyInstalled(resolvedTarget, slugs);
-    } catch (error) {
-      const rollbackErrors = [];
-      for (const change of changes.reverse()) {
-        try {
-          if (change.installed) rmSync(change.destination, { recursive: true, force: true });
-          if (change.backedUp) renameSync(change.backup, change.destination);
-        } catch (rollbackError) {
-          rollbackErrors.push(`${change.destination}: ${rollbackError.message}`);
+      for (const slug of slugs) {
+        const destination = path.join(staging, slug);
+        sources.write(bySlug.get(slug), destination);
+        if (language !== "bilingual") {
+          const filename = path.join(destination, "SKILL.md");
+          const content = readFileSync(filename, "utf8");
+          const en = content.indexOf("\n# English\n");
+          const zh = content.indexOf("\n# 简体中文\n", en + 1);
+          if (en < 0 || zh < en) throw new Error(`Missing language sections for ${slug}`);
+          writeFileSync(filename, content.slice(0, en) + (language === "en" ? content.slice(en, zh) : content.slice(zh)));
         }
       }
-      if (rollbackErrors.length) {
-        preserveStaging = true;
-        throw new Error(`${error.message}; rollback incomplete: ${rollbackErrors.join("; ")}. Recovery files preserved at ${backupRoot}`, { cause: error });
+      verifyInstalled(staging, slugs);
+      const unchanged = slugs.filter((slug) => {
+        const destination = path.join(resolvedTarget, slug);
+        return existsSync(destination) && sameTree(path.join(staging, slug), destination);
+      });
+      const pending = slugs.filter((slug) => !unchanged.includes(slug));
+      const conflicts = pending.filter((slug) => {
+        try { lstatSync(path.join(resolvedTarget, slug)); return true; } catch (error) { if (error.code === "ENOENT") return false; throw error; }
+      });
+      mkdirSync(resolvedTarget, { recursive: true });
+      const changes = [];
+      const backupRoot = path.join(staging, ".backup");
+      mkdirSync(backupRoot);
+      try {
+        for (const slug of pending) {
+          const change = { destination: path.join(resolvedTarget, slug), backup: path.join(backupRoot, slug), backedUp: false, installed: false };
+          changes.push(change);
+          if (conflicts.includes(slug)) {
+            renameSync(change.destination, change.backup);
+            change.backedUp = true;
+          }
+          renameSync(path.join(staging, slug), change.destination);
+          change.installed = true;
+        }
+        verifyInstalled(resolvedTarget, slugs);
+        recordInstallation(resolvedTarget, {
+          slugs, language,
+          version: JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version,
+          expectedRevision: previousState?.revision ?? 0,
+        });
+      } catch (error) {
+        const rollbackErrors = [];
+        for (const change of changes.reverse()) {
+          try {
+            if (change.installed) rmSync(change.destination, { recursive: true, force: true });
+            if (change.backedUp) renameSync(change.backup, change.destination);
+          } catch (rollbackError) {
+            rollbackErrors.push(`${change.destination}: ${rollbackError.message}`);
+          }
+        }
+        if (rollbackErrors.length) {
+          preserveStaging = true;
+          throw new Error(`${error.message}; rollback incomplete: ${rollbackErrors.join("; ")}. Recovery files preserved at ${backupRoot}`, { cause: error });
+        }
+        throw new Error(`${error.message}; installation rolled back; previous Skills restored`, { cause: error });
       }
-      throw new Error(`${error.message}; installation rolled back; previous Skills restored`, { cause: error });
+      return { preset: skill ? "individual" : preset, target: resolvedTarget, skills: slugs, installed: pending.length, unchanged: unchanged.length, language };
+    } finally {
+      if (!preserveStaging) rmSync(staging, { recursive: true, force: true });
     }
-    return { preset: skill ? "individual" : preset, target: resolvedTarget, skills: slugs, installed: pending.length, unchanged: unchanged.length, language };
-  } finally {
-    if (!preserveStaging) rmSync(staging, { recursive: true, force: true });
-  }
+  });
 }
 
 export async function runInstallerCli(args = process.argv.slice(2), { env = process.env, home = homedir(), stdout = process.stdout, stderr = process.stderr } = {}) {

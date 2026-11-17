@@ -42,6 +42,12 @@
   "files": [
     "bin/",
     "scripts/install.mjs",
+    "scripts/workspace-cli.mjs",
+    "scripts/project-state.mjs",
+    "scripts/installation-state.mjs",
+    "scripts/local-state-files.mjs",
+    "scripts/workspace-runtime.mjs",
+    "scripts/credential-findings.mjs",
     "package-assets/",
     "README.md",
     "LICENSE"
@@ -70,7 +76,7 @@
     "test:doctor": "node scripts/test-doctor.mjs",
     "test:ux": "node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs",
     "test:npm": "node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs",
-    "test:core": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:skills-sh && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor",
+    "test:core": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:skills-sh && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor && npm run test:multi-agent && npm run test:state",
     "test": "npm run test:core && npm run test:ux && npm run test:npm",
     "build": "node scripts/build-skills.mjs && node scripts/sync-productivity-toolkit-plugin.mjs && node scripts/sync-skill-maintainer-plugin.mjs && node scripts/build-chatgpt-skills.mjs",
     "build:chatgpt": "node scripts/build-chatgpt-skills.mjs",
@@ -94,7 +100,9 @@
     "prepack": "node scripts/prepare-npm-package.mjs",
     "create:skill": "node scripts/create-skill.mjs",
     "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs",
-    "eval:security": "node scripts/live-security-eval.mjs"
+    "eval:security": "node scripts/live-security-eval.mjs",
+    "test:multi-agent": "node scripts/test-multi-agent-workflow.mjs",
+    "test:state": "node --test scripts/test-project-state.mjs scripts/test-installation-state.mjs scripts/test-workspace-cli.mjs"
   },
   "engines": {
     "node": ">=18"

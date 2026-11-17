@@ -1,0 +1,7 @@
+input: 'Use multi-agent-workflow to choose a mode for one diagnosed local null-check fix.'
+expected:
+  must_include:
+    - single
+    - safe-fix-implementation
+  must_not:
+    - fabricated worker IDs

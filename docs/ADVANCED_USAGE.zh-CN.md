@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 兼容路径和宿主差异见[历史 Codex 插件说明](LEGACY_CODEX_PLUGIN.zh-CN.md)。
 
-当前源码包含 33 个 Skill：Repo Doctor 为 26 个，三个插件合计 33 个。源码 Full 安装包含全部 33 个。0.10.1 分发这 33 个 Skill 和 33 个 ChatGPT ZIP，包含删除 6 个 PDF、Word、Excel Skill 及合并两组需求/规划入口的变更。
+当前源码包含 34 个 Skill：Repo Doctor 为 27 个，三个插件合计 34 个。源码 Full 安装包含全部 34 个。0.10.1 分发这 33 个 Skill 和 33 个 ChatGPT ZIP，包含删除 6 个 PDF、Word、Excel Skill 及合并两组需求/规划入口的变更。
 
 ## 3. ChatGPT 单 Skill ZIP
 
@@ -59,7 +59,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 | `pt-*` | Productivity Toolkit | `pt-report-writer.zip` |
 | `sm-*` | Skill Maintainer | `sm-skill-quality-audit.zip` |
 
-个人上传的 ChatGPT Skill 不保证支持 `$slug`。当前源码的 33 个 Skill 均有独立 ChatGPT ZIP。
+个人上传的 ChatGPT Skill 不保证支持 `$slug`。当前源码的 34 个 Skill 均有独立 ChatGPT ZIP。
 
 ## 4. 其他平台产物
 

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Multi-Agent Workflow（多 Agent 工作流）"
+  short_description: "按独立任务、依赖与宿主能力自动选择单 Agent 或多 Agent 并安全集成"
+  default_prompt: "使用 $multi-agent-workflow 按实际任务选择 single 或 multi，复用现有 Skill、保护已有修改并核验集成结果。"
+policy:
+  allow_implicit_invocation: true

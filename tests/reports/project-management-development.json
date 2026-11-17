@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-17",
+  "scope": "Unpublished project setup, durable tasks and installation diagnosis additions",
+  "result": "PASS_LOCAL_AND_SCOPED_REVIEW",
+  "source_commit": "63df35e0807d63a2e7a1fea5b265c6ccddbf15d4",
+  "working_tree": true,
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "83791a7189168eef90e9ee9535f122a4454080a8acdf0a099428bf3feeffca0a",
+    "runtime_sha256": "f11981f6559208cc601768515bbd7c26f7bc3cf9c2e9cfb05565f4b14ad5fa4a"
+  },
+  "files_sha256": {
+    "bin/repo-doctor-skills.mjs": "7a9e9c745b269b7124a911664773cbfe99b3eafb8f80347c645b9ad032352d8a",
+    "scripts/install.mjs": "d51935ab9d2609907619bafd79071c20a9585ff7edab5f373c788fdc45e7e1d5",
+    "scripts/local-state-files.mjs": "42d23df6e6bdb1be2e4e2e334968bf9378c0d213fe5712d9edfc00aaa7db34cc",
+    "scripts/project-state.mjs": "86b3c641bba3d46d9bae65688a0c36d43c6c75947eb81da5db7969ee1052dc45",
+    "scripts/installation-state.mjs": "418fec5c2b3b3be86b913d953bd5cef749cd410866c24a95094a8bbce3e3b419",
+    "scripts/workspace-runtime.mjs": "2d9fd1ed780d6be2402bef6ba63dafe9cc364bbcc3fd82898d00b5861bb39076",
+    "scripts/workspace-cli.mjs": "d5a83262e2053315a27fffaf1a5292adc411c2ac5edeb7327d458f29dc19eae3",
+    "scripts/prepare-npm-package.mjs": "598522a2a72e87f042c22ad36201c26673715c5e13e5338f4e5c852d496a743d",
+    "scripts/test-project-state.mjs": "16d17761447d083108e383ace639861e9ab0f0f0ef611d70c147097beade3d4f",
+    "scripts/test-installation-state.mjs": "7c9d9ec3f979399047ec87b75fd21d29c750d0dfeed5281f5dac333ec1cb1a21",
+    "scripts/test-workspace-cli.mjs": "8c1ca489bf44dd692acc68bc8c7938ac20bc9812da85b7d89c8b22ed1fee67aa",
+    "scripts/test-npm-tarball.mjs": "99948b389ba0e1df7828c90bb045ca5a6487fdceda561d6cd87c0d0894b05dad"
+  },
+  "local_checks": {
+    "full_npm_test": "PASS",
+    "state_regressions": {
+      "total": 47,
+      "passed": 47,
+      "failed": 0,
+      "skipped": 0
+    },
+    "validate": "PASS",
+    "quality": "PASS",
+    "documentation": "PASS",
+    "development_metadata": "PASS",
+    "source_compatibility": {
+      "baseline": "tests/skill-quality/single-agent-compatibility.json",
+      "unchanged_groups": 70,
+      "existing_skills": 33,
+      "recommended_skills": 7
+    },
+    "packed_cli": {
+      "result": "PASS",
+      "project_preview_apply_check": true,
+      "task_create_list_resume": true,
+      "installation_receipts": true,
+      "full_skills": 34,
+      "recommended_skills": 7,
+      "same_name_replacement": true
+    }
+  },
+  "independent_reviews": [
+    {
+      "worker": "/root/project_feature_review",
+      "scope": "project state, persistence, common IO and CLI",
+      "final_result": "no additional P1/P2 after fixes",
+      "method": "Node read-only file API; no Shell, writes, network or tests"
+    },
+    {
+      "worker": "/root/installation_feature_review",
+      "scope": "installation receipts, diagnosis, rollback and packaging",
+      "final_result": "no remaining confirmed P1/P2 after fixes",
+      "method": "Node read-only file API; no Shell, writes, network or tests"
+    }
+  ],
+  "repaired_review_findings": [
+    "Existing falsy malformed project JSON must not be overwritten.",
+    "Write and read JSON limits must match.",
+    "Decoded JSON credential patterns must be checked before output.",
+    "Custom Agent homes must be shared between install and diagnosis.",
+    "Physical target aliases must not produce false duplicates.",
+    "Case, Unicode and short-name aliases must use directory identity for the same receipt and lock."
+  ],
+  "safety_contracts": [
+    "Configuration contains hints, not execution authority; stored commands are never executed.",
+    "Checkpoints restore through the existing core and require fresh host revalidation.",
+    "Existing task history and observations cannot be silently removed or rewritten.",
+    "Locks and revisions guard cooperating writers; external edits require host reconciliation.",
+    "Receipt failure rolls back the attempted batch and preserves the original receipt.",
+    "Unknown or modified installations are reported, never automatically deleted.",
+    "Local state is ignored by Git by default and created with private file permissions where supported."
+  ],
+  "limits": [
+    "Local macOS tests covered case-insensitive and Unicode path aliases. Windows 8.3 paths and Linux runtime were not tested on their respective operating systems in this turn.",
+    "No production/backends/hardware were accessed. No full live-model corpus or remote CI was run for this addition.",
+    "Automatic cross-session wakeup and native per-worker hard permission boundaries require host integration.",
+    "Receipts and checkpoints are local untrusted records, not cryptographic provenance or current authorization.",
+    "Current npm 0.10.1 predates these development changes; no new release was performed."
+  ]
+}

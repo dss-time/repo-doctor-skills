@@ -1,0 +1,44 @@
+id: repo.multi-agent-workflow
+name:
+  en: Multi-Agent Workflow
+  zh-CN: 多 Agent 工作流
+category: engineering
+visibility: public
+version: 0.1.0
+status: beta
+default_locale: zh-CN
+supported_locales: [en, zh-CN]
+description:
+  en: Select single-agent or multi-agent execution for a repository task when the user asks to choose the mode, explicitly requests delegation, or provides multiple genuinely independent implementation slices or review assignments that need coordination. Coordinate existing Skills, scoped workers and integration evidence. Keep ordinary small fixes, ordinary reviews and single-Skill tasks with their existing owner; do not activate merely because a task is called complex. Host-native subagents are required for parallel execution.
+  zh-CN: 用户要求自动选执行模式、明确要求委派，或提供需要协调的多个真正独立实施切片或审查分工时，为仓库任务选择单 Agent 或多 Agent 执行，并协调现有 Skills、受限子任务和集成证据。普通小修复、普通审查和单 Skill 任务继续由原能力处理，不能仅凭“复杂”启动。并行执行需要宿主原生子 Agent 能力。
+triggers:
+  en:
+    - choose single-agent or multi-agent execution for this repository task
+    - coordinate independent feature slices with isolated workers
+    - run independent review assignments in parallel and consolidate the findings
+  zh-CN:
+    - 根据实际任务自动选择单 Agent 或多 Agent
+    - 隔离并行实施多个独立功能切片并集成验证
+    - 多 Agent 分工审查后汇总核验结果
+tool_requirements:
+  filesystem: write
+  git: optional
+  shell: optional
+  web: none
+permissions:
+  read_files: true
+  write_files: true
+  run_shell_commands: true
+  access_network: false
+  destructive_actions_allowed: false
+risk_level:
+  default: safe_edit
+execution:
+  classification: standard
+  default_mode: standard
+  allow_implicit_invocation: true
+output_schema:
+  type: multi_agent_workflow_report
+localization:
+  en: {status: complete}
+  zh-CN: {status: complete}

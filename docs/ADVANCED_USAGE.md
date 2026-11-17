@@ -39,7 +39,7 @@ codex plugin marketplace add dss-time/repo-doctor-skills --ref main
 
 See [Legacy Codex Plugin](LEGACY_CODEX_PLUGIN.md) for the compatibility path and host-specific notes.
 
-Current source contains 33 Skills: Repo Doctor has 26 and the three plugins contain 33 together. A Full source installation includes all 33. Release 0.10.1 distributes these 33 Skills and 33 ChatGPT ZIPs, including the six PDF/Word/Excel removals and two requirements/planning consolidations.
+Current source contains 34 Skills: Repo Doctor has 27 and the three plugins contain 34 together. A Full source installation includes all 34. Release 0.10.1 distributes these 33 Skills and 33 ChatGPT ZIPs, including the six PDF/Word/Excel removals and two requirements/planning consolidations.
 
 ## 3. ChatGPT single-Skill ZIPs
 
@@ -59,7 +59,7 @@ Prefixes identify the source library:
 | `pt-*` | Productivity Toolkit | `pt-report-writer.zip` |
 | `sm-*` | Skill Maintainer | `sm-skill-quality-audit.zip` |
 
-The `$slug` syntax is not guaranteed for personally uploaded ChatGPT Skills. All 33 current source Skills have standalone ChatGPT ZIPs.
+The `$slug` syntax is not guaranteed for personally uploaded ChatGPT Skills. All 34 current source Skills have standalone ChatGPT ZIPs.
 
 ## 4. Other platform outputs
 

@@ -2,6 +2,7 @@
 
 import { createRequire } from "node:module";
 import { runInstallerCli } from "../scripts/install.mjs";
+import { runWorkspaceCli, workspaceUsage } from "../scripts/workspace-cli.mjs";
 
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
@@ -13,6 +14,7 @@ if (args.length === 0 || args.includes("--help")) {
     "",
     "Usage:",
     "  repo-doctor-skills install [options]",
+    workspaceUsage,
     "  repo-doctor-skills --help",
     "  repo-doctor-skills --version",
     "",
@@ -33,6 +35,8 @@ if (args.length === 0 || args.includes("--help")) {
   process.exitCode = 0;
 } else if (args[0] === "install") {
   process.exitCode = await runInstallerCli(args.slice(1));
+} else if (["project", "task", "installations"].includes(args[0])) {
+  process.exitCode = await runWorkspaceCli(args);
 } else {
   process.stderr.write(`Unknown command ${JSON.stringify(args[0])}. Run repo-doctor-skills --help.\n`);
   process.exitCode = 2;

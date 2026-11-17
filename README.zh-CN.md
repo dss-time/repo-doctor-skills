@@ -2,12 +2,36 @@
 
 # Repo Doctor Skills
 
-用职责明确的 Skill 排查 Bug、审查代码、完成修复和测试。
+让 AI 按明确的安全边界排查 Bug、实施功能、审查代码和验证结果，适配项目实际使用的语言与运行时。
 
+从一个局部修复到已授权的多阶段交付：小任务直接调用一个 Skill，复杂任务复用已有授权与有效证据，按依赖推进。
 
 当前稳定版本为 **0.10.1**，包含 33 个 Skill，已发布至 GitHub 和 npm。npm 的 `latest` 标签已指向 `0.10.1`。[GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.10.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.10.1) · [发布说明](docs/RELEASE_NOTES_0.10.1.zh-CN.md)。
 
 0.10.1 为文档补丁，复用与源码绑定的 0.10.0 运行组件证据。0.10.0 发布评测使用 `gpt-6.1-terra`，基础、工作流、模式和权限案例 **284/284 全部通过**。实际单点修改和协调恢复试验也已通过。安装兼容性已通过 Linux、macOS、Windows 的 Node 18 与当前 LTS CI 检查。[最终模型报告](tests/reports/live-codex-skill-validation-0.10.0.json) · [协调试验报告](tests/reports/coordination-release-0.10.0.json)。
+
+## 为什么选择 Repo Doctor Skills
+
+| 优势 | 对实际开发的帮助 |
+|---|---|
+| **优先保护你的项目** | 修改前核对权限与业务行为、已有数据更新语义和用户已有修改；执行测试或构建前检查真实环境与副作用。未知风险只阻塞受影响操作。 |
+| **渐进式上下文加载** | 在支持原生 Skills 的宿主中，先通过名称与描述发现能力，再加载选中 Skill 的正文，按任务读取参考规则，避免每次预先载入整套说明。 |
+| **按语言与运行时选择规则** | 根据相关组件应用检查，纯 JS/TS 不套用 C/C++ 内存管理限制；涉及原生代码、嵌入式或混合技术栈时，核对对应边界与可用验证工具。 |
+| **从单点任务衔接到工作流** | 职责明确的需求、诊断、实施、测试与审查能力可独立使用，也可在已有授权范围内串行协作，复用仍有效的验收证据，减少重复确认与检查。 |
+| **用证据说明完成程度** | 区分已实施、已验证、延期验证和阻塞，不把读取脚本当作测试通过，也不把局部检查当作完整交付。已发布版本提供源码绑定的模型评测记录。 |
+| **灵活安装，中文英文均可用** | 可安装推荐组合、部分或单个 Skill；提供双语内容及多平台适配，自带安装器支持按语言安装，并替换选中的同名旧 Skill。 |
+
+安全约束由 Skill 指令指导执行，仍依赖宿主工具、沙箱和审批机制。跨语言支持不代表已在所有语言、框架或硬件上完成验证。
+
+### 按需加载如何工作
+
+```text
+名称与描述 → 匹配任务 → 读取选中 Skill 的正文 → 按条件读取参考规则或使用脚本
+```
+
+例如，功能实施时按实际技术栈选择规则；编写测试时读取测试契约；需要多阶段续接或恢复时才读取工作流协议。安装全部 Skill 不等于每次加载全部正文。实际加载方式取决于宿主；普通提示词导入不保证自动按需加载，当前双语正文也会增加单个 Skill 激活后的上下文量。项目尚未提供统一的 Token 节省比例。
+
+**开发中的增强能力：** 当前检出目录另提供[自适应单 Agent / 多 Agent 模式](docs/MULTI_AGENT_WORKFLOW.zh-CN.md)，以及[项目初始化、任务存档与只读安装诊断](docs/PROJECT_STATE.zh-CN.md)。原有 Skill 保持可独立使用；这些新增能力尚未包含在 npm 0.10.1 中。
 
 ## 30 秒开始
 
@@ -29,7 +53,7 @@ $safe-code-review 审查当前修改。
 
 ## Codex 插件
 
-安装完整工程能力（26 个 Skill）：
+安装当前源码工程能力（27 个 Skill）：
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -60,7 +84,7 @@ npx skills@latest add dss-time/repo-doctor-skills --skill repo-doctor-router req
 
 ## 完整安装
 
-为 Codex 安装源码中的全部 33 个 Skill：
+为 Codex 安装源码中的全部 34 个 Skill：
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills --skill '*' -a codex
@@ -109,6 +133,34 @@ npx repo-doctor-skills@0.10.1 install --preset full --agent codex
 ```
 
 同一 Agent 选择一种安装方式。官方 skills CLI 从公开 GitHub 源码安装。
+
+## 自适应执行模式
+
+当前源码在原 33 个 Skill 上新增 `multi-agent-workflow`。已发布的 npm 0.10.1 包含 33 个 Skill，新入口可在当前检出目录安装：
+
+```bash
+node bin/repo-doctor-skills.mjs install --skill multi-agent-workflow --agent codex
+```
+
+请同时安装任务所需的现有 Skills。可明确要求自动选模式，也可由 Agent 在独立工作需要协调时选择该入口。小修复和普通直接 Skill 调用由原能力处理。并行执行需要宿主子 Agent，并发写入需要隔离工作区。默认推荐安装仍为原 7 个 Skill。
+
+```text
+$multi-agent-workflow 根据实际任务选择 single 或 multi，完成已授权工作。复用现有 Skills，保护我的已有修改，并验证集成结果。
+```
+
+详见[模式选择与示例](docs/MULTI_AGENT_WORKFLOW.zh-CN.md)。本项为开发中的新增能力，验证记录与已发布版本分别管理。
+
+## 本地项目与安装状态
+
+开发源码新增可选项目初始化、修订号保护的任务存档，以及只读安装诊断。初始化先预览再应用，任务续接前重新核对证据。
+
+```sh
+node bin/repo-doctor-skills.mjs project init
+node bin/repo-doctor-skills.mjs task list
+node bin/repo-doctor-skills.mjs installations check
+```
+
+详见[初始化、任务及迁移命令](docs/PROJECT_STATE.zh-CN.md)。这些新增能力可在当前检出目录使用，npm 需要新版本发布后提供。
 
 ## 文档
 

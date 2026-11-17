@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import {
   mkdirSync,
@@ -276,6 +277,9 @@ try {
   fixtureRecord.content_binding = liveEvidenceBinding(promotionRoot);
   const { version: fixtureVersion, ...fixtureManifest } = JSON.parse(readFileSync(path.join(promotionRoot, "package.json"), "utf8"));
   fixtureRecord.package_manifest_without_version = fixtureManifest;
+  fixtureRecord.runtime_files = Object.fromEntries(Object.keys(fixtureRecord.runtime_files).map(filename => [
+    filename, createHash("sha256").update(readFileSync(path.join(promotionRoot, filename))).digest("hex"),
+  ]));
   writeFileSync(fixtureRecordPath, JSON.stringify(fixtureRecord));
   assert.deepEqual(checkPromotion(), [], "equivalent fixture accepts matching evidence");
   for (const filename of ["scripts/install.mjs", "bin/repo-doctor-skills.mjs", promotionContract.liveModelReport,

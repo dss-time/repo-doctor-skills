@@ -1,0 +1,7 @@
+input: '请用 multi-agent-workflow 自动选择模式，修复已诊断的一行空值判断。'
+expected:
+  must_include:
+    - single
+    - safe-fix-implementation
+  must_not:
+    - fabricated worker IDs

@@ -1,6 +1,6 @@
 # Repo Doctor Skills 用户手册
 
-> 当前源码：33 个 Skill / Repo Doctor 26 个。GitHub v0.10.1 包含新增功能实施入口；npm 0.10.1 支持推荐的 7 个及全部 33 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
+> 当前源码：34 个 Skill / Repo Doctor 27 个。GitHub v0.10.1 包含新增功能实施入口；npm 0.10.1 支持推荐的 7 个及全部 33 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
 
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 
@@ -16,9 +16,9 @@
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-按提示选择 Skill 和目标 Agent。这个入口可发现全部 33 个 active Skill，默认安装到当前项目，无需源码构建。加 `-g` 可在所有项目使用。单项安装加 `--skill safe-code-review`；为 Codex 完整安装加 `--skill '*' -a codex`。复制安装的 Skills 使用 `npx skills@latest check` 和 `npx skills@latest update` 检查和更新；新增 Skill 再运行 `add` 选择。
+按提示选择 Skill 和目标 Agent。这个入口可发现全部 34 个 active Skill，默认安装到当前项目，无需源码构建。加 `-g` 可在所有项目使用。单项安装加 `--skill safe-code-review`；为 Codex 完整安装加 `--skill '*' -a codex`。复制安装的 Skills 使用 `npx skills@latest check` 和 `npx skills@latest update` 检查和更新；新增 Skill 再运行 `add` 选择。
 
-也可以安装完整 Codex 工程插件（26 个 Skill）：
+也可以安装完整 Codex 工程插件（27 个 Skill）：
 
 ```bash
 codex plugin marketplace add dss-time/repo-doctor-skills
@@ -47,13 +47,13 @@ npx repo-doctor-skills install
 
 `--agent codex` 会显式选择 Codex。安装器不会仅因为某个目录存在就认定用户正在使用对应 Agent；没有显式参数时，唯一一个已配置的 `CODEX_HOME` 或 `AGENTS_HOME` 会被视为可靠信号。两者同时存在时，安装器在写入前安全退出；两者都不存在时，安全安装到共享 `~/.agents/skills`，并打印准确目标。
 
-### 完整安装：全部 33 个 active Skill
+### 完整安装：全部 34 个 active Skill
 
 ```bash
 npx repo-doctor-skills install --preset full
 ```
 
-当前源码共 33 个 active Skill，其中 Repo Doctor 为 26 个，三个插件合计 33 个。PDF、Word、Excel 相关的 6 个 Skill 已删除。npm 0.10.1 Full 安装包含 33 个；本地安装当前源码也可运行 `node scripts/install.mjs --preset full`。
+当前源码共 34 个 active Skill，其中 Repo Doctor 为 27 个，三个插件合计 34 个。PDF、Word、Excel 相关的 6 个 Skill 已删除。npm 0.10.1 Full 安装包含 33 个；本地安装当前源码也可运行 `node scripts/install.mjs --preset full`。
 
 ### Individual
 
