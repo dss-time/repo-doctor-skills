@@ -14,6 +14,32 @@ The standard skills CLI lets users select Skills and their agent. The optional p
 
 Start with `npx skills@latest add dss-time/repo-doctor-skills` for interactive selection. The preset installer is useful for fixed selections and single-language bodies. Users can also choose plugins, source builds, platform outputs, and individual assets.
 
+### Unified multi-agent installation
+
+Use the community `skills` CLI as the single cross-agent installer:
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills -a claude-code
+npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli
+npx skills@latest add dss-time/repo-doctor-skills -a kimi-code-cli
+npx skills@latest add dss-time/repo-doctor-skills -a qwen-code
+npx skills@latest add dss-time/repo-doctor-skills -a cursor
+```
+
+Use `--skill '*'` for all Skills, `--skill <slug>` for one Skill and `-g` for a global target. This repository supplies one standard `SKILL.md` tree; the installer maps it to each host's directory. Installation compatibility and actual runtime validation are separate claims. This project does not add per-platform installers, duplicate Skill bodies or a WorkBuddy-specific `--agent` flag.
+
+| Host | Installation path | Runtime validation in this repository |
+|---|---|---|
+| Claude Code | `skills` CLI target `claude-code` | Format/distribution only |
+| Gemini CLI | `skills` CLI target `gemini-cli` | Format/distribution only |
+| Kimi Code CLI | `skills` CLI target `kimi-code-cli` | Format/distribution only |
+| Qwen Code | `skills` CLI target `qwen-code` | Format/distribution only |
+| Cursor | `skills` CLI target `cursor` | Format/distribution only |
+| Codex | `skills` CLI target `codex` or the Codex plugin | Fresh model and host trials |
+| WorkBuddy | Official local Skill import | Not verified here |
+
+“Format/distribution only” means the generated standard Skill tree and bundled resources are checked; it does not claim automatic triggering or successful tool execution in that host.
+
 ## 2. Plugin installation
 
 Add the stable source:

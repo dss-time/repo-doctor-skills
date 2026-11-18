@@ -19,6 +19,38 @@ Release validation uses fresh source-bound model cases and isolated coordination
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
+The same `npx skills` entry works across supported coding agents. Choose the host with `-a`:
+
+Use `$repo-doctor-router` when you want the library to recommend the narrowest matching Skill.
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills -a claude-code
+npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli
+npx skills@latest add dss-time/repo-doctor-skills -a kimi-code-cli
+npx skills@latest add dss-time/repo-doctor-skills -a qwen-code
+npx skills@latest add dss-time/repo-doctor-skills -a cursor
+```
+
+Install all Skills with `--skill '*'`, or select one with `--skill safe-code-review`. Add `-g` for a global installation. The installer selects the host's standard directory and replaces selected same-name Skills while leaving unselected Skills alone. This documents installation compatibility; automatic activation, tool permissions, multi-agent execution and runtime behavior still depend on the host. WorkBuddy has no `--agent workbuddy` command here; use its documented local Skill import instead.
+
+Platform quick reference:
+
+| Host | Command |
+|---|---|
+| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
+| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
+| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
+| WorkBuddy | Import the repository's `skills/` directory through WorkBuddy's documented local Skill import |
+
+For Codex, the native plugin path is also available:
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin add repo-doctor@repo-doctor-marketplace
+```
+
+WorkBuddy does not use a repository-specific `npx` Agent flag in this project. Preserve each Skill directory, including `SKILL.md` and linked resources, when importing locally.
+
 Use current Node.js LTS (Node 24 was tested). Run from your project, follow the installer's Skill and agent selection, then start a new task. No repository clone or build is needed. Installs are project-local by default; add `-g` for all projects.
 
 ## Minimal example

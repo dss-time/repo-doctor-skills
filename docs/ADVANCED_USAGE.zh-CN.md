@@ -14,6 +14,32 @@
 
 使用 `npx skills@latest add dss-time/repo-doctor-skills` 进行交互选择。preset 安装器适合固定选项和单语言正文；也可选择插件、源码构建、平台产物和单 Skill 资产。
 
+### 统一多平台安装
+
+使用社区 `skills` CLI 作为统一跨 Agent 安装入口：
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills -a claude-code
+npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli
+npx skills@latest add dss-time/repo-doctor-skills -a kimi-code-cli
+npx skills@latest add dss-time/repo-doctor-skills -a qwen-code
+npx skills@latest add dss-time/repo-doctor-skills -a cursor
+```
+
+使用 `--skill '*'` 安装全部 Skill，使用 `--skill <slug>` 安装单个 Skill，使用 `-g` 安装到全局。仓库只提供一份标准 `SKILL.md` 目录，由安装器映射到各宿主目录。安装格式兼容和实际运行验证分开记录。本项目不新增各平台安装器、不复制 Skill 正文，也不提供 WorkBuddy 专用 `--agent` 参数。
+
+| 宿主 | 安装方式 | 本仓库的运行验证 |
+|---|---|---|
+| Claude Code | `skills` CLI 的 `claude-code` 目标 | 仅格式/分发检查 |
+| Gemini CLI | `skills` CLI 的 `gemini-cli` 目标 | 仅格式/分发检查 |
+| Kimi Code CLI | `skills` CLI 的 `kimi-code-cli` 目标 | 仅格式/分发检查 |
+| Qwen Code | `skills` CLI 的 `qwen-code` 目标 | 仅格式/分发检查 |
+| Cursor | `skills` CLI 的 `cursor` 目标 | 仅格式/分发检查 |
+| Codex | `skills` CLI 的 `codex` 目标或 Codex 插件 | 已有真实模型和宿主试验 |
+| WorkBuddy | 官方本地 Skill 导入 | 本仓库未验证 |
+
+“仅格式/分发检查”表示已检查标准 Skill 目录和配套资源，不代表该宿主一定会自动触发或成功执行工具。
+
 ## 2. 插件安装
 
 添加稳定版 source：

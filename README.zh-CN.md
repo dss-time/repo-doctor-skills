@@ -16,6 +16,38 @@
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
+同一个 `npx skills` 入口可用于支持的编程 Agent，通过 `-a` 选择宿主：
+
+需要选择最匹配的能力时，使用 `$repo-doctor-router`。
+
+```bash
+npx skills@latest add dss-time/repo-doctor-skills -a claude-code
+npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli
+npx skills@latest add dss-time/repo-doctor-skills -a kimi-code-cli
+npx skills@latest add dss-time/repo-doctor-skills -a qwen-code
+npx skills@latest add dss-time/repo-doctor-skills -a cursor
+```
+
+使用 `--skill '*'` 安装全部 Skill，或用 `--skill safe-code-review` 安装单个 Skill；加 `-g` 安装到全局。安装器使用宿主的标准目录，替换选中的同名 Skill，并保留未选中的 Skill。这表示安装格式兼容；自动触发、工具权限、多 Agent 执行和运行时行为仍取决于宿主。这里不提供 `--agent workbuddy` 参数，WorkBuddy 请按其官方文档导入本地 Skill 目录。
+
+平台命令速查：
+
+| 宿主 | 命令 |
+|---|---|
+| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
+| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
+| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
+| WorkBuddy | 通过 WorkBuddy 官方本地 Skill 导入功能导入仓库的 `skills/` 目录 |
+
+Codex 也可以使用原生插件方式：
+
+```bash
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin add repo-doctor@repo-doctor-marketplace
+```
+
+WorkBuddy 在本项目中没有对应的 `npx` Agent 参数。通过本地导入时，请保留每个 Skill 的完整目录，包括 `SKILL.md` 及其链接的配套资源。
+
 使用当前 Node.js LTS（已测试 Node 24）。在你的项目目录运行，按安装器提示选择 Skill 和 Agent，然后新建任务即可使用。无需克隆或构建仓库。默认安装到当前项目；加 `-g` 可在所有项目使用。
 
 ## 最小示例
