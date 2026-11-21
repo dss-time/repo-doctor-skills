@@ -9,7 +9,7 @@ Help your AI agent diagnose bugs, implement features, review code and verify res
 
 From a local fix to authorized multi-stage delivery: use one Skill for a small task, or reuse existing authorization and valid evidence to move through dependent stages.
 
-Version **0.11.0** contains 34 Skills, including 27 Repo Doctor engineering Skills. [GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.0) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.0) · [Release notes](docs/RELEASE_NOTES_0.11.0.md).
+Version **0.11.1** contains 34 Skills, including 27 Repo Doctor engineering Skills. [GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.1) · [Release notes](docs/RELEASE_NOTES_0.11.1.md).
 
 Release validation uses fresh source-bound model cases and isolated coordination trials. See the [validation record](docs/RELEASE_VALIDATION_0.11.0.md) for results and limits. Earlier 0.10.0/0.10.1 reports remain historical evidence for their original content.
 
@@ -45,7 +45,7 @@ Platform quick reference:
 For Codex, the native plugin path is also available:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
@@ -150,23 +150,23 @@ npx repo-doctor-skills install --language en
 This alternative installs seven starter Skills by default and supports `en`, `zh-CN`, or `bilingual` bodies. Reinstalling replaces selected same-name Skills in the target directory, including local edits and old resources. Identical content is skipped. The bundled installer supports Node.js 18 and later. CI covers installation on Linux, macOS and Windows using Node 18 and current LTS, with full repository checks on Linux. The external skills CLI has its own Node requirements.
 
 
-## v0.11.0 stable release
+## v0.11.1 stable release
 
-Version 0.11.0 contains 34 Skills (27 in Repo Doctor) and 34 ChatGPT ZIPs. It adds adaptive execution, project/task state, installation diagnosis and scoped project convention rules. Earlier PDF/Word/Excel removals and requirements/planning consolidations remain in effect. [Release notes](docs/RELEASE_NOTES_0.11.0.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
+Version 0.11.1 contains 34 Skills (27 in Repo Doctor) and 34 ChatGPT ZIPs. It keeps the 0.11.0 runtime and adds unified multi-platform installation guidance for Codex, Claude Code, Cursor and WorkBuddy. [Release notes](docs/RELEASE_NOTES_0.11.1.md) · [Worked delivery examples](docs/guides/delivery-examples.md).
 
-When upgrading, use `requirements-clarification` for the former `requirements-to-spec` tasks and `safe-change-plan` for the former `spec-to-work-items` tasks. Previously installed directories for removed or merged Skills require manual cleanup after reviewing any local customizations. See the [migration notes](docs/RELEASE_NOTES_0.11.0.md#install-and-upgrade).
+When upgrading, use `requirements-clarification` for the former `requirements-to-spec` tasks and `safe-change-plan` for the former `spec-to-work-items` tasks. Previously installed directories for removed or merged Skills require manual cleanup after reviewing any local customizations. See the [migration notes](docs/RELEASE_NOTES_0.11.1.md#install-and-upgrade).
 
-Pin the GitHub plugin to `v0.11.0`:
+Pin the GitHub plugin to `v0.11.1`:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 Install the exact npm version (seven recommended Skills, or all 34):
 
 ```bash
-npx repo-doctor-skills@0.11.0 install --agent codex
-npx repo-doctor-skills@0.11.0 install --preset full --agent codex
+npx repo-doctor-skills@0.11.1 install --agent codex
+npx repo-doctor-skills@0.11.1 install --preset full --agent codex
 ```
 
 Choose one installation method per agent. The official skills CLI installs from the public GitHub source.
@@ -176,7 +176,7 @@ Choose one installation method per agent. The official skills CLI installs from 
 Version 0.11.0 adds `multi-agent-workflow` to the previous 33 Skills. Install it with the CLI:
 
 ```bash
-npx repo-doctor-skills@0.11.0 install --skill multi-agent-workflow --agent codex
+npx repo-doctor-skills@0.11.1 install --skill multi-agent-workflow --agent codex
 ```
 
 Keep the existing Skills needed by your task installed alongside it. Ask for automatic mode selection, or let the agent select this entry for independent work that needs coordination. Small fixes and ordinary direct Skill calls use their existing owner. Parallel execution requires host subagents; concurrent writers require isolated workspaces. The seven Recommended Skills remain the default selection.
@@ -192,9 +192,9 @@ See [mode selection and examples](docs/MULTI_AGENT_WORKFLOW.md). Host capabiliti
 Version 0.11.0 adds optional project initialization, revision-checked task checkpoints and read-only installation diagnosis. Preview setup before applying it, and revalidate saved task evidence before continuation.
 
 ```sh
-npx repo-doctor-skills@0.11.0 project init
-npx repo-doctor-skills@0.11.0 task list
-npx repo-doctor-skills@0.11.0 installations check
+npx repo-doctor-skills@0.11.1 project init
+npx repo-doctor-skills@0.11.1 task list
+npx repo-doctor-skills@0.11.1 installations check
 ```
 
 See [setup, task and migration commands](docs/PROJECT_STATE.md). The same commands can run from a local checkout.

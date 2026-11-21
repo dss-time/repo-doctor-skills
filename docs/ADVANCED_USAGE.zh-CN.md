@@ -45,11 +45,11 @@ npx skills@latest add dss-time/repo-doctor-skills -a cursor
 添加稳定版 source：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-此示例固定到 v0.11.0 正式版。省略 `--ref` 可使用 marketplace 当前默认分支；安装后新建任务。本仓库分发三个插件：
+此示例固定到 v0.11.1 正式版。省略 `--ref` 可使用 marketplace 当前默认分支；安装后新建任务。本仓库分发三个插件：
 
 - **Repo Doctor**：仓库工程任务；
 - **Productivity Toolkit**：报告、研究、表格、文档、会议和演示；

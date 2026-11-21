@@ -30,9 +30,9 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.11.0",
-  stableInstallVersion: "0.11.0",
-  releaseDate: "2026-11-17",
+  projectVersion: "0.11.1",
+  stableInstallVersion: "0.11.1",
+  releaseDate: "2026-11-21",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
@@ -85,8 +85,8 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.11.0.md",
-  promotionRecord: null,
+  releaseDocument: "docs/RELEASE_NOTES_0.11.1.md",
+  promotionRecord: "tests/reports/release-promotion-0.11.1.json",
   coordinationReport: "tests/reports/coordination-release-0.11.0.json",
   marketplacePath: ".agents/plugins/marketplace.json",
 });

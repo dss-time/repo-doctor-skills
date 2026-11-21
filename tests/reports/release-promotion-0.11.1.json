@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "target_version": "0.11.1",
+  "source_version": "0.11.0",
+  "source_tag": "v0.11.0",
+  "source_commit": "c9eadd8d059ff328bd2ddea57c91078104ff2280",
+  "authorization": "Maintainer requested publishing the documentation-only multi-platform installation update as 0.11.1 on 2026-11-21. This adjacent patch reuses unchanged runtime and source evidence.",
+  "scope": "equivalent-documentation-patch",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "bdfeb1f84e103d41ca0b72df84acfc9dbcd619efa54368a1b18659477157c11b",
+    "runtime_sha256": "13ba83865882014e8ee4f4aec4ca7845f02b5ca71871b959ba83a8937a1cf803"
+  },
+  "package_manifest_without_version": {
+    "name": "repo-doctor-skills",
+    "description": "A bilingual, cross-platform AI Skills framework for repository diagnosis, code review, and safe agent workflows.",
+    "type": "module",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/dss-time/repo-doctor-skills.git"
+    },
+    "homepage": "https://github.com/dss-time/repo-doctor-skills#readme",
+    "bugs": {
+      "url": "https://github.com/dss-time/repo-doctor-skills/issues"
+    },
+    "keywords": [
+      "ai",
+      "agent-skills",
+      "skills",
+      "codex",
+      "claude-code",
+      "workbuddy",
+      "cursor",
+      "qwen",
+      "kimi",
+      "chatgpt",
+      "code-review",
+      "debugging",
+      "root-cause-analysis",
+      "test-driven-development",
+      "requirements-analysis",
+      "feature-implementation",
+      "documentation",
+      "report-writing",
+      "skill-authoring",
+      "bilingual",
+      "workflow",
+      "developer-tools"
+    ],
+    "bin": {
+      "repo-doctor-skills": "bin/repo-doctor-skills.mjs"
+    },
+    "files": [
+      "bin/",
+      "scripts/install.mjs",
+      "scripts/workspace-cli.mjs",
+      "scripts/project-state.mjs",
+      "scripts/installation-state.mjs",
+      "scripts/local-state-files.mjs",
+      "scripts/workspace-runtime.mjs",
+      "scripts/credential-findings.mjs",
+      "package-assets/",
+      "README.md",
+      "LICENSE"
+    ],
+    "publishConfig": {
+      "access": "public",
+      "registry": "https://registry.npmjs.org/"
+    },
+    "scripts": {
+      "validate:schema": "node scripts/validate-yaml-schemas.mjs",
+      "validate:skills": "node scripts/validate-skills.mjs",
+      "workflow:validate": "node scripts/validate-workflows.mjs",
+      "validate": "npm run validate:schema && npm run validate:skills && npm run workflow:validate",
+      "test:activation": "node scripts/test-skill-activation.mjs",
+      "test:performance": "node scripts/test-performance-contracts.mjs",
+      "benchmark:performance": "node scripts/live-performance-benchmark.mjs",
+      "test:ci": "node scripts/test-ci-workflow.mjs",
+      "test:workflow": "node scripts/test-repo-doctor-workflows.mjs && node scripts/test-workflow-registry.mjs && node scripts/test-golden-workflows.mjs && npm run test:coordination",
+      "test:maintainer": "node scripts/test-maintainer-tools.mjs",
+      "test:build-integrity": "node scripts/test-build-integrity.mjs",
+      "test:skills-sh": "node scripts/test-skills-sh-compatibility.mjs",
+      "test:plugin-sync": "node scripts/test-repo-doctor-sync.mjs",
+      "test:docs": "node scripts/test-user-docs.mjs",
+      "test:release": "node scripts/test-release-metadata.mjs && node scripts/test-verify-release-assets.mjs",
+      "test:eval": "node scripts/test-eval-tools.mjs && node scripts/test-security-eval.mjs",
+      "test:doctor": "node scripts/test-doctor.mjs",
+      "test:ux": "node scripts/test-new-user-ux.mjs && node scripts/test-installer.mjs",
+      "test:npm": "node scripts/test-npm-package.mjs && node scripts/test-npm-tarball.mjs",
+      "test:core": "npm run test:ci && npm run test:activation && npm run test:performance && npm run test:workflow && npm run test:maintainer && npm run test:build-integrity && npm run test:skills-sh && npm run test:plugin-sync && npm run test:docs && npm run test:release && npm run test:eval && npm run test:doctor && npm run test:multi-agent && npm run test:state",
+      "test": "npm run test:core && npm run test:ux && npm run test:npm",
+      "build": "node scripts/build-skills.mjs && node scripts/sync-productivity-toolkit-plugin.mjs && node scripts/sync-skill-maintainer-plugin.mjs && node scripts/build-chatgpt-skills.mjs",
+      "build:chatgpt": "node scripts/build-chatgpt-skills.mjs",
+      "sync:plugin": "node scripts/sync-repo-doctor-plugin.mjs",
+      "sync:productivity": "node scripts/sync-productivity-toolkit-plugin.mjs",
+      "sync:maintainer": "node scripts/sync-skill-maintainer-plugin.mjs",
+      "quality:check": "node scripts/check-skill-quality.mjs --check-dist",
+      "docs:generate": "node scripts/generate-skill-catalog.mjs",
+      "docs:check": "node scripts/check-user-docs.mjs",
+      "release:check": "node scripts/release-metadata.mjs --check",
+      "release:inventory": "node scripts/release-validation-reports.mjs inventory",
+      "release:bilingual": "node scripts/release-validation-reports.mjs bilingual",
+      "release:artifacts": "node scripts/release-validation-reports.mjs artifacts",
+      "release:reports": "node scripts/release-validation-reports.mjs all",
+      "release:verify-remote": "node scripts/verify-release-assets.mjs",
+      "eval:prepare": "node scripts/eval-prepare.mjs",
+      "eval:validate": "node scripts/eval-validate.mjs",
+      "eval:report": "node scripts/eval-report.mjs",
+      "doctor": "node scripts/doctor.mjs",
+      "install:skills": "node scripts/install.mjs",
+      "prepack": "node scripts/prepare-npm-package.mjs",
+      "create:skill": "node scripts/create-skill.mjs",
+      "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs",
+      "eval:security": "node scripts/live-security-eval.mjs",
+      "test:multi-agent": "node scripts/test-multi-agent-workflow.mjs",
+      "test:state": "node --test scripts/test-project-state.mjs scripts/test-installation-state.mjs scripts/test-workspace-cli.mjs"
+    },
+    "engines": {
+      "node": ">=18"
+    },
+    "devDependencies": {
+      "yaml": "^2.8.1"
+    }
+  },
+  "runtime_files": {
+    "bin/repo-doctor-skills.mjs": "7a9e9c745b269b7124a911664773cbfe99b3eafb8f80347c645b9ad032352d8a",
+    "scripts/install.mjs": "d51935ab9d2609907619bafd79071c20a9585ff7edab5f373c788fdc45e7e1d5"
+  },
+  "evidence_reports": {
+    "tests/reports/live-codex-skill-validation-0.11.0.json": "b1ea25b8b6d4d129a5d5de8cd930ae5e2e72dc1f80778034a05bd427a92daa81",
+    "tests/reports/coordination-release-0.11.0.json": "ca7e7791e72028682ce189e71a977f98458621b8ee6fc739e4a6ea0a5fd037b9"
+  }
+}

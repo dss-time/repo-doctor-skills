@@ -6,7 +6,7 @@
 
 从一个局部修复到已授权的多阶段交付：小任务直接调用一个 Skill，复杂任务复用已有授权与有效证据，按依赖推进。
 
-版本 **0.11.0** 包含 34 个 Skill，其中 Repo Doctor 工程能力为 27 个。[GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.0) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.0) · [发布说明](docs/RELEASE_NOTES_0.11.0.zh-CN.md)。
+版本 **0.11.1** 包含 34 个 Skill，其中 Repo Doctor 工程能力为 27 个。[GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.1) · [发布说明](docs/RELEASE_NOTES_0.11.1.zh-CN.md)。
 
 发布验证使用新的源码绑定模型案例及隔离协调试验，结果与局限见[验证记录](docs/RELEASE_VALIDATION_0.11.0.md)。此前 0.10.0/0.10.1 报告仅保留为对应原始内容的历史证据。
 
@@ -42,7 +42,7 @@ npx skills@latest add dss-time/repo-doctor-skills -a cursor
 Codex 也可以使用原生插件方式：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
@@ -147,23 +147,23 @@ npx repo-doctor-skills install --language zh-CN
 这个替代入口默认安装 7 个常用 Skill，支持 `en`、`zh-CN`、`bilingual` 正文。重复安装会替换目标目录中选中的同名 Skill，包括本地修改和旧资源；内容相同则跳过。自带安装器支持 Node.js 18 及以上版本。CI 使用 Node 18 和当前 LTS 检查 Linux、macOS、Windows 安装，完整仓库检查运行于 Linux。外部 skills CLI 的 Node 要求由其自身版本决定。
 
 
-## v0.11.0 正式版
+## v0.11.1 正式版
 
-v0.11.0 包含 34 个 Skill（Repo Doctor 27 个）和 34 个 ChatGPT ZIP。新增自适应执行、项目与任务状态、安装诊断及局部项目规范适配；此前办公 Skill 删除及需求/规划入口合并继续生效。[发布说明](docs/RELEASE_NOTES_0.11.0.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
+v0.11.1 包含 34 个 Skill（Repo Doctor 27 个）和 34 个 ChatGPT ZIP。保留 0.11.0 运行内容，并新增 Codex、Claude Code、Cursor 和 WorkBuddy 的统一多平台安装说明。[发布说明](docs/RELEASE_NOTES_0.11.1.zh-CN.md) · [完整交付样例](docs/guides/delivery-examples.zh-CN.md)。
 
-升级时，原 `requirements-to-spec` 的任务改用 `requirements-clarification`，原 `spec-to-work-items` 的任务改用 `safe-change-plan`。已删除或合并的 Skill 如曾安装，其旧目录需要检查本地自定义内容后手动清理。详见[升级说明](docs/RELEASE_NOTES_0.11.0.zh-CN.md#安装与升级)。
+升级时，原 `requirements-to-spec` 的任务改用 `requirements-clarification`，原 `spec-to-work-items` 的任务改用 `safe-change-plan`。已删除或合并的 Skill 如曾安装，其旧目录需要检查本地自定义内容后手动清理。详见[升级说明](docs/RELEASE_NOTES_0.11.1.zh-CN.md#安装与升级)。
 
-将 GitHub 插件固定到 `v0.11.0`：
+将 GitHub 插件固定到 `v0.11.1`：
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 安装指定 npm 版本（默认 7 个常用 Skill，也可安装全部 34 个）：
 
 ```bash
-npx repo-doctor-skills@0.11.0 install --agent codex
-npx repo-doctor-skills@0.11.0 install --preset full --agent codex
+npx repo-doctor-skills@0.11.1 install --agent codex
+npx repo-doctor-skills@0.11.1 install --preset full --agent codex
 ```
 
 同一 Agent 选择一种安装方式。官方 skills CLI 从公开 GitHub 源码安装。
@@ -173,7 +173,7 @@ npx repo-doctor-skills@0.11.0 install --preset full --agent codex
 0.11.0 在原 33 个 Skill 上新增 `multi-agent-workflow`，可通过 CLI 安装：
 
 ```bash
-npx repo-doctor-skills@0.11.0 install --skill multi-agent-workflow --agent codex
+npx repo-doctor-skills@0.11.1 install --skill multi-agent-workflow --agent codex
 ```
 
 请同时安装任务所需的现有 Skills。可明确要求自动选模式，也可由 Agent 在独立工作需要协调时选择该入口。小修复和普通直接 Skill 调用由原能力处理。并行执行需要宿主子 Agent，并发写入需要隔离工作区。默认推荐安装仍为原 7 个 Skill。
@@ -189,9 +189,9 @@ $multi-agent-workflow 根据实际任务选择 single 或 multi，完成已授�
 0.11.0 新增可选项目初始化、修订号保护的任务存档，以及只读安装诊断。初始化先预览再应用，任务续接前重新核对证据。
 
 ```sh
-npx repo-doctor-skills@0.11.0 project init
-npx repo-doctor-skills@0.11.0 task list
-npx repo-doctor-skills@0.11.0 installations check
+npx repo-doctor-skills@0.11.1 project init
+npx repo-doctor-skills@0.11.1 task list
+npx repo-doctor-skills@0.11.1 installations check
 ```
 
 详见[初始化、任务及迁移命令](docs/PROJECT_STATE.zh-CN.md)。相同命令也可在本地检出目录运行。

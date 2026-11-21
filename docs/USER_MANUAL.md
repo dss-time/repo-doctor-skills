@@ -1,6 +1,6 @@
 # Repo Doctor Skills User Manual
 
-> Current source: 34 Skills / Repo Doctor 27. GitHub release v0.11.0 includes the new feature implementation owner; npm 0.11.0 supports Recommended 7 and Full 34. [Examples](guides/delivery-examples.md).
+> Current source: 34 Skills / Repo Doctor 27. GitHub release v0.11.1 includes unified multi-platform installation guidance; npm 0.11.1 supports Recommended 7 and Full 34. [Examples](guides/delivery-examples.md).
 
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 
@@ -53,7 +53,7 @@ Use `--agent codex` to choose Codex explicitly. The installer does not identify 
 npx repo-doctor-skills install --preset full
 ```
 
-Current source contains 34 active Skills, including 27 in Repo Doctor and 34 across the three plugins. Six PDF, Word, and Excel Skills have been removed. Published npm 0.11.0 Full installs 34 Skills. To install current local source, run `node scripts/install.mjs --preset full`.
+Current source contains 34 active Skills, including 27 in Repo Doctor and 34 across the three plugins. Six PDF, Word, and Excel Skills have been removed. Published npm 0.11.1 Full installs 34 Skills. To install current local source, run `node scripts/install.mjs --preset full`.
 
 ### Individual
 
@@ -140,10 +140,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.11.0`; to select that version, use:
+2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.11.1`; to select that version, use:
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

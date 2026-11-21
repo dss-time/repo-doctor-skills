@@ -45,11 +45,11 @@ Use `--skill '*'` for all Skills, `--skill <slug>` for one Skill and `-g` for a 
 Add the stable source:
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-This example pins the v0.11.0 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
+This example pins the v0.11.1 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
 
 - **Repo Doctor** for repository engineering;
 - **Productivity Toolkit** for reports, research, spreadsheets, documents, meetings, and presentations;

@@ -2,7 +2,7 @@
 
 Repo Doctor Skills keeps release versions, component versions, and maturity statuses separate. A matching number in two places is not evidence that they share a lifecycle.
 
-Project release 0.11.0 adds adaptive workflows, local project/task state, installation diagnosis and scoped project conventions. It requires fresh source-bound evidence; 0.10.1 evidence is historical.
+Project release 0.11.1 is an adjacent documentation patch over 0.11.0. It reuses the unchanged runtime and source-bound evidence while documenting the unified multi-platform installation entry.
 
 The current documentation patch is 0.10.1, based on the published 0.10.0 runtime. The published 0.9.0 release was promoted from 0.9.0-beta.2. Project channels and component maturity are managed separately.
 
