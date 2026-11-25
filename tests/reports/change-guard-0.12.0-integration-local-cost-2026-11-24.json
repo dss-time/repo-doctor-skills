@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v24.19.0",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "change_guard_sha256": "97991f97880b6f8db9f4a8807eb7817c8cfee198e59be824539133a0c8192b0b",
+  "measurement_script_sha256": "eb8c4c4fd9b8f46e2bfdf14790ff7e2936ca13c3a45cb61012f9c167ef38fbb1",
+  "tracked_fixture_files": 251,
+  "bytes_per_source_file": 4096,
+  "measured_rounds_per_size": 3,
+  "excluded_warmups_per_size": 1,
+  "measurement": "local CLI wall time including Node startup; baseline JSON bytes per ID",
+  "samples": [
+    {
+      "preexisting_dirty_paths": 0,
+      "ignored_file_bytes": 2,
+      "rounds": [
+        {
+          "begin_ms": 169.8,
+          "check_ms": 144.8,
+          "begin_peak_rss_bytes": 56836096,
+          "check_peak_rss_bytes": 55902208,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 164.9,
+          "check_ms": 142.3,
+          "begin_peak_rss_bytes": 56754176,
+          "check_peak_rss_bytes": 56049664,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 171.4,
+          "check_ms": 140,
+          "begin_peak_rss_bytes": 56672256,
+          "check_peak_rss_bytes": 56000512,
+          "baseline_bytes": 925
+        }
+      ]
+    },
+    {
+      "preexisting_dirty_paths": 25,
+      "ignored_file_bytes": 2,
+      "rounds": [
+        {
+          "begin_ms": 181,
+          "check_ms": 153.7,
+          "begin_peak_rss_bytes": 63668224,
+          "check_peak_rss_bytes": 63553536,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 178.6,
+          "check_ms": 152.7,
+          "begin_peak_rss_bytes": 63750144,
+          "check_peak_rss_bytes": 63504384,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 177.8,
+          "check_ms": 152.3,
+          "begin_peak_rss_bytes": 63782912,
+          "check_peak_rss_bytes": 63422464,
+          "baseline_bytes": 14496
+        }
+      ]
+    },
+    {
+      "preexisting_dirty_paths": 250,
+      "ignored_file_bytes": 2,
+      "rounds": [
+        {
+          "begin_ms": 254.9,
+          "check_ms": 229.7,
+          "begin_peak_rss_bytes": 66191360,
+          "check_peak_rss_bytes": 70434816,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 255.8,
+          "check_ms": 229,
+          "begin_peak_rss_bytes": 66355200,
+          "check_peak_rss_bytes": 70451200,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 252.9,
+          "check_ms": 226.5,
+          "begin_peak_rss_bytes": 66011136,
+          "check_peak_rss_bytes": 70516736,
+          "baseline_bytes": 136821
+        }
+      ]
+    }
+  ]
+}

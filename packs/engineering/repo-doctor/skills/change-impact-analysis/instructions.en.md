@@ -13,10 +13,10 @@ Use this skill before modifying, moving, renaming, deleting, or redesigning shar
 
 ## Workflow
 
-1. Identify the proposed change target.
+1. Identify the proposed change target. For an existing diff, reuse its changed paths and any Change Guard labels to seed the search. Establish owning modules from the project layout, package exports and project configuration. Use an existing dependency index or coverage map when it covers the target.
 2. Search imports, calls, re-exports, dynamic references, route references, config usage, tests, documentation, package exports, and CI usage.
 3. Determine whether the target is a public interface.
-4. Classify blast radius and compatibility requirements.
+4. Classify blast radius and compatibility requirements. Distinguish verified callers, path-based candidates and unresolved references. Choose relevant API, data or permission checks from actual call paths and configuration. Static evidence identifies what to verify at runtime.
 5. Identify behavior that must be preserved.
 6. Recommend the smallest safe change plan.
 

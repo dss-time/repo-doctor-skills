@@ -780,3 +780,36 @@ test('Recovered execution needs a disposition even after its request becomes rea
   f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw earlier write and current narrower request',reconciled:true});
   assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
 });
+
+test('attested verification remains worktree-bound and declared external state needs a current receipt', t => {
+  const fixture = setup(t);
+  const other = setup(t);
+  const green = fixture.runTest();
+  assert.deepEqual(evidenceValidity(green, { ...fixture.host, root: other.root }), {
+    status: 'stale', reason: 'project_binding_changed',
+  });
+  const { project_binding: omitted, ...historical } = green;
+  fixture.host.trustedEvidence.add(digest(historical));
+  assert.equal(evidenceValidity(historical, fixture.host).reason, 'project_binding_missing');
+
+  const external = fixture.evidence('external-check', [], { external_dependencies: ['fixtureService'] });
+  assert.equal(evidenceValidity(external, fixture.host).reason, 'external_state_binding_missing');
+  fixture.host.environment.fixtureService = 'fixture-v1';
+  const observed = fixture.evidence('external-receipt', [], { external_dependencies: ['fixtureService'] });
+  assert.equal(evidenceValidity(observed, fixture.host).status, 'valid');
+  fixture.host.environment.fixtureService = 'fixture-v2';
+  assert.equal(evidenceValidity(observed, fixture.host).status, 'stale');
+  fixture.host.environment.fixtureService = null;
+  assert.equal(evidenceValidity(observed, fixture.host).status, 'unknown');
+});
+
+test('a sourced live verification deferral preserves valid results and marks pending checks deferred', t => {
+  const fixture = setup(t);
+  const green = fixture.runTest();
+  fixture.host.verificationDeferral = { active: true, source: 'fixture user instruction' };
+  assert.equal(validationPlan([green], fixture.host)[0].action, 'reuse');
+  writeFileSync(path.join(fixture.root, 'lock.json'), '{"fixture":2}');
+  assert.equal(validationPlan([green], fixture.host)[0].status, 'deferred');
+  fixture.host.verificationDeferral = { active: true };
+  assert.equal(validationPlan([green], fixture.host)[0].action, 'rerun');
+});

@@ -43,7 +43,7 @@ for (const [english, chinese] of pairs) {
 for (const relative of ["README.md", "README.zh-CN.md"]) {
   const content = read(relative);
   const firstThirty = content.split(/\r?\n/).slice(0, 30).join("\n");
-  assert.match(firstThirty, /Repo Doctor Skills/);
+  assert.match(firstThirty, /^# Repo Doctor$/m);
   assert.match(firstThirty, /npx skills@latest add dss-time\/repo-doctor-skills/);
   assert.match(firstThirty, /repo-doctor-router/);
   assert.match(firstThirty, /(?:Minimal example|最小示例)/);

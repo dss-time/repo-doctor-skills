@@ -657,11 +657,11 @@ function validateSyntheticFixture(directory) {
   }
 }
 
-function installBaselineSkills(tempRoot) {
+function installBaselineSkills(tempRoot, ref = baselineRef) {
   const archive = path.join(tempRoot, "baseline.tar");
   const source = path.join(tempRoot, "baseline-source");
   mkdirSync(source, { recursive: true });
-  runCommand("git", ["archive", "--format=tar", "--output", archive, baselineRef], { cwd: root });
+  runCommand("git", ["archive", "--format=tar", "--output", archive, ref], { cwd: root });
   runCommand("tar", ["-xf", archive, "-C", source]);
   runCommand("node", ["scripts/build-skills.mjs", "--target", "codex-zh-CN"], { cwd: source });
   const home = path.join(tempRoot, "codex-home");
@@ -669,7 +669,7 @@ function installBaselineSkills(tempRoot) {
   cpSync(path.join(source, "dist", "codex-zh-CN", "skills"), path.join(home, "skills"), { recursive: true });
   const expectedCount = discoverCanonicalSkillDirs(path.join(source, "packs")).length;
   if (countInstalledSkills(home) !== expectedCount) {
-    throw new Error(`Baseline installation does not match ${baselineRef} canonical inventory`);
+    throw new Error(`Baseline installation does not match ${ref} canonical inventory`);
   }
   rmSync(source, { recursive: true, force: true });
   rmSync(archive, { force: true });
@@ -690,7 +690,7 @@ function countInstalledSkills(codexHome) {
 }
 
 class AppServer {
-  constructor({ stateRoot, cwd }) {
+  constructor({ stateRoot, cwd, environment, settings = [] }) {
     this.nextId = 1;
     this.pending = new Map();
     this.turns = new Map();
@@ -708,14 +708,15 @@ class AppServer {
       "--disable", "image_generation",
       "--disable", "multi_agent",
       "--disable", "memories",
-      "-c", 'model_provider="openai"',
       "-c", 'model_reasoning_effort="low"',
       "-c", 'model_verbosity="low"',
       "-c", "analytics.enabled=false",
+      ...(environment ? [] : ["-c", 'model_provider="openai"']),
+      ...settings.flatMap(value => ["-c", value]),
     ];
     this.child = spawn("codex", args, {
       cwd,
-      env: { ...process.env, CODEX_SQLITE_HOME: sqliteHome },
+      env: { ...(environment ?? process.env), CODEX_SQLITE_HOME: sqliteHome },
       stdio: ["pipe", "pipe", "pipe"],
     });
     this.child.stdout.on("data", (chunk) => this.onStdout(chunk));
@@ -764,7 +765,7 @@ class AppServer {
       collector.events.push(message);
       if (message.method === "turn/completed") {
         this.turns.delete(threadId);
-        collector.resolve({ turn: message.params.turn, events: collector.events });
+        collector.resolve({ turn: message.params.turn, events: collector.events, model: collector.model });
       }
     }
   }
@@ -800,6 +801,7 @@ class AppServer {
     sandbox = "read-only",
     instructions,
     schema = null,
+    model,
   }) {
     const thread = await this.request("thread/start", {
       cwd: workspace,
@@ -807,6 +809,7 @@ class AppServer {
       approvalPolicy: "never",
       ephemeral: true,
       developerInstructions: instructions,
+      ...(model ? { model } : {}),
     });
     const threadId = thread.thread.id;
     const completed = new Promise((resolve, reject) => {
@@ -816,6 +819,7 @@ class AppServer {
       }, timeoutMs);
       this.turns.set(threadId, {
         events: [],
+        model: thread.model ?? null,
         resolve: (result) => {
           clearTimeout(timeout);
           resolve(result);
@@ -1972,4 +1976,6 @@ async function main() {
   if (recommendation !== "KEEP_OPTIMIZATION") process.exitCode = 1;
 }
 
-await main();
+export { AppServer, cases, fixtureFiles, fixtureDigest, installBaselineSkills, installOptimizedSkills, parseOutput, toolEvidence, writeFixture };
+
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

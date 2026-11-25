@@ -47,12 +47,19 @@ export function captureEvidence(root, input, environment) {
   assert(input.id && input.source && input.summary, 'Evidence needs id, source and summary');
   assert(Array.isArray(input.dependencies) && input.dependencies.length, 'Evidence needs dependency coverage');
   const bindings = Object.fromEntries(input.dependencies.map(p => [p, fingerprint(root, p)]));
-  return { ...copy(input), bindings, environment: copy(environment), recorded_at: new Date().toISOString() };
+  return { ...copy(input), project_binding: digest(realpathSync(root)), bindings,
+    environment: copy(environment), recorded_at: new Date().toISOString() };
 }
 
 export function evidenceValidity(evidence, host) {
   if (!evidence || !host.trustedEvidence?.has(digest(evidence))) return { status: 'unknown', reason: 'source_not_attested' };
   if (!['pass', 'fail'].includes(evidence.result)) return { status: 'unknown', reason: 'result_not_observed' };
+  if (!evidence.project_binding) return { status: 'unknown', reason: 'project_binding_missing' };
+  try {
+    if (evidence.project_binding !== digest(realpathSync(host.root))) return { status: 'stale', reason: 'project_binding_changed' };
+  } catch {
+    return { status: 'unknown', reason: 'project_binding_unavailable' };
+  }
   let unknownReason = evidence.coverage_complete !== true || !evidence.bindings || !Object.keys(evidence.bindings).length
     || !evidence.environment || !Object.keys(evidence.environment).length
     ? 'dependency_or_environment_coverage_unknown' : null;
@@ -63,8 +70,16 @@ export function evidenceValidity(evidence, host) {
       || evidence.observed_target_failure !== true || !evidence.success_criterion || !evidence.failure_criterion)) {
     unknownReason ??= 'reliable_failure_signal_missing';
   }
+  if (evidence.external_dependencies !== undefined &&
+      (!Array.isArray(evidence.external_dependencies) || evidence.external_dependencies.some(key =>
+        typeof key !== 'string' || !key || !Object.hasOwn(evidence.environment ?? {}, key)
+        || evidence.environment[key] === null || evidence.environment[key] === undefined))) {
+    unknownReason ??= 'external_state_binding_missing';
+  }
   for (const [key, value] of Object.entries(evidence.environment ?? {})) {
-    if (!(key in (host.environment ?? {}))) { unknownReason ??= `environment_unknown:${key}`; continue; }
+    if (!Object.hasOwn(host.environment ?? {}, key) || host.environment[key] === undefined || host.environment[key] === null) {
+      unknownReason ??= `environment_unknown:${key}`; continue;
+    }
     if (host.environment[key] !== value) return { status: 'stale', reason: `environment_changed:${key}` };
   }
   for (const [file, hash] of Object.entries(evidence.bindings ?? {})) {
@@ -77,8 +92,14 @@ export function evidenceValidity(evidence, host) {
 }
 
 export function validationPlan(evidence, host) {
-  return evidence.map(item => ({ id: item.id, ...evidenceValidity(item, host) }))
-    .map(item => ({ ...item, action: item.status === 'valid' ? 'reuse' : item.status === 'unknown' ? 'investigate' : 'rerun' }));
+  return evidence.map(item => {
+    const validity = evidenceValidity(item, host);
+    if (item.kind === 'test' && ['stale', 'unknown'].includes(validity.status)
+        && host.verificationDeferral?.active === true && host.verificationDeferral.source) {
+      return { id: item.id, status: 'deferred', action: 'defer', reason: validity.reason };
+    }
+    return { id: item.id, ...validity, action: validity.status === 'valid' ? 'reuse' : validity.status === 'unknown' ? 'investigate' : 'rerun' };
+  });
 }
 
 export function reviewBinding(root, task, baseline, files) {

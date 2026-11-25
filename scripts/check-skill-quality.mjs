@@ -21,7 +21,7 @@ import {
   walkFiles,
 } from "./deterministic-files.mjs";
 import { permissionRiskIssues } from "./skill-metadata.mjs";
-import { discoverActivePackSkills } from "./sync-pack-plugin.mjs";
+import { changeGuardModules, discoverActivePackSkills } from "./sync-pack-plugin.mjs";
 import { syncRepoDoctorPlugin } from "./sync-repo-doctor-plugin.mjs";
 import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 
@@ -360,6 +360,13 @@ function auditPluginSkill(skillDir, expectedName = null) {
     const resolved = path.resolve(skillDir, reference);
     referenced.add(resolved);
     if (!existsSync(resolved)) errors.push(`${relative(skillPath)}: broken resource reference ${reference}`);
+  }
+  if (referenced.has(path.join(skillDir, "references", "change-guard-entry.mjs"))) {
+    for (const filename of changeGuardModules) {
+      const dependency = path.join(skillDir, "references", "change-guard-runtime", filename);
+      referenced.add(dependency);
+      if (!existsSync(dependency)) errors.push(`${relative(skillPath)}: missing bundled runtime module ${filename}`);
+    }
   }
   for (const resourceDir of ["references", "assets", "scripts"]) {
     const resourceRoot = path.join(skillDir, resourceDir);

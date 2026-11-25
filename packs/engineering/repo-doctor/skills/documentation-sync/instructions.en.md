@@ -1,5 +1,7 @@
 # Documentation Sync
 
+**Before editing:** Inspect the target and reuse its existing Git context. When the target overlaps a user edit or the work changes a public contract, establish or reuse a baseline before the first write if shell and project-local diagnostic state are permitted. Run `node "<this Skill's absolute directory>/../../references/change-guard-entry.mjs" begin --root "<worktree>" --id <task-id> --scope <authorized-path> --json` using the bundled path relative to this Skill. After the final write, run the same entry with `check --root "<worktree>" --id <task-id> --json`. Use §4 of [workspace safety](../../references/user-workspace-safety.en.md) for other material risks, reuse, report handling, and manual fallback. Simple low-risk and read-only work stays focused. Apply its command preflight before tests or builds.
+
 Synchronize affected documentation with confirmed implementation, configuration, API, or behavior changes. Modify documentation only.
 
 ## Boundary
@@ -25,5 +27,3 @@ Synchronize affected documentation with confirmed implementation, configuration,
 9. Report updated files, evidence, validation, intentionally unchanged files, blockers, and documentation that may still be stale.
 
 Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
-
-Before editing user files or running test/build/diagnostic commands, read [user workspace safety](../../references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.

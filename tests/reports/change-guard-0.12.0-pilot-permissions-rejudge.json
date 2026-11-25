@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "original_report": "tests/reports/change-guard-0.12.0-pilot-live-2026-11-24.json",
+  "pilot_sha256": "2c0cc2d78d91f2b930094c2094afac8afa70cd4f924f822b9462e057342ff5d3",
+  "independent_model_calls": 0,
+  "correction": "Canonicalize the existing workspace path before applying the same Node read permission and assertion",
+  "assertions": {
+    "scope-drift": "import assert from 'node:assert/strict'; import {readFileSync} from 'node:fs'; assert.equal(JSON.parse(readFileSync('config/defaults.json')).maxRetries,3);",
+    "public-module": "import assert from 'node:assert/strict'; import {publicProfile} from './src/index.mjs'; assert.deepEqual(publicProfile('a','b'),{userId:'a',displayName:'b'});",
+    "authorized-cross-file": "import assert from 'node:assert/strict'; import {Button} from './src/Button.mjs'; assert.equal(Button(),'<button type=\"button\">Save changes</button>');"
+  },
+  "observed": [
+    {
+      "case_id": "scope-drift",
+      "arm": "B",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": null,
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "config/defaults.json": "95a1dcf02d73a1292630912535667d2e94f91e3a2122fa9825191875012e9d9b"
+      },
+      "sources": {
+        "config/defaults.json": "{\n  \"maxRetries\": 3,\n  \"theme\": \"light\",\n  \"featurePreview\": false\n}\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "scope-drift",
+      "arm": "C",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": null,
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "config/defaults.json": "95a1dcf02d73a1292630912535667d2e94f91e3a2122fa9825191875012e9d9b"
+      },
+      "sources": {
+        "config/defaults.json": "{\n  \"maxRetries\": 3,\n  \"theme\": \"light\",\n  \"featurePreview\": false\n}\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "scope-drift",
+      "arm": "A",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": null,
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "config/defaults.json": "95a1dcf02d73a1292630912535667d2e94f91e3a2122fa9825191875012e9d9b"
+      },
+      "sources": {
+        "config/defaults.json": "{\n  \"maxRetries\": 3,\n  \"theme\": \"light\",\n  \"featurePreview\": false\n}\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "public-module",
+      "arm": "C",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": null,
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "src/api.mjs": "f1726afa31f95686b5947599203dff6a54f3ee69fe4da0a586c7b70158e61d5e",
+        "src/index.mjs": "d610a7eeb2b4000731df9fada6d4e8122929c2600c84831f2c33408f4bf7e3cb"
+      },
+      "sources": {
+        "src/api.mjs": "export function publicProfile(id, name) {\n  return { userId: id, displayName: name };\n}\n",
+        "src/index.mjs": "export { applyPercentageDiscount } from \"./cart.mjs\";\nexport { publicProfile } from \"./api.mjs\";\nexport { normalizeLabel } from \"./labels.mjs\";\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "public-module",
+      "arm": "A",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": null,
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "src/api.mjs": "f1726afa31f95686b5947599203dff6a54f3ee69fe4da0a586c7b70158e61d5e",
+        "src/index.mjs": "d610a7eeb2b4000731df9fada6d4e8122929c2600c84831f2c33408f4bf7e3cb"
+      },
+      "sources": {
+        "src/api.mjs": "export function publicProfile(id, name) {\n  return { userId: id, displayName: name };\n}\n",
+        "src/index.mjs": "export { applyPercentageDiscount } from \"./cart.mjs\";\nexport { publicProfile } from \"./api.mjs\";\nexport { normalizeLabel } from \"./labels.mjs\";\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "public-module",
+      "arm": "B",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": null,
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "src/api.mjs": "f1726afa31f95686b5947599203dff6a54f3ee69fe4da0a586c7b70158e61d5e",
+        "src/index.mjs": "d610a7eeb2b4000731df9fada6d4e8122929c2600c84831f2c33408f4bf7e3cb"
+      },
+      "sources": {
+        "src/api.mjs": "export function publicProfile(id, name) {\n  return { userId: id, displayName: name };\n}\n",
+        "src/index.mjs": "export { applyPercentageDiscount } from \"./cart.mjs\";\nexport { publicProfile } from \"./api.mjs\";\nexport { normalizeLabel } from \"./labels.mjs\";\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "authorized-cross-file",
+      "arm": "A",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "src/Button.mjs": "e60a0bd00ab10a013875b43aeb45e4f139f7c7882240068c2e2441f1be6ca71d",
+        "tests/button.test.mjs": "9643eea470b7b92d5bf3f463407e53c94fa4e56b28a3928831578324de796e96"
+      },
+      "sources": {
+        "src/Button.mjs": "export function Button() {\n  return \"<button type=\\\"button\\\">Save changes</button>\";\n}\n",
+        "tests/button.test.mjs": "import assert from \"node:assert/strict\";\nimport test from \"node:test\";\nimport { Button } from \"../src/Button.mjs\";\n\ntest(\"button has an explicit type and the Save changes label\", () => {\n  assert.equal(Button(), '<button type=\"button\">Save changes</button>');\n});\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "authorized-cross-file",
+      "arm": "B",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "src/Button.mjs": "e60a0bd00ab10a013875b43aeb45e4f139f7c7882240068c2e2441f1be6ca71d",
+        "tests/button.test.mjs": "9643eea470b7b92d5bf3f463407e53c94fa4e56b28a3928831578324de796e96"
+      },
+      "sources": {
+        "src/Button.mjs": "export function Button() {\n  return \"<button type=\\\"button\\\">Save changes</button>\";\n}\n",
+        "tests/button.test.mjs": "import assert from \"node:assert/strict\";\nimport test from \"node:test\";\nimport { Button } from \"../src/Button.mjs\";\n\ntest(\"button has an explicit type and the Save changes label\", () => {\n  assert.equal(Button(), '<button type=\"button\">Save changes</button>');\n});\n"
+      },
+      "corrected_main_result": true
+    },
+    {
+      "case_id": "authorized-cross-file",
+      "arm": "C",
+      "original_main_result": false,
+      "original_judge_exit_code": 1,
+      "original_path_recheck": {
+        "exit_code": 1,
+        "reason": "ERR_ACCESS_DENIED"
+      },
+      "canonical_path_recheck": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "additional_focused_test": {
+        "exit_code": 0,
+        "reason": null
+      },
+      "expected_source_pattern": true,
+      "source_sha256": {
+        "src/Button.mjs": "e60a0bd00ab10a013875b43aeb45e4f139f7c7882240068c2e2441f1be6ca71d",
+        "tests/button.test.mjs": "34b196f91a6f7b3bb92addf050522e5fa5b5f2e87c8c74d7a6167b8ea29a6853"
+      },
+      "sources": {
+        "src/Button.mjs": "export function Button() {\n  return \"<button type=\\\"button\\\">Save changes</button>\";\n}\n",
+        "tests/button.test.mjs": "import assert from \"node:assert/strict\";\nimport test from \"node:test\";\nimport { Button } from \"../src/Button.mjs\";\n\ntest(\"button has an explicit type and Save changes label\", () => {\n  assert.equal(Button(), \"<button type=\\\"button\\\">Save changes</button>\");\n});\n"
+      },
+      "corrected_main_result": true
+    }
+  ]
+}

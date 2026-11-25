@@ -25,6 +25,8 @@ Validate according to actual risk; security, production, migrations, releases an
 
 # Documentation Sync
 
+**Before editing:** Inspect the target and reuse its existing Git context. When the target overlaps a user edit or the work changes a public contract, establish or reuse a baseline before the first write if shell and project-local diagnostic state are permitted. Run `node "<this Skill's absolute directory>/references/change-guard-entry.mjs" begin --root "<worktree>" --id <task-id> --scope <authorized-path> --json` using the bundled path relative to this Skill. After the final write, run the same entry with `check --root "<worktree>" --id <task-id> --json`. Use §4 of [workspace safety](references/user-workspace-safety.en.md) for other material risks, reuse, report handling, and manual fallback. Simple low-risk and read-only work stays focused. Apply its command preflight before tests or builds.
+
 Synchronize affected documentation with confirmed implementation, configuration, API, or behavior changes. Modify documentation only.
 
 ## Boundary
@@ -50,8 +52,6 @@ Synchronize affected documentation with confirmed implementation, configuration,
 9. Report updated files, evidence, validation, intentionally unchanged files, blockers, and documentation that may still be stale.
 
 Read [execution boundaries](references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
-
-Before editing user files or running test/build/diagnostic commands, read [user workspace safety](references/user-workspace-safety.en.md) and apply relevant sections. Read-only analysis/review uses it when assessing authorization/business invariants, existing-data update semantics, validation isolation or edit conflicts; preserve this Skill's own permissions.
 
 # Output Contract
 
@@ -89,6 +89,8 @@ When relevant, briefly state preserved authorization/business behavior, existing
 
 # 文档同步维护
 
+**写入前：**检查目标并复用已有 Git 上下文。目标与用户编辑重叠，或任务改变公共契约时，如果 Shell 与项目本地诊断状态均获准，必须先建立或复用基线。使用本 Skill 中入口的实际路径运行 `node "<本 Skill 的绝对目录>/references/change-guard-entry.mjs" begin --root "<工作树>" --id <任务ID> --scope <授权路径> --json`。最后一次写入后，用同一入口运行 `check --root "<工作树>" --id <任务ID> --json`。其他实质风险、复用、报告处理及人工降级见[用户工作区安全](references/user-workspace-safety.zh-CN.md)第 4 节。简单低风险及只读任务保持定向检查，测试及构建前执行命令预检。
+
 根据已确认的实现、配置、API 或行为变更同步受影响文档。只修改文档。
 
 ## 职责边界
@@ -114,8 +116,6 @@ When relevant, briefly state preserved authorization/business behavior, existing
 9. 报告更新文件、证据、验证、明确未修改文件、阻塞项和仍可能过期的文档。
 
 读取[执行边界](references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
-
-修改用户文件或运行测试、构建、诊断命令前，读取[用户项目修改与验证安全](references/user-workspace-safety.zh-CN.md)并应用相关章节。只读分析/审查涉及权限与业务不变量、已有数据更新语义、验证隔离或编辑冲突时按需读取，保持本 Skill 自身权限。
 
 # 输出契约
 

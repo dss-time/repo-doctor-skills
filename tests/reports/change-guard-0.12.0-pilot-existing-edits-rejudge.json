@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "case_id": "existing-edits",
+  "original_report": "tests/reports/change-guard-0.12.0-pilot-live-2026-11-24.json",
+  "pilot_sha256": "2c0cc2d78d91f2b930094c2094afac8afa70cd4f924f822b9462e057342ff5d3",
+  "original_oracle": "import assert from 'node:assert/strict'; import {normalizeHeading} from './src/labels.mjs'; assert.equal(normalizeHeading(' X '),'x');",
+  "reference_oracle": "import assert from 'node:assert/strict'; import {normalizeHeading} from './src/labels.mjs'; assert.equal(normalizeHeading(' X '),'X');",
+  "baseline_sha256": "2ef5fc9f7b779821a34817c4faef8db55601f70df631cb607efbd3dbbe080f12",
+  "baseline_reference_exit_code": 0,
+  "independent_model_calls": 0,
+  "observed": [
+    {
+      "arm": "A",
+      "original_judge_exit_code": 1,
+      "original_main_result": false,
+      "source_sha256": "81b8ebb2734c315a5253c0178d5b38a86027766e740882ef05cd01fb283e4aaa",
+      "source": "// Existing user note: keep this normalization behavior.\nexport function normalizeLabel(value) {\n  return value.trim().toUpperCase();\n}\n\nexport function normalizeHeading(value) {\n  return normalizeLabel(value);\n}\n\nexport const unusedLabel = \"synthetic-unused\";\n",
+      "exit_code": 0,
+      "accepted_source_pattern": true,
+      "output_is_reference_mismatch": false,
+      "corrected_main_result": true
+    },
+    {
+      "arm": "B",
+      "original_judge_exit_code": 1,
+      "original_main_result": false,
+      "source_sha256": "81b8ebb2734c315a5253c0178d5b38a86027766e740882ef05cd01fb283e4aaa",
+      "source": "// Existing user note: keep this normalization behavior.\nexport function normalizeLabel(value) {\n  return value.trim().toUpperCase();\n}\n\nexport function normalizeHeading(value) {\n  return normalizeLabel(value);\n}\n\nexport const unusedLabel = \"synthetic-unused\";\n",
+      "exit_code": 0,
+      "accepted_source_pattern": true,
+      "output_is_reference_mismatch": false,
+      "corrected_main_result": true
+    },
+    {
+      "arm": "C",
+      "original_judge_exit_code": 1,
+      "original_main_result": false,
+      "source_sha256": "81b8ebb2734c315a5253c0178d5b38a86027766e740882ef05cd01fb283e4aaa",
+      "source": "// Existing user note: keep this normalization behavior.\nexport function normalizeLabel(value) {\n  return value.trim().toUpperCase();\n}\n\nexport function normalizeHeading(value) {\n  return normalizeLabel(value);\n}\n\nexport const unusedLabel = \"synthetic-unused\";\n",
+      "exit_code": 0,
+      "accepted_source_pattern": true,
+      "output_is_reference_mismatch": false,
+      "corrected_main_result": true
+    }
+  ]
+}

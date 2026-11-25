@@ -8,6 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Add local, advisory Change Guard reports for preexisting changes, scope drift, protected paths and coverage limits.
+- Add optional Change Guard project policy and worktree-bound engineering evidence.
+
+### Changed
+
+- Bundle the same Change Guard runtime in implementation, safe fix, safe test and documentation Skills. Let eligible natural-language tasks invoke a shared pre-edit baseline and final check while keeping focused checks for lower-risk work. Preserve the public CLI and Skill IDs.
+- Record CLI timing and storage samples, packaging checks and outstanding release evidence in the [0.12.0 draft](docs/RELEASE_NOTES_0.12.0_DRAFT.md).
+
+### Fixed
+
+- Report executable and type transitions relative to the baseline.
+- Keep valid observations when one declared path traverses a symlink.
+- Match confirmed filesystem aliases for scope and protected paths.
+
+
 ## [0.11.1] - 2026-11-21
 
 ### Documentation

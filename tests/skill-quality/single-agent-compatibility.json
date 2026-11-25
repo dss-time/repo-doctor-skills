@@ -291,5 +291,231 @@
       "heading": "## 5. 按修改范围适配项目规范",
       "sha256": "fc113c84d5acd407439daabcc981f0a4862a0790dc4d6a8ad35c726b26169064"
     }
+  },
+  "change_safety_upgrade": {
+    "reason": "Canonical changes cover routing, impact analysis and shared change safety and evidence. Generated projections carry those changes and drop the Router’s unused language profiles.",
+    "trees": {
+      "packs/engineering/repo-doctor/references": {
+        "sha256": "6797edbf0d40072d5e8a5123dc57f61b39255b6beb32635002861253b4df7647",
+        "file_count": 13
+      },
+      "packs/engineering/repo-doctor/skills/change-impact-analysis": {
+        "sha256": "30d272dbee01198ef016b46ea678b339b270429ec3e4e3b254e60a5347a06686",
+        "file_count": 9
+      },
+      "packs/engineering/repo-doctor/skills/repo-doctor-router": {
+        "sha256": "d675b59072f3845f24bda9fcc5994d065fb8f115018918302955627345076807",
+        "file_count": 9
+      },
+      "skills/api-contract-review": {
+        "sha256": "96beef57c8709e56be64408e330656d40aacb17802531146bc3510753041a906",
+        "file_count": 14
+      },
+      "skills/architecture-decision-record": {
+        "sha256": "47fc6a7b3e5ccdb597901dd39830b3472fa88211451bd34e7450244f9d110bb8",
+        "file_count": 15
+      },
+      "skills/architecture-deepening-analysis": {
+        "sha256": "2622affa3d680e962970dda7e3fdc4dde54c80cbdbb3c246c60d9774d221858c",
+        "file_count": 16
+      },
+      "skills/bug-root-cause-analysis": {
+        "sha256": "73739450cde7e53617a50f11db5575b797b5b6ab42576f2ffecd82f6c6fbba9e",
+        "file_count": 14
+      },
+      "skills/change-impact-analysis": {
+        "sha256": "325a3956fcc4655cf307d821a0295f90e07c17fd05c9124fc7cc8f804e9bad79",
+        "file_count": 14
+      },
+      "skills/ci-failure-diagnosis": {
+        "sha256": "f8715ca63d9ed04bca9dc72912b4049d571a3c338385ce397711458397550e96",
+        "file_count": 14
+      },
+      "skills/configuration-audit": {
+        "sha256": "b5cee427b3a196c92e65be02b11c5933f3867dc47f7e55e2861830d91aa5fb53",
+        "file_count": 14
+      },
+      "skills/database-migration-review": {
+        "sha256": "4c74b545f5acb3c01e4ebf7de31edd27c1d871aff5e277433d3c779bb2224722",
+        "file_count": 14
+      },
+      "skills/dead-code-verification": {
+        "sha256": "13b170e6d1b08d12b2245b43c011cefe9bfcac68ecff8076ee29abf5f72d4e25",
+        "file_count": 12
+      },
+      "skills/decision-prototype": {
+        "sha256": "a9b716e5d981ca8f5a3f69151b40de2372bd89f7dfd3c71894560e136c0d8288",
+        "file_count": 16
+      },
+      "skills/dependency-upgrade-analysis": {
+        "sha256": "b583c65a18aa88b9f54afc6a7ebf60c525bfe173a598fa14b5c6e921c47ab9ac",
+        "file_count": 12
+      },
+      "skills/documentation-sync": {
+        "sha256": "72c382e8dddcdeb169a8e5a0187e588558e371f18ae7720ba6524af293f5c115",
+        "file_count": 14
+      },
+      "skills/feature-implementation": {
+        "sha256": "78e650915b5bdfb4905e00b374e0b24d706ffbe1aabf7aa595ddc11be8118c72",
+        "file_count": 16
+      },
+      "skills/performance-regression-analysis": {
+        "sha256": "bc609c9748a5207e9de33d632e4666c4d1532edd25acbb183806e8f63fa7a4aa",
+        "file_count": 12
+      },
+      "skills/project-health-check": {
+        "sha256": "9ee1c7c0eccc00eb9d3e8b60d009e757c86dd5ce4b1fe40e1baa8a3a941fe4fd",
+        "file_count": 12
+      },
+      "skills/release-readiness-check": {
+        "sha256": "3ca0dccc8d6a1e5f46c77aaa7d994ca34373f030c0064f13186cb997f0c2a276",
+        "file_count": 14
+      },
+      "skills/repo-doctor-router": {
+        "sha256": "fb75abdfa820b81544eaf701987fffd5f5bda6deb14b79b394a3d075b1c75ca8",
+        "file_count": 10
+      },
+      "skills/repo-onboarding": {
+        "sha256": "ba71b6bbe597dd95ce29bd833728d9f0f63de5ef49745f9831dfdf54b6741057",
+        "file_count": 12
+      },
+      "skills/requirements-clarification": {
+        "sha256": "6970ba40979acd9a79fb5a4e57f434a2358c48e3f0fcd8b4ec9b02dab23a2504",
+        "file_count": 14
+      },
+      "skills/safe-change-plan": {
+        "sha256": "a16a52ee20273e7c74ff9a0576b8b974054d56e7bacb515235a3289c2a6b1eda",
+        "file_count": 14
+      },
+      "skills/safe-code-review": {
+        "sha256": "88c923d94fef44f4e5f9596ebeadbc5c8957ba6cd3789a635752990bc322d1ca",
+        "file_count": 14
+      },
+      "skills/safe-fix-implementation": {
+        "sha256": "eba53ab9dabfc61230a5e8cf4481cab596c4e6f61a462b9171d9c3f4541205f1",
+        "file_count": 14
+      },
+      "skills/safe-test-implementation": {
+        "sha256": "15809784af46c431a6b7687bbc5ecdd3e48d68d8855807282c535b39c86a4d18",
+        "file_count": 16
+      },
+      "skills/security-focused-review": {
+        "sha256": "6319a57cc6d8bf79730c4c6736ebdea2b7513647802543338847fa718b5f3e05",
+        "file_count": 14
+      },
+      "skills/session-handoff": {
+        "sha256": "aafe7d42a6aa07b6e67d1a16cd6d113f005ea067125d7b6edce75a1015f94dc2",
+        "file_count": 14
+      },
+      "skills/test-gap-analysis": {
+        "sha256": "5716889d7040641a4459057cc25bb3b5c11b1b51c8f788eedaa69f58ab525016",
+        "file_count": 14
+      }
+    }
+  },
+  "change_guard_integration": {
+    "reason": "Shared worktree comparison lifecycle, early cues in four existing writing Skills, and their deterministic runtime modules. Prior hashes are retained.",
+    "trees": {
+      "packs/engineering/repo-doctor/references": {
+        "sha256": "e904e1bc77bf40455658160be665d520bee07d3adc9e6784b356ccfc08849206",
+        "file_count": 14
+      },
+      "packs/engineering/repo-doctor/skills/documentation-sync": {
+        "sha256": "81bfd5052508054315da05d3852f686fd427cf4bd80d48f18c8f3bc0c16afbd2",
+        "file_count": 9
+      },
+      "packs/engineering/repo-doctor/skills/feature-implementation": {
+        "sha256": "6e6a6724933ab0672bc6cf01964c47d2a01c688035156d3c2487c95f25f11635",
+        "file_count": 9
+      },
+      "packs/engineering/repo-doctor/skills/safe-fix-implementation": {
+        "sha256": "26de1943915630a8ffd3abb20e81f2807f47c423e9b56484564d1fc8ccf5a128",
+        "file_count": 11
+      },
+      "packs/engineering/repo-doctor/skills/safe-test-implementation": {
+        "sha256": "8730a6846a4ae0fa4e759f56cdec74c0da1b2953b68f73ccee2cbed00d2d847c",
+        "file_count": 11
+      },
+      "skills/api-contract-review": {
+        "sha256": "a89c119966f6bd091c81b6b0e2d9dbb641ac4072ff655be6225968c86be30ef0",
+        "file_count": 14
+      },
+      "skills/architecture-decision-record": {
+        "sha256": "f11be179d150d921dfac8ee91d1295258dd1ec3c6e6bdcecb22053428913a4bf",
+        "file_count": 15
+      },
+      "skills/architecture-deepening-analysis": {
+        "sha256": "3a84db3b5ee140fb4d50f6c4bc7bc9a760e3c3ab923420f1f4e5d74c57e17215",
+        "file_count": 16
+      },
+      "skills/bug-root-cause-analysis": {
+        "sha256": "3f91f2802bcd3a016516e21e7d9896d424c28ca09646dc6fa838e042e37bda2a",
+        "file_count": 14
+      },
+      "skills/change-impact-analysis": {
+        "sha256": "3e198202003b341abd7f42948d464bfc00576c777a321d1c95571b89440ffec4",
+        "file_count": 14
+      },
+      "skills/ci-failure-diagnosis": {
+        "sha256": "981fcb43cc761a2b603bb1d6f1d776bcd7f32e14817da5843924ab6c49f7cae4",
+        "file_count": 14
+      },
+      "skills/configuration-audit": {
+        "sha256": "a7d8bd5fba03ef126b4d9059e3ab966b8b1cf9b7f46edefb38dc46eb0eea6271",
+        "file_count": 14
+      },
+      "skills/database-migration-review": {
+        "sha256": "87c334cff5c934fa5ebc529459333dfa19af6bdc56cc92c42387a2201fc25814",
+        "file_count": 14
+      },
+      "skills/decision-prototype": {
+        "sha256": "e6270dcf5fdf01773656a8b33cd1626f4917f1ff88b27098ad5e5d4a98e2c4e7",
+        "file_count": 16
+      },
+      "skills/documentation-sync": {
+        "sha256": "bc4a6c211c619bf27f3c48a92a9629c8418b6dca9049701d0f84bc27770627a5",
+        "file_count": 22
+      },
+      "skills/feature-implementation": {
+        "sha256": "bc035550a07892ee89d5c2c287f87f0b22d837f24e10759440c809dc361760f2",
+        "file_count": 24
+      },
+      "skills/release-readiness-check": {
+        "sha256": "04fdc665dc63cfed6dd62a4f918eb01a7276ebb0fb7bba0ba2c0b36c6d0260ac",
+        "file_count": 14
+      },
+      "skills/requirements-clarification": {
+        "sha256": "b63f104eb175b4341f55ef18eaa1eb5b1089cffbb45e77412e206215fdc68354",
+        "file_count": 14
+      },
+      "skills/safe-change-plan": {
+        "sha256": "914b1cb582fbb56d913f6f050a61671244747f1b3eb21781d8b227254860664b",
+        "file_count": 14
+      },
+      "skills/safe-code-review": {
+        "sha256": "93fdd35184d0b35509d40a1f8f74d00a8f9f4c89003d64f83761edb5380a09f6",
+        "file_count": 14
+      },
+      "skills/safe-fix-implementation": {
+        "sha256": "146f27fc6e44e4c9b7353c093b878ff9588f10d27aae8d4e4773a195aea65124",
+        "file_count": 22
+      },
+      "skills/safe-test-implementation": {
+        "sha256": "6b19f516b48a2e45b04e082d829f5577f6dc1967d64755ef03f001ec0096ccb4",
+        "file_count": 24
+      },
+      "skills/security-focused-review": {
+        "sha256": "c2468733eabf4ff3f7985e41b796d894dbaca98588082c1c74db5e4ec2274a97",
+        "file_count": 14
+      },
+      "skills/session-handoff": {
+        "sha256": "c7c036dbd5f84ac18026ee0d17dd5474944b9dfa2052e8ab113df1583ad2cd3a",
+        "file_count": 14
+      },
+      "skills/test-gap-analysis": {
+        "sha256": "981ffd3343468f7ca472d939db17938ea0957ed3e6efa5355252c68a1bbe0973",
+        "file_count": 14
+      }
+    }
   }
 }

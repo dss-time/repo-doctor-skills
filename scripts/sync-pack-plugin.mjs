@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   compareNames,
   copyDirectoryContents,
@@ -16,6 +17,10 @@ import { parseYamlSubset } from "./validate-yaml-schemas.mjs";
 
 const activeSkillStatuses = new Set(["draft", "beta", "stable"]);
 const knownSkillStatuses = new Set([...activeSkillStatuses, "deprecated"]);
+export const changeGuardModules = Object.freeze([
+  "change-guard-cli.mjs", "change-guard.mjs", "credential-findings.mjs", "local-state-files.mjs",
+  "project-state.mjs", "state-cli-options.mjs", "workspace-runtime.mjs",
+]);
 
 function block(yaml, key) {
   return yaml.match(new RegExp(`^${key}:\\n([\\s\\S]*?)(?=^[a-zA-Z_][a-zA-Z0-9_]*:|\\Z)`, "m"))?.[1] ?? "";
@@ -104,6 +109,13 @@ export function copyPackReferences(skillDir, destination, workflowDestination = 
       if (!entry.isFile() || !instructions.includes(`references/${entry.name}`)) continue;
       mkdirSync(destination, { recursive: true });
       copyFileSync(path.join(references, entry.name), path.join(destination, entry.name));
+    }
+  }
+  if (instructions.includes("references/change-guard-entry.mjs")) {
+    const runtime = path.join(destination, "change-guard-runtime");
+    mkdirSync(runtime, { recursive: true });
+    for (const filename of changeGuardModules) {
+      copyFileSync(fileURLToPath(new URL(filename, import.meta.url)), path.join(runtime, filename));
     }
   }
   if (instructions.includes("../../workflows.yaml") || instructions.includes("references/workflows.yaml")) {

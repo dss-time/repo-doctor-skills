@@ -1,4 +1,4 @@
-# Repo Doctor Skills User Manual
+# Repo Doctor User Manual
 
 > Current source: 34 Skills / Repo Doctor 27. GitHub release v0.11.1 includes unified multi-platform installation guidance; npm 0.11.1 supports Recommended 7 and Full 34. [Examples](guides/delivery-examples.md).
 
@@ -97,6 +97,8 @@ It is a fallback, not a mandatory gateway. If you already know you need `$safe-c
 
 ## 4. Common tasks
 
+With the source candidate, describe the intended behavior, permitted scope and work to preserve. Overlapping edits, shared contracts and protected paths can warrant a pre-edit baseline and final check. Supported writing Skills bundle the runtime entry point and need Node, Git and host permission to run it. Read-only and low-risk local requests can stay light. If execution is unavailable, the assistant should report unknown coverage and continue reviewing the diff and affected behavior. [Observed behavior](research/change-guard-integration.md)
+
 | Goal | Start with | Minimal request |
 |---|---|---|
 | Diagnose a runtime bug | `$bug-root-cause-analysis` | `Find the cause of this intermittent 500; do not edit files.` |
@@ -127,6 +129,8 @@ One primary Skill per step is the safest default. Repo Doctor does not assume th
 Fast never means skipping safety. Audit is not imposed on every small problem. A Skill escalates only when the task's actual risk, permission boundary, or evidence requirement calls for it.
 
 ## 7. Update
+
+The local candidate was tested upgrading from the published 0.11.1 in isolated directories. Existing project state stays readable, and old task evidence still requires host revalidation. Installing replaces selected same-name Skills under the existing contract and preserves unselected custom directories. Public installation instructions continue to target the published release.
 
 ### Understand the two version layers
 

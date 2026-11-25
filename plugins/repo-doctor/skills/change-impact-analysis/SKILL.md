@@ -40,10 +40,10 @@ Use this skill before modifying, moving, renaming, deleting, or redesigning shar
 
 ## Workflow
 
-1. Identify the proposed change target.
+1. Identify the proposed change target. For an existing diff, reuse its changed paths and any Change Guard labels to seed the search. Establish owning modules from the project layout, package exports and project configuration. Use an existing dependency index or coverage map when it covers the target.
 2. Search imports, calls, re-exports, dynamic references, route references, config usage, tests, documentation, package exports, and CI usage.
 3. Determine whether the target is a public interface.
-4. Classify blast radius and compatibility requirements.
+4. Classify blast radius and compatibility requirements. Distinguish verified callers, path-based candidates and unresolved references. Choose relevant API, data or permission checks from actual call paths and configuration. Static evidence identifies what to verify at runtime.
 5. Identify behavior that must be preserved.
 6. Recommend the smallest safe change plan.
 
@@ -101,10 +101,10 @@ For relevant changes, identify authorization/business invariants to preserve, ex
 
 ## 工作流程
 
-1. 识别拟变更目标。
+1. 识别拟变更目标。已有 diff 时，复用变更路径及 Change Guard 标签作为搜索入口。根据项目结构、包导出和项目配置定位所属模块。已有依赖索引或覆盖率映射能覆盖目标时予以复用。
 2. 搜索 import、调用、re-export、动态引用、路由引用、配置使用、测试、文档、包导出和 CI 使用。
 3. 判断目标是否属于公共接口。
-4. 评估影响范围和兼容性要求。
+4. 评估影响范围和兼容性要求。区分已核实调用方、基于路径的候选项和仍未查明的引用。依据真实调用链与配置选择相关的 API、数据或权限检查，并据此确定需要运行验证的部分。
 5. 识别必须保持的行为。
 6. 给出最小安全修改方案。
 

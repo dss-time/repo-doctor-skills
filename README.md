@@ -1,92 +1,63 @@
 **English** | [简体中文](./README.zh-CN.md)
 
-# Repo Doctor Skills
+# Repo Doctor
 
-[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/dss-time/badge.svg)](https://hub.xerj.org/contributors/dss-time)
-![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen) ![Agent Skills](https://img.shields.io/badge/Agent-Skills-blue) ![Codex](https://img.shields.io/badge/Codex-Compatible-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-orange)
+**Make AI coding safer, not slower.**
 
-Help your AI agent diagnose bugs, implement features, review code and verify results within explicit safety boundaries, using rules matched to your project's languages and runtimes.
+Safe, scoped, and verifiable code changes for AI coding agents.
 
-From a local fix to authorized multi-stage delivery: use one Skill for a small task, or reuse existing authorization and valid evidence to move through dependent stages.
+Repo Doctor gives coding agents a way to check whether their edits touched your existing work, changed staging, or crossed an agreed boundary. In this source candidate, eligible engineering Skills share **Change Guard**, a local Git worktree comparison. They can use it alongside focused tests and existing engineering evidence.
 
-Version **0.11.1** contains 34 Skills, including 27 Repo Doctor engineering Skills. [GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.1) · [Release notes](docs/RELEASE_NOTES_0.11.1.md).
-
-Release validation uses fresh source-bound model cases and isolated coordination trials. See the [validation record](docs/RELEASE_VALIDATION_0.11.0.md) for results and limits. Earlier 0.10.0/0.10.1 reports remain historical evidence for their original content.
-
-## Start in 30 seconds
+## Quick start
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-The same `npx skills` entry works across supported coding agents. Choose the host with `-a`:
-
-Use `$repo-doctor-router` when you want the library to recommend the narrowest matching Skill.
-
-```bash
-npx skills@latest add dss-time/repo-doctor-skills -a claude-code
-npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli
-npx skills@latest add dss-time/repo-doctor-skills -a kimi-code-cli
-npx skills@latest add dss-time/repo-doctor-skills -a qwen-code
-npx skills@latest add dss-time/repo-doctor-skills -a cursor
-```
-
-Install all Skills with `--skill '*'`, or select one with `--skill safe-code-review`. Add `-g` for a global installation. The installer selects the host's standard directory and replaces selected same-name Skills while leaving unselected Skills alone. This documents installation compatibility; automatic activation, tool permissions, multi-agent execution and runtime behavior still depend on the host. WorkBuddy has no `--agent workbuddy` command here; use its documented local Skill import instead.
-
-Platform quick reference:
-
-| Host | Command |
-|---|---|
-| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
-| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
-| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
-| WorkBuddy | Import the repository's `skills/` directory through WorkBuddy's documented local Skill import |
-
-For Codex, the native plugin path is also available:
-
-```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
-codex plugin add repo-doctor@repo-doctor-marketplace
-```
-
-WorkBuddy does not use a repository-specific `npx` Agent flag in this project. Preserve each Skill directory, including `SKILL.md` and linked resources, when importing locally.
-
-Use current Node.js LTS (Node 24 was tested). Run from your project, follow the installer's Skill and agent selection, then start a new task. No repository clone or build is needed. Installs are project-local by default; add `-g` for all projects.
+Start a task in your coding agent and describe the work in your own words. You can also invoke a Skill directly or ask `$repo-doctor-router` for a recommendation.
 
 ## Minimal example
 
 ```text
-$safe-code-review Review the current changes.
+Fix the label formatting bug in src/labels.mjs. Keep my uncommitted accessibility note in that file and leave unrelated files alone.
 ```
 
-Use `$repo-doctor-router` when unsure. It recommends a Skill and gives a copyable next request; invoke a known Skill directly.
+In the isolated Codex follow-up, a request to fix a label while preserving an existing user edit led to a baseline and a final warning for the edited path. The user note survived and the fixture checks passed. Three of four eligible candidate turns ran both checks. The public-module turn skipped them, and the low-risk edit stayed light. Invocation depends on Skill selection, host permissions and runtime availability. [Live observations and costs](docs/research/change-guard-integration.md)
 
-Authorized multi-stage tasks can use [serial workflow coordination and evidence reuse](docs/WORKFLOW_COORDINATION.md). Simple tasks still use one Skill; automatic execution depends on the host.
+On macOS with 251 tracked fixture files, median baseline time was 170–255 ms and median check time was 142–229 ms, including Node startup. Costs vary by worktree and environment. The candidate upgrade passed on macOS with Node 18 and 24. Linux and Windows runs are pending. [Candidate verification](docs/research/change-guard-integration.md#候选冻结和本轮补验)
 
-## Why Repo Doctor Skills
+## Explicit worktree comparison for diagnostics
 
-| Advantage | What it means for your work |
+The following commands run from a Repo Doctor source checkout against the Git worktree you choose. The published 0.11.1 CLI predates this workflow.
+
+```bash
+node bin/repo-doctor-skills.mjs change begin --root ../my-project --id export-fix --scope src/export --json
+node bin/repo-doctor-skills.mjs change check --root ../my-project --id export-fix --json
+```
+
+A baseline makes it possible to distinguish an existing edit from a later change to the same file. For example, if a task touches a user-edited file and also updates a lockfile outside its scope, the JSON report flags both. The report leaves edit ownership unknown and puts remediation in the developer’s hands. Git-ignored work and transient concurrent changes can be invisible. Verify business behavior separately with focused tests. [Report fields, project policy and coverage limits](docs/PROJECT_STATE.md#change-guard).
+
+[Try the verified disposable Git example](docs/guides/change-guard-demo.md).
+
+## How it works
+
+- **Change safety.** Existing Skills check user edits, business behavior and permission boundaries. Change Guard adds a Git-visible comparison for tasks where a persisted baseline helps.
+- **Adaptive verification.** Choose checks by impact and evidence. Small tasks use focused checks. Contracts, data updates and permission boundaries can require isolated integration tests. [Execution modes](docs/MULTI_AGENT_WORKFLOW.md).
+- **Engineering evidence.** Optional task checkpoints preserve history. The host revalidates execution receipts, worktree identity, relevant inputs and environment before reuse. [Workflow coordination](docs/WORKFLOW_COORDINATION.md).
+- **Runs alongside your other tools.** Invoke a single Skill or use authorized coordination for dependent stages. Hosts choose when to load references and whether isolated parallel execution is available.
+
+## Hosts and installation
+
+Use current Node.js LTS. The bundled CLI supports Node 18 and later. The external Skills installer has its own Node requirements. Run the quick-start command in your target project and select your host and Skills. Native activation and tool permissions depend on the host.
+
+| Host | Command or import |
 |---|---|
-| **Protect your existing project** | Check authorization and business behavior, existing-data update semantics and preexisting edits before changes. Inspect actual environments and side effects before tests or builds. Unknown risks block affected operations. |
-| **Progressive context disclosure** | Hosts with native Skills support discover capabilities through names and descriptions, load the selected Skill's body, then read references as needed, avoiding loading the entire instruction collection upfront. |
-| **Language- and runtime-aware rules** | Apply checks to relevant components. Pure JS/TS does not inherit C/C++ memory-management requirements; native, embedded and mixed-stack work requires checking the corresponding boundaries and available validation tools. |
-| **Individual Skills that connect into workflows** | Use focused requirements, diagnosis, implementation, testing and review capabilities independently, or coordinate them serially within existing authorization. Reuse valid acceptance evidence to reduce repeated confirmations and checks. |
-| **Evidence behind completion claims** | Distinguish implemented, verified, deferred and blocked work. Script inspection is not a passing test, and a local check is not full delivery. Published versions include source-bound model evaluation records. |
-| **Flexible installation, English and Chinese** | Install a recommended set, a subset or one Skill. Bilingual content and platform adapters support different hosts; the bundled installer supports language selection and replacement of selected same-name Skills. |
+| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
+| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
+| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
+| WorkBuddy | Import the `skills/` directories using the host's local Skill import |
 
-Skill instructions guide safe execution; enforcement still depends on host tools, sandboxes and approval controls. Cross-language support does not mean every language, framework or device has been validated.
-
-### How on-demand loading works
-
-```text
-Name and description → Match the task → Read the selected Skill → Read references or use scripts as needed
-```
-
-For example, feature implementation selects rules for the actual stack, reads the testing contract when authoring tests, and loads the workflow protocol for multi-stage continuation or recovery. Installing all Skills does not mean loading all bodies for every task. Loading behavior depends on the host; generic prompt imports do not guarantee automatic disclosure, and the current bilingual bodies add context when a Skill is activated. No universal Token savings percentage has been measured.
-
-**Included in 0.11.0:** [adaptive single-agent / multi-agent execution](docs/MULTI_AGENT_WORKFLOW.md), plus [project initialization, task checkpoints and read-only installation diagnosis](docs/PROJECT_STATE.md). Existing Skills remain independently usable. Project setup remains optional.
-
-Current source also strengthens **project convention adaptation**: direct implementation, fix, test and documentation calls check applicable instructions, configuration and nearby style for the target directory and stack before editing, without project initialization. Changes stay within the task; configuration discovery does not execute configuration code, format the whole repository or silently store personal preferences. See [user workspace safety](packs/engineering/repo-doctor/references/user-workspace-safety.en.md#5-adapt-to-project-conventions-within-the-edit-scope). Actual adherence depends on the host and model.
+See [Advanced usage](docs/ADVANCED_USAGE.md) for additional hosts and bundled installation. The compatibility matrix covers Linux, macOS and Windows.
 
 ## Codex plugin
 
