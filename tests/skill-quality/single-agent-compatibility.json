@@ -473,11 +473,11 @@
         "file_count": 16
       },
       "skills/documentation-sync": {
-        "sha256": "8eb41ba56c65b0f440ea542cd92037053c7e4d11d53ccae01981d5cca0975097",
+        "sha256": "049c91cf31f115457becacee3a0c6780e5ff50ff4c9bc5b6fccb15c62f92a8ff",
         "file_count": 22
       },
       "skills/feature-implementation": {
-        "sha256": "b65679a001dad5676af7d7ba6c2ee8b8f0973578827a2c540ce73249078115aa",
+        "sha256": "aefb33d9c02d1c3cec25913d5cd0edc993df07e385dfd9b625ec43df9efafa37",
         "file_count": 24
       },
       "skills/release-readiness-check": {
@@ -497,11 +497,11 @@
         "file_count": 14
       },
       "skills/safe-fix-implementation": {
-        "sha256": "f500e4d35653153320b877003c4fc4dbeb5bf90f92935ece995801c55a282a33",
+        "sha256": "0ca6d9f3a1bbf3996db5270dd4d8825d31376d5cb2ff5ad45aaf9c0874c81ece",
         "file_count": 22
       },
       "skills/safe-test-implementation": {
-        "sha256": "205fd5c18c55aa2af6aa6188107846e318becfe42c1ebbf7fcbc771a8f50d37c",
+        "sha256": "c49a6d29d084f801af57d74775a504659dcc13d4aa36e14d3eb35538d16e0a97",
         "file_count": 24
       },
       "skills/security-focused-review": {

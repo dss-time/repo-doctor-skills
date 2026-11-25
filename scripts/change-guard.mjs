@@ -119,6 +119,25 @@ function symlinkSpelling(root, relative) {
     ? path.join(realpathSync.native(dir), names[0]) : null;
 }
 
+function windowsPathSpelling(root, relative) {
+  let directory = root;
+  for (const part of relative.split('/')) {
+    const names = readdirSync(directory);
+    if (names.includes(part)) {
+      directory = path.join(directory, part);
+      continue;
+    }
+    const matches = names.filter(name => name.toLowerCase() === part.toLowerCase());
+    if (matches.length !== 1) return null;
+    const candidate = path.join(directory, matches[0]);
+    const requested = lstatSync(path.join(directory, part), { bigint: true });
+    const actual = lstatSync(candidate, { bigint: true });
+    if (requested.ino === 0n || requested.ino !== actual.ino || requested.dev !== actual.dev) return null;
+    directory = candidate;
+  }
+  return directory;
+}
+
 function pathAliases(root, relatives) {
   const aliases = new Set(relatives);
   for (const relative of relatives) {
@@ -128,7 +147,13 @@ function pathAliases(root, relatives) {
       try {
         // Native realpath resolves the on-disk spelling on case-insensitive filesystems.
         let canonical;
-        try { canonical = realpathSync.native(safePath(root, parent)); }
+        try {
+          const target = safePath(root, parent);
+          canonical = realpathSync.native(target);
+          // Git reports the path recorded in the index. Windows realpath can
+          // retain the input spelling, so confirm directory-entry spelling.
+          if (process.platform === 'win32') canonical = windowsPathSpelling(root, parent) ?? canonical;
+        }
         catch (error) {
           if (error.code) throw error;
           canonical = symlinkSpelling(root, parent);
