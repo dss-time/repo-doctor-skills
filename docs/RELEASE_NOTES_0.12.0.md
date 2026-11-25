@@ -2,7 +2,7 @@
 
 [简体中文](RELEASE_NOTES_0.12.0.zh-CN.md)
 
-The target is a stable release. The public release remains at v0.11.1 pending candidate checks. The existing gate requires Live-model validation PASS and a successful independent coordination review bound to this version.
+The target is a stable release. The public release remains at v0.11.1 pending candidate checks. Live-model validation is UNKNOWN under the one-time v0.12.0 maintainer waiver. The waiver does not claim PASS or waive deterministic and platform gates.
 
 - Use natural language for scoped development work. Eligible writing Skills can compare a local Git baseline with the final worktree and report existing edits, scope changes and protected paths.
 - Checkpoint recovery reconciles attested failures recorded after the saved checkpoint. The host confirms history completeness and retains unresolved failures until a qualifying rerun or proven input change. Retry authority applies to the exact import and worktree. Changing an optional condition cannot erase a failed stage.

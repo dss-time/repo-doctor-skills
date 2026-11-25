@@ -251,8 +251,9 @@ assert.deepEqual(
 );
 assert.equal(releaseContract.projectVersion, "0.12.0");
 assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "PASS");
-assert.equal(releaseContract.liveModelWaiver, null);
+assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
+assert.equal(releaseContract.liveModelWaiver.version, "0.12.0");
+assert.equal(releaseContract.liveModelWaiver.scope, "live-model-and-coordination-status-only");
 assert.equal(releaseContract.expectedLiveModelCases, 289);
 assert.equal(releaseContract.liveModelEvidenceVersion, "0.12.0");
 
@@ -499,7 +500,7 @@ const broadWaiver = inspectReleaseMetadata(repositoryRoot, {
   liveModelWaiver: { ...historicalWaiver, scope: "all-release-gates" },
 });
 assert.ok(
-  broadWaiver.errors.some((error) => error.includes("scope must be live-model-status-only")),
+  broadWaiver.errors.some((error) => error.includes("scope is invalid")),
   "Live-model waiver must not suppress other release gates",
 );
 

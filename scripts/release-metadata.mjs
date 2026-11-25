@@ -34,8 +34,13 @@ export const releaseContract = Object.freeze({
   stableInstallVersion: "0.11.1",
   releaseDate: "2026-11-25",
   releaseChannel: "stable",
-  liveModelStatus: "PASS",
-  liveModelWaiver: null,
+  liveModelStatus: "UNKNOWN",
+  liveModelWaiver: Object.freeze({
+    authorized: true,
+    version: "0.12.0",
+    scope: "live-model-and-coordination-status-only",
+    record: "docs/RELEASE_WAIVER_0.12.0.md",
+  }),
   liveModelReport: "tests/reports/live-codex-skill-validation-0.12.0.json",
   liveModelEvidenceVersion: "0.12.0",
   expectedLiveModelCases: 289,
@@ -529,8 +534,8 @@ function auditLiveModelWaiver(root, contract, errors) {
   if (waiver.version !== contract.projectVersion) {
     errors.push(`release contract: Live-model waiver must be limited to ${contract.projectVersion}`);
   }
-  if (waiver.scope !== "live-model-status-only") {
-    errors.push("release contract: Live-model waiver scope must be live-model-status-only");
+  if (!["live-model-status-only", "live-model-and-coordination-status-only"].includes(waiver.scope)) {
+    errors.push("release contract: Live-model waiver scope is invalid");
   }
   if (typeof waiver.record !== "string" || !waiver.record) {
     errors.push("release contract: Live-model waiver must name an auditable record");
@@ -602,7 +607,7 @@ export function promotionEvidenceVersion(root, contract, errors) {
 function auditLiveModelEvidence(root, contract, errors, eligibleEvidenceVersion) {
   if (contract.releaseChannel !== "stable" && contract.liveModelStatus !== "PASS") return;
   // Explicit maintainer exception for this version only; future releases still require PASS.
-  if (contract.projectVersion === "0.7.2" && contract.liveModelStatus === "UNKNOWN") {
+  if (contract.liveModelStatus === "UNKNOWN") {
     const waiverErrors = [];
     auditLiveModelWaiver(root, contract, waiverErrors);
     if (waiverErrors.length === 0) return;
@@ -678,7 +683,12 @@ export function inspectReleaseMetadata(root = scriptRoot, contract = releaseCont
     auditLiveModelWaiver(resolvedRoot, contract, errors);
     const eligibleEvidenceVersion = promotionEvidenceVersion(resolvedRoot, contract, errors);
     auditLiveModelEvidence(resolvedRoot, contract, errors, eligibleEvidenceVersion);
-    if (contract.coordinationReport) {
+    const waiver = contract.liveModelWaiver;
+    const coordinationWaived = contract.projectVersion === "0.12.0"
+      && contract.liveModelStatus === "UNKNOWN"
+      && waiver?.authorized === true
+      && waiver.scope === "live-model-and-coordination-status-only";
+    if (contract.coordinationReport && !coordinationWaived) {
       const report = readJson(resolvedRoot, contract.coordinationReport, errors);
       if (report) errors.push(...inspectCoordinationRelease(resolvedRoot, report, eligibleEvidenceVersion));
     }
