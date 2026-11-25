@@ -50,7 +50,7 @@
 
 实际核对 Skill 正文与当前模式/目标后，提供 `host.skillChecks[stageId] = {allowed: true, source, request_binding: digest(request), skill_binding: digest(metadata)}`。缺失或不匹配时阻塞执行与结果接收；这是宿主核验，不是重复用户审批。
 
-必须直接使用 `restoreTask` 返回对象；不得拷贝字段到另一对象或直接 JSON.parse 后执行。每次导入都有新的内存恢复标识。检查实际工作区与可信操作/尝试记录（包括旧 pending 检查点之后的效果）后，设置 `host.recoveryChecks.set(recoveryBinding(task, host), {source, reconciled: true, failureEvidence})`。不得从 pending 推断“从未执行”，也不得从 Task Context 复制此权威。 宿主须提供经核对的当前任务与工作树的实际失败凭据，包括检查点之后观测的失败。只有确认无附加失败时才填空数组。缺少历史，或出现未核验、冲突凭据时阻塞恢复。推进会保存核对过的凭据，但不保存宿主授权。每次导入仍须重新核对。确认并复用历史执行或重开阶段后，旧恢复处置不再有效。对已知写入的重试必须提供新的 safe_retry 核验。
+必须直接使用 `restoreTask` 返回对象；不得拷贝字段到另一对象或直接 JSON.parse 后执行。每次导入都有新的内存恢复标识。检查实际工作区与可信操作/尝试记录（包括旧 pending 检查点之后的效果）后，设置 `host.recoveryChecks.set(recoveryBinding(task, host), {source, reconciled: true, failureEvidence})`。不得从 pending 推断“从未执行”，也不得从 Task Context 复制此权威。 宿主须提供经核对的当前任务与工作树的实际失败凭据，包括检查点之后观测的失败。只有确认无附加失败时才填空数组。缺少历史，或出现未核验、冲突凭据时阻塞恢复。推进会保存核对过的凭据，但不保存宿主授权。每次导入仍须重新核对。已明确分类的 Shell 验证只有取得与命令和工作目录匹配的成功凭据才可完成。恢复与重试授权同时绑定实际工作树和操作。确认并复用历史执行或重开阶段后，旧恢复处置不再有效。对已知写入的重试必须提供新的 safe_retry 核验。
 
 重试前，只能在核对本次具体尝试与范围后，向 `host.reconciled` Set 加入 `reconciliationBinding(task, stageId, host)`，再带来源和 safeToRetry 调用 `reopen`。旧阶段名或旧尝试的许可无效。失败写操作保持副作用不确定，条件变化不能掩盖运行中/中断操作；成功只读阶段无需写入核对。未知结果保持未知，失败记录也需输入/环境仍适用才能作为当前失败。
 

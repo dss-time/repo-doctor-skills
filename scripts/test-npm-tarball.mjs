@@ -21,7 +21,7 @@ function parsePackReport(output) {
 }
 
 function runNpx(tarball, args, env = {}) {
-  return runNpm(["exec", "--yes", `--package=${tarball}`, "--", "repo-doctor-skills", ...args], {
+  const result = runNpm(["exec", "--yes", `--package=${tarball}`, "--", "repo-doctor-skills", ...args], {
     cwd: tempRoot,
     encoding: "utf8",
     timeout: 30000,
@@ -41,6 +41,9 @@ function runNpx(tarball, args, env = {}) {
       ...env,
     },
   });
+  assert.ifError(result.error);
+  assert.equal(result.signal, null, `Packed CLI terminated by ${result.signal}`);
+  return result;
 }
 
 function installedCount(target) {

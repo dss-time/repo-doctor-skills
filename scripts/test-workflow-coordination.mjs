@@ -714,6 +714,50 @@ test('Observed historical effects invalidate a prior no-execution disposition af
   assert.equal(nextAction(restored, f.host).action, 'execute');
 });
 
+test('Recovery authority and in-flight callbacks stay within the observed worktree', t => {
+  const f = setup(t);
+  const other = setup(t);
+  const restored = restoreTask(encodeTask(f.task), registry, inventory);
+  const binding = recoveryBinding(restored, f.host);
+  f.host.recoveryChecks.set(binding, { source: 'checked original history', reconciled: true, failureEvidence: [] });
+  f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(restored, 'task', f.host),
+    { source: 'checked original attempts', disposition: 'not_executed' }]]);
+  const reconcile = reconciliationBinding(restored, 'task', f.host);
+  f.host.root = other.root;
+  assert.notEqual(reconciliationBinding(restored, 'task', f.host), reconcile);
+  assert.equal(nextAction(restored, f.host).reason, 'recovered_execution_state_needs_reconciliation');
+  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), { source: 'checked other history', reconciled: true, failureEvidence: [] });
+  assert.equal(nextAction(restored, f.host).reason, 'recovered_execution_needs_explicit_disposition');
+  f.host.root = f.root;
+  assert.equal(advance(restored, f.host).action, 'execute');
+  const step = restored.steps.task;
+  f.host.root = other.root;
+  assert.throws(() => finishStep(restored, 'task', [], f.host, 'mismatched worktree',
+    { execution_attempt: step.attempts, execution_nonce: step.execution_nonce }), /current-attempt/);
+  assert.equal(step.status, 'running');
+});
+
+test('An authorized verification operation requires a matching successful command receipt', t => {
+  const f = setup(t, { skill_id: 'safe-test-implementation' });
+  const request = f.host.requests.task;
+  request.capabilities.push('run_shell_commands');
+  request.operation = 'node tests/main.mjs';
+  request.preflight = 'safe';
+  request.verification = true;
+  f.host.grants.push({ task_id: f.task.id, capability: 'run_shell_commands', skills: ['safe-test-implementation'], operations: [request.operation], source: 'fixture' });
+  f.host.skillChecks.task.request_binding = digest(request);
+  assert.equal(advance(f.task, f.host).action, 'execute');
+  const receipt = { skill: 'safe-test-implementation', dependencies: ['tests/main.mjs'] };
+  const analysis = f.evidence('analysis-only', ['stage:task'], receipt);
+  assert.throws(() => finishStep(f.task, 'task', [analysis.id], f.host), /current-attempt evidence/);
+  const success = spawnSync(process.execPath, ['tests/main.mjs'], { cwd: f.root, encoding: 'utf8' });
+  assert.equal(success.status, 0);
+  const observed = f.evidence('verification-run', ['stage:task', 'acceptance:behavior', 'behavior-validation'],
+    { ...receipt, kind: 'test', command: request.operation, cwd: '.', exit_code: success.status });
+  finishStep(f.task, 'task', [observed.id], f.host);
+  assert.equal(nextAction(f.task, f.host).action, 'complete');
+});
+
 test('Acceptance and risk claims cannot cross an authorized operation scope change', t => {
   const f = setup(t); const a = advance(f.task, f.host); const prior = f.complete(a, { claims: ['stage:task','acceptance:behavior'] });
   assert.equal(nextAction(f.task, f.host).action, 'complete');
@@ -867,6 +911,21 @@ test('A false optional condition cannot authorize imported historical completion
   assert.equal(decision.reason,'historical_stage_requires_explicit_reuse');
   f.host.reuse.clarification=[...restored.steps.clarification.evidence_ids];
   assert.equal(advance(restored,f.host).action,'reuse');
+});
+
+test('A live optional stage can reuse an authorized historical result instead of skipping it', t => {
+  const f = setup(t, { workflow_id: 'feature-delivery' });
+  f.pump('test-implementation');
+  const action = advance(f.task, f.host);
+  assert.equal(action.stage, 'test-implementation');
+  const historical = f.complete(action);
+  f.host.reconciled = new Set([reconciliationBinding(f.task, action.stage, f.host)]);
+  reopen(f.task, action.stage, f.host, { reason: 'reconsider tests', source: 'fixture', safeToRetry: true });
+  f.setCondition('test_changes_authorized', false);
+  assert.equal(nextAction(f.task, f.host).action, 'skip');
+  f.host.reuse[action.stage] = [historical.id];
+  assert.equal(advance(f.task, f.host).action, 'reuse');
+  assert.equal(f.task.steps[action.stage].status, 'reused');
 });
 
 test('Recovery cannot erase an effect by skipping a formerly pending optional stage', t => {

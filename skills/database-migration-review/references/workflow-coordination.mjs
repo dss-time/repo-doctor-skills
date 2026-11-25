@@ -96,6 +96,10 @@ export function evidenceValidity(evidence, host) {
 export function validationPlan(evidence, host) {
   return evidence.map(item => {
     const validity = evidenceValidity(item, host);
+    if (item.kind === 'test' && validity.status === 'failed'
+        && host.verificationDeferral?.active === true && host.verificationDeferral.source) {
+      return { id: item.id, ...validity, action: 'investigate' };
+    }
     if (item.kind === 'test' && (validity.status === 'stale' || (validity.status === 'unknown' && item.result !== 'fail'))
         && host.verificationDeferral?.active === true && host.verificationDeferral.source) {
       return { id: item.id, status: 'deferred', action: 'defer', reason: validity.reason };
@@ -181,14 +185,16 @@ function writes(stage, host) {
 }
 
 export function reconciliationBinding(task, stageId, host) {
-  return digest({ intent: taskBinding(task), stage: stageId, step: task.steps[stageId], request: host.requests?.[stageId] });
+  return digest({ worktree: realpathSync(host.root), intent: taskBinding(task), stage: stageId,
+    step: task.steps[stageId], request: host.requests?.[stageId] });
 }
 
 export function recoveryBinding(task, host) {
   const record = recovered.get(task);
   if (!record) return null;
   const { checkpoint, import_id } = record;
-  return digest({ checkpoint: { checkpoint, import_id }, intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks });
+  return digest({ checkpoint: { checkpoint, import_id }, worktree: realpathSync(host.root),
+    intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks });
 }
 
 export function recoveredExecutionBinding(task, stageId, host) {
@@ -219,12 +225,16 @@ function stepEvidence(task, stage, host, executionOwner = task) {
   const explicitReuse = step.status === 'reused'
     && Array.isArray(host.reuse?.[stage.id]) && digest(host.reuse[stage.id]) === digest(step.evidence_ids);
   if (step.status === 'reused' && !explicitReuse) return false;
+  const request = host.requests[stage.id];
+  const execution = runtimeExecutions.get(executionOwner)?.get(stage.id);
   const evidence = step.evidence_ids.map(id => task.evidence.find(e => e.id === id));
-  const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(host.requests[stage.id]) && e.claims?.includes(`stage:${stage.id}`)
-    && (explicitReuse || (runtimeExecutions.get(executionOwner)?.get(stage.id) === step.execution_nonce
+  const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(request) && e.claims?.includes(`stage:${stage.id}`)
+    && (explicitReuse || (execution?.nonce === step.execution_nonce && execution?.worktree === realpathSync(host.root)
       && typeof step.execution_nonce === 'string' && e.execution_attempt === step.attempts
       && e.execution_nonce === step.execution_nonce)));
   if (!scoped.length) return false;
+  if (request.verification === true && request.capabilities.includes('run_shell_commands')
+      && !scoped.some(e => e.kind === 'test' && e.command === request.operation && e.cwd === (request.cwd ?? '.'))) return false;
   if (stage.skill === 'safe-code-review' && !scoped.some(e => e.kind === 'review' && e.independent === true
       && e.review_basis && e.review_basis === host.reviewBinding)) return false;
   if (stage.skill === 'bug-root-cause-analysis' && !scoped.some(e => e.signal_ids?.length
@@ -342,7 +352,7 @@ export function nextAction(task, host) {
         if (stage.type === 'skill' && !stepEvidence(task, stage, host)) return { ...decision, action: 'evidence_insufficient', reason: 'historical_stage_requires_explicit_reuse' };
         completed.add(stage.id); continue;
       }
-      if (recovery && stage.type === 'skill') {
+      if (stage.type === 'skill') {
         const reusable = host.reuse?.[stage.id];
         if (reusable) {
           const provisional = copy(task);
@@ -352,9 +362,11 @@ export function nextAction(task, host) {
           if (denied) return { ...decision, action: 'permission_blocked', reason: denied };
           if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...reusable], reason: 'observed_effect_before_checkpoint_recovery' };
         }
-        const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
-        if (!disposition?.source || disposition.disposition !== 'not_executed' || recovered.get(task).stageDispositions.get(stage.id)?.needsRetry) {
-          return { ...decision, action: 'blocked', reason: 'recovered_skipped_effect_needs_disposition' };
+        if (recovery) {
+          const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
+          if (!disposition?.source || disposition.disposition !== 'not_executed' || recovered.get(task).stageDispositions.get(stage.id)?.needsRetry) {
+            return { ...decision, action: 'blocked', reason: 'recovered_skipped_effect_needs_disposition' };
+          }
         }
       }
       if (step.status !== 'skipped' || step.condition_binding !== digest(host.conditions[stage.condition])) return { ...decision, action: 'skip', reason: `not_applicable:${stage.condition}` };
@@ -467,6 +479,7 @@ export function advance(task, host) {
   }
   const action = nextAction(task, host);
   if (['skip', 'approve', 'reuse', 'execute'].includes(action.action)) {
+    const worktree = action.action === 'execute' ? realpathSync(host.root) : null;
     const step = task.steps[action.stage];
     step.status = { skip: 'skipped', approve: 'completed', reuse: 'reused', execute: 'running' }[action.action];
     step.reason = action.reason;
@@ -475,7 +488,7 @@ export function advance(task, host) {
       step.attempts++;
       step.execution_nonce = randomUUID();
       if (!runtimeExecutions.has(task)) runtimeExecutions.set(task, new Map());
-      runtimeExecutions.get(task).set(action.stage, step.execution_nonce);
+      runtimeExecutions.get(task).set(action.stage, { nonce: step.execution_nonce, worktree });
       step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'uncertain' : 'none';
     }
     if (action.action === 'skip') {
@@ -501,8 +514,10 @@ export function finishStep(task, stageId, evidenceIds, host, failureReason = nul
   const denied = permission(stage.skill, stage, task, host);
   assert(!denied, denied);
   if (failureReason) {
-    const currentNonce = runtimeExecutions.get(task)?.get(stageId);
+    const execution = runtimeExecutions.get(task)?.get(stageId);
+    const currentNonce = execution?.nonce;
     assert(currentNonce && currentNonce === step.execution_nonce
+      && execution.worktree === realpathSync(host.root)
       && (attempt === null ? step.attempts === 1 && !recovered.has(task)
         : attempt.execution_attempt === step.attempts && attempt.execution_nonce === currentNonce),
     'Failure requires the current-attempt execution binding after a retry');
