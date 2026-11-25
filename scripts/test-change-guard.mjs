@@ -7,8 +7,6 @@ import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { promisify } from 'node:util';
 
-if (process.platform === 'win32') process.env.REPO_DOCTOR_DEBUG_WINDOWS = '1';
-
 const cli = fileURLToPath(new URL('../bin/repo-doctor-skills.mjs', import.meta.url));
 const asyncExec = promisify(execFile);
 
@@ -76,7 +74,6 @@ test('independently installed writing skills share an existing baseline and proj
   put(root, '.repo-doctor/project.json', JSON.stringify(profile));
   put(root, 'src/app.js', '// existing user change\n');
   const origin = invoke(implementation, 'begin', '--scope', 'src');
-  if (process.platform === 'win32' && origin.status !== 'baseline_created') console.log('windows change guard diagnostic', origin);
   assert.equal(origin.status, 'baseline_created');
   const baseline = path.join(root, '.repo-doctor/changes/shared-task.json');
   const receipt = readFileSync(baseline);

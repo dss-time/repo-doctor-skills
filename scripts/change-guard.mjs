@@ -52,13 +52,7 @@ function categories(relative) {
 }
 
 function statKey(stat) {
-  // Windows can update the directory-entry change timestamp while opening a
-  // file for a read-only fingerprint. Keep the stable identity, mode, size and
-  // modification timestamp in the observation key there. The second lstat
-  // still detects a content write or replacement during capture.
-  return process.platform === 'win32'
-    ? [stat.dev, stat.ino, stat.mode, stat.size, stat.mtimeNs].join(':')
-    : [stat.dev, stat.ino, stat.mode, stat.size, stat.mtimeNs, stat.ctimeNs].join(':');
+  return [stat.dev, stat.ino, stat.mode, stat.size, stat.mtimeNs, stat.ctimeNs].join(':');
 }
 
 function sample(root, relative, budget) {
@@ -236,13 +230,10 @@ function observe(root, scope, baseline) {
   try {
     const top = git(root, ['rev-parse', '--show-toplevel'], [0, 128]);
     if (top.status === 128) return { reason: 'git_worktree_unavailable' };
-    const reportedRoot = realpathSync(top.output.replace(/\r?\n$/, ''));
+    const reportedRoot = top.output.replace(/\r?\n$/, '');
     const sameRoot = process.platform === 'win32'
-      ? reportedRoot.toLowerCase() === root.toLowerCase()
-      : reportedRoot === root;
-    if (!sameRoot && process.env.REPO_DOCTOR_DEBUG_WINDOWS === '1') {
-      console.error(`Change Guard root mismatch reported=${reportedRoot} resolved=${root}`);
-    }
+      ? realpathSync.native(reportedRoot) === realpathSync.native(root)
+      : realpathSync(reportedRoot) === root;
     if (!sameRoot) return { reason: 'use_git_worktree_root' };
     const previousUntracked = baseline?.entries
       .filter(entry => entry.type === '?' && !entry.labels.includes('sensitive_configuration'))
