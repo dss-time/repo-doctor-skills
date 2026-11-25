@@ -2,6 +2,8 @@
 
 This guide collects installation alternatives, platform-specific behavior, source builds, and maintainer-oriented concepts. New Repo Doctor users should start with the [User Manual](USER_MANUAL.md).
 
+[Targeted setup for six agents, version requirements, verified scope and isolated trials](AGENT_COMPATIBILITY.md).
+
 ## 1. Recommended / Full / Individual
 
 The standard skills CLI lets users select Skills and their agent. The optional preset installer offers these three selections:

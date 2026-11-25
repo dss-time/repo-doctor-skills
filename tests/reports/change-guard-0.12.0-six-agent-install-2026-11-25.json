@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-25",
+  "source_commit": "ff4fdc1bc9eada01c49199c4f16c11cf87a0ec07",
+  "skills_cli": "1.9.0",
+  "skills_cli_node_requirement": ">=22.20.0",
+  "node": "v24.19.0",
+  "host_versions": {
+    "codex": "codex-cli 0.171.0-alpha.13.2",
+    "claude_code": "1.0.70 (version probe only)"
+  },
+  "skill": "safe-fix-implementation",
+  "rows": [
+    {
+      "agent": "codex",
+      "scope": "project",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS",
+      "host_discovery": "PASS"
+    },
+    {
+      "agent": "codex",
+      "scope": "global",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS",
+      "host_discovery": "PASS"
+    },
+    {
+      "agent": "claude-code",
+      "scope": "project",
+      "location": ".claude/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "claude-code",
+      "scope": "global",
+      "location": ".claude/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "cursor",
+      "scope": "project",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "cursor",
+      "scope": "global",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "github-copilot",
+      "scope": "project",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "github-copilot",
+      "scope": "global",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "gemini-cli",
+      "scope": "project",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "gemini-cli",
+      "scope": "global",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "opencode",
+      "scope": "project",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    },
+    {
+      "agent": "opencode",
+      "scope": "global",
+      "location": ".agents/skills/safe-fix-implementation",
+      "install": "copy",
+      "installed_resources_match": true,
+      "standalone_runtime": "PASS"
+    }
+  ],
+  "public_default_branch_discovery": {
+    "source": "dss-time/repo-doctor-skills",
+    "agent": "codex",
+    "method": "skills add --list",
+    "skills_found": 34
+  }
+}

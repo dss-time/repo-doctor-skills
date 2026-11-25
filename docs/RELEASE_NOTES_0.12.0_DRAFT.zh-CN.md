@@ -17,8 +17,10 @@
 
 ## 发布门禁
 
-本地内容冻结使用候选指纹，稳定版 npm 元数据仍为 0.11.1。macOS 上 Node 18 和 24 构建产物一致，已发布的 0.11.1 npm 包可升级到候选。正式门禁拒绝旧版绑定证据，开发一致性检查通过。Linux 与 Windows 仍待实际运行。 [冻结记录与构建证据](research/change-guard-integration.md#候选冻结和本轮补验)
+修订冻结候选通过 Linux、macOS、Windows 的 Node 18 与 LTS 矩阵，以及独立 Linux 质量门禁。修复了 Windows 工作树根目录和大小写别名判定。独立 0.12.0-beta.1 本地包通过打包和 macOS Node 18、24 升级。公开稳定安装仍指向 0.11.1。 [候选绑定证据](../tests/reports/change-guard-0.12.0-release-validation-2026-11-25.json)
 
 ## 试用范围
 
-本地 macOS **GO**。四个适用的最终候选样本中三个完成自动基线与检查。公共模块任务漏触发，低风险任务保持轻量。新增三案复测受同一模型的额度限制，报告处理仍需补证。公开 Beta **BLOCKED**，待设定独立预发布版本、在授权范围内验证对应产物与安全要求。RC **BLOCKED**，还缺当前候选的 Linux 和 Windows 运行及发布绑定证据。Stable **NO-GO**，现有正式门禁未通过。宿主 Hook 仍未经实跑。 [实测与边界](research/change-guard-integration.md)
+本地试用为 GO。原模型补跑三案均完成自然语言触发和结果检查，包括此前漏触发的公共模块。受保护路径规则命中时仍需核对授权。公开 Beta、RC 与 Stable 的判定见专项记录。宿主 Hook 尚未经实跑。 [实测与边界](research/change-guard-integration.md#0120-local2-跨平台和模型实测)
+
+六个 Agent 的项目级与个人级安装及内置运行时单测通过。只有 Codex 有当前候选的宿主调用和自然语言观测。公开 Beta 和 RC 仍为 **BLOCKED**，Stable 为 **NO-GO**。 [Beta 验收](RELEASE_NOTES_0.12.0-beta.1.zh-CN.md)

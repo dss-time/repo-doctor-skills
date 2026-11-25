@@ -4,6 +4,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { lstatSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
 import path from 'node:path';
+import { isDeepStrictEqual } from 'node:util';
 
 export const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const operationBinding = host => digest(host.requests ?? {});
@@ -61,7 +62,7 @@ export function evidenceValidity(evidence, host) {
     return { status: 'unknown', reason: 'project_binding_unavailable' };
   }
   let unknownReason = evidence.coverage_complete !== true || !evidence.bindings || !Object.keys(evidence.bindings).length
-    || !evidence.environment || !Object.keys(evidence.environment).length
+    || !evidence.environment || (!Object.keys(evidence.environment).length && !evidence.external_dependencies?.length)
     ? 'dependency_or_environment_coverage_unknown' : null;
   if (evidence.kind === 'test' && (!evidence.command || !evidence.cwd || !Number.isInteger(evidence.exit_code) || (evidence.result === 'pass' ? evidence.exit_code !== 0 : evidence.exit_code === 0))) {
     unknownReason ??= 'execution_receipt_missing';
@@ -77,10 +78,11 @@ export function evidenceValidity(evidence, host) {
     unknownReason ??= 'external_state_binding_missing';
   }
   for (const [key, value] of Object.entries(evidence.environment ?? {})) {
-    if (!Object.hasOwn(host.environment ?? {}, key) || host.environment[key] === undefined || host.environment[key] === null) {
+    if (value === null || value === undefined || !Object.hasOwn(host.environment ?? {}, key)
+        || host.environment[key] === undefined || host.environment[key] === null) {
       unknownReason ??= `environment_unknown:${key}`; continue;
     }
-    if (host.environment[key] !== value) return { status: 'stale', reason: `environment_changed:${key}` };
+    if (!isDeepStrictEqual(host.environment[key], value)) return { status: 'stale', reason: `environment_changed:${key}` };
   }
   for (const [file, hash] of Object.entries(evidence.bindings ?? {})) {
     try {
@@ -94,7 +96,7 @@ export function evidenceValidity(evidence, host) {
 export function validationPlan(evidence, host) {
   return evidence.map(item => {
     const validity = evidenceValidity(item, host);
-    if (item.kind === 'test' && ['stale', 'unknown'].includes(validity.status)
+    if (item.kind === 'test' && (validity.status === 'stale' || (validity.status === 'unknown' && item.result !== 'fail'))
         && host.verificationDeferral?.active === true && host.verificationDeferral.source) {
       return { id: item.id, status: 'deferred', action: 'defer', reason: validity.reason };
     }
@@ -220,20 +222,47 @@ function stepEvidence(task, stage, host, executionOwner = task) {
   return true;
 }
 
-function unresolvedFailures(task, host) {
+function failureResolutionMatches(failed, replacement, validity) {
+  if (failed.command !== replacement.command || failed.cwd !== replacement.cwd
+      || !isDeepStrictEqual(failed.bindings, replacement.bindings)) return false;
+  if (validity.status !== 'unknown') return isDeepStrictEqual(failed.environment, replacement.environment);
+  if (validity.reason !== 'external_state_binding_missing' && !validity.reason.startsWith('environment_unknown:')) return false;
+  const dependencies = failed.external_dependencies === undefined ? [] : failed.external_dependencies;
+  if (!Array.isArray(dependencies) || dependencies.some(key => typeof key !== 'string' || !key)) return false;
+  const keys = new Set([...Object.keys(failed.environment), ...dependencies]);
+  return keys.size === Object.keys(replacement.environment).length && [...keys].every(key => {
+    const recorded = Object.hasOwn(failed.environment, key) ? failed.environment[key] : undefined;
+    const observed = replacement.environment[key];
+    return Object.hasOwn(replacement.environment, key) && observed !== null && observed !== undefined
+      && (recorded === null || recorded === undefined || isDeepStrictEqual(recorded, observed));
+  });
+}
+
+// The current host reconciles failure history for this import. A checkpoint
+// can retain receipt bytes, but cannot prove that its history is complete.
+function reconciledFailureEvidence(task, host, recoveryCheck) {
+  if (!Array.isArray(recoveryCheck.failureEvidence)) return null;
+  const byId = new Map(task.evidence.map(item => [item.id, item]));
+  for (const failed of recoveryCheck.failureEvidence) {
+    if (typeof failed?.id !== 'string' || !failed.id || failed.kind !== 'test' || failed.result !== 'fail') return null;
+    const signature = digest(failed);
+    if (!host.trustedEvidence?.has(signature)) return null;
+    const existing = byId.get(failed.id);
+    if (existing && digest(existing) !== signature) return null;
+    byId.set(failed.id, failed);
+  }
+  return [...byId.values()];
+}
+
+function unresolvedFailures(task, host, evidence) {
   const unresolved = [];
-  for (const failed of task.evidence.filter(e => e.kind === 'test' && e.result === 'fail')) {
+  for (const failed of evidence.filter(e => e.kind === 'test' && e.result === 'fail')) {
     const validity = evidenceValidity(failed, host);
     if (validity.status === 'stale' || validity.reason === 'source_not_attested') continue;
-    if (validity.status === 'unknown') {
-      unresolved.push(failed);
-      continue;
-    }
     const resolution = host.failureResolutions?.get(digest(failed));
     const replacement = resolution?.source && task.evidence.find(e => e.id === resolution.replacement);
-    const identity = e => digest({ command: e.command, cwd: e.cwd, bindings: e.bindings, environment: e.environment });
     if (!replacement || replacement.task_binding !== taskBinding(task) || replacement.kind !== 'test'
-        || evidenceValidity(replacement, host).status !== 'valid' || identity(replacement) !== identity(failed)
+        || evidenceValidity(replacement, host).status !== 'valid' || !failureResolutionMatches(failed, replacement, validity)
         || !(Date.parse(replacement.recorded_at) > Date.parse(failed.recorded_at))) {
       unresolved.push(failed);
     }
@@ -253,6 +282,8 @@ export function nextAction(task, host) {
   const recovery = recoveryBinding(task, host);
   const recoveryCheck = recovery && host.recoveryChecks?.get(recovery);
   if (recovery && (!recoveryCheck?.source || recoveryCheck.reconciled !== true)) return { action: 'blocked', reason: 'recovered_execution_state_needs_reconciliation' };
+  const evidence = recovery ? reconciledFailureEvidence(task, host, recoveryCheck) : task.evidence;
+  if (!evidence) return { action: 'evidence_insufficient', reason: 'recovered_failure_history_unverified' };
   // Unknown effects cannot disappear when an optional predicate or prerequisite changes.
   const inflight = workflow.stages.find(stage => ['running', 'interrupted'].includes(task.steps[stage.id].status));
   if (inflight) return { stage: inflight.id, skill: inflight.skill, action: 'blocked', reason: 'inflight_operation_needs_reconciliation' };
@@ -371,7 +402,7 @@ export function nextAction(task, host) {
         return { ...decision, action: 'blocked', reason: 'recovered_execution_needs_explicit_disposition' };
       }
     }
-    const unresolved = unresolvedFailures(task, host).find(failed => {
+    const unresolved = unresolvedFailures(task, host, evidence).find(failed => {
       const repair = host.failureRepairs?.get(digest(failed));
       return !repair?.source || repair.stages?.[stage.id] !== digest(host.requests[stage.id]);
     });
@@ -392,7 +423,7 @@ export function nextAction(task, host) {
       return rules ? [...rules.before_write, ...rules.before_delivery] : [{ claim: `unclassified-risk:${r}` }];
     }),
   ];
-  const failure = unresolvedFailures(task, host)[0];
+  const failure = unresolvedFailures(task, host, evidence)[0];
   if (failure) return { action: evidenceValidity(failure, host).status === 'unknown' ? 'evidence_insufficient' : 'validation_failed', reason: 'unresolved_current_test_failure', evidence_id: failure.id };
   const missing = obligations.filter(r => !requirement(task, r, host));
   if (host.verificationDeferral?.active === true) {
@@ -412,6 +443,12 @@ function event(task, stage, status, reason) {
 }
 
 export function advance(task, host) {
+  const recovery = recoveryBinding(task, host);
+  const check = recovery && host.recoveryChecks?.get(recovery);
+  if (check?.source && check.reconciled === true) {
+    const evidence = reconciledFailureEvidence(task, host, check);
+    if (evidence && evidence.length > task.evidence.length) task.evidence.push(...copy(evidence.slice(task.evidence.length)));
+  }
   const action = nextAction(task, host);
   if (['skip', 'approve', 'reuse', 'execute'].includes(action.action)) {
     const step = task.steps[action.stage];
@@ -437,14 +474,21 @@ export function advance(task, host) {
   return action;
 }
 
-export function finishStep(task, stageId, evidenceIds, host, failureReason = null) {
+export function finishStep(task, stageId, evidenceIds, host, failureReason = null, attempt = null) {
   const stage = definition(task, host.registry, host.inventory).stages.find(s => s.id === stageId);
   const step = task.steps[stageId];
   assert(stage && step?.status === 'running', 'Only a running stage may finish');
   assert(step.request_binding === digest(host.requests[stageId]), 'Operation scope changed while running');
   const denied = permission(stage.skill, stage, task, host);
   assert(!denied, denied);
-  if (failureReason) { step.status = 'validation_failed'; step.reason = failureReason; step.evidence_ids = [...evidenceIds]; }
+  if (failureReason) {
+    const currentNonce = runtimeExecutions.get(task)?.get(stageId);
+    assert(currentNonce && currentNonce === step.execution_nonce
+      && (attempt === null ? step.attempts === 1 && !recovered.has(task)
+        : attempt.execution_attempt === step.attempts && attempt.execution_nonce === currentNonce),
+    'Failure requires the current-attempt execution binding after a retry');
+    step.status = 'validation_failed'; step.reason = failureReason; step.evidence_ids = [...evidenceIds];
+  }
   else {
     const provisional = copy(task); provisional.steps[stageId].evidence_ids = evidenceIds;
     assert(stepEvidence(provisional, stage, host, task), 'Completion requires valid, scoped current-attempt evidence and independent review');

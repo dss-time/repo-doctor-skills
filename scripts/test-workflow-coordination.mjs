@@ -156,7 +156,7 @@ test('F: interrupted writes never replay; restored context cannot restore author
   assert.equal(restored.steps.task.status, 'interrupted');
   assert.equal(nextAction(restored, f.host).reason, 'recovered_execution_state_needs_reconciliation');
   assert.throws(() => reopen(restored, 'task', f.host, { reason: 'resume', source: 'host' }), /reconciled/);
-  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), { source: 'Fixture inspected all checkpoint effects', reconciled: true });
+  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), { source: 'Fixture inspected all checkpoint effects', reconciled: true, failureEvidence: [] });
   f.host.reconciled = new Set([reconciliationBinding(restored, 'task', f.host)]); reopen(restored, 'task', f.host, { reason: 'no mutation occurred', source: 'inspection', safeToRetry: true });
   f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(restored,'task',f.host),{source:'Fixture verified no mutation occurred',disposition:'not_executed'}]]);
   assert.equal(nextAction(restored, f.host).action, 'execute');
@@ -242,7 +242,7 @@ test('Persisted gate approval never replaces current authorization', t => {
   const f = setup(t, { workflow_id: 'feature-delivery' }); f.setCondition('material_decisions_open', false);
   f.pump('implementation'); assert.equal(f.task.steps['implementation-approval'].status, 'completed');
   const restored = restoreTask(encodeTask(f.task), registry, inventory);
-  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), { source: 'Fixture verified checkpoint state', reconciled: true }); f.host.grants = [];
+  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), { source: 'Fixture verified checkpoint state', reconciled: true, failureEvidence: [] }); f.host.grants = [];
   assert.equal(nextAction(restored, f.host).action, 'permission_blocked');
 });
 
@@ -331,7 +331,7 @@ test('Read-only conditional modes need no writes, while narrower mode rules rema
 test('Recovery approval cannot be reused for another import of the same pending checkpoint', t => {
   const f = setup(t); const checkpoint = encodeTask(f.task);
   const first = restoreTask(checkpoint, registry, inventory);
-  f.host.recoveryChecks.set(recoveryBinding(first, f.host), { source: 'Workspace and attempt ledger inspected', reconciled: true });
+  f.host.recoveryChecks.set(recoveryBinding(first, f.host), { source: 'Workspace and attempt ledger inspected', reconciled: true, failureEvidence: [] });
   f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(first,'task',f.host),{source:'Fixture verified no earlier execution',disposition:'not_executed'}]]);
   assert.equal(nextAction(first, f.host).action, 'execute');
   const second = restoreTask(checkpoint, registry, inventory);
@@ -340,12 +340,64 @@ test('Recovery approval cannot be reused for another import of the same pending 
 
 test('Failed-write reconciliation must name the current attempt and scope', t => {
   const f = setup(t); advance(f.task, f.host);
+  const first = { execution_attempt: 1, execution_nonce: f.task.steps.task.execution_nonce };
   finishStep(f.task, 'task', [], f.host, 'partial write');
   const old = reconciliationBinding(f.task, 'task', f.host);
   f.host.reconciled = new Set([old]);
   reopen(f.task, 'task', f.host, { reason: 'first failure inspected', source: 'host', safeToRetry: true });
-  advance(f.task, f.host); finishStep(f.task, 'task', [], f.host, 'second partial write');
+  advance(f.task, f.host);
+  assert.throws(() => finishStep(f.task, 'task', [], f.host, 'late failure', first), /current-attempt/);
+  assert.throws(() => finishStep(f.task, 'task', [], f.host, 'unbound failure'), /current-attempt/);
+  assert.equal(nextAction(f.task, f.host).reason, 'inflight_operation_needs_reconciliation');
+  finishStep(f.task, 'task', [], f.host, 'second partial write',
+    { execution_attempt: 2, execution_nonce: f.task.steps.task.execution_nonce });
   assert.throws(() => reopen(f.task, 'task', f.host, { reason: 'retry', source: 'host', safeToRetry: true }), /reconciled/);
+});
+
+test('Learning a missing external value does not resolve a failed check before a dependent stage or delivery', t => {
+  for (const atDelivery of [false, true]) {
+    const f = setup(t, { workflow_id: 'feature-delivery' });
+    f.setCondition('material_decisions_open', false);
+    f.setCondition('test_changes_required', false);
+    f.setCondition('test_changes_authorized', false);
+    f.setCondition('candidate_available', false);
+    f.runTest();
+    f.pump(atDelivery ? null : 'implementation');
+    const next = nextAction(f.task, f.host);
+    assert.equal(next.action, atDelivery ? 'complete' : 'execute');
+    const receipt = { kind: 'test', command: 'fixture check', cwd: '.', external_dependencies: ['service'] };
+    f.host.environment.service = null;
+    const failed = f.evidence('missing-service-failure', [], { ...receipt, result: 'fail', exit_code: 1 });
+    failed.recorded_at = '2025-01-01T00:00:00.000Z';
+    f.host.trustedEvidence.add(digest(failed));
+    f.host.environment.service = 'service-v1';
+    const assertBlocked = failure => {
+      const decision = nextAction(f.task, f.host);
+      assert.equal(decision.reason, 'unresolved_current_test_failure');
+      assert.equal(decision.evidence_id, failure.id);
+    };
+    assertBlocked(failed);
+    assert.equal(nextAction(f.task, f.host).action, 'evidence_insufficient');
+    if (!atDelivery) {
+      f.host.verificationDeferral = { active: true, source: 'fixture user instruction' };
+      assert.equal(validationPlan([failed], f.host)[0].action, 'investigate');
+      f.host.verificationDeferral = null;
+    }
+    const retry = f.evidence('retry-failure', [], { ...receipt, result: 'fail', exit_code: 1 });
+    f.host.failureResolutions = new Map([[digest(failed), { source: 'host investigated', replacement: retry.id }]]);
+    assertBlocked(failed);
+    f.host.environment.service = 'service-v2';
+    assert.equal(evidenceValidity(retry, f.host).status, 'stale');
+    assertBlocked(failed);
+    const pass = f.evidence('retry-pass', [], { ...receipt, exit_code: 0 });
+    assertBlocked(failed);
+    f.host.failureResolutions.set(digest(failed), { source: 'host investigated and reran', replacement: pass.id });
+    assert.equal(nextAction(f.task, f.host).action, next.action);
+    assert.equal(validationPlan([pass], f.host)[0].action, 'reuse');
+    f.host.environment.service = 'service-v3';
+    assert.equal(validationPlan([pass], f.host)[0].action, 'rerun');
+    assertBlocked(failed);
+  }
 });
 
 test('Historical failures become stale; unobserved results require investigation', t => {
@@ -520,6 +572,8 @@ test('Completion rejects a previous execution attempt while explicit reuse remai
   reopen(f.task, 'task', f.host, { reason: 'Retry inspected operation', source: 'host', safeToRetry: true });
   advance(f.task, f.host);
   assert.equal(f.task.steps.task.attempts, 2);
+  assert.throws(() => finishStep(f.task, 'task', [], f.host, 'late failure',
+    { execution_attempt: old.execution_attempt, execution_nonce: old.execution_nonce }), /current-attempt/);
   assert.throws(() => finishStep(f.task, 'task', [old.id], f.host), /current-attempt/);
   f.complete({ stage: 'task', skill: 'documentation-sync' }, { claims: ['stage:task', 'acceptance:behavior'] });
   assert.equal(nextAction(f.task, f.host).action, 'complete');
@@ -563,6 +617,71 @@ test('Intent changes cannot erase an attested test failure before execution or d
       assert.equal(nextAction(f.task, f.host).action, 'validation_failed');
     }
   }
+});
+
+test('Restoring an older checkpoint preserves subsequent attested failures before execution and delivery', t => {
+  for (const atDelivery of [false, true]) {
+    const f = setup(t);
+    if (atDelivery) f.complete(advance(f.task, f.host), { claims: ['stage:task', 'acceptance:behavior'] });
+    const checkpoint = encodeTask(f.task);
+    const receipt = { kind: 'test', command: 'fixture check', cwd: '.', dependencies: ['README.md'] };
+    const failed = f.evidence('post-checkpoint-failure', [], { ...receipt, result: 'fail', exit_code: 1 });
+    failed.recorded_at = '2025-01-01T00:00:00.000Z';
+    f.host.trustedEvidence.add(digest(failed));
+    const restore = saved => {
+      const task = restoreTask(saved, registry, inventory);
+      const binding = recoveryBinding(task, f.host);
+      f.host.recoveryChecks.set(binding, { source: 'checked effects only', reconciled: true });
+      assert.equal(nextAction(task, f.host).reason, 'recovered_failure_history_unverified');
+      const check = f.host.recoveryChecks.get(binding);
+      check.failureEvidence = [{ ...failed, id: 'unattested' }];
+      assert.equal(nextAction(task, f.host).reason, 'recovered_failure_history_unverified');
+      check.failureEvidence = [failed];
+      if (atDelivery) {
+        f.host.reuse.task = task.steps.task.evidence_ids;
+        if (task.steps.task.status === 'completed') assert.equal(advance(task, f.host).action, 'reuse');
+      } else {
+        f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(task, 'task', f.host),
+          { source: 'checked actual attempts', disposition: 'not_executed' }]]);
+      }
+      const decision = advance(task, f.host);
+      assert.equal(decision.action, 'validation_failed');
+      assert.equal(decision.evidence_id, failed.id);
+      return task;
+    };
+    const task = restore(encodeTask(restore(checkpoint)));
+    const retry = f.evidence('post-restore-failure', [], { ...receipt, result: 'fail', exit_code: 1 });
+    retry.recorded_at = '2025-01-02T00:00:00.000Z';
+    f.host.trustedEvidence.add(digest(retry));
+    task.evidence.push(retry);
+    f.host.failureResolutions = new Map([[digest(failed), { source: 'observed rerun', replacement: retry.id }]]);
+    assert.equal(nextAction(task, f.host).action, 'validation_failed');
+    const pass = f.evidence('post-restore-pass', [], { ...receipt, exit_code: 0 });
+    task.evidence.push(pass);
+    f.host.failureResolutions.set(digest(failed), { source: 'verified later pass', replacement: pass.id });
+    assert.equal(nextAction(task, f.host).evidence_id, retry.id);
+    f.host.failureResolutions.set(digest(retry), { source: 'verified later pass', replacement: pass.id });
+    assert.equal(nextAction(task, f.host).action, atDelivery ? 'complete' : 'execute');
+  }
+});
+
+test('An explicit rerun can resolve missing and reordered external observations', t => {
+  const f = setup(t);
+  const receipt = { kind: 'test', command: 'fixture check', cwd: '.', external_dependencies: ['service'] };
+  f.host.environment = {};
+  const failed = f.evidence('missing-environment', [], { ...receipt, result: 'fail', exit_code: 1, dependencies: ['README.md', 'facts.txt'] });
+  failed.recorded_at = '2025-01-01T00:00:00.000Z';
+  f.host.trustedEvidence.add(digest(failed));
+  f.host.environment = { service: { version: 1, ports: [1000, 2000] } };
+  const pass = f.evidence('observed-environment', [], { ...receipt, exit_code: 0, dependencies: ['facts.txt', 'README.md'] });
+  f.host.environment.service = { ports: [1000, 2000], version: 1 };
+  assert.equal(nextAction(f.task, f.host).action, 'evidence_insufficient');
+  f.host.failureResolutions = new Map([[digest(failed), { source: 'host investigated', replacement: pass.id }]]);
+  assert.equal(nextAction(f.task, f.host).action, 'execute');
+  assert.equal(validationPlan([pass], f.host)[0].action, 'reuse');
+  f.host.environment.service.version++;
+  assert.equal(validationPlan([pass], f.host)[0].action, 'rerun');
+  assert.equal(nextAction(f.task, f.host).action, 'evidence_insufficient');
 });
 
 test('Acceptance and risk claims cannot cross an authorized operation scope change', t => {
@@ -613,12 +732,13 @@ test('Restoring a pending checkpoint cannot reuse a prior attempt identity', t =
   const old = f.complete(action, { claims: ['stage:task', 'acceptance:behavior'] });
   const restored = restoreTask(pending, registry, inventory);
   restored.evidence.push(old);
-  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), {source:'Host reconciled actual prior effects',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), {source:'Host reconciled actual prior effects',reconciled:true, failureEvidence: []});
   f.host.reconciled = new Set([reconciliationBinding(restored,'task',f.host)]);
   f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(restored,'task',f.host),{source:'Fixture explicitly authorizes inspected safe retry',disposition:'safe_retry'}]]);
   assert.equal(advance(restored, f.host).action,'execute');
   assert.equal(restored.steps.task.attempts,1);
   assert.notEqual(restored.steps.task.execution_nonce,old.execution_nonce);
+  assert.throws(() => finishStep(restored, 'task', [], f.host, 'unbound pre-restore failure'), /current-attempt/);
   assert.throws(()=>finishStep(restored,'task',[old.id],f.host),/current-attempt/);
 });
 
@@ -633,7 +753,7 @@ test('Imported completed stages reject old receipts and require explicit histori
   const tampered = JSON.parse(encodeTask(f.task));
   tampered.steps.task.evidence_ids=[old.id];
   const restored = restoreTask(JSON.stringify(tampered),registry,inventory);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host checked recovered effects',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host checked recovered effects',reconciled:true, failureEvidence: []});
   assert.notEqual(nextAction(restored,f.host).action,'complete');
   f.host.reconciled = new Set([reconciliationBinding(restored,'task',f.host)]);
   reopen(restored,'task',f.host,{reason:'Explicitly reuse historical verified result',source:'host',safeToRetry:true});
@@ -662,7 +782,7 @@ test('Reused receipts cannot fall back to execution identity after host reuse is
   assert.equal(advance(f.task,f.host).action,'reuse');
   assert.equal(nextAction(f.task,f.host).action,'complete');
   const restored=restoreTask(encodeTask(f.task),registry,inventory);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host reconciled actual prior state',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host reconciled actual prior state',reconciled:true, failureEvidence: []});
   delete f.host.reuse.task;
   assert.notEqual(nextAction(restored,f.host).action,'complete');
 });
@@ -671,7 +791,7 @@ test('Old pending checkpoint requires an explicit per-operation disposition', t 
   const f=setup(t);const checkpoint=encodeTask(f.task);
   const action=advance(f.task,f.host);f.complete(action,{claims:['stage:task','acceptance:behavior']});
   const restored=restoreTask(checkpoint,registry,inventory);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host observed prior completed effect',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host observed prior completed effect',reconciled:true, failureEvidence: []});
   assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
   f.host.recoveredExecutionChecks=new Map([[recoveredExecutionBinding(restored,'task',f.host),{source:'Already completed',disposition:'completed'}]]);
   assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
@@ -697,7 +817,7 @@ test('Imported attempt count and nonce cannot impersonate runtime execution auth
   raw.steps.task.execution_nonce=old.execution_nonce;
   raw.steps.task.evidence_ids=[old.id];
   const restored=restoreTask(JSON.stringify(raw),registry,inventory);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host inspected recovered state',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host inspected recovered state',reconciled:true, failureEvidence: []});
   assert.notEqual(nextAction(restored,f.host).action,'complete');
   f.host.reuse.task=[old.id];
   assert.equal(advance(restored,f.host).action,'reuse');
@@ -708,7 +828,7 @@ test('A false optional condition cannot authorize imported historical completion
   const f=setup(t,{workflow_id:'feature-delivery'});
   f.pump('impact');
   const restored=restoreTask(encodeTask(f.task),registry,inventory);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host inspected prior read-only phases',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host inspected prior read-only phases',reconciled:true, failureEvidence: []});
   f.setCondition('material_decisions_open',false);
   f.host.reuse.route=[...restored.steps.route.evidence_ids];
   assert.equal(advance(restored,f.host).action,'reuse');
@@ -728,7 +848,7 @@ test('Recovery cannot erase an effect by skipping a formerly pending optional st
   const restored=restoreTask(checkpoint,registry,inventory);
   restored.evidence.push(receipt);
   f.setCondition('test_changes_authorized',false);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw the later completed test edit',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw the later completed test edit',reconciled:true, failureEvidence: []});
   for(const [id,step] of Object.entries(restored.steps)) {
     if(step.status==='completed' && step.evidence_ids.length) f.host.reuse[id]=[...step.evidence_ids];
   }
@@ -749,7 +869,7 @@ test('A verified not-executed disposition remains valid through the skip transit
   f.pump('test-implementation');
   const restored=restoreTask(encodeTask(f.task),registry,inventory);
   f.setCondition('test_changes_authorized',false);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host verified no later writes',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host verified no later writes',reconciled:true, failureEvidence: []});
   for(const [id,step] of Object.entries(restored.steps))if(step.status==='completed'&&step.evidence_ids.length)f.host.reuse[id]=[...step.evidence_ids];
   for(let i=0;i<20;i++){const a=nextAction(restored,f.host);if(a.stage==='test-implementation')break;assert.ok(['reuse','approve','skip'].includes(a.action));advance(restored,f.host);}
   f.host.recoveredExecutionChecks=new Map([[recoveredExecutionBinding(restored,'test-implementation',f.host),{source:'Host checked actual attempt ledger: never executed',disposition:'not_executed'}]]);
@@ -763,7 +883,7 @@ test('Current read-only scope cannot hide earlier effects when recovery skips a 
   const checkpoint=encodeTask(f.task);
   const restored=restoreTask(checkpoint,registry,inventory);
   f.setCondition('material_decisions_open',false);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host discovered a later historical effect under older scope',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host discovered a later historical effect under older scope',reconciled:true, failureEvidence: []});
   f.host.reuse.route=[...restored.steps.route.evidence_ids];
   assert.equal(advance(restored,f.host).action,'reuse');
   assert.equal(nextAction(restored,f.host).reason,'recovered_skipped_effect_needs_disposition');
@@ -777,7 +897,7 @@ test('Recovered execution needs a disposition even after its request becomes rea
   const restored=restoreTask(checkpoint,registry,inventory);
   f.host.requests.task={capabilities:['read_files'],paths:['README.md']};
   f.host.skillChecks.task.request_binding=digest(f.host.requests.task);
-  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw earlier write and current narrower request',reconciled:true});
+  f.host.recoveryChecks.set(recoveryBinding(restored,f.host),{source:'Host saw earlier write and current narrower request',reconciled:true, failureEvidence: []});
   assert.equal(nextAction(restored,f.host).reason,'recovered_execution_needs_explicit_disposition');
 });
 
@@ -791,6 +911,11 @@ test('attested verification remains worktree-bound and declared external state n
   const { project_binding: omitted, ...historical } = green;
   fixture.host.trustedEvidence.add(digest(historical));
   assert.equal(evidenceValidity(historical, fixture.host).reason, 'project_binding_missing');
+  const unboundFailure = { ...historical, id: 'unbound-failure', result: 'fail', exit_code: 1 };
+  fixture.task.evidence.push(unboundFailure);
+  fixture.host.trustedEvidence.add(digest(unboundFailure));
+  writeFileSync(path.join(fixture.root, 'lock.json'), '{"changed":true}');
+  assert.equal(nextAction(fixture.task, fixture.host).reason, 'unresolved_current_test_failure');
 
   const external = fixture.evidence('external-check', [], { external_dependencies: ['fixtureService'] });
   assert.equal(evidenceValidity(external, fixture.host).reason, 'external_state_binding_missing');

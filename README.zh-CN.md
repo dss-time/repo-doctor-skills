@@ -6,58 +6,51 @@
 
 面向 AI 编程助手的代码变更安全与工程验证工具。
 
-Repo Doctor 帮助编程助手核对任务是否触及你已有的修改、改变暂存状态或越过约定的范围。当前源码候选中的相关工程 Skills 共享 **Change Guard**，可以结合定向测试和已有工程证据，核对本地 Git 工作区。
+让 AI 改代码时少碰无关文件，留意你尚未提交的修改，并说清楚实际验证了什么。适合 OpenAI Codex、Claude Code、Cursor、GitHub Copilot、Gemini CLI 和 OpenCode，宿主实测范围见下表。
 
 ## 快速开始
+
+在项目目录运行，选择你正在使用的 Agent。
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-在编程助手里开始新任务，用自己的话描述需求。也可以直接调用熟悉的 Skill，或用 `$repo-doctor-router` 获取推荐。
+安装后打开新会话，像往常一样描述需求、改动范围和要保留的行为。可选用 `$repo-doctor-router` 获取 Skill 推荐。公开稳定版 **0.11.1** 提供工程工作流。下文的工作区基线和自动变更报告属于尚未发布的 **0.12.0 候选**。
 
 ## 最小示例
 
-```text
-修复 src/labels.mjs 的标签格式问题。保留我在文件里尚未提交的无障碍说明，也请保留无关文件。
-```
+| 你可以这样说 | Repo Doctor 能帮你做什么 |
+| --- | --- |
+| “修复订单编辑后列表没有刷新的问题，保留现有业务逻辑。” | 先复现并追踪刷新链路，做局部修复，核对受影响的行为和定向回归结果。 |
+| “给订单页加个搜索条件，保留我没提交的修改。” | 候选版在适用时记录修改前的 Git 状态，检查任务是否又触及了你已经编辑过的文件，方便复核。 |
+| “修一下这个 TypeScript 类型错误，依赖保持原样。” | 候选版可以报告基线之后发生的依赖清单和锁文件变化，并提示核对实际范围。 |
+| “只改这个按钮的文案。” | 用定向检查确认改动即可。真实 Codex 的低风险样本未创建额外基线。 |
 
-隔离 Codex 复测中，修复标签并保留用户修改的自然语言请求触发了基线和交付前检查。报告提示该路径原有修改被触及，用户说明仍在，夹具检查通过。候选四个适用任务中有三个完成两次调用，公共模块任务遗漏了检查，低风险修改保持轻量。实际调用取决于 Skill 选择、宿主权限和运行时可用性。[真实观测与成本](docs/research/change-guard-integration.md)
+更多示例覆盖样式越界、公共请求方法、批量审核与续接任务。[自然语言使用案例](docs/guides/repo-doctor-scenarios.zh-CN.md)
 
-在 macOS、251 个跟踪文件的本地夹具中，基线中位耗时为 170–255 ms，检查为 142–229 ms，含 Node 启动。数值随工作区内容和环境变化。当前候选已在 macOS 的 Node 18 和 24 验证安装升级，Linux 和 Windows 实跑待补。 [候选验证记录](docs/research/change-guard-integration.md#候选冻结和本轮补验)
+## 工作机制与边界
 
-## 显式核对工作区，供诊断使用
+- **按影响决定检查深度。** Skills 为问题定位、局部修复和测试提供工程步骤。测试结果取决于实际执行，已有证据也要在输入、工作树和环境仍匹配时才复用。
+- **在适用场景比较工作区。** 候选版的四个可写 Skills 共享本地运行时。在宿主允许使用 Node、Git 和项目本地状态时，可在改动前建立基线，并在交付前比较。通过 Skills CLI 安装这四项中的任意一项即可取得对应运行时。
+- **看清实际变化。** 报告区分检测结果、风险提示和未知覆盖，供人和 Agent 核对实际授权。Git 忽略项、短暂并发写入等情况可能看不到。业务正确性仍需实际测试。
 
-下列命令在 Repo Doctor 源码目录执行，`--root` 指向你要检查的 Git 工作树。已发布的 0.11.1 CLI 早于此流程。
-
-```bash
-node bin/repo-doctor-skills.mjs change begin --root ../my-project --id export-fix --scope src/export --json
-node bin/repo-doctor-skills.mjs change check --root ../my-project --id export-fix --json
-```
-
-基线可以区分文件原本就有的修改，以及同一文件在任务中又发生的变化。例如，任务触碰了用户已经编辑过的文件，同时在范围外更新了锁文件，JSON 报告会分别标出这两处。报告将改动来源保留为未知，由开发者核对和处理。Git 忽略的改动和瞬时并发变化可能不可见，业务正确性仍需用定向测试验证。[报告字段、项目策略和覆盖限制](docs/PROJECT_STATE.zh-CN.md#change-guard)。
-
-[运行已经实测的临时 Git 示例](docs/guides/change-guard-demo.zh-CN.md)。
-
-## 工作机制
-
-- **变更安全**。已有 Skills 检查用户修改、业务行为和权限边界。需要跨步骤保存基线时，Change Guard 补充 Git 可见范围内的比较。
-- **自适应验证**。按影响与证据选择检查。小任务做定向验证，涉及契约、数据更新、权限边界时可安排隔离集成测试。[执行模式](docs/MULTI_AGENT_WORKFLOW.zh-CN.md)。
-- **工程证据**。可选任务检查点保留历史。复用之前，由宿主核验执行凭据、工作树身份、相关输入和环境。[工作流协同](docs/WORKFLOW_COORDINATION.zh-CN.md)。
-- **与现有工具共存**。可以直接使用单个 Skill，也可以在授权内协调有依赖的阶段。宿主决定参考资料何时加载、能否隔离并行执行。
+Codex 实测中，用户原有说明得以保留，原模型三个定向复测均触发了检查。公共模块曾漏触发，本次复测成功。macOS 251 跟踪文件夹具的基线和检查中位耗时分别为 170–255 ms 和 142–229 ms，含 Node 启动。[实测记录](docs/research/change-guard-integration.md) · [可复现临时仓库示例](docs/guides/change-guard-demo.zh-CN.md)
 
 ## 宿主与安装
 
-建议使用当前 Node.js LTS。自带 CLI 支持 Node 18 及以上，外部 Skills 安装器有自己的 Node 版本要求。在目标项目运行快速开始命令并选择宿主和 Skills。自动触发和工具权限取决于宿主。
+选择一条命令即可。项目级是默认方式，`-g` 安装到当前用户目录。表中的安装和独立运行时验证使用 Skills CLI **1.9.0** 和冻结候选。
 
-| 宿主 | 命令或导入方式 |
-|---|---|
-| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
-| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
-| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
-| WorkBuddy | 用宿主的本地 Skill 导入功能导入 `skills/` 中的目录 |
+| Agent | 定向安装 | 验证范围 |
+| --- | --- | --- |
+| OpenAI Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` | 项目／全局安装，候选宿主发现、正文加载、自动调用及部分报告处理有观测 |
+| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| GitHub Copilot | `npx skills@latest add dss-time/repo-doctor-skills -a github-copilot` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| Gemini CLI | `npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| OpenCode | `npx skills@latest add dss-time/repo-doctor-skills -a opencode` | 项目／全局安装和独立运行时，宿主执行未验证 |
 
-更多宿主与内置安装方式见[高级用法](docs/ADVANCED_USAGE.zh-CN.md)。兼容性矩阵覆盖 Linux、macOS 和 Windows。
+Skills CLI 1.9.0 要求 Node **22.20.0+**，建议使用当前 LTS。项目自带 CLI 与候选运行时支持 Node 18+。工作区比较需要本地 Git。详细目录、权限、升级与本地 Beta 验证见 [Agent 安装与兼容性](docs/AGENT_COMPATIBILITY.zh-CN.md)。其他现有安装渠道见 [高级用法](docs/ADVANCED_USAGE.zh-CN.md)。
 
 ## Codex 插件
 

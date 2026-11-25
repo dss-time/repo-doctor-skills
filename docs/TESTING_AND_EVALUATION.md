@@ -34,6 +34,12 @@ The first run yielded 14 usable turns and the follow-up yielded seven. The final
 
 The frozen candidate retried the public-module, existing-edits and protected-path cases. Each stopped before any tool call with `usageLimitExceeded`, leaving the count at 21 usable observations. An offline business assertion can establish the fixture outcome. Agent-run verification and report handling need their own evidence. [Retry record](../tests/reports/change-guard-0.12.0-freeze-retest-2026-11-24.json)
 
+After quota recovered, all three same-model repeats completed the baseline, final check and fixture assertions, bringing the total to 24 usable observations. The existing-edit answer confirmed preservation, the protected-path answer distinguished policy from authorization, and the public-module answer reported unknown coverage from disabled Git filters. [Observations, usage and bindings](research/change-guard-integration.md#0120-local2-跨平台和模型实测)
+
+The six-agent install study produced 12 successful isolated installs with Skills CLI 1.9.0. Codex also discovered the Skill at project and personal scope. Direct runtime smoke tests are recorded separately from native host calls. [Compatibility evidence](AGENT_COMPATIBILITY.md)
+
+A coordination fix changed the candidate binding. The fresh simple and workflow trials passed. Independent review found a separate checkpoint recovery issue. Earlier Change Guard observations keep their original binding. [Coordination rerun](../tests/reports/coordination-0.12.0-beta.1-p1-retest-2026-11-25.json)
+
 ## Offline live-model preparation
 
 The default commands do not use the network, read API keys, upload prompts, upload code, or create model output:

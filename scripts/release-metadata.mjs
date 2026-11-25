@@ -30,14 +30,14 @@ const maturityRank = new Map([
 // Skill versions are protected against invalid values and known regressions
 // without being forced to match their Pack.
 export const releaseContract = Object.freeze({
-  projectVersion: "0.11.1",
+  projectVersion: "0.12.0",
   stableInstallVersion: "0.11.1",
-  releaseDate: "2026-11-21",
+  releaseDate: "2026-11-25",
   releaseChannel: "stable",
   liveModelStatus: "PASS",
   liveModelWaiver: null,
-  liveModelReport: "tests/reports/live-codex-skill-validation-0.11.0.json",
-  liveModelEvidenceVersion: "0.11.0",
+  liveModelReport: "tests/reports/live-codex-skill-validation-0.12.0.json",
+  liveModelEvidenceVersion: "0.12.0",
   expectedLiveModelCases: 289,
   historicalProjectVersion: "0.1.0",
   historicalReleaseDate: "2026-07-09",
@@ -46,9 +46,9 @@ export const releaseContract = Object.freeze({
     Object.freeze({
       id: "engineering.repo-doctor",
       path: "engineering/repo-doctor",
-      version: "0.13.0",
+      version: "0.14.0",
       activeSkillCount: 27,
-      plugin: Object.freeze({ name: "repo-doctor", version: "0.13.0" }),
+      plugin: Object.freeze({ name: "repo-doctor", version: "0.14.0" }),
     }),
     Object.freeze({
       id: "productivity.productivity-toolkit",
@@ -85,9 +85,9 @@ export const releaseContract = Object.freeze({
     skillCount: 1,
   }),
   changelogPath: "CHANGELOG.md",
-  releaseDocument: "docs/RELEASE_NOTES_0.11.1.md",
-  promotionRecord: "tests/reports/release-promotion-0.11.1.json",
-  coordinationReport: "tests/reports/coordination-release-0.11.0.json",
+  releaseDocument: "docs/RELEASE_NOTES_0.12.0.md",
+  promotionRecord: null,
+  coordinationReport: "tests/reports/coordination-release-0.12.0.json",
   marketplacePath: ".agents/plugins/marketplace.json",
 });
 

@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-25",
+  "project_version": "0.12.0-beta.1",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "8021699269faa84cf6cfb79bcf7fb5cd8593d015f20d822a98f4d2c13c97d31d",
+    "runtime_sha256": "5dcfc31c2bad5b290ba78256e905defd755da6da72f8c5d04ee6318d13d193bb"
+  },
+  "model": "gpt-6.2-sol",
+  "reasoning_effort": "medium",
+  "codex_version": "codex-cli 0.171.0-alpha.13.2",
+  "approval": {
+    "mechanism": "Codex CLI per-tool approval_mode=approve",
+    "tools": [
+      "fixture_reader.read_text"
+    ],
+    "sandbox": "read-only for review stages",
+    "global_config_changed": false
+  },
+  "reused": [
+    {
+      "case": "simple",
+      "result": "PASS"
+    }
+  ],
+  "cases": [
+    {
+      "case": "workflow",
+      "result": "PASS",
+      "stages": [
+        {
+          "id": "gap",
+          "sandbox": "read-only",
+          "completed": true,
+          "shell_commands": 0,
+          "fixture_reads": 8,
+          "permission_violations": []
+        },
+        {
+          "id": "regression",
+          "sandbox": "workspace-write",
+          "completed": true,
+          "shell_commands": 5,
+          "fixture_reads": 0,
+          "permission_violations": []
+        },
+        {
+          "id": "review",
+          "sandbox": "read-only",
+          "completed": true,
+          "shell_commands": 0,
+          "fixture_reads": 10,
+          "permission_violations": [],
+          "review": {
+            "verdict": "clear",
+            "axes": {
+              "conformance": "checked",
+              "intent": "checked",
+              "safety": "checked"
+            },
+            "findings": [],
+            "summary": "No actionable findings in the scoped test diff. Against the immutable baseline, tests/cart.test.mjs preserves the zero-percent case and adds both exact assertions required by SPEC.md. The additions follow the existing Node test conventions and call the synchronous discount export in src/cart.mjs without introducing side effects or dependencies. Reviewed AGENTS.md and the test script in package.json. This was a read-only static audit. No shell commands or tests were run."
+          }
+        }
+      ]
+    },
+    {
+      "case": "core-review",
+      "result": "FAIL",
+      "stages": [
+        {
+          "id": "core-review",
+          "sandbox": "read-only",
+          "completed": true,
+          "shell_commands": 0,
+          "fixture_reads": 12,
+          "permission_violations": [],
+          "review": {
+            "verdict": "findings",
+            "axes": {
+              "conformance": "checked",
+              "intent": "checked",
+              "safety": "checked"
+            },
+            "findings": [
+              {
+                "severity": "P1",
+                "title": "A missing recorded external receipt can clear a failed check",
+                "file": "core.mjs",
+                "line": 83,
+                "reason": "Intent and safety. An attested failed test declares an external dependency whose recorded value is null. When the host later supplies a real value, lines 73–77 flag the missing recorded receipt, but line 83 compares that null with the live value and returns stale. Line 227 then drops the failure, so an otherwise satisfied workflow can proceed or complete without a verified change or investigated resolution. Requirements.md lines 19 and 25 require unknown validity to keep the failure unresolved. Compare only observed values. Add a regression that starts with a recorded null, supplies a live value, and asserts evidence_insufficient before both dependent execution and delivery."
+              },
+              {
+                "severity": "P2",
+                "title": "Legacy failures cannot be retired when known inputs change",
+                "file": "core.mjs",
+                "line": 57,
+                "reason": "Intent and safety. Restore a checkpoint with an attested pre-binding failure from the same worktree, change a fingerprinted dependency, and record a fresh pass. The missing project binding returns unknown before the dependency comparison. The unknown branch at line 228 also bypasses failure resolution, so the preserved failure can keep delivery blocked even after the host verifies its origin and observes the change. Requirements.md lines 19 and 25 require fresh observation for reuse and recognize demonstrated input changes as stale. Add a host-attested path to establish legacy provenance and assess changed inputs while preserving the original receipt. Test unchanged and changed dependencies after restore."
+              },
+              {
+                "severity": "P2",
+                "title": "A late failure can finalize the wrong execution attempt",
+                "file": "core.mjs",
+                "line": 447,
+                "reason": "Intent and safety. This behavior is also present in baseline-core.mjs. Start attempt 1, reconcile and reopen it, then start attempt 2 under the same request. A late failure callback for attempt 1 passes the running-state and request checks and marks attempt 2 validation_failed. The failure branch never checks the runtime attempt or nonce, so the legitimate attempt 2 completion is then rejected. Requirements.md lines 27 and 71 require current-attempt completion. Bind failure callbacks to the runtime attempt and nonce before changing state. Test that a late failure leaves attempt 2 running and able to complete."
+              },
+              {
+                "severity": "P2",
+                "title": "Deferral hides an unresolved failure in the validation plan",
+                "file": "core.mjs",
+                "line": 97,
+                "reason": "Intent. Take an attested failed test, remove a required live environment receipt, and activate a sourced verification deferral. validationPlan reports only deferred/defer, even though nextAction still treats that same failure as unresolved and blocks dependent execution and delivery. Requirements.md lines 25 and 63 preserve the investigation and safety gates during deferral. Keep the unresolved failure visible in the plan and track its pending rerun separately. Add a regression that checks both the plan and the workflow decision with deferral active."
+              }
+            ],
+            "summary": "The bounded audit compared core.mjs with baseline-core.mjs. Repository conformance was checked against AGENTS.md and the supplied contracts, with no separate conformance finding. The intent and operational safety checks found four defects. The SHA-256 of core.mjs matched the host receipt, which recorded 63 passing focused regressions and exit code 0 on Node v24.19.0. The findings are based on static inspection. No shell commands or tests were run during this review, and no files changed. existing-tests.mjs was reviewed as context because its imports are unresolved in the isolated copy. Broader integration remains unverified and was outside the verdict."
+          }
+        }
+      ]
+    }
+  ],
+  "reproduced": [
+    {
+      "point": "before_execution",
+      "before": {
+        "validity": {
+          "status": "unknown",
+          "reason": "external_state_binding_missing"
+        },
+        "action": "evidence_insufficient"
+      },
+      "after": {
+        "validity": {
+          "status": "stale",
+          "reason": "environment_changed:fixtureService"
+        },
+        "action": "execute"
+      },
+      "expected": {
+        "validity": {
+          "status": "unknown",
+          "reason": "external_state_binding_missing"
+        },
+        "action": "evidence_insufficient"
+      }
+    },
+    {
+      "point": "delivery",
+      "before": {
+        "validity": {
+          "status": "unknown",
+          "reason": "external_state_binding_missing"
+        },
+        "action": "evidence_insufficient"
+      },
+      "after": {
+        "validity": {
+          "status": "stale",
+          "reason": "environment_changed:fixtureService"
+        },
+        "action": "complete"
+      },
+      "expected": {
+        "validity": {
+          "status": "unknown",
+          "reason": "external_state_binding_missing"
+        },
+        "action": "evidence_insufficient"
+      }
+    }
+  ],
+  "raw_sha256": "eca848ba999933df0ac19b0686d223c5619c1c6c0872ca60d79e5667685c4a65",
+  "beta_gate": "BLOCKED",
+  "reason": "Independent review reports a P1 finding; existing assembler rejects incomplete coordination evidence."
+}

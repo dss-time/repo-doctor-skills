@@ -59,3 +59,19 @@
 升级起点使用与 npm 公共登记的 SHA-512 相符的已发布 0.11.1 tarball。Node 18 和 24 均成功将同一隔离目录的 34 项升级，现有自定义 Skill 保留，随后重复安装识别 34 项未变。旧项目状态可读，旧任务仍要求宿主复核凭据。升级后的 Skill 入口和 CLI 可以共享同一基线。人工注入的范围外文件被报告，索引未改，公开字段断言通过。以上为确定性升级与运行时证据。
 
 本机缺少 Linux 或 Windows 运行器。获准使用远程 CI 后，将完全匹配冻结输入的工作树放到隔离候选分支，让现有三平台 Node 18/LTS 矩阵运行。另一途径是在已有 Linux 与 Windows 机器上对同一快照执行 `npm ci`、`npm run validate`、`node --test scripts/test-change-guard.mjs`、`node scripts/test-installer.mjs` 和 `npm run test:npm`，保留平台版本、源码摘要和退出结果。当前没有提交候选分支或触发 CI。
+
+## 0.12.0-local.2 跨平台和模型实测
+
+2026-11-25，原始候选的 Linux、macOS 矩阵和质量门禁通过，Windows 无法建立基线。实际失败报告为 `use_git_worktree_root`。切换到 Windows 原生路径解析后 11 项通过，剩余的失败为受保护路径在大小写别名删除场景漏报。后续按真实目录项拼写与文件身份验证别名。两个 Windows 作业随后通过，包括基线、暂存变化、范围以及受保护路径用例。三平台 Node 18 和 LTS 与 Linux 质量门禁共 7/7。Windows 三项受平台限制的符号链接或执行位用例仍按既有条件跳过。重新冻结的 490 项输入与提交 `ff4fdc1` 匹配。图形界面中 `main` 的历史状态属于 `112ab7d`。 [GitHub Actions](https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106) · [内容及产物绑定](../../tests/reports/change-guard-0.12.0-release-validation-2026-11-25.json)
+
+额度恢复后，`gpt-6.2-sol`、low 在原三个夹具上新增 3/3 有效观测。三个任务均在首次宿主可见写入前建立一个基线，在最后一次宿主可见写入后完成检查。公共模块这次成功触发，并明确说明过滤器限制使结果为 unknown。受保护路径返回 violation，答复确认了具体的用户授权，说明外部调用者未验证。已有修改返回 warning，答复确认用户说明保留，并区分测试覆盖和差异核对。该答复没有明确复述 warning 或同时存在的 unknown。三案均通过定向业务断言。耗时 139–168 秒，每案 5–8 次工具调用。模型在 macOS 上运行，观测早于最后的 Windows 专用别名修复。历史报告保留原绑定，编译产物的绑定另行记录。本次成功复测仍无法解释历史漏触发，也无法估计总体漏报率。 [原始模型记录](../../tests/reports/change-guard-0.12.0-candidate-retest-2026-11-25.json)
+
+独立 `0.12.0-beta.1` npm 包已本地构建，测试覆盖从已发布 0.11.1 升级，保留 34 项和自定义 Skill、旧项目状态及旧任务再验证要求。Beta 的正式候选协调门禁保留，使用独立版本绑定记录。RC 还需完整的候选验收证据，Stable 门禁仍要求与当前发行内容相符的正式模型及协调证据。
+
+Beta 协调试验已实际执行。简单文案任务通过，工作流和独立审查未通过。三个只读阶段缺少允许的非 Shell 文件读取工具，模型报告阻塞并遵守了权限边界。当前 Codex CLI 已移除历史试验使用的内置 `js_repl` 功能。使用具备受限非 Shell 文件读取能力的宿主补验后，才能生成绑定 Beta 版本的协调通过证据。公开 Beta **BLOCKED**，RC **BLOCKED**，Stable **NO-GO**。本轮未使用旧报告填补门禁，未修改发布标准。 [Beta 协调尝试](../../tests/reports/coordination-0.12.0-beta.1-attempt-2026-11-25.json)
+
+CI 运行绑定候选提交内的构建输入。随后的 README、手册、Benchmark 和发布说明同步保留在本地工作区。
+
+六宿主验证使用 Vercel Skills CLI 1.9.0 和冻结提交 `ff4fdc1`。六个定向目标各做一次项目级和个人级安装，12/12 安装结果的资源校验及直接运行时检查通过。Codex 在两种安装范围均能发现安装结果。其他五个宿主的实际任务仍未验证。 [安装观测](../../tests/reports/change-guard-0.12.0-six-agent-install-2026-11-25.json)
+
+Beta 协调补验沿用冻结包和现有评分。在隔离的 Codex 调用中，官方 MCP 入口只公布了带路径白名单的夹具读取工具，Node 权限也限制在合成夹具和读取器文件内。三个只读阶段发现工具并发起调用，分别有 7、10、13 次调用因 `approval_policy=never` 被拒绝，实际读取为 0，Shell 调用为 0。回归任务仍在原写入授权内执行。两项审查如实返回阻塞。结论从缺少内置工具缩小到试验中的 MCP 调用缺少授权，现有证据没有指向生产运行时缺陷。发布前需要在专用试验会话中明确批准该只读工具，或使用本来就提供等价受限读取的宿主，再补齐协调证据。 [受限读取观测](../../tests/reports/coordination-0.12.0-beta.1-scoped-reader-2026-11-25.json)

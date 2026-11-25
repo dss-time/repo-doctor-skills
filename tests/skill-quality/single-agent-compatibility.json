@@ -417,7 +417,7 @@
     "reason": "Shared worktree comparison lifecycle, early cues in four existing writing Skills, and their deterministic runtime modules. Prior hashes are retained.",
     "trees": {
       "packs/engineering/repo-doctor/references": {
-        "sha256": "e904e1bc77bf40455658160be665d520bee07d3adc9e6784b356ccfc08849206",
+        "sha256": "c3be7b33f6df410dc1b93fba4468eab46aa3b906134d33bad8a7e22091e37aa4",
         "file_count": 14
       },
       "packs/engineering/repo-doctor/skills/documentation-sync": {
@@ -437,84 +437,108 @@
         "file_count": 11
       },
       "skills/api-contract-review": {
-        "sha256": "a89c119966f6bd091c81b6b0e2d9dbb641ac4072ff655be6225968c86be30ef0",
+        "sha256": "30f546e78ea1c0388088cd5143454eb4ef3b6641e980f3493b0d86c8ea3ab854",
         "file_count": 14
       },
       "skills/architecture-decision-record": {
-        "sha256": "f11be179d150d921dfac8ee91d1295258dd1ec3c6e6bdcecb22053428913a4bf",
+        "sha256": "54acc1967340033b0fcb2eaf3d7eaedb47ecd0f49a9cfbe0071f6d7727017b83",
         "file_count": 15
       },
       "skills/architecture-deepening-analysis": {
-        "sha256": "3a84db3b5ee140fb4d50f6c4bc7bc9a760e3c3ab923420f1f4e5d74c57e17215",
+        "sha256": "19d3b29411d2d3cd31b60e97b1acca1a8cbdfce8b852d206a59266fab46ddcb1",
         "file_count": 16
       },
       "skills/bug-root-cause-analysis": {
-        "sha256": "3f91f2802bcd3a016516e21e7d9896d424c28ca09646dc6fa838e042e37bda2a",
+        "sha256": "99bbf798f257e5d8d79fef52af48420c50aab29af55b3860d3b370ab845288ca",
         "file_count": 14
       },
       "skills/change-impact-analysis": {
-        "sha256": "3e198202003b341abd7f42948d464bfc00576c777a321d1c95571b89440ffec4",
+        "sha256": "9dfabadfed50c67230de86b5676696ad0fdbc685c15a878e3b6739ffa1647e9a",
         "file_count": 14
       },
       "skills/ci-failure-diagnosis": {
-        "sha256": "981fcb43cc761a2b603bb1d6f1d776bcd7f32e14817da5843924ab6c49f7cae4",
+        "sha256": "3dadff9c972075b3efed0530964ec81694b3338bc1ee17e1f8b03d08f2fa9dc3",
         "file_count": 14
       },
       "skills/configuration-audit": {
-        "sha256": "a7d8bd5fba03ef126b4d9059e3ab966b8b1cf9b7f46edefb38dc46eb0eea6271",
+        "sha256": "81f92cac20d4abe38a0c39556541c1426af9832c1166ffa7010276a6c91d63cb",
         "file_count": 14
       },
       "skills/database-migration-review": {
-        "sha256": "87c334cff5c934fa5ebc529459333dfa19af6bdc56cc92c42387a2201fc25814",
+        "sha256": "cad890d14800fa70fca9d5dc5ba8d8a9b4b8927456666b2d55b192e535543dd7",
         "file_count": 14
       },
       "skills/decision-prototype": {
-        "sha256": "e6270dcf5fdf01773656a8b33cd1626f4917f1ff88b27098ad5e5d4a98e2c4e7",
+        "sha256": "4782516efecf57c7fbfeb0793f39d4b4eaac01e6e63f6928d88360c2246f93cb",
         "file_count": 16
       },
       "skills/documentation-sync": {
-        "sha256": "049c91cf31f115457becacee3a0c6780e5ff50ff4c9bc5b6fccb15c62f92a8ff",
+        "sha256": "fe0bdcc184d51d1bd3e9fc989230bdef83914e60f8ef46d5f4b7502a9bd3c31f",
         "file_count": 22
       },
       "skills/feature-implementation": {
-        "sha256": "aefb33d9c02d1c3cec25913d5cd0edc993df07e385dfd9b625ec43df9efafa37",
+        "sha256": "9ef2885c93dd69a6471840a12435dcb5c196c572e9f712451e3f8dfda1fb652d",
         "file_count": 24
       },
       "skills/release-readiness-check": {
-        "sha256": "04fdc665dc63cfed6dd62a4f918eb01a7276ebb0fb7bba0ba2c0b36c6d0260ac",
+        "sha256": "ca8ab10a52e288000c4415f984ab3c0ed0f38f36a85f0c1792b083001e44e0c9",
         "file_count": 14
       },
       "skills/requirements-clarification": {
-        "sha256": "b63f104eb175b4341f55ef18eaa1eb5b1089cffbb45e77412e206215fdc68354",
+        "sha256": "ad4dbe3bb1fc848194f5bc668e2c239b916b7ad547912cda66d639ae5cccbe7c",
         "file_count": 14
       },
       "skills/safe-change-plan": {
-        "sha256": "914b1cb582fbb56d913f6f050a61671244747f1b3eb21781d8b227254860664b",
+        "sha256": "60f19f7ad3b2c0f4959bcf3ffa1bdd9d76d123af595dcd7059dc68139878337b",
         "file_count": 14
       },
       "skills/safe-code-review": {
-        "sha256": "93fdd35184d0b35509d40a1f8f74d00a8f9f4c89003d64f83761edb5380a09f6",
+        "sha256": "bf270043bae15b1d9b649ff744297d06bbef82f38015d60d07bbbc18024a15d0",
         "file_count": 14
       },
       "skills/safe-fix-implementation": {
-        "sha256": "0ca6d9f3a1bbf3996db5270dd4d8825d31376d5cb2ff5ad45aaf9c0874c81ece",
+        "sha256": "27ab3c78873170f066375c40a9844e5f6ed869567fc73e7627061ae644ceda6a",
         "file_count": 22
       },
       "skills/safe-test-implementation": {
-        "sha256": "c49a6d29d084f801af57d74775a504659dcc13d4aa36e14d3eb35538d16e0a97",
+        "sha256": "d1d73a41fe64d8c68c4bab1dd9680ee09d7dcfb5322e51733aa75ff7e29fc306",
         "file_count": 24
       },
       "skills/security-focused-review": {
-        "sha256": "c2468733eabf4ff3f7985e41b796d894dbaca98588082c1c74db5e4ec2274a97",
+        "sha256": "af57c4acbae650992a32e5cd055a4bfc52857f4da099873d58bbcfae97fef725",
         "file_count": 14
       },
       "skills/session-handoff": {
-        "sha256": "c7c036dbd5f84ac18026ee0d17dd5474944b9dfa2052e8ab113df1583ad2cd3a",
+        "sha256": "51913e31d6d98835e7835dc99057703af4ae3db63c051b6b361023fd8ceddfe7",
         "file_count": 14
       },
       "skills/test-gap-analysis": {
-        "sha256": "981ffd3343468f7ca472d939db17938ea0957ed3e6efa5355252c68a1bbe0973",
+        "sha256": "68215d78fe850163efd9fa67016015b816f69a831d9951a61898955c9c845500",
         "file_count": 14
+      },
+      "skills/dead-code-verification": {
+        "sha256": "fb14ff1d0635f5a8e756b78ff1b5118253ed6fc1d11959c9a7c4cb129877ed5f",
+        "file_count": 12
+      },
+      "skills/dependency-upgrade-analysis": {
+        "sha256": "ec2d3b6ae1d238c4c3094d42311264071a05bae215ec756c85d05af010bf7771",
+        "file_count": 12
+      },
+      "skills/performance-regression-analysis": {
+        "sha256": "6b57689b1755a3ae707a2fa2582cdfa31087a8d642ce52b506911c106d50dd53",
+        "file_count": 12
+      },
+      "skills/project-health-check": {
+        "sha256": "f7130b08b7d2390d375071b429cbd62d3b04ff6577aa2b02f486b46c346a7373",
+        "file_count": 12
+      },
+      "skills/repo-doctor-router": {
+        "sha256": "77afd90e71f4b96475feb2af52e298bcb78a616fc7eba71a42f52ec2364ae0f0",
+        "file_count": 10
+      },
+      "skills/repo-onboarding": {
+        "sha256": "2c408175893dcc54fe0045841bd9288d39796ba2588a7ffc3acd71946e20b700",
+        "file_count": 12
       }
     }
   }

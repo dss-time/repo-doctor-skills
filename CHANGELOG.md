@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-11-25
+
 ### Added
 
 - Add local, advisory Change Guard reports for preexisting changes, scope drift, protected paths and coverage limits.
@@ -18,12 +20,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Bundle the same Change Guard runtime in implementation, safe fix, safe test and documentation Skills. Let eligible natural-language tasks invoke a shared pre-edit baseline and final check while keeping focused checks for lower-risk work. Preserve the public CLI and Skill IDs.
 - Record CLI timing and storage samples, packaging checks and outstanding release evidence in the [0.12.0 draft](docs/RELEASE_NOTES_0.12.0_DRAFT.md).
 
+### Documentation
+
+- Lead with natural-language examples and distinguish six-agent installation and standalone runtime checks from host execution.
+
 ### Fixed
 
+- Reconcile attested failures observed after a checkpoint before continuing work or delivering. Preserve the barrier until a valid rerun or demonstrated input change.
+
+- Preserve unresolved test failures when an external identity is first observed. Require an attested rerun or a proven change to clear the blocker. Keep unknown failures visible during deferral and bind retry failure callbacks to the current execution.
+
+- Resolve Windows worktree roots with native paths, and verify on-disk case spelling for scope and protected path aliases.
 - Report executable and type transitions relative to the baseline.
 - Keep valid observations when one declared path traverses a symlink.
 - Match confirmed filesystem aliases for scope and protected paths.
 
+
+### Security
+
+- Keep host reconciliation and permissions outside serialized Task Context.
 
 ## [0.11.1] - 2026-11-21
 
@@ -730,3 +745,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 [0.11.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.10.1...v0.11.0
+
+[0.12.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.11.1...v0.12.0

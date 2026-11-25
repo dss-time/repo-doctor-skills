@@ -6,6 +6,8 @@ This manual starts with the shortest supported path for a new Repo Doctor user. 
 
 > Platform entry points were verified on 2026-07-15. Product interfaces, plans, and workspace policy can change; use the controls exposed by your current host.
 
+[Targeted setup for six agents, version requirements, verified scope and isolated trials](AGENT_COMPATIBILITY.md).
+
 ## 1. Install
 
 ### Select Skills and your agent
@@ -130,7 +132,7 @@ Fast never means skipping safety. Audit is not imposed on every small problem. A
 
 ## 7. Update
 
-The local candidate was tested upgrading from the published 0.11.1 in isolated directories. Existing project state stays readable, and old task evidence still requires host revalidation. Installing replaces selected same-name Skills under the existing contract and preserves unselected custom directories. Public installation instructions continue to target the published release.
+The local candidate was tested upgrading from the published 0.11.1 in isolated directories. Existing project state stays readable, and old task evidence still requires host revalidation. Installing replaces selected same-name Skills under the existing contract and preserves unselected custom directories. The revised candidate passed the Linux, macOS and Windows matrix on Node 18 and LTS. The separate Beta package passed macOS upgrades on Node 18 and 24. Public installation instructions continue to target the published release.
 
 ### Understand the two version layers
 
@@ -144,10 +146,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.11.1`; to select that version, use:
+2. Refresh or replace the configured marketplace source so it points to that tag. After the stable release is published, use this command to select `v0.12.0`. The published stable version is currently `v0.11.1`.
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

@@ -34,6 +34,12 @@ npm run doctor
 
 冻结候选补跑公共模块、已有修改和受保护路径三案。每轮都在工具执行前收到 `usageLimitExceeded`，没有新增有效模型样本。复用已有 21 条观测，禁止把离线业务断言通过当作 Agent 已执行验证或正确处理报告。 [原始补跑记录](../tests/reports/change-guard-0.12.0-freeze-retest-2026-11-24.json)
 
+额度恢复后，原模型的三案均完成基线、检查和夹具断言，累计有效观测为 24 条。已有修改答复确认保留用户内容，受保护路径答复区分策略命中与实际授权，公共模块答复保留过滤器限制带来的 unknown。详细记录包含宿主统计与绑定范围。 [本轮记录](research/change-guard-integration.md#0120-local2-跨平台和模型实测)
+
+新增的是六宿主安装验证。Skills CLI 1.9.0 的 12 个隔离安装均通过，Codex 另完成项目及个人发现检查。独立运行时结果与真实宿主自动调用分开统计。 [兼容性明细](AGENT_COMPATIBILITY.zh-CN.md)
+
+协调器修订改变了候选绑定，简单任务和协调工作流重新通过。独立审查发现另一项检查点恢复问题。既有 Change Guard 自然语言观测仍保留原绑定。 [协调复验](../tests/reports/coordination-0.12.0-beta.1-p1-retest-2026-11-25.json)
+
 ## 离线准备真实模型评测
 
 以下默认命令不联网、不读取 API Key、不上传 Prompt、不上传代码，也不生成模型输出：

@@ -6,58 +6,51 @@
 
 Safe, scoped, and verifiable code changes for AI coding agents.
 
-Repo Doctor gives coding agents a way to check whether their edits touched your existing work, changed staging, or crossed an agreed boundary. In this source candidate, eligible engineering Skills share **Change Guard**, a local Git worktree comparison. They can use it alongside focused tests and existing engineering evidence.
+Keep AI edits focused, spot when they touch your uncommitted work, and see what was actually verified. Available for OpenAI Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI and OpenCode. See the matrix for tested capabilities.
 
 ## Quick start
+
+Run this in your project and select your coding agent.
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-Start a task in your coding agent and describe the work in your own words. You can also invoke a Skill directly or ask `$repo-doctor-router` for a recommendation.
+Start a new session and describe the change, scope and behavior to preserve in your own words. Use `$repo-doctor-router` if you want a Skill recommendation. The public **0.11.1** release provides engineering workflows. The baseline and automatic change reports below are part of the **unreleased 0.12.0 candidate**.
 
 ## Minimal example
 
-```text
-Fix the label formatting bug in src/labels.mjs. Keep my uncommitted accessibility note in that file and leave unrelated files alone.
-```
+| What you can ask | How Repo Doctor helps |
+| --- | --- |
+| “Fix the order list that stays stale after an edit. Preserve the existing business rules.” | Reproduce the behavior, trace the refresh path, keep the fix local and report focused regression results. |
+| “Add a search filter to the order page. Keep my uncommitted work.” | When appropriate, the candidate records the initial Git state and flags later changes to files you had already edited. |
+| “Fix this TypeScript error. Keep dependencies as they are.” | The candidate can surface dependency manifest and lockfile changes after the baseline so you can check their scope. |
+| “Change the copy on this button.” | A focused check can be enough. The observed low-risk Codex example stayed light without a baseline. |
 
-In the isolated Codex follow-up, a request to fix a label while preserving an existing user edit led to a baseline and a final warning for the edited path. The user note survived and the fixture checks passed. Three of four eligible candidate turns ran both checks. The public-module turn skipped them, and the low-risk edit stayed light. Invocation depends on Skill selection, host permissions and runtime availability. [Live observations and costs](docs/research/change-guard-integration.md)
+More examples cover style changes, shared request helpers, bulk approval and resuming a task. [Natural-language examples](docs/guides/repo-doctor-scenarios.md)
 
-On macOS with 251 tracked fixture files, median baseline time was 170–255 ms and median check time was 142–229 ms, including Node startup. Costs vary by worktree and environment. The candidate upgrade passed on macOS with Node 18 and 24. Linux and Windows runs are pending. [Candidate verification](docs/research/change-guard-integration.md#候选冻结和本轮补验)
+## How it works and where it stops
 
-## Explicit worktree comparison for diagnostics
+- **Match verification to risk.** Skills guide root-cause investigation, scoped edits and regression tests. Prior evidence can be reused when its inputs, worktree and environment still match.
+- **Compare the worktree when it matters.** Four candidate writing Skills share a local runtime. With Node, Git and permission to use project-local state, they can record a baseline and check before handoff. Each of these Skills bundles the runtime when installed through the Skills CLI.
+- **Review what actually changed.** Findings identify observed changes, risks and unknown coverage. Check them against the authorized task. Ignored files and transient concurrent writes may be invisible. Business behavior still needs focused verification.
 
-The following commands run from a Repo Doctor source checkout against the Git worktree you choose. The published 0.11.1 CLI predates this workflow.
-
-```bash
-node bin/repo-doctor-skills.mjs change begin --root ../my-project --id export-fix --scope src/export --json
-node bin/repo-doctor-skills.mjs change check --root ../my-project --id export-fix --json
-```
-
-A baseline makes it possible to distinguish an existing edit from a later change to the same file. For example, if a task touches a user-edited file and also updates a lockfile outside its scope, the JSON report flags both. The report leaves edit ownership unknown and puts remediation in the developer’s hands. Git-ignored work and transient concurrent changes can be invisible. Verify business behavior separately with focused tests. [Report fields, project policy and coverage limits](docs/PROJECT_STATE.md#change-guard).
-
-[Try the verified disposable Git example](docs/guides/change-guard-demo.md).
-
-## How it works
-
-- **Change safety.** Existing Skills check user edits, business behavior and permission boundaries. Change Guard adds a Git-visible comparison for tasks where a persisted baseline helps.
-- **Adaptive verification.** Choose checks by impact and evidence. Small tasks use focused checks. Contracts, data updates and permission boundaries can require isolated integration tests. [Execution modes](docs/MULTI_AGENT_WORKFLOW.md).
-- **Engineering evidence.** Optional task checkpoints preserve history. The host revalidates execution receipts, worktree identity, relevant inputs and environment before reuse. [Workflow coordination](docs/WORKFLOW_COORDINATION.md).
-- **Runs alongside your other tools.** Invoke a single Skill or use authorized coordination for dependent stages. Hosts choose when to load references and whether isolated parallel execution is available.
+In Codex, the existing user note was preserved and all three targeted repeats ran the checks. A shared-module task missed earlier and triggered on retry. Median baseline and check times on a 251-tracked-file macOS fixture were 170–255 ms and 142–229 ms, including Node startup. [Live observations](docs/research/change-guard-integration.md) · [Reproducible disposable Git example](docs/guides/change-guard-demo.md)
 
 ## Hosts and installation
 
-Use current Node.js LTS. The bundled CLI supports Node 18 and later. The external Skills installer has its own Node requirements. Run the quick-start command in your target project and select your host and Skills. Native activation and tool permissions depend on the host.
+Use one installation channel per agent. Project scope is the default. Add `-g` for user-wide installation. The installation and standalone runtime results below use Skills CLI **1.9.0** and the frozen candidate.
 
-| Host | Command or import |
-|---|---|
-| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
-| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
-| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
-| WorkBuddy | Import the `skills/` directories using the host's local Skill import |
+| Agent | Targeted install | Verified scope |
+| --- | --- | --- |
+| OpenAI Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` | Project/global install. Candidate host discovery, body loading, automatic calls and some report handling observed. |
+| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` | Project/global install and standalone runtime. Host execution unverified. |
+| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` | Project/global install and standalone runtime. Host execution unverified. |
+| GitHub Copilot | `npx skills@latest add dss-time/repo-doctor-skills -a github-copilot` | Project/global install and standalone runtime. Host execution unverified. |
+| Gemini CLI | `npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli` | Project/global install and standalone runtime. Host execution unverified. |
+| OpenCode | `npx skills@latest add dss-time/repo-doctor-skills -a opencode` | Project/global install and standalone runtime. Host execution unverified. |
 
-See [Advanced usage](docs/ADVANCED_USAGE.md) for additional hosts and bundled installation. The compatibility matrix covers Linux, macOS and Windows.
+Skills CLI 1.9.0 requires Node **22.20.0+**. Use current LTS. The bundled Repo Doctor CLI and candidate runtime support Node 18+. Worktree comparisons need local Git. [Agent installation, permissions, upgrades and local Beta checks](docs/AGENT_COMPATIBILITY.md) · [Other existing installation channels](docs/ADVANCED_USAGE.md)
 
 ## Codex plugin
 

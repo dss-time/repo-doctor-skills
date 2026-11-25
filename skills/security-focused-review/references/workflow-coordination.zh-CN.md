@@ -22,7 +22,7 @@
 
 条件有真、假、未知三态，必须有宿主评估、来源和有效证据。可选阶段条件为假才能 `skipped`，必需阶段不能凭空省略。已有充分结果记为 `reused`，不算跳过。证据不足为 `evidence_insufficient`，缺少授权为 `permission_blocked`，真实检查失败为 `validation_failed`；后三种绝不算成功。门禁即使恢复后也要针对当前宿主授权重新核对。
 
-已核验失败检查的依赖或环境有效性变为未知时，仍属于未解决问题，必须以 `evidence_insufficient` 阻止依赖执行与交付。已证实输入变化时，历史失败才属于过期证据。环境字段缺失不能解除已观察到的失败。
+已核验失败检查的依赖或环境有效性变为未知时，仍属于未解决问题，必须以 `evidence_insufficient` 阻止依赖执行与交付。已证实输入变化时，历史失败才属于过期证据。环境字段缺失不能解除已观察到的失败。旧值未知时，首次取得实测值不能证明环境已改变。延期计划中仍要保留这类失败的调查项。
 
 执行完成凭据包含与当前阶段尝试计数一致的 `execution_attempt`。`finishStep` 拒绝之前尝试的凭据，历史结果通过显式 reuse 路径复用。证据分类时，已证实输入变化优先于环境信息缺失。
 
@@ -50,7 +50,7 @@
 
 实际核对 Skill 正文与当前模式/目标后，提供 `host.skillChecks[stageId] = {allowed: true, source, request_binding: digest(request), skill_binding: digest(metadata)}`。缺失或不匹配时阻塞执行与结果接收；这是宿主核验，不是重复用户审批。
 
-必须直接使用 `restoreTask` 返回对象；不得拷贝字段到另一对象或直接 JSON.parse 后执行。每次导入都有新的内存恢复标识。检查实际工作区与可信操作/尝试记录（包括旧 pending 检查点之后的效果）后，设置 `host.recoveryChecks.set(recoveryBinding(task, host), {source, reconciled: true})`。不得从 pending 推断“从未执行”，也不得从 Task Context 复制此权威。
+必须直接使用 `restoreTask` 返回对象；不得拷贝字段到另一对象或直接 JSON.parse 后执行。每次导入都有新的内存恢复标识。检查实际工作区与可信操作/尝试记录（包括旧 pending 检查点之后的效果）后，设置 `host.recoveryChecks.set(recoveryBinding(task, host), {source, reconciled: true, failureEvidence})`。不得从 pending 推断“从未执行”，也不得从 Task Context 复制此权威。 宿主须提供经核对的当前任务与工作树的实际失败凭据，包括检查点之后观测的失败。只有确认无附加失败时才填空数组。缺少历史，或出现未核验、冲突凭据时阻塞恢复。推进会保存核对过的凭据，但不保存宿主授权。每次导入仍须重新核对。
 
 重试前，只能在核对本次具体尝试与范围后，向 `host.reconciled` Set 加入 `reconciliationBinding(task, stageId, host)`，再带来源和 safeToRetry 调用 `reopen`。旧阶段名或旧尝试的许可无效。失败写操作保持副作用不确定，条件变化不能掩盖运行中/中断操作；成功只读阶段无需写入核对。未知结果保持未知，失败记录也需输入/环境仍适用才能作为当前失败。
 
@@ -58,7 +58,7 @@
 
 验收和风险记录除任务标识外，还须包含 `operation_binding: operationBinding(host)`；操作集合变化后，这些主张需要重新评估。所有声明的停止谓词（包括 false）都需要当前证据；未知或过期时先调查。有潜在副作用的命令同样需要 Registry 的操作前风险检查。
 
-当前未解决的失败测试阻塞依赖执行和交付。可信宿主可通过 `host.failureRepairs.set(digest(failed), {source, stages: {[stageId]: digest(request)}})` 明确允许具体修复或调查阶段，但不清除失败。调查原因并真实观察相同命令、输入和环境下的后续成功后，才能用 `host.failureResolutions.set(digest(failed), {source, replacement: laterPassingReceiptId})` 解决；更早的通过记录不能覆盖当前失败。
+当前未解决的失败测试阻塞依赖执行和交付。可信宿主可通过 `host.failureRepairs.set(digest(failed), {source, stages: {[stageId]: digest(request)}})` 明确允许具体修复或调查阶段，但不清除失败。调查原因并真实观察相同命令、输入和环境下的后续成功后，才能用 `host.failureResolutions.set(digest(failed), {source, replacement: laterPassingReceiptId})` 解决；更早的通过记录不能覆盖当前失败。如果原失败只缺外部环境观测，宿主可在明确调查后，用命令、工作目录、文件指纹及全部已知环境值匹配且补齐未知值的后续成功凭据解除阻塞。缺少原工作树绑定的旧凭据仍需重新核验来源。
 
 用户明确指定延期验证时，优先于逐切片测试时序。记录 `verification_status: verification_deferred` 及待验证项，继续安全且已授权的独立工作，保留完成和安全门禁。已有有效证据与授权可以复用。
 
@@ -75,3 +75,5 @@
 当前执行身份保存在内部运行时 WeakMap，不从 Task Context 恢复。导入的完成凭据即使次数和 nonce 匹配仍属于历史结果，须由当前宿主明确核验并复用；新的完成凭据必须匹配 advance 为该内存任务实际签发的 nonce。
 
 恢复处置检查覆盖每个新的 Skill 执行及可选跳过，即使当前请求仅只读：当前能力不能证明较早请求没有副作用。跳过必须确认 not_executed，已完成操作须明确核验复用，重试须 safe_retry 及匹配的核对记录；门禁继续使用当前宿主授权。
+
+重试阶段提交失败回调时，向 `finishStep` 传入第六个参数 `{ execution_attempt, execution_nonce }`，使用开始本次执行时记录的值。当前运行时创建的任务首次执行仍兼容原签名。恢复任务的失败回调始终需要显式执行绑定。
