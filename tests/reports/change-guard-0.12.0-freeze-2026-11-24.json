@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "project": "repo-doctor-skills",
+  "candidate_id": "0.12.0-local.1",
+  "state": "local_content_freeze",
+  "base_head": "112ab7d521cc105971ccad07a8f3de492187aab2",
+  "package_version": "0.11.1",
+  "manifest_algorithm": "SHA-256 of sorted JSON lines [relative_path, executable_mode_mask, file_sha256]",
+  "input_scope": [
+    "packs/",
+    "scripts/",
+    "bin/",
+    "schemas/",
+    "adapters/",
+    ".github/",
+    "package.json",
+    "package-lock.json",
+    ".agents/plugins/marketplace.json",
+    ".gitattributes",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "build_inputs": {
+    "files": 490,
+    "sha256": "dcf84249dd84e8cd97df6388c2cd1539e6ac3f45d62a8eafe30f2228bacc0e73"
+  },
+  "skill_binding": {
+    "schema_version": 1,
+    "source_sha256": "fdd4e5b24446819749f66e0cb33b95af235779ed9315e75d8dc28bb22d321bb4",
+    "runtime_sha256": "b16979b24c1ab8e63800b34f185cd75dbae66be1a2983915d8ba7906ececa63d"
+  },
+  "artifact_trees": {
+    "skills": {
+      "files": 428,
+      "sha256": "b16979b24c1ab8e63800b34f185cd75dbae66be1a2983915d8ba7906ececa63d"
+    },
+    "plugins": {
+      "files": 439,
+      "sha256": "614ae8be2eb582d05c084ef4d107980df6c82f457c4ca4329c67d8015af8d8c9"
+    },
+    "dist": {
+      "files": 1880,
+      "sha256": "7d62f993a8e886168e7ee90aa0f1f8aef3ca2cee84dbdb7d4a2ab26263ebf082"
+    },
+    "package-assets": {
+      "files": 431,
+      "sha256": "44daa48efc3e0266bf72c4de1c104d1cf535db043cf6d6e01c3d878f25e0ce8e"
+    }
+  },
+  "npm_archive": {
+    "filename": "repo-doctor-skills-0.11.1.tgz",
+    "sha256": "0293ae7a10077e9adedd4c63ed92a6f0313b3dc708fb04f9b7aee53b80320905",
+    "byte_identical_rebuild": true,
+    "published": false
+  },
+  "macos_arm64": {
+    "node18": "18.20.8",
+    "node24": "24.19.0",
+    "node18_guard_passed": 15,
+    "node18_npm_passed": true,
+    "bilingual_skills": 34,
+    "build_targets": 7,
+    "chatgpt_zips": 34,
+    "upgrade_source_public_integrity": "sha512-FpIue2GkWS9mr5QcBYdGOCrPJ0Dub/LI8jo2kfAI/EmZYLL+7/0VH5bEEkHVrGJDMkXpGLlDMgErCtNA1QE3tg==",
+    "upgrades": [
+      {
+        "platform": "darwin",
+        "node": "v18.20.8",
+        "stable_skills": 34,
+        "upgraded_skills": 34,
+        "user_custom_skill_preserved": true,
+        "reinstall_unchanged": 34,
+        "ledger_status": "valid",
+        "old_project_current": true,
+        "old_task_requires_host_revalidation": true,
+        "shared_cli_baseline": true,
+        "outside_scope_detected": true,
+        "index_preserved": true,
+        "public_contract_assertion": true
+      },
+      {
+        "platform": "darwin",
+        "node": "v24.19.0",
+        "stable_skills": 34,
+        "upgraded_skills": 34,
+        "user_custom_skill_preserved": true,
+        "reinstall_unchanged": 34,
+        "ledger_status": "valid",
+        "old_project_current": true,
+        "old_task_requires_host_revalidation": true,
+        "shared_cli_baseline": true,
+        "outside_scope_detected": true,
+        "index_preserved": true,
+        "public_contract_assertion": true
+      }
+    ]
+  },
+  "model": {
+    "model": "gpt-6.2-sol",
+    "effort": "low",
+    "prior_usable_observations": 21,
+    "final_candidate_prior_eligible_triggers": 3,
+    "final_candidate_prior_eligible_cases": 4,
+    "retries": [
+      {
+        "case_id": "existing-edits",
+        "status": "usageLimitExceeded",
+        "tool_calls": 0,
+        "usable": false
+      },
+      {
+        "case_id": "public-module",
+        "status": "usageLimitExceeded",
+        "tool_calls": 0,
+        "usable": false
+      },
+      {
+        "case_id": "protected-path",
+        "status": "usageLimitExceeded",
+        "tool_calls": 0,
+        "usable": false
+      }
+    ]
+  },
+  "unverified": [
+    "Linux",
+    "Windows",
+    "host hook execution",
+    "mutating-task report handling after receipt"
+  ],
+  "release_gate": {
+    "development": "PASS",
+    "formal": "FAIL",
+    "formal_gate_issues": [
+      "- Live-model evidence is missing or stale: Skill source/runtime content binding differs; run a fresh evaluation",
+      "- simple: installed Skill content changed",
+      "- tests/reports/live-codex-skill-validation-0.11.0.json: Live-model evidence is missing or stale: Skill source/runtime content binding differs; run a fresh evaluation",
+      "- tests/reports/release-promotion-0.11.1.json: Live-model evidence is missing or stale: Skill source/runtime content binding differs; run a fresh evaluation",
+      "- tests/reports/release-promotion-0.11.1.json: bin/repo-doctor-skills.mjs: published runtime changed",
+      "- tests/reports/release-promotion-0.11.1.json: package manifest changed beyond its version",
+      "- workflow: installed Skill content changed"
+    ]
+  },
+  "release_decisions": {
+    "local_macos": "GO",
+    "public_beta": "BLOCKED",
+    "release_candidate": "BLOCKED",
+    "stable": "NO-GO"
+  }
+}

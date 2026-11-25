@@ -15,15 +15,15 @@ Default approach:
 - do not default to full regression or persistent reports; use them when justified by impact and authorization; no unauthorized Skill chaining;
 - output only the conclusion, completed/found items, minimum validation, and at most one next recommendation.
 
-Evidence sufficiency determines investigation depth. Escalate for increased scope or risk, not a file, command, test or Token count.
+Pair the target diff with the nearest relevant behavior or syntax check. Evidence sufficiency determines investigation depth. Escalate for increased scope or risk, not a file, command, test or Token count.
 
 ## `standard`
 
-Use for several related files, ordinary feature or bug work, module-level validation, or a small number of unresolved non-material details. Read only the relevant module and run affected tests plus the necessary typecheck or lint. Preserve enough evidence to support the result, but do not run repository-wide release gates or enter audit automatically.
+Use for related changes, ordinary feature or bug work, module-level validation, or unresolved non-material details. Trace affected callers. Select checks for changed behavior and nearby regressions, plus necessary typecheck or lint. Preserve enough evidence to support the result. Repository-wide and release checks require a task-specific reason.
 
 ## `audit`
 
-Use only for database migrations, security or permission boundaries, production data, release decisions, public-contract breakage, large architecture changes, dependency upgrades, or an explicit request for a complete audit. Preserve evidence states, command and permission ledgers, full risk and stop conditions, and run full tests/builds only when authorized and relevant.
+Use only for database migrations, security or permission boundaries, production data, release decisions, public-contract breakage, large architecture changes, dependency upgrades, or an explicit request for a complete audit. Trace relevant contracts, permission boundaries or data semantics. Use isolated integration checks for material behavior and widen coverage when dependencies or runtime effects remain uncertain. Preserve evidence states, command and permission ledgers, risks and stop conditions. Run full tests and builds when authorized and relevant.
 
 `fast` never relaxes permissions, destructive-action prohibitions, evidence honesty, data handling, or approval gates. An unsafe or unauthorized request stops instead of being made cheaper.
 

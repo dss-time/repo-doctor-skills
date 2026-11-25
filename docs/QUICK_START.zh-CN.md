@@ -1,5 +1,7 @@
 # 快速开始
 
+[六个 Agent 的定向安装、版本要求、已验证范围与隔离试用](AGENT_COMPATIBILITY.zh-CN.md)。
+
 ## 1. 安装
 
 使用当前 Node.js LTS（已测试 Node 24）；最新外部 skills CLI 无法在本仓库最低支持的 Node 18 环境运行。

@@ -8,12 +8,16 @@ import { credentialFindings } from "./credential-findings.mjs";
 
 export const maxStateBytes = 4 * 1024 * 1024;
 
-export function safePath(root, relative) {
+export function validateRelativePath(relative) {
   if (typeof relative !== "string" || !relative || path.isAbsolute(relative)
       || relative.includes("\\") || relative.includes("\0") || /^[A-Za-z]:/.test(relative)
       || relative.split("/").some(part => part === ".." || part === "." || !part)) {
     throw new Error("Expected a contained relative path");
   }
+}
+
+export function safePath(root, relative) {
+  validateRelativePath(relative);
   let current = realpathSync(root);
   if (!lstatSync(current).isDirectory()) throw new Error("Root must be a directory");
   for (const part of relative.split("/")) {
@@ -23,6 +27,16 @@ export function safePath(root, relative) {
     } catch (error) { if (error.code !== "ENOENT") throw error; }
   }
   return current;
+}
+
+export function ensurePrivateIgnore(root) {
+  const relative = ".repo-doctor/.gitignore";
+  try {
+    writeFileSync(safePath(root, relative), "*\n", { flag: "wx", mode: 0o600 });
+  } catch (error) {
+    if (error.code !== "EEXIST") throw error;
+    if (!lstatSync(safePath(root, relative)).isFile()) throw new Error("Local ignore rules must be a regular file");
+  }
 }
 
 export function readJson(root, relative, { optional = false } = {}) {

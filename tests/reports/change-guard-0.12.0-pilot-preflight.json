@@ -1,0 +1,86 @@
+{
+  "recorded_on": "2026-11-24",
+  "environment": {
+    "platform": "macOS arm64"
+  },
+  "default_cli_login_status": "Logged in using ChatGPT",
+  "isolated_preflight": {
+    "mode": "preflight",
+    "effort": "low",
+    "stable_commit": "112ab7d521cc105971ccad07a8f3de492187aab2",
+    "candidate_skill_binding": {
+      "schema_version": 1,
+      "source_sha256": "4dd087edc4a028f5cb7eda184eef7bb8f05926c1caa6480666ab0495598c9c0f",
+      "runtime_sha256": "ae6358f0e6edd69ad16b718c6b5e4328af337f77dddcd586d98475726ad483e2"
+    },
+    "pilot_sha256": "2c0cc2d78d91f2b930094c2094afac8afa70cd4f924f822b9462e057342ff5d3",
+    "candidate_runtime": {
+      "bin/repo-doctor-skills.mjs": "73:7d6866a74b13142f862ddc3d98a2f1d79f6058be4ca0b4f3162f1d9104491ac5",
+      "package.json": "0:a1744d93bbe9d7ba46daf9e385fbc219156ffb44addd57d80790dea9edd9f543",
+      "scripts/change-guard.mjs": "0:97991f97880b6f8db9f4a8807eb7817c8cfee198e59be824539133a0c8192b0b",
+      "scripts/credential-findings.mjs": "0:6c34ee3c4defdbf580ae0db58fac1507a53f059e24cf76da9411ba30439f4898",
+      "scripts/install.mjs": "0:d51935ab9d2609907619bafd79071c20a9585ff7edab5f373c788fdc45e7e1d5",
+      "scripts/installation-state.mjs": "0:418fec5c2b3b3be86b913d953bd5cef749cd410866c24a95094a8bbce3e3b419",
+      "scripts/local-state-files.mjs": "0:61406f43763a5c288b22b493883aeb20d7c61a8a3e9561e151e9f1ecb681bf2b",
+      "scripts/project-state.mjs": "0:56dfd11e2775c585c577bcfe134dfe7c702e465935ce0f8ed3f541f07d169afd",
+      "scripts/workspace-cli.mjs": "0:a764a7f78089e81612fadb92a971e6caaf1bf48d5b99f54adeff3e58764908fa",
+      "scripts/workspace-runtime.mjs": "0:2d9fd1ed780d6be2402bef6ba63dafe9cc364bbcc3fd82898d00b5861bb39076"
+    },
+    "installed_skills": {
+      "A": {
+        "count": 0,
+        "sha256": null
+      },
+      "B": {
+        "count": 34,
+        "sha256": "31c7a987310d2a1a06d9c571545d57d24138ab29c071bca2deba7f5bdf2d6c33"
+      },
+      "C": {
+        "count": 34,
+        "sha256": "5445615a0e165bba5c8a288e2f16775ea40efac7bccb7e15b99a22b189f4b773"
+      }
+    },
+    "fixtures": {
+      "existing-edits": {
+        "sha256": "ce99cf2250c336a99b0ddb3f966fc913222ef454b36cdf597ecd2cdbdcf5ceca",
+        "base_case": "simple-en-deduplicate"
+      },
+      "scope-drift": {
+        "sha256": "8973c7a6195fcb18982852d32357df9dfac3a79278e5d13bdba5b429b72583f7",
+        "base_case": "simple-zh-config-change"
+      },
+      "public-module": {
+        "sha256": "11921009042de4f56bd0dfe7bc9d496508d636fcaf19445fcc1f1004ada2bdd3",
+        "base_case": "simple-zh-api-fix"
+      },
+      "authorized-cross-file": {
+        "sha256": "11921009042de4f56bd0dfe7bc9d496508d636fcaf19445fcc1f1004ada2bdd3",
+        "base_case": "simple-en-button-text"
+      },
+      "simple-cost": {
+        "sha256": "11921009042de4f56bd0dfe7bc9d496508d636fcaf19445fcc1f1004ada2bdd3",
+        "base_case": "simple-en-doc-typo"
+      },
+      "stale-evidence-and-report": {
+        "sha256": "9827de91314eb7cedf1133927dcb6b4640908184efdeec797d07de3e1913e850",
+        "base_case": "simple-en-api-review"
+      }
+    },
+    "results": [],
+    "host_cli": {
+      "exit_code": 71,
+      "status": "BLOCKED",
+      "reason": "permission"
+    },
+    "account_available": false
+  },
+  "approved_host_probe": {
+    "evidence": "observed second preflight from a tool invocation approved outside the outer sandbox",
+    "sandbox_policy": "workspaceWrite",
+    "account_available": false,
+    "exit_code": 0,
+    "status": "baseline_created",
+    "pilot_sha256": "2c0cc2d78d91f2b930094c2094afac8afa70cd4f924f822b9462e057342ff5d3",
+    "live_observations": 0
+  }
+}

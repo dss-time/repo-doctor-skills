@@ -2,7 +2,7 @@
 
 [简体中文](PROJECT_STATE.zh-CN.md)
 
-These commands are included in the 0.11.0 CLI and can also run from a checkout. Version 0.10.1 predates these additions. The existing Skills remain usable individually; setup is optional. All commands return JSON. A successful command exit means the state operation completed, while the returned status describes whether evidence is current, stale or unverified.
+These commands are included in the 0.11.0 CLI and can also run from a checkout. Version 0.10.1 predates these additions. The existing Skills remain usable individually; setup is optional. Project, task and installation commands return JSON. A successful command exit means the state operation completed, while the returned status describes whether evidence is current, stale or unverified.
 
 ## Project setup and reuse
 
@@ -44,6 +44,39 @@ node bin/repo-doctor-skills.mjs task save --root . --id export-fix --input check
 Saving validates identity, context structure, registry compatibility and revision, preserves history, and records dependency fingerprints from scope files and evidence. Incomplete dependency coverage remains unknown. Existing records survive rejected updates and failed atomic writes. Concurrent cooperating writers use a project lock; revision checks also reject stale updates.
 
 `task resume` reuses the existing coordination core. Running stages become interrupted, old next-action suggestions are cleared and host authorization/trusted evidence are never restored. It returns `requires_host_revalidation: true`, with `UNKNOWN` or `STALE`; it does not certify completion. Changed registry definitions return migration information with no restored context. The host must recheck actual effects before retrying an interrupted operation, and verify live user authorization and receipts before continuing. The CLI supplies discovery and validated checkpoints, not an automatic session wakeup.
+
+## Change Guard
+
+The candidate's implementation, safe fix, safe test and documentation Skills can invoke the bundled entry point. A material risk and permission to record local state call for a baseline before the first relevant edit. Later phases can reuse it while the task ID, worktree and scope still match. Refresh the final check after further writes. If the runtime or a trustworthy baseline is unavailable, record the unknown and continue with manual Git diff review and focused tests. The CLI also supports explicit diagnostics.
+
+Available in the current source and locally packed builds. The published 0.11.1 CLI predates this feature. Node.js 18+ and Git are required. Run from the Repo Doctor checkout with `--root` pointing to the worktree root:
+
+```sh
+node bin/repo-doctor-skills.mjs change begin --root ../example --id export-fix --scope src/export --scope tests/export
+node bin/repo-doctor-skills.mjs change check --root ../example --id export-fix --json
+node bin/repo-doctor-skills.mjs change status --root ../example --id export-fix
+```
+
+`begin` creates a private baseline in the target worktree's `.repo-doctor/changes/`. Each ID is immutable and local to the resolved worktree. The state uses the existing permission, path, atomic write and locking helpers. Guard-managed state must be Git-ignored. `check` compares the working tree and index to the saved observation. `status` summarizes the saved baseline without inspecting the current Git status. Project initialization and task checkpoints are optional. A checkpoint and a Change Guard baseline can share an ID for reference, with independent lifecycles.
+
+Scope accepts slash-separated repository-relative file and directory prefixes. Include both endpoints of a planned rename. With no scope, the report marks scope coverage unknown. The baseline keeps confirmed filesystem aliases for scope and protected paths. If one declared path traverses a symlink, that path is marked unknown while other observations remain available. Optional protected paths can be set in an existing `.repo-doctor/project.json` by adding the following top-level field:
+
+```json
+"change_guard": { "schema_version": 1, "protected_paths": ["infra/production", "config/access.json"] }
+```
+
+Normal project refresh preserves this policy. If it changes during the task, the report marks policy drift and checks the union of the saved and current protected paths. Scope and protection are report inputs. Live authorization comes from the user and host.
+
+`--json` emits schema version 1 with operation status, structured findings, Git staging transitions, paths, and coverage limits. Each observed change has `origin: "unknown"`. Classification is:
+
+- `info` for an observed change.
+- `warning` for a touched preexisting change, dependency or sensitive configuration change, or an unmerged path.
+- `violation` for a change outside declared scope or within protected paths.
+- `unknown` for insufficient coverage, including missing scope, a changed HEAD or branch, or a path that could not be fingerprinted.
+
+Exit 0 means the command produced a report, including violations, unavailable Git information and missing baselines. Exit 1 indicates an invalid request or unusable local state. With `--json`, command errors are structured on stderr. Review actual diffs for flagged files. Change Guard leaves the project files and index in place.
+
+A snapshot records HEAD, branch, Git-visible dirty paths, selected Git metadata and bounded fingerprints. It stores no source bodies, environment variables or contents or fingerprints for paths recognized as sensitive. Coverage is limited to Git-visible changes, Git's file-mode and rename detection, and what is stable across two observations. Ignore rules, assume-unchanged or skip-worktree flags, submodule internal edits, executable modes Git cannot see, and changes overwritten between observations may hide work. An unstaged rename that Git reports as a deletion and an addition retains those two records. Disabled external Git filters can affect Git's view and are reported as unknown. Fingerprinting skips large files, unsafe paths and special files. Non-Git projects and unstable observations return unknown. Check target contents before each edit and continue using the host's existing conflict checks.
 
 ## Installation origin and upgrade diagnosis
 

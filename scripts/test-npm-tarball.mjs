@@ -21,13 +21,14 @@ function parsePackReport(output) {
 }
 
 function runNpx(tarball, args, env = {}) {
-  return runNpm(["exec", "--yes", `--package=${tarball}`, "--", "repo-doctor-skills", ...args], {
+  const result = runNpm(["exec", "--yes", `--package=${tarball}`, "--", "repo-doctor-skills", ...args], {
     cwd: tempRoot,
     encoding: "utf8",
     timeout: 30000,
     env: {
       ...process.env,
       HOME: path.join(tempRoot, "home"),
+      ...(process.platform === "win32" ? { USERPROFILE: path.join(tempRoot, "home") } : {}),
       npm_config_cache: path.join(tempRoot, "npm-cache"),
       npm_config_update_notifier: "false",
       // This test installs the local tarball, including all runtime resources.
@@ -40,6 +41,9 @@ function runNpx(tarball, args, env = {}) {
       ...env,
     },
   });
+  assert.ifError(result.error);
+  assert.equal(result.signal, null, `Packed CLI terminated by ${result.signal}`);
+  return result;
 }
 
 function installedCount(target) {
@@ -57,14 +61,15 @@ try {
   const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
-  assert.equal(packReport[0].version, "0.11.1");
+  assert.equal(packReport[0].version, "0.12.0");
   const tarball = path.join(tempRoot, packReport[0].filename);
   assert.ok(existsSync(tarball));
 
-  const entries = execFileSync("tar", ["-tzf", tarball], { encoding: "utf8" }).trim().split("\n");
+  const entries = execFileSync("tar", ["-tzf", tarball], { encoding: "utf8" }).trim().split(/\r?\n/);
   for (const required of [
     "package/bin/repo-doctor-skills.mjs",
     "package/scripts/install.mjs",
+    "package/scripts/change-guard.mjs",
     "package/package.json",
     "package/README.md",
     "package/LICENSE",
@@ -90,7 +95,7 @@ try {
 
   const version = runNpx(tarball, ["--version"]);
   assert.equal(version.status, 0, version.stderr || version.stdout);
-  assert.equal(version.stdout.trim(), "0.11.1");
+  assert.equal(version.stdout.trim(), "0.12.0");
 
   const help = runNpx(tarball, ["--help"]);
   assert.equal(help.status, 0, help.stderr || help.stdout);
@@ -110,6 +115,13 @@ try {
   assert.equal(runState(["task", "create", "--root", projectTarget, "--id", "packed-task", "--goal", "Verify packed state", "--acceptance", "state-ready", "--skill", "safe-fix-implementation"]).revision, 1);
   assert.equal(runState(["task", "list", "--root", projectTarget]).tasks.length, 1);
   assert.equal(runState(["task", "resume", "--root", projectTarget, "--id", "packed-task"]).requires_host_revalidation, true);
+
+  execFileSync("git", ["init", "-q"], { cwd: projectTarget });
+  assert.equal(runState(["change", "begin", "--id", "packed-edit", "--scope", "approved.txt", "--root", projectTarget, "--json"]).status, "baseline_created");
+  writeFileSync(path.join(projectTarget, "outside.txt"), "fixture drift\n");
+  const drift = runState(["change", "check", "--id", "packed-edit", "--root", projectTarget, "--json"]);
+  assert.equal(drift.status, "violation");
+  assert.ok(drift.findings.some(item => item.code === "outside_declared_scope" && item.path === "outside.txt"));
 
   const recommendedTarget = path.join(tempRoot, "recommended");
   const recommended = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);
@@ -160,7 +172,10 @@ try {
   assert.equal(installedCount(path.join(agentsHome, "skills")), 7);
 
   const defaultHome = path.join(tempRoot, "default-home");
-  const defaultInstall = runNpx(tarball, ["install"], { HOME: defaultHome });
+  const defaultInstall = runNpx(tarball, ["install"], {
+    HOME: defaultHome,
+    ...(process.platform === "win32" ? { USERPROFILE: defaultHome } : {}),
+  });
   assert.equal(defaultInstall.status, 0, defaultInstall.stderr || defaultInstall.stdout);
   assert.equal(installedCount(path.join(defaultHome, ".agents", "skills")), 7);
 

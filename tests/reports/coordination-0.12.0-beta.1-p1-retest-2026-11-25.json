@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "project_version": "0.12.0-beta.1",
+  "date": "2026-11-25",
+  "model": "gpt-6.2-sol",
+  "reasoning_effort": "medium",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "38154bc457568230b7bc4d0a12cbfa675369b4e7ef2618b57e42835ccc9ca5a4",
+    "runtime_sha256": "9bc9e05d98261dc9d5ab271b082fad5089b38db4ae757a697d55be90bdc33753"
+  },
+  "cases": {
+    "simple": {
+      "result": "PASS",
+      "raw_sha256": "eb955ae7f0a22d5a5ffd15ca7f4f226e63feaf77bcde9b46a41adca1f9bf8db1",
+      "cases": [
+        {
+          "case": "simple",
+          "result": "PASS",
+          "stages": [
+            {
+              "id": "simple",
+              "sandbox": "workspace-write",
+              "observed": true,
+              "shell_commands": 4,
+              "fixture_reads": 0,
+              "permission_violations": []
+            }
+          ]
+        }
+      ]
+    },
+    "workflow": {
+      "result": "PASS",
+      "raw_sha256": "f5c1d48b4e3eb10e8515b1905c01d115cfe1cb5a3401452ee9958c060ed1eb61",
+      "cases": [
+        {
+          "case": "workflow",
+          "result": "PASS",
+          "stages": [
+            {
+              "id": "gap",
+              "sandbox": "read-only",
+              "observed": true,
+              "shell_commands": 0,
+              "fixture_reads": 9,
+              "permission_violations": []
+            },
+            {
+              "id": "regression",
+              "sandbox": "workspace-write",
+              "observed": true,
+              "shell_commands": 9,
+              "fixture_reads": 0,
+              "permission_violations": []
+            },
+            {
+              "id": "review",
+              "sandbox": "read-only",
+              "observed": true,
+              "shell_commands": 0,
+              "fixture_reads": 10,
+              "permission_violations": [],
+              "review": {
+                "verdict": "clear",
+                "axes": {
+                  "conformance": "checked",
+                  "intent": "checked",
+                  "safety": "checked"
+                },
+                "findings": [],
+                "summary": "No actionable findings in the reviewed test diff. The change follows the repository’s Node test conventions, preserves the baseline zero-percent test, and adds both exact assertions required by SPEC.md through the public discount function. The added tests use only in-memory arithmetic and assertions. This was a read-only static review of the repository instructions, test script, baseline, specification, implementation, and current tests. No commands or tests were run."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "review-core": {
+      "result": "FAIL",
+      "raw_sha256": "7db418604cf1a45d60706f9d76e1f48b82d87cc71516acbc81ac7bd33ede18ef",
+      "cases": [
+        {
+          "case": "core-review",
+          "result": "FAIL",
+          "stages": [
+            {
+              "id": "core-review",
+              "sandbox": "read-only",
+              "observed": true,
+              "shell_commands": 0,
+              "fixture_reads": 12,
+              "permission_violations": [],
+              "review": {
+                "verdict": "findings",
+                "axes": {
+                  "conformance": "checked",
+                  "intent": "checked",
+                  "safety": "checked"
+                },
+                "findings": [
+                  {
+                    "severity": "P1",
+                    "title": "A stale checkpoint can omit a current failed check and permit delivery",
+                    "file": "core.mjs",
+                    "line": 242,
+                    "reason": "Intent and safety. This predates the change. Save a checkpoint after the stages and acceptance checks pass, then observe and attest a failed check with unchanged inputs. Restore the earlier checkpoint and have the host reconcile the execution history and explicitly approve reuse of the completed stage receipts. The failure scan reads only the restored evidence array, so it misses the newer failure even if its digest remains in host.trustedEvidence. Delivery can then return complete. Incorporate current host-attested failure records into recovery and progression. Add a regression where a failure observed after the checkpoint blocks delivery until it is resolved."
+                  },
+                  {
+                    "severity": "P2",
+                    "title": "Missing every external observation prevents a valid failure resolution",
+                    "file": "core.mjs",
+                    "line": 228,
+                    "reason": "Intent and safety. Record a well-formed failed check with complete file coverage, external_dependencies containing one service, and an empty environment object. Then observe that service and attach an explicit host resolution pointing to a later passing receipt with the same command, working directory, and file fingerprints. Line 65 classifies the empty environment as generic missing coverage before the declared external dependency check can identify the only gap. The new resolver rejects that classification, leaving progression blocked. Distinguish missing declared observations from incomplete dependency coverage. Test omitted and null observations, including a receipt with no other environment keys."
+                  },
+                  {
+                    "severity": "P2",
+                    "title": "Reordering identical receipt keys prevents failure resolution",
+                    "file": "core.mjs",
+                    "line": 226,
+                    "reason": "Intent and safety. This predates the change. Record a failed check with dependencies listed as a then b. Rerun successfully against the same bytes with dependencies listed as b then a, and attach an explicit host resolution. The file fingerprints match by path, but hashing the serialized bindings object produces different digests. The same issue affects fully observed environment maps at line 227. Compare maps by key and value or canonicalize them first. Verify that reordering either map permits resolution and that changing a fingerprint or a known environment value still blocks it."
+                  },
+                  {
+                    "severity": "P2",
+                    "title": "Structured environment receipts are classified as stale immediately",
+                    "file": "core.mjs",
+                    "line": 84,
+                    "reason": "Intent and safety. This predates the change. If a host supplies a JSON object as an external state identity, captureEvidence copies it at line 51. The validity check then compares the copy with the live object by reference, so a newly attested failure is classified as stale even though the observed state is unchanged. The failure scan then drops it. Compare supported values by content, or enforce a scalar receipt format and treat unsupported values as unknown. Add a regression covering unchanged and changed structured identities."
+                  }
+                ],
+                "summary": "The read-only audit compared core.mjs with baseline-core.mjs and assessed conformance against AGENTS.md, contracts.md, and contracts.skill.yaml, intent against requirements.md, and safety against the core execution and recovery paths. No conformance findings were identified. The host receipt reports 64 focused regressions passed, and its SHA-256 matches the reviewed core bytes. No commands or tests were run during this audit. The isolated test source was used as context because its imports do not resolve. Broader integration remains unverified. Production systems, external clients, backends, and hardware were outside scope."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "reproduced_new_finding": {
+    "case": "post-checkpoint-failure",
+    "first": {
+      "stage": "task",
+      "skill": "documentation-sync",
+      "action": "reuse",
+      "evidence_ids": [
+        "result-task-1"
+      ],
+      "reason": "explicit_recovered_or_historical_result_reuse"
+    },
+    "delivery": {
+      "action": "complete",
+      "reason": "applicable_stages_and_acceptance_proven",
+      "release_authorized": false
+    },
+    "expected": "validation_failed"
+  },
+  "coordination_gate": "BLOCKED",
+  "previous_review": {
+    "p1": "FIXED: null external values do not invalidate a failure; a matching explicit later pass can resolve.",
+    "p2": [
+      {
+        "case": "unbound historical receipt",
+        "disposition": "CONFIRMED BEHAVIOR; fail closed without original worktree provenance; defer migration design"
+      },
+      {
+        "case": "late retry failure",
+        "disposition": "FIXED: bind failure callback to current retry attempt and nonce"
+      },
+      {
+        "case": "deferral hides unresolved failure",
+        "disposition": "FIXED: keep unresolved unknown failure visible as investigation"
+      }
+    ]
+  }
+}

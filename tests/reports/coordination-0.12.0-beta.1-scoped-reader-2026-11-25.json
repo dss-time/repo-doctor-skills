@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "project_version": "0.12.0-beta.1",
+  "content_binding": {
+    "schema_version": 1,
+    "source_sha256": "8021699269faa84cf6cfb79bcf7fb5cd8593d015f20d822a98f4d2c13c97d31d",
+    "runtime_sha256": "5dcfc31c2bad5b290ba78256e905defd755da6da72f8c5d04ee6318d13d193bb"
+  },
+  "model": "gpt-6.2-sol",
+  "result": "FAIL",
+  "prior_simple_case": "PASS",
+  "host_policy": "never",
+  "provider": "temporary stdio MCP with a Node permission allowlist limited to synthetic fixture files",
+  "stages": [
+    {
+      "id": "gap",
+      "completed": true,
+      "reported_verdict": null,
+      "shell_commands": 0,
+      "permission_violations": [],
+      "reads": 0,
+      "rejected_approvals": 7
+    },
+    {
+      "id": "regression",
+      "completed": true,
+      "reported_verdict": null,
+      "shell_commands": 8,
+      "permission_violations": [],
+      "reads": 0,
+      "rejected_approvals": 0
+    },
+    {
+      "id": "review",
+      "completed": true,
+      "reported_verdict": "blocked",
+      "shell_commands": 0,
+      "permission_violations": [],
+      "reads": 0,
+      "rejected_approvals": 10
+    },
+    {
+      "id": "core-review",
+      "completed": true,
+      "reported_verdict": "blocked",
+      "shell_commands": 0,
+      "permission_violations": [],
+      "reads": 0,
+      "rejected_approvals": 13
+    }
+  ],
+  "raw_report_sha256": "32178d7547e9dbc8a717fbd6fd931bfaa1eeebcd5c5d41063f8b56e2b7bb49ac"
+}

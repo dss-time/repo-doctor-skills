@@ -1,8 +1,8 @@
 /** Local checkpoints are data only. No command execution or restored host authority. */
 import { createHash, randomUUID } from 'node:crypto';
-import { lstatSync, realpathSync, readdirSync, writeFileSync } from 'node:fs';
+import { lstatSync, realpathSync, readdirSync } from 'node:fs';
 import path from 'node:path';
-import { safePath, readJson, ensureDirectory, withLock, writeJson } from './local-state-files.mjs';
+import { safePath, validateRelativePath, readJson, ensureDirectory, ensurePrivateIgnore, withLock, writeJson } from './local-state-files.mjs';
 import { workspaceRuntime } from './workspace-runtime.mjs';
 
 const CONFIG = '.repo-doctor/project.json';
@@ -20,7 +20,7 @@ function assert(value, message) {
   if (!value) throw new Error(message);
 }
 const plain = value => value !== null && typeof value === 'object' && !Array.isArray(value);
-const binding = root => createHash('sha256').update(realpathSync(root)).digest('hex');
+export const projectRootBinding = root => createHash('sha256').update(realpathSync(root)).digest('hex');
 function checkRoot(root) {
   const actual = realpathSync(root);
   assert(actual !== path.parse(actual).root, 'Project root must not be a filesystem root');
@@ -58,9 +58,16 @@ function validateBindings(root, dependencies) {
   }
 }
 function validateConfig(root, config) {
-  keys(config, ['schema_version', 'kind', 'id', 'root_binding', 'revision', 'commands', 'documents', 'sources', 'environment_safety'], 'project');
+  const fields = ['schema_version', 'kind', 'id', 'root_binding', 'revision', 'commands', 'documents', 'sources', 'environment_safety'];
+  if (plain(config) && Object.hasOwn(config, 'change_guard')) {
+    fields.push('change_guard');
+    keys(config.change_guard, ['schema_version', 'protected_paths'], 'Change Guard policy');
+    assert(config.change_guard.schema_version === 1, 'Unsupported Change Guard policy version');
+    validateGuardPaths(config.change_guard.protected_paths);
+  }
+  keys(config, fields, 'project');
   assert(config.schema_version === 1 && config.kind === 'repo-doctor-project' && UUID.test(config.id)
-    && config.root_binding === binding(root) && Number.isSafeInteger(config.revision) && config.revision > 0
+    && config.root_binding === projectRootBinding(root) && Number.isSafeInteger(config.revision) && config.revision > 0
     && config.environment_safety === 'unverified', 'Invalid project identity or root binding');
   assert(Array.isArray(config.commands) && Array.isArray(config.documents), 'Invalid project discovery');
   for (const command of config.commands) {
@@ -76,6 +83,21 @@ function validateConfig(root, config) {
   assert(config.sources.length === SOURCES.length && SOURCES.every(source => config.sources.some(item => item.path === source)), 'Invalid project source coverage');
   return config;
 }
+
+export function validateGuardPaths(paths) {
+  assert(Array.isArray(paths) && new Set(paths).size === paths.length, 'Invalid Change Guard paths');
+  for (const relative of paths) {
+    validateRelativePath(relative);
+    assert(!relative.split('/').some(part => ['.git', '.repo-doctor'].includes(part.toLowerCase()))
+      && !/[\u0000-\u001f\u007f]/.test(relative), 'Invalid Change Guard scope or protected path');
+  }
+}
+
+export function projectGuardPolicy(root) {
+  if (!exists(root, CONFIG)) return { project_id: null, protected_paths: [] };
+  const project = loadConfig(root);
+  return { project_id: project.id, protected_paths: [...(project.change_guard?.protected_paths ?? [])].sort() };
+}
 function loadConfig(root) {
   checkRoot(root);
   assert(exists(root, CONFIG), 'Project is not initialized');
@@ -84,18 +106,6 @@ function loadConfig(root) {
 }
 function drift(root, dependencies, runtime) {
   return dependencies.filter(item => fingerprint(root, item.path, runtime) !== item.fingerprint).map(item => item.path);
-}
-
-function ensurePrivateIgnore(root) {
-  const relative = '.repo-doctor/.gitignore';
-  const filename = safePath(root, relative);
-  try {
-    writeFileSync(filename, '*\n', { flag: 'wx', mode: 0o600 });
-  } catch (error) {
-    if (error.code !== 'EEXIST') throw error;
-    // Preserve user-authored rules, while refusing links and non-file state paths.
-    assert(exists(root, relative)?.isFile(), 'Local ignore rules must be a regular file');
-  }
 }
 
 function discoverProject(root, runtime, identity) {
@@ -121,12 +131,13 @@ function discoverProject(root, runtime, identity) {
     schema_version: 1,
     kind: 'repo-doctor-project',
     id: identity.id,
-    root_binding: binding(root),
+    root_binding: projectRootBinding(root),
     revision: identity.revision,
     commands,
     documents: DOCS.filter(relative => exists(root, relative)?.isFile()),
     sources,
     environment_safety: 'unverified',
+    ...(identity.change_guard ? { change_guard: identity.change_guard } : {}),
   };
 }
 
@@ -142,6 +153,7 @@ export async function refreshProject(root, { apply = false, expectedRevision } =
     const project = discoverProject(root, runtime, {
       id: previous.id,
       revision: nextRevision(previous.revision),
+      change_guard: previous.change_guard,
     });
     validateConfig(root, project);
     return { applied: false, status: 'PREVIEW', expectedRevision: previous.revision, project };
@@ -153,6 +165,7 @@ export async function refreshProject(root, { apply = false, expectedRevision } =
     const project = discoverProject(root, runtime, {
       id: current.id,
       revision: nextRevision(current.revision),
+      change_guard: current.change_guard,
     });
     validateConfig(root, project);
     writeJson(root, CONFIG, project);
@@ -270,7 +283,7 @@ function validateRecord(root, record, id, project, runtime, options) {
   keys(record, ['schema_version', 'kind', 'project_id', 'root_binding', 'id', 'revision', 'context', 'dependencies', 'dependency_coverage'], 'task record');
   assert(record.schema_version === 1 && record.kind === 'repo-doctor-task', 'Invalid task record schema');
   assert(record.id === id && record.project_id === project.id
-    && record.root_binding === binding(root), 'Invalid task identity or root binding');
+    && record.root_binding === projectRootBinding(root), 'Invalid task identity or root binding');
   assert(Number.isSafeInteger(record.revision) && record.revision > 0, 'Invalid task revision identity');
   assert(['recorded', 'unknown'].includes(record.dependency_coverage), 'Invalid dependency coverage');
   validateContext(record.context, id, runtime, options);
@@ -291,7 +304,7 @@ function recordFor(root, project, id, revision, context, runtime) {
     schema_version: 1,
     kind: 'repo-doctor-task',
     project_id: project.id,
-    root_binding: binding(root),
+    root_binding: projectRootBinding(root),
     id,
     revision,
     context: JSON.parse(runtime.encodeTask(context)),

@@ -18,6 +18,28 @@ npm run doctor
 
 `npm run workflow:validate` 校验唯一 canonical 注册表；`npm run test:workflow` 包含三组双语 Golden Workflow。不得把 Golden fixture 报告成真实模型结果。
 
+## Change Guard 预检
+
+运行 `node --test scripts/test-change-guard.mjs` 验证 Git 行为，运行 `node scripts/measure-change-guard.mjs` 测量 CLI 端到端耗时和状态体积。[独立审查](research/change-guard-independent-review.md)记录夹具、原始样本及模型对照当前的阻碍。
+
+现有 30 案例的准备模式核验合成夹具和隔离 Skill 构建。真实对照应在原生 Codex 和两个 Repo Doctor 版本之间统一 Git 初始状态、CLI 可用性、提示、授权与行为评分。保留宿主原始用量字段，并区分 Agent 运行的命令和事后裁判检查。
+
+### 已认证六案 A/B/C 试验
+
+六案固定为 `gpt-6.2-sol` 和 low 推理。对相同产物离线复核后，每组通过 6/6。报告解读与自动调用分别计量。主样本保留宿主 `tokenUsage.last`，续跑在可用时另存线程累计值。用官方已登录的隔离目录执行 `node scripts/change-guard-pilot.mjs --profile PATH --model MODEL_ID --output NEW_REPORT.json`。用 `--case` 和 `--arm` 仅选择缺失或需复测的观测。[方法、原始观测与复核记录](research/change-guard-live-pilot.md)
+
+### 共享集成专项实测
+
+初测有 14 条有效观测，复测有 7 条。复测 C 组四个适用任务中三个完成基线和检查，公共模块任务遗漏；低风险修改未调用。复测调整了 Skill 决策位置以及本地诊断状态授权，无法单独归因。两轮分别记录线程累计与 last Token、工具次数和耗时。 [设计、统计、原始记录与覆盖限制](research/change-guard-integration.md)
+
+冻结候选补跑公共模块、已有修改和受保护路径三案。每轮都在工具执行前收到 `usageLimitExceeded`，没有新增有效模型样本。复用已有 21 条观测，禁止把离线业务断言通过当作 Agent 已执行验证或正确处理报告。 [原始补跑记录](../tests/reports/change-guard-0.12.0-freeze-retest-2026-11-24.json)
+
+额度恢复后，原模型的三案均完成基线、检查和夹具断言，累计有效观测为 24 条。已有修改答复确认保留用户内容，受保护路径答复区分策略命中与实际授权，公共模块答复保留过滤器限制带来的 unknown。详细记录包含宿主统计与绑定范围。 [本轮记录](research/change-guard-integration.md#0120-local2-跨平台和模型实测)
+
+新增的是六宿主安装验证。Skills CLI 1.9.0 的 12 个隔离安装均通过，Codex 另完成项目及个人发现检查。独立运行时结果与真实宿主自动调用分开统计。 [兼容性明细](AGENT_COMPATIBILITY.zh-CN.md)
+
+协调器修订改变了候选绑定，简单任务和协调工作流重新通过。独立审查发现另一项检查点恢复问题。既有 Change Guard 自然语言观测仍保留原绑定。 [协调复验](../tests/reports/coordination-0.12.0-beta.1-p1-retest-2026-11-25.json)
+
 ## 离线准备真实模型评测
 
 以下默认命令不联网、不读取 API Key、不上传 Prompt、不上传代码，也不生成模型输出：

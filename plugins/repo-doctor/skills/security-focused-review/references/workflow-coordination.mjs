@@ -4,6 +4,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { lstatSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
 import path from 'node:path';
+import { isDeepStrictEqual } from 'node:util';
 
 export const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const operationBinding = host => digest(host.requests ?? {});
@@ -47,14 +48,21 @@ export function captureEvidence(root, input, environment) {
   assert(input.id && input.source && input.summary, 'Evidence needs id, source and summary');
   assert(Array.isArray(input.dependencies) && input.dependencies.length, 'Evidence needs dependency coverage');
   const bindings = Object.fromEntries(input.dependencies.map(p => [p, fingerprint(root, p)]));
-  return { ...copy(input), bindings, environment: copy(environment), recorded_at: new Date().toISOString() };
+  return { ...copy(input), project_binding: digest(realpathSync(root)), bindings,
+    environment: copy(environment), recorded_at: new Date().toISOString() };
 }
 
 export function evidenceValidity(evidence, host) {
   if (!evidence || !host.trustedEvidence?.has(digest(evidence))) return { status: 'unknown', reason: 'source_not_attested' };
   if (!['pass', 'fail'].includes(evidence.result)) return { status: 'unknown', reason: 'result_not_observed' };
+  if (!evidence.project_binding) return { status: 'unknown', reason: 'project_binding_missing' };
+  try {
+    if (evidence.project_binding !== digest(realpathSync(host.root))) return { status: 'stale', reason: 'project_binding_changed' };
+  } catch {
+    return { status: 'unknown', reason: 'project_binding_unavailable' };
+  }
   let unknownReason = evidence.coverage_complete !== true || !evidence.bindings || !Object.keys(evidence.bindings).length
-    || !evidence.environment || !Object.keys(evidence.environment).length
+    || !evidence.environment || (!Object.keys(evidence.environment).length && !evidence.external_dependencies?.length)
     ? 'dependency_or_environment_coverage_unknown' : null;
   if (evidence.kind === 'test' && (!evidence.command || !evidence.cwd || !Number.isInteger(evidence.exit_code) || (evidence.result === 'pass' ? evidence.exit_code !== 0 : evidence.exit_code === 0))) {
     unknownReason ??= 'execution_receipt_missing';
@@ -63,9 +71,18 @@ export function evidenceValidity(evidence, host) {
       || evidence.observed_target_failure !== true || !evidence.success_criterion || !evidence.failure_criterion)) {
     unknownReason ??= 'reliable_failure_signal_missing';
   }
+  if (evidence.external_dependencies !== undefined &&
+      (!Array.isArray(evidence.external_dependencies) || evidence.external_dependencies.some(key =>
+        typeof key !== 'string' || !key || !Object.hasOwn(evidence.environment ?? {}, key)
+        || evidence.environment[key] === null || evidence.environment[key] === undefined))) {
+    unknownReason ??= 'external_state_binding_missing';
+  }
   for (const [key, value] of Object.entries(evidence.environment ?? {})) {
-    if (!(key in (host.environment ?? {}))) { unknownReason ??= `environment_unknown:${key}`; continue; }
-    if (host.environment[key] !== value) return { status: 'stale', reason: `environment_changed:${key}` };
+    if (value === null || value === undefined || !Object.hasOwn(host.environment ?? {}, key)
+        || host.environment[key] === undefined || host.environment[key] === null) {
+      unknownReason ??= `environment_unknown:${key}`; continue;
+    }
+    if (!isDeepStrictEqual(host.environment[key], value)) return { status: 'stale', reason: `environment_changed:${key}` };
   }
   for (const [file, hash] of Object.entries(evidence.bindings ?? {})) {
     try {
@@ -77,8 +94,18 @@ export function evidenceValidity(evidence, host) {
 }
 
 export function validationPlan(evidence, host) {
-  return evidence.map(item => ({ id: item.id, ...evidenceValidity(item, host) }))
-    .map(item => ({ ...item, action: item.status === 'valid' ? 'reuse' : item.status === 'unknown' ? 'investigate' : 'rerun' }));
+  return evidence.map(item => {
+    const validity = evidenceValidity(item, host);
+    if (item.kind === 'test' && validity.status === 'failed'
+        && host.verificationDeferral?.active === true && host.verificationDeferral.source) {
+      return { id: item.id, ...validity, action: 'investigate' };
+    }
+    if (item.kind === 'test' && (validity.status === 'stale' || (validity.status === 'unknown' && item.result !== 'fail'))
+        && host.verificationDeferral?.active === true && host.verificationDeferral.source) {
+      return { id: item.id, status: 'deferred', action: 'defer', reason: validity.reason };
+    }
+    return { id: item.id, ...validity, action: validity.status === 'valid' ? 'reuse' : validity.status === 'unknown' ? 'investigate' : 'rerun' };
+  });
 }
 
 export function reviewBinding(root, task, baseline, files) {
@@ -158,16 +185,29 @@ function writes(stage, host) {
 }
 
 export function reconciliationBinding(task, stageId, host) {
-  return digest({ intent: taskBinding(task), stage: stageId, step: task.steps[stageId], request: host.requests?.[stageId] });
+  return digest({ worktree: realpathSync(host.root), intent: taskBinding(task), stage: stageId,
+    step: task.steps[stageId], request: host.requests?.[stageId], recovery: recovered.get(task)?.import_id });
 }
 
 export function recoveryBinding(task, host) {
-  const checkpoint = recovered.get(task);
-  return checkpoint ? digest({ checkpoint, intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks }) : null;
+  const record = recovered.get(task);
+  if (!record) return null;
+  const { checkpoint, import_id } = record;
+  return digest({ checkpoint: { checkpoint, import_id }, worktree: realpathSync(host.root),
+    intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks });
 }
 
 export function recoveredExecutionBinding(task, stageId, host) {
-  return digest({ recovery: recoveryBinding(task, host), stage: stageId, attempts: task.steps[stageId]?.attempts, execution_nonce: task.steps[stageId]?.execution_nonce, request: host.requests?.[stageId] });
+  return digest({ recovery: recoveryBinding(task, host), stage: stageId, attempts: task.steps[stageId]?.attempts,
+    execution_nonce: task.steps[stageId]?.execution_nonce, request: host.requests?.[stageId],
+    disposition_revision: recovered.get(task)?.stageDispositions.get(stageId)?.revision ?? 0 });
+}
+
+function invalidateRecoveryDisposition(task, stageId, needsRetry = false) {
+  const stages = recovered.get(task)?.stageDispositions;
+  if (!stages) return;
+  const previous = stages.get(stageId);
+  stages.set(stageId, { revision: (previous?.revision ?? 0) + 1, needsRetry: needsRetry || previous?.needsRetry === true });
 }
 
 function requirement(task, requirement, host) {
@@ -185,12 +225,16 @@ function stepEvidence(task, stage, host, executionOwner = task) {
   const explicitReuse = step.status === 'reused'
     && Array.isArray(host.reuse?.[stage.id]) && digest(host.reuse[stage.id]) === digest(step.evidence_ids);
   if (step.status === 'reused' && !explicitReuse) return false;
+  const request = host.requests[stage.id];
+  const execution = runtimeExecutions.get(executionOwner)?.get(stage.id);
   const evidence = step.evidence_ids.map(id => task.evidence.find(e => e.id === id));
-  const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(host.requests[stage.id]) && e.claims?.includes(`stage:${stage.id}`)
-    && (explicitReuse || (runtimeExecutions.get(executionOwner)?.get(stage.id) === step.execution_nonce
+  const scoped = evidence.filter(e => e.skill === stage.skill && e.request_binding === digest(request) && e.claims?.includes(`stage:${stage.id}`)
+    && (explicitReuse || (execution?.nonce === step.execution_nonce && execution?.worktree === realpathSync(host.root)
       && typeof step.execution_nonce === 'string' && e.execution_attempt === step.attempts
       && e.execution_nonce === step.execution_nonce)));
   if (!scoped.length) return false;
+  if (request.verification === true && request.capabilities.includes('run_shell_commands')
+      && !scoped.some(e => e.kind === 'test' && e.command === request.operation && e.cwd === (request.cwd ?? '.'))) return false;
   if (stage.skill === 'safe-code-review' && !scoped.some(e => e.kind === 'review' && e.independent === true
       && e.review_basis && e.review_basis === host.reviewBinding)) return false;
   if (stage.skill === 'bug-root-cause-analysis' && !scoped.some(e => e.signal_ids?.length
@@ -199,20 +243,49 @@ function stepEvidence(task, stage, host, executionOwner = task) {
   return true;
 }
 
-function unresolvedFailures(task, host) {
+function failureResolutionMatches(failed, replacement, validity) {
+  if (failed.command !== replacement.command || failed.cwd !== replacement.cwd
+      || !isDeepStrictEqual(failed.bindings, replacement.bindings)) return false;
+  if (validity.status !== 'unknown') return isDeepStrictEqual(failed.environment, replacement.environment);
+  if (validity.reason !== 'external_state_binding_missing' && !validity.reason.startsWith('environment_unknown:')) return false;
+  const dependencies = failed.external_dependencies === undefined ? [] : failed.external_dependencies;
+  if (!Array.isArray(dependencies) || dependencies.some(key => typeof key !== 'string' || !key)) return false;
+  const keys = new Set([...Object.keys(failed.environment), ...dependencies]);
+  return [...keys].every(key => {
+    const recorded = Object.hasOwn(failed.environment, key) ? failed.environment[key] : undefined;
+    const observed = replacement.environment[key];
+    return Object.hasOwn(replacement.environment, key) && observed !== null && observed !== undefined
+      && (recorded === null || recorded === undefined || isDeepStrictEqual(recorded, observed));
+  });
+}
+
+// The current host reconciles failure history for this import. A checkpoint
+// can retain receipt bytes, but cannot prove that its history is complete.
+function reconciledFailureEvidence(task, host, recoveryCheck) {
+  if (!Array.isArray(recoveryCheck.failureEvidence)) return null;
+  const byId = new Map(task.evidence.map(item => [item.id, item]));
+  const unconfirmed = new Set(recovered.get(task).outOfIntentFailures);
+  for (const failed of recoveryCheck.failureEvidence) {
+    if (typeof failed?.id !== 'string' || !failed.id || failed.kind !== 'test' || failed.result !== 'fail') return null;
+    const signature = digest(failed);
+    if (!host.trustedEvidence?.has(signature)) return null;
+    const existing = byId.get(failed.id);
+    if (existing && digest(existing) !== signature) return null;
+    byId.set(failed.id, failed);
+    unconfirmed.delete(signature);
+  }
+  return [...byId.values()].filter(item => !unconfirmed.size || !unconfirmed.has(digest(item)));
+}
+
+function unresolvedFailures(task, host, evidence) {
   const unresolved = [];
-  for (const failed of task.evidence.filter(e => e.kind === 'test' && e.result === 'fail')) {
+  for (const failed of evidence.filter(e => e.kind === 'test' && e.result === 'fail')) {
     const validity = evidenceValidity(failed, host);
     if (validity.status === 'stale' || validity.reason === 'source_not_attested') continue;
-    if (validity.status === 'unknown') {
-      unresolved.push(failed);
-      continue;
-    }
     const resolution = host.failureResolutions?.get(digest(failed));
     const replacement = resolution?.source && task.evidence.find(e => e.id === resolution.replacement);
-    const identity = e => digest({ command: e.command, cwd: e.cwd, bindings: e.bindings, environment: e.environment });
     if (!replacement || replacement.task_binding !== taskBinding(task) || replacement.kind !== 'test'
-        || evidenceValidity(replacement, host).status !== 'valid' || identity(replacement) !== identity(failed)
+        || evidenceValidity(replacement, host).status !== 'valid' || !failureResolutionMatches(failed, replacement, validity)
         || !(Date.parse(replacement.recorded_at) > Date.parse(failed.recorded_at))) {
       unresolved.push(failed);
     }
@@ -232,6 +305,8 @@ export function nextAction(task, host) {
   const recovery = recoveryBinding(task, host);
   const recoveryCheck = recovery && host.recoveryChecks?.get(recovery);
   if (recovery && (!recoveryCheck?.source || recoveryCheck.reconciled !== true)) return { action: 'blocked', reason: 'recovered_execution_state_needs_reconciliation' };
+  const evidence = recovery ? reconciledFailureEvidence(task, host, recoveryCheck) : task.evidence;
+  if (!evidence) return { action: 'evidence_insufficient', reason: 'recovered_failure_history_unverified' };
   // Unknown effects cannot disappear when an optional predicate or prerequisite changes.
   const inflight = workflow.stages.find(stage => ['running', 'interrupted'].includes(task.steps[stage.id].status));
   if (inflight) return { stage: inflight.id, skill: inflight.skill, action: 'blocked', reason: 'inflight_operation_needs_reconciliation' };
@@ -252,6 +327,7 @@ export function nextAction(task, host) {
     const unknownStop = stopAssessments.find(([, value]) => value === undefined);
     if (unknownStop) return { ...decision, action: 'evidence_insufficient', reason: `stop_condition_unknown:${unknownStop[0]}` };
     if (applies === undefined) return { ...decision, action: 'evidence_insufficient', reason: `condition_unknown:${stage.condition}` };
+    if (step.status === 'validation_failed') return { ...decision, action: 'validation_failed', reason: step.reason || 'explicit_retry_required' };
     // Completed effects stay protected even when applicability changes. A new receipt
     // is not a reconciliation of the previous attempt's potentially different effects.
     const wasCompleted = ['completed', 'reused'].includes(step.status);
@@ -267,7 +343,7 @@ export function nextAction(task, host) {
           const provisional = copy(task);
           provisional.steps[stage.id].status = 'reused';
           provisional.steps[stage.id].evidence_ids = reusable;
-          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: reusable, reason: 'explicit_recovered_or_historical_result_reuse' };
+          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...reusable], reason: 'explicit_recovered_or_historical_result_reuse' };
         }
         if (effectful) return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
       }
@@ -279,7 +355,7 @@ export function nextAction(task, host) {
         if (stage.type === 'skill' && !stepEvidence(task, stage, host)) return { ...decision, action: 'evidence_insufficient', reason: 'historical_stage_requires_explicit_reuse' };
         completed.add(stage.id); continue;
       }
-      if (recovery && stage.type === 'skill') {
+      if (stage.type === 'skill') {
         const reusable = host.reuse?.[stage.id];
         if (reusable) {
           const provisional = copy(task);
@@ -287,11 +363,13 @@ export function nextAction(task, host) {
           provisional.steps[stage.id].evidence_ids = reusable;
           const denied = permission(stage.skill, stage, task, host);
           if (denied) return { ...decision, action: 'permission_blocked', reason: denied };
-          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: reusable, reason: 'observed_effect_before_checkpoint_recovery' };
+          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...reusable], reason: 'observed_effect_before_checkpoint_recovery' };
         }
-        const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
-        if (!disposition?.source || disposition.disposition !== 'not_executed') {
-          return { ...decision, action: 'blocked', reason: 'recovered_skipped_effect_needs_disposition' };
+        if (recovery) {
+          const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
+          if (!disposition?.source || disposition.disposition !== 'not_executed' || recovered.get(task).stageDispositions.get(stage.id)?.needsRetry) {
+            return { ...decision, action: 'blocked', reason: 'recovered_skipped_effect_needs_disposition' };
+          }
         }
       }
       if (step.status !== 'skipped' || step.condition_binding !== digest(host.conditions[stage.condition])) return { ...decision, action: 'skip', reason: `not_applicable:${stage.condition}` };
@@ -313,8 +391,6 @@ export function nextAction(task, host) {
     if (['completed', 'reused'].includes(step.status) && stepEvidence(task, stage, host)) {
       completed.add(stage.id); continue;
     }
-    const failure = step.status === 'validation_failed';
-    if (failure) return { ...decision, action: 'validation_failed', reason: step.reason || 'explicit_retry_required' };
     // Risk checks are additive obligations referencing existing Skills, not new workflows.
     if (potentiallyEffectful(stage, host)) {
       const gap = (host.risks ?? []).flatMap(r => host.registry.coordination?.risk_requirements?.[r]?.before_write ?? [{ claim: `unclassified-risk:${r}` }])
@@ -324,7 +400,7 @@ export function nextAction(task, host) {
     const candidate = host.reuse?.[stage.id];
     if (candidate) {
       const provisional = copy(task); provisional.steps[stage.id].evidence_ids = candidate; provisional.steps[stage.id].status = 'reused';
-      if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: candidate, reason: 'valid_existing_result' };
+      if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...candidate], reason: 'valid_existing_result' };
     }
     if ((writes(stage, host) || step.effect_state === 'known' || host.requests[stage.id].capabilities.some(c => c !== 'read_files')) && ['completed', 'reused'].includes(step.status)) {
       return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
@@ -338,19 +414,24 @@ export function nextAction(task, host) {
         return { ...decision, action: 'evidence_insufficient', reason: 'command_verification_purpose_unknown' };
       }
       if (request.verification === true) {
+        const currentFailures = unresolvedFailures(task, host, evidence);
         return { ...decision, action: 'evidence_insufficient', reason: 'verification_deferred',
           verification_status: 'verification_deferred', source: host.verificationDeferral.source,
-          pending: host.verificationDeferral.pending ?? [], release_authorized: false };
+          pending: host.verificationDeferral.pending ?? [],
+          unresolved_failures: currentFailures.map(item => ({ evidence_id: item.id, ...evidenceValidity(item, host) })),
+          release_authorized: false };
       }
     }
     if (recovery && stage.type === 'skill') {
       const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
+      const needsRetry = recovered.get(task).stageDispositions.get(stage.id)?.needsRetry;
       if (!disposition?.source || !['not_executed', 'safe_retry'].includes(disposition.disposition)
+          || (needsRetry && disposition.disposition !== 'safe_retry')
           || (disposition.disposition === 'safe_retry' && !host.reconciled?.has(reconciliationBinding(task, stage.id, host)))) {
         return { ...decision, action: 'blocked', reason: 'recovered_execution_needs_explicit_disposition' };
       }
     }
-    const unresolved = unresolvedFailures(task, host).find(failed => {
+    const unresolved = unresolvedFailures(task, host, evidence).find(failed => {
       const repair = host.failureRepairs?.get(digest(failed));
       return !repair?.source || repair.stages?.[stage.id] !== digest(host.requests[stage.id]);
     });
@@ -371,13 +452,14 @@ export function nextAction(task, host) {
       return rules ? [...rules.before_write, ...rules.before_delivery] : [{ claim: `unclassified-risk:${r}` }];
     }),
   ];
-  const failure = unresolvedFailures(task, host)[0];
+  const failure = unresolvedFailures(task, host, evidence)[0];
   if (failure) return { action: evidenceValidity(failure, host).status === 'unknown' ? 'evidence_insufficient' : 'validation_failed', reason: 'unresolved_current_test_failure', evidence_id: failure.id };
   const missing = obligations.filter(r => !requirement(task, r, host));
   if (host.verificationDeferral?.active === true) {
+    if (!host.verificationDeferral.source) return { action: 'evidence_insufficient', reason: 'verification_deferral_source_missing' };
     return { action: 'evidence_insufficient', reason: 'verification_deferred',
       verification_status: 'verification_deferred',
-      source: host.verificationDeferral.source ?? null,
+      source: host.verificationDeferral.source,
       pending: host.verificationDeferral.pending ?? [], missing,
       unresolved: [...task.unresolved], release_authorized: false };
   }
@@ -391,8 +473,18 @@ function event(task, stage, status, reason) {
 }
 
 export function advance(task, host) {
+  const recovery = recoveryBinding(task, host);
+  const check = recovery && host.recoveryChecks?.get(recovery);
+  if (check?.source && check.reconciled === true) {
+    const evidence = reconciledFailureEvidence(task, host, check);
+    if (evidence) {
+      const existing = new Set(task.evidence.map(item => item.id));
+      task.evidence.push(...copy(evidence.filter(item => !existing.has(item.id))));
+    }
+  }
   const action = nextAction(task, host);
   if (['skip', 'approve', 'reuse', 'execute'].includes(action.action)) {
+    const worktree = action.action === 'execute' ? realpathSync(host.root) : null;
     const step = task.steps[action.stage];
     step.status = { skip: 'skipped', approve: 'completed', reuse: 'reused', execute: 'running' }[action.action];
     step.reason = action.reason;
@@ -401,29 +493,41 @@ export function advance(task, host) {
       step.attempts++;
       step.execution_nonce = randomUUID();
       if (!runtimeExecutions.has(task)) runtimeExecutions.set(task, new Map());
-      runtimeExecutions.get(task).set(action.stage, step.execution_nonce);
+      runtimeExecutions.get(task).set(action.stage, { nonce: step.execution_nonce, worktree });
       step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'uncertain' : 'none';
     }
     if (action.action === 'skip') {
       const stage = definition(task, host.registry, host.inventory).stages.find(s => s.id === action.stage);
       step.condition_binding = digest(host.conditions[stage.condition]);
     }
-    if (action.action === 'reuse') step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'known' : 'none';
-    if (action.evidence_ids) step.evidence_ids = action.evidence_ids;
+    if (action.action === 'reuse') {
+      step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'known' : 'none';
+      invalidateRecoveryDisposition(task, action.stage, step.effect_state === 'known');
+    }
+    if (action.evidence_ids) step.evidence_ids = [...action.evidence_ids];
     event(task, action.stage, step.status, action.reason);
   }
-  task.next_actions = [action];
+  task.next_actions = [copy(action)];
   return action;
 }
 
-export function finishStep(task, stageId, evidenceIds, host, failureReason = null) {
+export function finishStep(task, stageId, evidenceIds, host, failureReason = null, attempt = null) {
   const stage = definition(task, host.registry, host.inventory).stages.find(s => s.id === stageId);
   const step = task.steps[stageId];
   assert(stage && step?.status === 'running', 'Only a running stage may finish');
   assert(step.request_binding === digest(host.requests[stageId]), 'Operation scope changed while running');
   const denied = permission(stage.skill, stage, task, host);
   assert(!denied, denied);
-  if (failureReason) { step.status = 'validation_failed'; step.reason = failureReason; step.evidence_ids = [...evidenceIds]; }
+  if (failureReason) {
+    const execution = runtimeExecutions.get(task)?.get(stageId);
+    const currentNonce = execution?.nonce;
+    assert(currentNonce && currentNonce === step.execution_nonce
+      && execution.worktree === realpathSync(host.root)
+      && (attempt === null ? step.attempts === 1 && !recovered.has(task)
+        : attempt.execution_attempt === step.attempts && attempt.execution_nonce === currentNonce),
+    'Failure requires the current-attempt execution binding after a retry');
+    step.status = 'validation_failed'; step.reason = failureReason; step.evidence_ids = [...evidenceIds];
+  }
   else {
     const provisional = copy(task); provisional.steps[stageId].evidence_ids = evidenceIds;
     assert(stepEvidence(provisional, stage, host, task), 'Completion requires valid, scoped current-attempt evidence and independent review');
@@ -454,6 +558,8 @@ export function reopen(task, stageId, host, { reason, source, safeToRetry = fals
   }
   for (const id of affected) {
     const previous = task.steps[id].request_binding;
+    const step = task.steps[id];
+    invalidateRecoveryDisposition(task, id, step.effect_state === 'known');
     task.steps[id].status = 'pending'; task.steps[id].effect_state = 'reconciled';
     delete task.steps[id].request_binding;
     event(task, id, 'pending', `${reason} (${source})`);
@@ -483,6 +589,10 @@ export function restoreTask(serialized, registry, inventory) {
   assert(new Set(task.evidence.map(e => e.id)).size === task.evidence.length, 'Duplicate evidence IDs');
   // No grants, trustedEvidence, capabilities, conditions or runtime commands restored.
   task.next_actions = [];
-  recovered.set(task, { checkpoint: digest(task), import_id: randomUUID() });
+  const intent = taskBinding(task);
+  const outOfIntentFailures = task.evidence
+    .filter(item => item.kind === 'test' && item.result === 'fail' && item.task_binding !== intent)
+    .map(digest);
+  recovered.set(task, { checkpoint: digest(task), import_id: randomUUID(), stageDispositions: new Map(), outOfIntentFailures });
   return task;
 }

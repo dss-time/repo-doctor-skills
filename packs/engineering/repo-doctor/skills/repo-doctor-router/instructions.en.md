@@ -11,7 +11,7 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
 ## Boundary
 
 - Stay read-only. Do not edit files, run commands, access the network, or perform release actions.
-- Read `../../workflows.yaml` relative to this Skill document. In a distribution this is a bundled read-only projection of the unique canonical registry; no source-repository checkout is required. Do not invent or silently extend workflows.
+- Read `../../workflows.yaml` only when recommending a registered workflow. The bundled projection is sufficient. Do not invent or silently extend workflows.
 - Do not claim the host recursively invokes Skills. A recommendation is guidance for the user or a later turn.
 - Codex and the supported build targets have no repository-verified cross-platform Skill alias field. Do not emit alias frontmatter, duplicate a Skill, or claim `$doctor` exists. Use the stable canonical Skill name.
 - Do not route ordinary factual questions with no repository workflow decision.
@@ -29,7 +29,7 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
    - A settled large specification needs vertical delivery slices -> `safe-change-plan` with work-items granularity.
    - Impact is unknown -> `change-impact-analysis`; impact is known and atomic implementation steps are needed -> `safe-change-plan`.
    - A direct code-change request with a material unresolved permission, behavior, compatibility, or destructive choice -> clarify first.
-   - A clear, scoped direct code-change request with explicit write authority -> recommend the matching registered workflow gate and implementation owner below; never treat clarity as permission.
+   - A clear, local, low-risk edit with established scope and write authority -> recommend one verified implementation Skill in `fast` mode. Recommend a registered workflow only when the task needs dependent stages. Preserve applicable permission checks in either case.
    - Settled new-feature specification/work items with write authority -> `feature-implementation`; a diagnosed local defect remains `safe-fix-implementation`.
    - Testing intent -> `test-gap-analysis` for analysis, or `safe-test-implementation` with explicit `test_first`, `regression_after_fix`, or `characterization` mode for authorized test edits.
    - A single design, interaction, state, or business-logic question that needs runnable evidence -> `decision-prototype`; production implementation is a separate later step.
@@ -38,7 +38,7 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
    - Evidence-backed architecture friction and migration options -> `architecture-deepening-analysis`; a request to directly perform a large refactor requires clarification, impact analysis, planning, and explicit write authorization instead.
    - Documentation drift -> `documentation-sync`; candidate release -> `release-readiness-check`; long-session transfer -> `session-handoff`.
    - Other onboarding, health, or specialist review -> the narrowest active owner represented by the registry or active inventory.
-5. If a registered workflow fits, return its exact `workflow_id` and ordered applicable stages. Preserve approval gates, forbidden transitions, alternatives, and stop conditions. Do not create a bespoke duplicate.
+5. If the task needs multiple stages and a registered workflow fits, return its exact `workflow_id` and ordered applicable stages. Preserve approval gates, forbidden transitions, alternatives, and stop conditions. Do not create a bespoke duplicate.
 6. If no workflow fits, recommend one verified Skill and say why registry routing is not applicable.
 7. Choose the output mode: prefer `fast` for routing and bounded requests, `standard` for a complete workflow handoff, and `audit` when the user needs evidence and permission ledgers.
 8. Return the recommendation using the output contract. Invocation syntax is an adapter example, not canonical workflow data.
@@ -47,4 +47,4 @@ Use [execution modes](../../references/execution-modes.en.md) when detailed mode
 
 Return one verified recommendation and never execute it. If inventory or registry evidence is unavailable, mark the route `Unverified` and provide a bounded natural-language fallback.
 
-Read [execution boundaries](../../references/execution-boundaries.en.md). For code analysis, implementation or verification whose rules depend on the stack, consult [language and runtime selection](../../references/language-security-boundaries.en.md) and apply only relevant component profiles. Routing, handoff and ordinary documentation work do not require language profiles.
+Read [execution boundaries](../../references/execution-boundaries.en.md) when a permission or continuation decision needs details. The selected Skill loads its own technical references if needed.

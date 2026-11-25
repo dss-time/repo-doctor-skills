@@ -12,7 +12,7 @@ assert.deepEqual(compatibility.strategy.matrix.node, ["18", "lts/*"]);
 assert.equal(JSON.parse(readFileSync("package.json", "utf8")).engines.node, ">=18");
 assert.ok(compatibility.steps.some((step) => step.run === "node scripts/test-installer.mjs"));
 assert.ok(compatibility.steps.some((step) => step.run === "npm run test:npm"
-  && step.if === "runner.os == 'Linux' && matrix.node == '18'"));
+  && step.if === "matrix.node == '18' || runner.os != 'Linux'"));
 const qualityContent = content.slice(content.indexOf("  quality-gates:"));
 const required = [
   /actions\/checkout@v6/,

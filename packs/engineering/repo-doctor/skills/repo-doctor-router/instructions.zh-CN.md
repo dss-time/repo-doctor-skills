@@ -11,7 +11,7 @@
 ## 职责边界
 
 - 保持只读，不修改文件、不运行命令、不联网，也不执行发布动作。
-- 相对于本 Skill 文档读取 `../../workflows.yaml`。分发包内附带唯一 canonical 注册表的只读投影，无需克隆源仓库。不得编造或静默扩展工作流。
+- 仅在推荐注册工作流时读取 `../../workflows.yaml`。分发包内附带的注册表投影即可核验。不得编造或静默扩展工作流。
 - 不声称宿主会递归调用 Skill。推荐只是给用户或后续轮次的指引。
 - Codex 与本仓库支持目标没有经仓库核验的跨平台 Skill alias 字段。不得输出 alias frontmatter、复制 Skill 或声称 `$doctor` 已存在；始终使用稳定 canonical Skill 名。
 - 普通知识问答不涉及仓库工作流决策时不要路由。
@@ -29,7 +29,7 @@
    - 大型已闭合规格需要垂直交付切片 -> `safe-change-plan` 的 work-items 粒度。
    - 影响未知 -> `change-impact-analysis`；影响已知且需要原子实施步骤 -> `safe-change-plan` 的 atomic-steps 粒度。
    - 直接改代码请求仍有重大权限、行为、兼容性或破坏性选择 -> 先澄清。
-   - 范围明确且有显式写授权的直接改代码请求 -> 推荐匹配的注册工作流门禁和下述实施承接者；清晰不等于授权。
+   - 范围明确、低风险且已有写授权的局部修改 -> 以 `fast` 模式推荐一个已核验的实施 Skill。任务确需多个依赖阶段时才推荐注册工作流。两种路径都保留适用的权限检查。
    - 已确认新功能规格/工作项且已有写授权 -> `feature-implementation`；已诊断局部缺陷仍交给 `safe-fix-implementation`。
    - 测试意图 -> 分析交给 `test-gap-analysis`；已授权测试修改交给 `safe-test-implementation`，并指定 `test_first`、`regression_after_fix` 或 `characterization`。
    - 单一设计、交互、状态或业务逻辑问题需要可运行证据 -> `decision-prototype`；生产实施属于后续独立步骤。
@@ -38,7 +38,7 @@
    - 有证据的架构摩擦与迁移方案 -> `architecture-deepening-analysis`；要求直接进行大规模重构时，应先澄清、影响分析、计划和明确写授权。
    - 文档漂移 -> `documentation-sync`；候选版本 -> `release-readiness-check`；长会话交接 -> `session-handoff`。
    - 其他上手、体检或专项审查 -> 选择注册表或 active 清单中职责最窄的承接者。
-5. 若注册工作流匹配，返回准确 `workflow_id` 和适用阶段顺序；保留审批门禁、禁止跃迁、替代路径和停止条件，不另造重复流程。
+5. 若任务确需多个阶段且有匹配的注册工作流，返回准确 `workflow_id` 和适用阶段顺序；保留审批门禁、禁止跃迁、替代路径和停止条件，不另造重复流程。
 6. 若没有工作流匹配，只推荐一个已核验 Skill，并说明为何不适用注册工作流。
 7. 选择输出模式：路由和有边界请求优先 `fast`，完整工作流交接使用 `standard`，需要证据与权限账本时使用 `audit`。
 8. 按输出契约返回推荐。调用语法属于 adapter 示例，不是 canonical 工作流数据。
@@ -47,4 +47,4 @@
 
 只返回一个已核验推荐，绝不执行。清单或注册表无法核实时，将路由标为 `Unverified` 并给出边界明确的自然语言后备指令。
 
-读取[执行边界](../../references/execution-boundaries.zh-CN.md)。分析、实施或验证代码且检查规则依赖技术栈时，按需读取[语言与运行时选择](../../references/language-security-boundaries.zh-CN.md)，仅应用相关组件规则。路由、交接和普通文档任务无需加载语言规则。
+权限或续接判断需要详情时，读取[执行边界](../../references/execution-boundaries.zh-CN.md)。被推荐的 Skill 按需读取自己的技术规则。

@@ -11,8 +11,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = relative => readFileSync(path.join(root, relative), "utf8");
 const baseline = JSON.parse(read("tests/skill-quality/single-agent-compatibility.json"));
 
-// Preserve the baseline outside explicitly pinned, additive shared-reference sections.
-// Never refresh the historical hashes to conceal unrelated behavior changes.
+// Check separately pinned convention sections and explicitly reviewed upgrades.
+// The historical inventory and hashes stay available for comparison.
 function baselineBytes(filename) {
   const bytes = readFileSync(path.join(root, filename));
   const addition = baseline.reference_additions?.[path.basename(filename)];
@@ -28,7 +28,10 @@ function baselineBytes(filename) {
   return Buffer.from(content.slice(0, start) + content.slice(end + 1));
 }
 
+const reviewedTrees = { ...baseline.change_safety_upgrade?.trees, ...baseline.change_guard_integration?.trees };
+assert.ok(Object.keys(reviewedTrees).every(group => Object.hasOwn(baseline.trees, group)), "Upgrade pins must refer to historical groups");
 for (const [group, expected] of Object.entries(baseline.trees)) {
+  const current = reviewedTrees[group] ?? expected;
   const absolute = path.join(root, group);
   const entries = statSync(absolute).isFile() ? [absolute] : walkFiles(absolute);
   const files = entries.map(file => path.relative(root, file).split(path.sep).join("/")).sort();
@@ -37,8 +40,8 @@ for (const [group, expected] of Object.entries(baseline.trees)) {
     const digest = createHash("sha256").update(baselineBytes(filename)).digest("hex");
     hash.update(JSON.stringify([filename, digest]) + "\n");
   }
-  assert.equal(files.length, expected.file_count, `${group}: existing file inventory changed`);
-  assert.equal(hash.digest("hex"), expected.sha256, `${group}: single-agent compatibility baseline changed`);
+  assert.equal(files.length, current.file_count, `${group}: existing file inventory changed`);
+  assert.equal(hash.digest("hex"), current.sha256, `${group}: single-agent compatibility baseline changed`);
 }
 
 assert.deepEqual(recommendedSkills, [
@@ -71,4 +74,4 @@ for (const folder of ["skills", "plugins/repo-doctor/skills"]) {
   }
 }
 
-console.log(`Multi-agent integration contracts passed: ${Object.keys(baseline.trees).length} baseline groups preserved outside pinned convention additions, Recommended 7 unchanged, additive distribution and bilingual activation boundaries.`);
+console.log(`Multi-agent integration contracts passed: ${Object.keys(baseline.trees).length} baseline groups checked, ${Object.keys(reviewedTrees).length} explicit upgrade pins, Recommended 7 unchanged, distribution and bilingual activation boundaries.`);

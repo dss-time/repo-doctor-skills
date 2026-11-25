@@ -1,10 +1,12 @@
-# Repo Doctor Skills 用户手册
+# Repo Doctor 用户手册
 
 > 当前源码：34 个 Skill / Repo Doctor 27 个。GitHub v0.11.1 包含统一多平台安装说明；npm 0.11.1 支持推荐的 7 个及全部 34 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
 
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 
 > 平台入口核验日期为 2026-07-15。产品界面、订阅方案和工作区策略可能变化，请以当前宿主实际提供的控件为准。
+
+[六个 Agent 的定向安装、版本要求、已验证范围与隔离试用](AGENT_COMPATIBILITY.zh-CN.md)。
 
 ## 1. 安装
 
@@ -97,6 +99,8 @@ Router 会：
 
 ## 4. 常见任务
 
+使用当前源码候选时，直接描述希望修改的行为、允许的范围和必须保留的工作。已有修改重叠、公共契约和受保护路径可能需要修改前基线与交付前检查。受支持的可写 Skill 自带运行时入口，Node、Git 和宿主权限可用时无需另装 npm CLI。只读和低风险局部任务通常使用轻量检查。宿主缺少必要能力时，助手应说明覆盖未知，继续检查差异和业务行为。 [专项观测](research/change-guard-integration.md)
+
 | 目标 | 从这里开始 | 最短请求 |
 |---|---|---|
 | 排查运行时 Bug | `$bug-root-cause-analysis` | `查明这个偶发 500 的原因，不要修改文件。` |
@@ -128,6 +132,8 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 
 ## 7. 更新
 
+本地候选已经在隔离目录验证从已发布的 0.11.1 升级。原有项目和任务状态可读取，旧任务凭据继续要求宿主重新验证。安装会按当前契约替换所选同名 Skill，未选的自定义目录保留。修订候选通过 Linux、macOS、Windows 的 Node 18 与 LTS 矩阵。独立 Beta 包的升级已在 macOS Node 18 与 24 验证。公开升级仍以已发布版本为准。
+
 ### 先理解两个版本层级
 
 - **Project Release Version（项目发布版本）**标识一个经过测试的仓库发布快照，例如 GitHub Release `v0.6.1`。
@@ -140,10 +146,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。本手册对应的项目正式版本为 `v0.11.1`，选择该版本时使用：
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。仅在正式发布后，使用以下命令选择 `v0.12.0`；公开稳定版目前为 `v0.11.1`。
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

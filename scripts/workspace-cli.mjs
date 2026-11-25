@@ -1,6 +1,7 @@
 import path from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
+import { parseOptions, required } from "./state-cli-options.mjs";
 import { readJson } from "./local-state-files.mjs";
 import { targetFromAgent } from "./install.mjs";
 
@@ -14,32 +15,19 @@ export const workspaceUsage = [
   "  repo-doctor-skills task list [--root PATH]",
   "  repo-doctor-skills task save --id ID --input CONTEXT.json --revision N [--root PATH]",
   "  repo-doctor-skills task resume --id ID [--root PATH]",
+  "  repo-doctor-skills change begin --id ID [--scope PATH ...] [--root PATH] [--json]",
+  "  repo-doctor-skills change check --id ID [--root PATH] [--json]",
+  "  repo-doctor-skills change status --id ID [--root PATH] [--json]",
   "  repo-doctor-skills installations check [--target-dir PATH ...]",
 ].join("\n");
-
-function parseOptions(args, { values = [], repeat = [], flags = [] }) {
-  const result = {};
-  for (let index = 0; index < args.length; index += 1) {
-    const name = args[index];
-    if (![...values, ...repeat, ...flags, "--json"].includes(name)) throw new Error("Unknown option; see --help");
-    if (Object.hasOwn(result, name) && !repeat.includes(name)) throw new Error("Repeated option; see --help");
-    if (flags.includes(name) || name === "--json") { result[name] = true; continue; }
-    const value = args[++index];
-    if (!value || value.startsWith("--")) throw new Error("Missing option value; see --help");
-    if (repeat.includes(name)) (result[name] ??= []).push(value);
-    else result[name] = value;
-  }
-  return result;
-}
-
-function required(options, name) {
-  if (!options[name]) throw new Error(`Required option ${name}`);
-  return options[name];
-}
 
 export async function runWorkspaceCli(args, { stdout = process.stdout, stderr = process.stderr, cwd = process.cwd(), home = homedir(), env = process.env } = {}) {
   try {
     const [group, action, ...rest] = args;
+    if (group === "change") {
+      const { runChangeGuardCli } = await import("./change-guard-cli.mjs");
+      return await runChangeGuardCli(args.slice(1), { stdout, stderr, cwd });
+    }
     let result;
     if (group === "project" && ["init", "check", "refresh"].includes(action)) {
       const options = parseOptions(rest, { values: action === "refresh" ? ["--root", "--revision"] : ["--root"], flags: action !== "check" ? ["--apply"] : [] });

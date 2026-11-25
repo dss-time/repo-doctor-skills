@@ -1,5 +1,7 @@
 # Quick start
 
+[Targeted setup for six agents, version requirements, verified scope and isolated trials](AGENT_COMPATIBILITY.md).
+
 ## 1. Install
 
 Use current Node.js LTS (tested with Node 24); the latest external skills CLI does not run on the repository's Node 18 minimum.

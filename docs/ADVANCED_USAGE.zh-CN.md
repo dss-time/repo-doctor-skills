@@ -2,6 +2,8 @@
 
 本指南集中说明替代安装路径、平台差异、源码构建和维护者概念。第一次使用 Repo Doctor 时，请先看[用户手册](USER_MANUAL.zh-CN.md)。
 
+[六个 Agent 的定向安装、版本要求、已验证范围与隔离试用](AGENT_COMPATIBILITY.zh-CN.md)。
+
 ## 1. Recommended / Full / Individual
 
 标准 skills CLI 让用户选择 Skill 和 Agent；可选的 preset 安装器提供以下三组选项：
@@ -44,8 +46,10 @@ npx skills@latest add dss-time/repo-doctor-skills -a cursor
 
 添加稳定版 source：
 
+正式发布后使用以下版本。当前公开版为 v0.11.1。
+
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 

@@ -249,12 +249,13 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.11.1");
+assert.equal(releaseContract.projectVersion, "0.12.0");
 assert.equal(releaseContract.releaseChannel, "stable");
-assert.equal(releaseContract.liveModelStatus, "PASS");
-assert.equal(releaseContract.liveModelWaiver, null);
+assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
+assert.equal(releaseContract.liveModelWaiver.version, "0.12.0");
+assert.equal(releaseContract.liveModelWaiver.scope, "live-model-and-coordination-status-only");
 assert.equal(releaseContract.expectedLiveModelCases, 289);
-assert.equal(releaseContract.liveModelEvidenceVersion, "0.11.0");
+assert.equal(releaseContract.liveModelEvidenceVersion, "0.12.0");
 
 const promotionContract = { ...releaseContract, projectVersion: "0.9.0", liveModelEvidenceVersion: "0.9.0-beta.2", promotionRecord: "tests/reports/release-promotion-0.9.0.json", liveModelReport: "tests/reports/live-codex-skill-validation-0.9.0-beta.2.json", coordinationReport: "tests/reports/coordination-release-0.9.0-beta.2.json" };
 const promotionRoot = mkdtempSync(path.join(tmpdir(), "release-promotion-"));
@@ -343,7 +344,7 @@ try {
 assert.deepEqual(
   Object.fromEntries(releaseContract.packs.map((pack) => [pack.id, pack.version])),
   {
-    "engineering.repo-doctor": "0.13.0",
+    "engineering.repo-doctor": "0.14.0",
     "productivity.productivity-toolkit": "0.2.0",
     "engineering.skill-maintainer": "0.2.1",
   },
@@ -499,7 +500,7 @@ const broadWaiver = inspectReleaseMetadata(repositoryRoot, {
   liveModelWaiver: { ...historicalWaiver, scope: "all-release-gates" },
 });
 assert.ok(
-  broadWaiver.errors.some((error) => error.includes("scope must be live-model-status-only")),
+  broadWaiver.errors.some((error) => error.includes("scope is invalid")),
   "Live-model waiver must not suppress other release gates",
 );
 

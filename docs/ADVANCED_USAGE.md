@@ -2,6 +2,8 @@
 
 This guide collects installation alternatives, platform-specific behavior, source builds, and maintainer-oriented concepts. New Repo Doctor users should start with the [User Manual](USER_MANUAL.md).
 
+[Targeted setup for six agents, version requirements, verified scope and isolated trials](AGENT_COMPATIBILITY.md).
+
 ## 1. Recommended / Full / Individual
 
 The standard skills CLI lets users select Skills and their agent. The optional preset installer offers these three selections:
@@ -44,8 +46,10 @@ Use `--skill '*'` for all Skills, `--skill <slug>` for one Skill and `-g` for a 
 
 Add the stable source:
 
+Use the command below after the release is published. The current public version is v0.11.1.
+
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 

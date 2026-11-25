@@ -152,7 +152,10 @@ async function workflow() {
       if (!observed.completed || observedPermissionViolations(observed, inventory.get(slug).permissions).length || !observedSkillLoad(observed, slug)) throw new Error('Original CLI phase not observed');
       if (id === 'regression' && !observed.commands.some(c => c.command.includes('cat tests/cart.test.mjs') && c.output === readFileSync(path.join(root, 'tests/cart.test.mjs'), 'utf8'))) throw new Error('Persisted edit does not match observed CLI file receipt');
     }
-    host.recoveryChecks.set(recoveryBinding(task, host), { source: 'Host re-inspected actual workspace, original execution receipts and pending attempts', reconciled: true });
+    if (task.evidence.some(entry => entry.kind === 'test' && entry.result === 'fail')) {
+      throw new Error('Resume requires host verification of the original failure history');
+    }
+    host.recoveryChecks.set(recoveryBinding(task, host), { source: 'Host re-inspected actual workspace, original execution receipts and pending attempts', reconciled: true, failureEvidence: [] });
     host.reconciled = new Set([reconciliationBinding(task, 'regression-test', host)]);
     reopen(task, 'regression-test', host, { reason: 'Host inspected persisted test edit against original CLI receipt and immutable fixture', source: resumeReport, safeToRetry: true });
   } else {
@@ -167,7 +170,7 @@ async function workflow() {
   // Real serialized handoff to a fresh CLI turn; re-attest host authority, never import it from context.
   const resumed = restoreTask(encodeTask(task), registry, inventory);
   task = resumed;
-  host.recoveryChecks.set(recoveryBinding(task, host), { source: 'Host verified unchanged fixture after read-only gap phase and no previous write attempt', reconciled: true });
+  host.recoveryChecks.set(recoveryBinding(task, host), { source: 'Host verified unchanged fixture after read-only gap phase and no previous write attempt', reconciled: true, failureEvidence: [] });
   host.reuse['test-gap'] = ['gap'];
   if (advance(task, host).action !== 'reuse') throw new Error('Recovered gap requires explicit host result reuse');
   host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(task, 'regression-test', host), {source:'Host inspected unchanged test baseline and actual attempt log: no previous test write',disposition:'not_executed'}]]);

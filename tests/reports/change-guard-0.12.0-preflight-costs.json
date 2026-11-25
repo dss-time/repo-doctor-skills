@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v24.19.0",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "change_guard_sha256": "97991f97880b6f8db9f4a8807eb7817c8cfee198e59be824539133a0c8192b0b",
+  "measurement_script_sha256": "ada7762edff0ac567253d480cf248a51c9065f09aad96cc38b0182fe2d71cf10",
+  "tracked_fixture_files": 251,
+  "bytes_per_source_file": 4096,
+  "measured_rounds_per_size": 10,
+  "excluded_warmups_per_size": 1,
+  "measurement": "local CLI wall time including Node startup; baseline JSON bytes per ID",
+  "samples": [
+    {
+      "preexisting_dirty_paths": 0,
+      "ignored_file_bytes": 2,
+      "rounds": [
+        {
+          "begin_ms": 194.7,
+          "check_ms": 163.3,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 241.7,
+          "check_ms": 224.3,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 437.7,
+          "check_ms": 303.6,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 256,
+          "check_ms": 465,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 393,
+          "check_ms": 405.2,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 330.7,
+          "check_ms": 431.2,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 311.4,
+          "check_ms": 235.7,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 243.1,
+          "check_ms": 575.7,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 189.4,
+          "check_ms": 193.1,
+          "baseline_bytes": 925
+        },
+        {
+          "begin_ms": 217.1,
+          "check_ms": 158.9,
+          "baseline_bytes": 926
+        }
+      ]
+    },
+    {
+      "preexisting_dirty_paths": 25,
+      "ignored_file_bytes": 2,
+      "rounds": [
+        {
+          "begin_ms": 204.4,
+          "check_ms": 210.8,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 216.1,
+          "check_ms": 170.6,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 207.2,
+          "check_ms": 166.7,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 183.3,
+          "check_ms": 179.2,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 202.8,
+          "check_ms": 186.2,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 204.5,
+          "check_ms": 359.3,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 216,
+          "check_ms": 171.5,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 259.1,
+          "check_ms": 239.4,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 189.6,
+          "check_ms": 214.9,
+          "baseline_bytes": 14496
+        },
+        {
+          "begin_ms": 234.4,
+          "check_ms": 192,
+          "baseline_bytes": 14497
+        }
+      ]
+    },
+    {
+      "preexisting_dirty_paths": 250,
+      "ignored_file_bytes": 2,
+      "rounds": [
+        {
+          "begin_ms": 360.4,
+          "check_ms": 225.8,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 294.1,
+          "check_ms": 374.5,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 324.8,
+          "check_ms": 282.3,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 265.8,
+          "check_ms": 211.6,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 262.8,
+          "check_ms": 459.5,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 314.3,
+          "check_ms": 243.7,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 240.5,
+          "check_ms": 223.5,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 290.1,
+          "check_ms": 229.7,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 264.2,
+          "check_ms": 263.6,
+          "baseline_bytes": 136821
+        },
+        {
+          "begin_ms": 261.8,
+          "check_ms": 303.1,
+          "baseline_bytes": 136822
+        }
+      ]
+    }
+  ]
+}

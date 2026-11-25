@@ -39,8 +39,11 @@ jobs:
       - name: Verify CLI package
         run: node scripts/test-npm-package.mjs
 
-      - name: Verify packed CLI on minimum Node
-        if: runner.os == 'Linux' && matrix.node == '18'
+      - name: Verify Git Change Guard
+        run: node --test scripts/test-change-guard.mjs
+
+      - name: Verify packed CLI on minimum Node and non-Linux runners
+        if: matrix.node == '18' || runner.os != 'Linux'
         run: npm run test:npm
 
   quality-gates:

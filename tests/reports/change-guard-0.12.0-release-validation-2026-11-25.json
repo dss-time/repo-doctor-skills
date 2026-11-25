@@ -1,0 +1,529 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-25",
+  "candidate_id": "0.12.0-local.2",
+  "original_freeze": "dcf84249dd84e8cd97df6388c2cd1539e6ac3f45d62a8eafe30f2228bacc0e73",
+  "build_inputs": {
+    "files": 490,
+    "sha256": "c5795d6b37486afb45fe7caaaa7e815314c890ef3764d85a6ff60c81df9e6cb2",
+    "scope": [
+      "packs/",
+      "scripts/",
+      "bin/",
+      "schemas/",
+      "adapters/",
+      ".github/",
+      "package.json",
+      "package-lock.json",
+      ".agents/plugins/marketplace.json",
+      ".gitattributes",
+      "README.md",
+      "README.zh-CN.md",
+      "CHANGELOG.md",
+      "LICENSE"
+    ]
+  },
+  "ci": {
+    "branch": "codex/0.12.0-frozen-ci",
+    "commit": "ff4fdc1bc9eada01c49199c4f16c11cf87a0ec07",
+    "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "Install on windows-latest / Node 18",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948837854",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Validate metadata and schemas",
+            "result": "success"
+          },
+          {
+            "name": "Verify installation and replacement",
+            "result": "success"
+          },
+          {
+            "name": "Verify CLI package",
+            "result": "success"
+          },
+          {
+            "name": "Verify Git Change Guard",
+            "result": "success"
+          },
+          {
+            "name": "Verify packed CLI on minimum Node and non-Linux runners",
+            "result": "success"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      },
+      {
+        "name": "Install on windows-latest / Node lts/*",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948838000",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Validate metadata and schemas",
+            "result": "success"
+          },
+          {
+            "name": "Verify installation and replacement",
+            "result": "success"
+          },
+          {
+            "name": "Verify CLI package",
+            "result": "success"
+          },
+          {
+            "name": "Verify Git Change Guard",
+            "result": "success"
+          },
+          {
+            "name": "Verify packed CLI on minimum Node and non-Linux runners",
+            "result": "success"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      },
+      {
+        "name": "Install on ubuntu-latest / Node lts/*",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948838017",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Validate metadata and schemas",
+            "result": "success"
+          },
+          {
+            "name": "Verify installation and replacement",
+            "result": "success"
+          },
+          {
+            "name": "Verify CLI package",
+            "result": "success"
+          },
+          {
+            "name": "Verify Git Change Guard",
+            "result": "success"
+          },
+          {
+            "name": "Verify packed CLI on minimum Node and non-Linux runners",
+            "result": "skipped"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      },
+      {
+        "name": "Install on macos-latest / Node lts/*",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948838065",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Validate metadata and schemas",
+            "result": "success"
+          },
+          {
+            "name": "Verify installation and replacement",
+            "result": "success"
+          },
+          {
+            "name": "Verify CLI package",
+            "result": "success"
+          },
+          {
+            "name": "Verify Git Change Guard",
+            "result": "success"
+          },
+          {
+            "name": "Verify packed CLI on minimum Node and non-Linux runners",
+            "result": "success"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      },
+      {
+        "name": "Install on ubuntu-latest / Node 18",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948838102",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Validate metadata and schemas",
+            "result": "success"
+          },
+          {
+            "name": "Verify installation and replacement",
+            "result": "success"
+          },
+          {
+            "name": "Verify CLI package",
+            "result": "success"
+          },
+          {
+            "name": "Verify Git Change Guard",
+            "result": "success"
+          },
+          {
+            "name": "Verify packed CLI on minimum Node and non-Linux runners",
+            "result": "success"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      },
+      {
+        "name": "Install on macos-latest / Node 18",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948838167",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Validate metadata and schemas",
+            "result": "success"
+          },
+          {
+            "name": "Verify installation and replacement",
+            "result": "success"
+          },
+          {
+            "name": "Verify CLI package",
+            "result": "success"
+          },
+          {
+            "name": "Verify Git Change Guard",
+            "result": "success"
+          },
+          {
+            "name": "Verify packed CLI on minimum Node and non-Linux runners",
+            "result": "success"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      },
+      {
+        "name": "quality-gates",
+        "result": "success",
+        "url": "https://github.com/dss-time/repo-doctor-skills/actions/runs/45537870106/job/138948838173",
+        "steps": [
+          {
+            "name": "Set up job",
+            "result": "success"
+          },
+          {
+            "name": "Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Install dependencies",
+            "result": "success"
+          },
+          {
+            "name": "Check script syntax",
+            "result": "success"
+          },
+          {
+            "name": "Validate schemas, Skills, and workflow registry",
+            "result": "success"
+          },
+          {
+            "name": "Run core tests",
+            "result": "success"
+          },
+          {
+            "name": "Run new-user UX tests",
+            "result": "success"
+          },
+          {
+            "name": "Run public npm tarball tests",
+            "result": "success"
+          },
+          {
+            "name": "Build all generated outputs",
+            "result": "success"
+          },
+          {
+            "name": "Generate deterministic documentation",
+            "result": "success"
+          },
+          {
+            "name": "Check documentation",
+            "result": "success"
+          },
+          {
+            "name": "Check Skill and generated-output quality",
+            "result": "success"
+          },
+          {
+            "name": "Check development metadata",
+            "result": "success"
+          },
+          {
+            "name": "Check tagged release metadata and evidence",
+            "result": "skipped"
+          },
+          {
+            "name": "Check generated-file drift",
+            "result": "success"
+          },
+          {
+            "name": "Post Setup Node",
+            "result": "success"
+          },
+          {
+            "name": "Post Checkout",
+            "result": "success"
+          },
+          {
+            "name": "Complete job",
+            "result": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "fixes": [
+    "Compare native worktree root paths on Windows.",
+    "Confirm Windows on-disk spelling using directory entries and file identity before adding path aliases."
+  ],
+  "final_skill_binding": {
+    "schema_version": 1,
+    "source_sha256": "8021699269faa84cf6cfb79bcf7fb5cd8593d015f20d822a98f4d2c13c97d31d",
+    "runtime_sha256": "5dcfc31c2bad5b290ba78256e905defd755da6da72f8c5d04ee6318d13d193bb"
+  },
+  "model_retest": {
+    "report": "tests/reports/change-guard-0.12.0-candidate-retest-2026-11-25.json",
+    "sha256": "654593a4431d59072ff19999569b2ec65c34570b3f178d8a3ff044adef539f58",
+    "model": "gpt-6.2-sol",
+    "effort": "low",
+    "usable": 3,
+    "binding": {
+      "schema_version": 1,
+      "source_sha256": "fdd4e5b24446819749f66e0cb33b95af235779ed9315e75d8dc28bb22d321bb4",
+      "runtime_sha256": "ea6d2cd3f85e54baa86414bb894f702151e48b8399beaf227e426cf809263a62"
+    },
+    "boundary": "Observed before the Windows-only path-alias correction. The canonical Skill instructions and macOS implementation path are unchanged."
+  },
+  "beta": {
+    "version": "0.12.0-beta.1",
+    "built_locally": true,
+    "published": false,
+    "npm_sha256": "e0b318e5a33638e0c3b6f55ee5af37a229ea6f6283ee04f23c63e027407719e8",
+    "macos_upgrades": [
+      {
+        "platform": "darwin",
+        "node": "v18.20.8",
+        "stable_skills": 34,
+        "upgraded_skills": 34,
+        "user_custom_skill_preserved": true,
+        "reinstall_unchanged": 34,
+        "ledger_status": "valid",
+        "old_project_current": true,
+        "old_task_requires_host_revalidation": true,
+        "shared_cli_baseline": true,
+        "outside_scope_detected": true,
+        "index_preserved": true,
+        "public_contract_assertion": true
+      },
+      {
+        "platform": "darwin",
+        "node": "v24.19.0",
+        "stable_skills": 34,
+        "upgraded_skills": 34,
+        "user_custom_skill_preserved": true,
+        "reinstall_unchanged": 34,
+        "ledger_status": "valid",
+        "old_project_current": true,
+        "old_task_requires_host_revalidation": true,
+        "shared_cli_baseline": true,
+        "outside_scope_detected": true,
+        "index_preserved": true,
+        "public_contract_assertion": true
+      }
+    ],
+    "coordination": {
+      "status": "FAIL",
+      "report": "tests/reports/coordination-0.12.0-beta.1-attempt-2026-11-25.json",
+      "sha256": "1448638ea0a8f66edac595b6633699b2e5165cdc66e3dc81d6fcbaeedf3dbe85",
+      "cases": [
+        {
+          "case": "simple",
+          "result": "PASS"
+        },
+        {
+          "case": "workflow",
+          "result": "FAIL"
+        },
+        {
+          "case": "core-review",
+          "result": "FAIL"
+        }
+      ],
+      "blockers": [
+        "The current scoped Codex CLI did not expose an authorized non-shell file reader for read-only analysis and review."
+      ]
+    }
+  }
+}

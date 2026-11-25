@@ -1,10 +1,12 @@
-# Repo Doctor Skills User Manual
+# Repo Doctor User Manual
 
 > Current source: 34 Skills / Repo Doctor 27. GitHub release v0.11.1 includes unified multi-platform installation guidance; npm 0.11.1 supports Recommended 7 and Full 34. [Examples](guides/delivery-examples.md).
 
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 
 > Platform entry points were verified on 2026-07-15. Product interfaces, plans, and workspace policy can change; use the controls exposed by your current host.
+
+[Targeted setup for six agents, version requirements, verified scope and isolated trials](AGENT_COMPATIBILITY.md).
 
 ## 1. Install
 
@@ -97,6 +99,8 @@ It is a fallback, not a mandatory gateway. If you already know you need `$safe-c
 
 ## 4. Common tasks
 
+With the source candidate, describe the intended behavior, permitted scope and work to preserve. Overlapping edits, shared contracts and protected paths can warrant a pre-edit baseline and final check. Supported writing Skills bundle the runtime entry point and need Node, Git and host permission to run it. Read-only and low-risk local requests can stay light. If execution is unavailable, the assistant should report unknown coverage and continue reviewing the diff and affected behavior. [Observed behavior](research/change-guard-integration.md)
+
 | Goal | Start with | Minimal request |
 |---|---|---|
 | Diagnose a runtime bug | `$bug-root-cause-analysis` | `Find the cause of this intermittent 500; do not edit files.` |
@@ -128,6 +132,8 @@ Fast never means skipping safety. Audit is not imposed on every small problem. A
 
 ## 7. Update
 
+The local candidate was tested upgrading from the published 0.11.1 in isolated directories. Existing project state stays readable, and old task evidence still requires host revalidation. Installing replaces selected same-name Skills under the existing contract and preserves unselected custom directories. The revised candidate passed the Linux, macOS and Windows matrix on Node 18 and LTS. The separate Beta package passed macOS upgrades on Node 18 and 24. Public installation instructions continue to target the published release.
+
 ### Understand the two version layers
 
 - **Project Release Version** identifies a tested repository snapshot, such as GitHub Release `v0.6.1`.
@@ -140,10 +146,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. This manual targets project release `v0.11.1`; to select that version, use:
+2. Refresh or replace the configured marketplace source so it points to that tag. After the stable release is published, use this command to select `v0.12.0`. The published stable version is currently `v0.11.1`.
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.

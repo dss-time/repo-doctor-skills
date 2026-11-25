@@ -1,89 +1,56 @@
 [English](./README.md) | **简体中文**
 
-# Repo Doctor Skills
+# Repo Doctor
 
-让 AI 按明确的安全边界排查 Bug、实施功能、审查代码和验证结果，适配项目实际使用的语言与运行时。
+**Make AI coding safer, not slower.**
 
-从一个局部修复到已授权的多阶段交付：小任务直接调用一个 Skill，复杂任务复用已有授权与有效证据，按依赖推进。
+面向 AI 编程助手的代码变更安全与工程验证工具。
 
-版本 **0.11.1** 包含 34 个 Skill，其中 Repo Doctor 工程能力为 27 个。[GitHub Release](https://github.com/dss-time/repo-doctor-skills/releases/tag/v0.11.1) · [npm](https://www.npmjs.com/package/repo-doctor-skills/v/0.11.1) · [发布说明](docs/RELEASE_NOTES_0.11.1.zh-CN.md)。
+让 AI 改代码时少碰无关文件，留意你尚未提交的修改，并说清楚实际验证了什么。适合 OpenAI Codex、Claude Code、Cursor、GitHub Copilot、Gemini CLI 和 OpenCode，宿主实测范围见下表。
 
-发布验证使用新的源码绑定模型案例及隔离协调试验，结果与局限见[验证记录](docs/RELEASE_VALIDATION_0.11.0.md)。此前 0.10.0/0.10.1 报告仅保留为对应原始内容的历史证据。
+## 快速开始
 
-## 30 秒开始
+在项目目录运行，选择你正在使用的 Agent。
 
 ```bash
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-同一个 `npx skills` 入口可用于支持的编程 Agent，通过 `-a` 选择宿主：
-
-需要选择最匹配的能力时，使用 `$repo-doctor-router`。
-
-```bash
-npx skills@latest add dss-time/repo-doctor-skills -a claude-code
-npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli
-npx skills@latest add dss-time/repo-doctor-skills -a kimi-code-cli
-npx skills@latest add dss-time/repo-doctor-skills -a qwen-code
-npx skills@latest add dss-time/repo-doctor-skills -a cursor
-```
-
-使用 `--skill '*'` 安装全部 Skill，或用 `--skill safe-code-review` 安装单个 Skill；加 `-g` 安装到全局。安装器使用宿主的标准目录，替换选中的同名 Skill，并保留未选中的 Skill。这表示安装格式兼容；自动触发、工具权限、多 Agent 执行和运行时行为仍取决于宿主。这里不提供 `--agent workbuddy` 参数，WorkBuddy 请按其官方文档导入本地 Skill 目录。
-
-平台命令速查：
-
-| 宿主 | 命令 |
-|---|---|
-| Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` |
-| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` |
-| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` |
-| WorkBuddy | 通过 WorkBuddy 官方本地 Skill 导入功能导入仓库的 `skills/` 目录 |
-
-Codex 也可以使用原生插件方式：
-
-```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
-codex plugin add repo-doctor@repo-doctor-marketplace
-```
-
-WorkBuddy 在本项目中没有对应的 `npx` Agent 参数。通过本地导入时，请保留每个 Skill 的完整目录，包括 `SKILL.md` 及其链接的配套资源。
-
-使用当前 Node.js LTS（已测试 Node 24）。在你的项目目录运行，按安装器提示选择 Skill 和 Agent，然后新建任务即可使用。无需克隆或构建仓库。默认安装到当前项目；加 `-g` 可在所有项目使用。
+安装后打开新会话，像往常一样描述需求、改动范围和要保留的行为。可选用 `$repo-doctor-router` 获取 Skill 推荐。公开稳定版 **0.11.1** 提供工程工作流。下文的工作区基线和自动变更报告属于尚未发布的 **0.12.0 候选**。
 
 ## 最小示例
 
-```text
-$safe-code-review 审查当前修改。
-```
+| 你可以这样说 | Repo Doctor 能帮你做什么 |
+| --- | --- |
+| “修复订单编辑后列表没有刷新的问题，保留现有业务逻辑。” | 先复现并追踪刷新链路，做局部修复，核对受影响的行为和定向回归结果。 |
+| “给订单页加个搜索条件，保留我没提交的修改。” | 候选版在适用时记录修改前的 Git 状态，检查任务是否又触及了你已经编辑过的文件，方便复核。 |
+| “修一下这个 TypeScript 类型错误，依赖保持原样。” | 候选版可以报告基线之后发生的依赖清单和锁文件变化，并提示核对实际范围。 |
+| “只改这个按钮的文案。” | 用定向检查确认改动即可。真实 Codex 的低风险样本未创建额外基线。 |
 
-不知道选哪个时，使用 `$repo-doctor-router`。它会推荐 Skill 并给出可复制的下一步请求；知道 Skill 名时直接调用。
+更多示例覆盖样式越界、公共请求方法、批量审核与续接任务。[自然语言使用案例](docs/guides/repo-doctor-scenarios.zh-CN.md)
 
-已授权的连续任务可使用[串行工作流协同与证据复用](docs/WORKFLOW_COORDINATION.zh-CN.md)。简单任务仍直接调用一个 Skill；自动执行能力取决于宿主。
+## 工作机制与边界
 
-## 为什么选择 Repo Doctor Skills
+- **按影响决定检查深度。** Skills 为问题定位、局部修复和测试提供工程步骤。测试结果取决于实际执行，已有证据也要在输入、工作树和环境仍匹配时才复用。
+- **在适用场景比较工作区。** 候选版的四个可写 Skills 共享本地运行时。在宿主允许使用 Node、Git 和项目本地状态时，可在改动前建立基线，并在交付前比较。通过 Skills CLI 安装这四项中的任意一项即可取得对应运行时。
+- **看清实际变化。** 报告区分检测结果、风险提示和未知覆盖，供人和 Agent 核对实际授权。Git 忽略项、短暂并发写入等情况可能看不到。业务正确性仍需实际测试。
 
-| 优势 | 对实际开发的帮助 |
-|---|---|
-| **优先保护你的项目** | 修改前核对权限与业务行为、已有数据更新语义和用户已有修改；执行测试或构建前检查真实环境与副作用。未知风险只阻塞受影响操作。 |
-| **渐进式上下文加载** | 在支持原生 Skills 的宿主中，先通过名称与描述发现能力，再加载选中 Skill 的正文，按任务读取参考规则，避免每次预先载入整套说明。 |
-| **按语言与运行时选择规则** | 根据相关组件应用检查，纯 JS/TS 不套用 C/C++ 内存管理限制；涉及原生代码、嵌入式或混合技术栈时，核对对应边界与可用验证工具。 |
-| **从单点任务衔接到工作流** | 职责明确的需求、诊断、实施、测试与审查能力可独立使用，也可在已有授权范围内串行协作，复用仍有效的验收证据，减少重复确认与检查。 |
-| **用证据说明完成程度** | 区分已实施、已验证、延期验证和阻塞，不把读取脚本当作测试通过，也不把局部检查当作完整交付。已发布版本提供源码绑定的模型评测记录。 |
-| **灵活安装，中文英文均可用** | 可安装推荐组合、部分或单个 Skill；提供双语内容及多平台适配，自带安装器支持按语言安装，并替换选中的同名旧 Skill。 |
+Codex 实测中，用户原有说明得以保留，原模型三个定向复测均触发了检查。公共模块曾漏触发，本次复测成功。macOS 251 跟踪文件夹具的基线和检查中位耗时分别为 170–255 ms 和 142–229 ms，含 Node 启动。[实测记录](docs/research/change-guard-integration.md) · [可复现临时仓库示例](docs/guides/change-guard-demo.zh-CN.md)
 
-安全约束由 Skill 指令指导执行，仍依赖宿主工具、沙箱和审批机制。跨语言支持不代表已在所有语言、框架或硬件上完成验证。
+## 宿主与安装
 
-### 按需加载如何工作
+选择一条命令即可。项目级是默认方式，`-g` 安装到当前用户目录。表中的安装和独立运行时验证使用 Skills CLI **1.9.0** 和冻结候选。
 
-```text
-名称与描述 → 匹配任务 → 读取选中 Skill 的正文 → 按条件读取参考规则或使用脚本
-```
+| Agent | 定向安装 | 验证范围 |
+| --- | --- | --- |
+| OpenAI Codex | `npx skills@latest add dss-time/repo-doctor-skills -a codex` | 项目／全局安装，候选宿主发现、正文加载、自动调用及部分报告处理有观测 |
+| Claude Code | `npx skills@latest add dss-time/repo-doctor-skills -a claude-code` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| Cursor | `npx skills@latest add dss-time/repo-doctor-skills -a cursor` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| GitHub Copilot | `npx skills@latest add dss-time/repo-doctor-skills -a github-copilot` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| Gemini CLI | `npx skills@latest add dss-time/repo-doctor-skills -a gemini-cli` | 项目／全局安装和独立运行时，宿主执行未验证 |
+| OpenCode | `npx skills@latest add dss-time/repo-doctor-skills -a opencode` | 项目／全局安装和独立运行时，宿主执行未验证 |
 
-例如，功能实施时按实际技术栈选择规则；编写测试时读取测试契约；需要多阶段续接或恢复时才读取工作流协议。安装全部 Skill 不等于每次加载全部正文。实际加载方式取决于宿主；普通提示词导入不保证自动按需加载，当前双语正文也会增加单个 Skill 激活后的上下文量。项目尚未提供统一的 Token 节省比例。
-
-**0.11.0 已包含：**[自适应单 Agent / 多 Agent 模式](docs/MULTI_AGENT_WORKFLOW.zh-CN.md)，以及[项目初始化、任务存档与只读安装诊断](docs/PROJECT_STATE.zh-CN.md)。原有 Skill 保持可独立使用；项目初始化仍为可选。
-
-当前源码还补强了**项目规范自适应**：直接调用实施、修复、测试或文档 Skill 时，在修改前按目标目录与技术栈核对适用的项目指令、配置和邻近风格，无需先初始化项目。仅调整任务相关内容，不执行配置代码来发现规则、不全仓格式化，也不静默记录个人偏好。规则见[用户项目安全参考](packs/engineering/repo-doctor/references/user-workspace-safety.zh-CN.md#5-按修改范围适配项目规范)，实际遵循情况取决于宿主与模型。
+Skills CLI 1.9.0 要求 Node **22.20.0+**，建议使用当前 LTS。项目自带 CLI 与候选运行时支持 Node 18+。工作区比较需要本地 Git。详细目录、权限、升级与本地 Beta 验证见 [Agent 安装与兼容性](docs/AGENT_COMPATIBILITY.zh-CN.md)。其他现有安装渠道见 [高级用法](docs/ADVANCED_USAGE.zh-CN.md)。
 
 ## Codex 插件
 
