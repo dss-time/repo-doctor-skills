@@ -46,8 +46,10 @@ Use `--skill '*'` for all Skills, `--skill <slug>` for one Skill and `-g` for a 
 
 Add the stable source:
 
+Use the command below after the release is published. The current public version is v0.11.1.
+
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 

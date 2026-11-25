@@ -46,8 +46,10 @@ npx skills@latest add dss-time/repo-doctor-skills -a cursor
 
 添加稳定版 source：
 
+正式发布后使用以下版本。当前公开版为 v0.11.1。
+
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.11.1
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 

@@ -673,6 +673,7 @@ test('An explicit rerun can resolve missing and reordered external observations'
   failed.recorded_at = '2025-01-01T00:00:00.000Z';
   f.host.trustedEvidence.add(digest(failed));
   f.host.environment = { service: { version: 1, ports: [1000, 2000] } };
+  f.host.environment.platform = process.platform;
   const pass = f.evidence('observed-environment', [], { ...receipt, exit_code: 0, dependencies: ['facts.txt', 'README.md'] });
   f.host.environment.service = { ports: [1000, 2000], version: 1 };
   assert.equal(nextAction(f.task, f.host).action, 'evidence_insufficient');
@@ -682,6 +683,35 @@ test('An explicit rerun can resolve missing and reordered external observations'
   f.host.environment.service.version++;
   assert.equal(validationPlan([pass], f.host)[0].action, 'rerun');
   assert.equal(nextAction(f.task, f.host).action, 'evidence_insufficient');
+});
+
+test('Observed historical effects invalidate a prior no-execution disposition after reopen', t => {
+  const f = setup(t);
+  const restored = restoreTask(encodeTask(f.task), registry, inventory);
+  f.host.recoveryChecks.set(recoveryBinding(restored, f.host), {
+    source: 'host inspected recovery history', reconciled: true, failureEvidence: [],
+  });
+  f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(restored, 'task', f.host),
+    { source: 'initial finding', disposition: 'not_executed' }]]);
+  assert.equal(nextAction(restored, f.host).action, 'execute');
+  const receipt = f.complete(advance(f.task, f.host), { claims: ['stage:task', 'acceptance:behavior'] });
+  restored.evidence.push(receipt);
+  f.host.reuse.task = [receipt.id];
+  const reuse = advance(restored, f.host);
+  assert.equal(reuse.action, 'reuse');
+  reuse.evidence_ids[0] = 'modified return';
+  restored.next_actions[0].evidence_ids[0] = 'modified context action';
+  assert.deepEqual(restored.steps.task.evidence_ids, [receipt.id]);
+  assert.deepEqual(f.host.reuse.task, [receipt.id]);
+  f.host.reconciled = new Set([reconciliationBinding(restored, 'task', f.host)]);
+  reopen(restored, 'task', f.host, { reason: 'inspected and requested retry', source: 'host', safeToRetry: true });
+  delete f.host.reuse.task;
+  assert.equal(nextAction(restored, f.host).reason, 'recovered_execution_needs_explicit_disposition');
+  f.host.recoveredExecutionChecks.set(recoveredExecutionBinding(restored, 'task', f.host),
+    { source: 'current reconciliation', disposition: 'safe_retry' });
+  assert.equal(nextAction(restored, f.host).reason, 'recovered_execution_needs_explicit_disposition');
+  f.host.reconciled.add(reconciliationBinding(restored, 'task', f.host));
+  assert.equal(nextAction(restored, f.host).action, 'execute');
 });
 
 test('Acceptance and risk claims cannot cross an authorized operation scope change', t => {

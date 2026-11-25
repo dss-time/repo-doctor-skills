@@ -2,7 +2,7 @@
 
 [English](LOCAL_CODEX_BETA.md)
 
-此本地市场使用生成的 Codex 工程插件，包含 27 个 Skills。npm 候选仍包含全部 34 个公开 Skills。市场 ID 为 `repo-doctor-beta-marketplace`，显示名称为 **Repo Doctor Beta**。安装选择器为 `repo-doctor@repo-doctor-beta-marketplace`，插件版本为 `0.13.1-beta.1`。稳定版市场保留在日常配置中。
+此本地市场使用生成的 Codex 工程插件，包含 27 个 Skills。npm 候选仍包含全部 34 个公开 Skills。市场 ID 为 `repo-doctor-beta-marketplace`，显示名称为 **Repo Doctor Beta**。安装选择器为 `repo-doctor@repo-doctor-beta-marketplace`，插件版本为 `0.14.0`。稳定版市场保留在日常配置中。
 
 从此仓库在子 Shell 中执行以下命令，隔离 Codex 配置和个人 Skill 目录。临时测试项目没有同名项目级 Skills。
 
@@ -20,7 +20,7 @@
 已准备好的隔离配置已经安装 Beta。新建配置时，使用自己的空 `HOME` 和 `CODEX_HOME`，并在相同命令块内执行以下命令。
 
 ```bash
-"$bin" plugin marketplace add "$root/market"
+"$bin" plugin marketplace add "$root/market-v0.12.0"
 "$bin" plugin add repo-doctor@repo-doctor-beta-marketplace
 "$bin" plugin list
 ```

@@ -185,12 +185,23 @@ export function reconciliationBinding(task, stageId, host) {
 }
 
 export function recoveryBinding(task, host) {
-  const checkpoint = recovered.get(task);
-  return checkpoint ? digest({ checkpoint, intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks }) : null;
+  const record = recovered.get(task);
+  if (!record) return null;
+  const { checkpoint, import_id } = record;
+  return digest({ checkpoint: { checkpoint, import_id }, intent: taskBinding(task), requests: host.requests, skillChecks: host.skillChecks });
 }
 
 export function recoveredExecutionBinding(task, stageId, host) {
-  return digest({ recovery: recoveryBinding(task, host), stage: stageId, attempts: task.steps[stageId]?.attempts, execution_nonce: task.steps[stageId]?.execution_nonce, request: host.requests?.[stageId] });
+  return digest({ recovery: recoveryBinding(task, host), stage: stageId, attempts: task.steps[stageId]?.attempts,
+    execution_nonce: task.steps[stageId]?.execution_nonce, request: host.requests?.[stageId],
+    disposition_revision: recovered.get(task)?.stageDispositions.get(stageId)?.revision ?? 0 });
+}
+
+function invalidateRecoveryDisposition(task, stageId, needsRetry = false) {
+  const stages = recovered.get(task)?.stageDispositions;
+  if (!stages) return;
+  const previous = stages.get(stageId);
+  stages.set(stageId, { revision: (previous?.revision ?? 0) + 1, needsRetry: needsRetry || previous?.needsRetry === true });
 }
 
 function requirement(task, requirement, host) {
@@ -230,7 +241,7 @@ function failureResolutionMatches(failed, replacement, validity) {
   const dependencies = failed.external_dependencies === undefined ? [] : failed.external_dependencies;
   if (!Array.isArray(dependencies) || dependencies.some(key => typeof key !== 'string' || !key)) return false;
   const keys = new Set([...Object.keys(failed.environment), ...dependencies]);
-  return keys.size === Object.keys(replacement.environment).length && [...keys].every(key => {
+  return [...keys].every(key => {
     const recorded = Object.hasOwn(failed.environment, key) ? failed.environment[key] : undefined;
     const observed = replacement.environment[key];
     return Object.hasOwn(replacement.environment, key) && observed !== null && observed !== undefined
@@ -319,7 +330,7 @@ export function nextAction(task, host) {
           const provisional = copy(task);
           provisional.steps[stage.id].status = 'reused';
           provisional.steps[stage.id].evidence_ids = reusable;
-          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: reusable, reason: 'explicit_recovered_or_historical_result_reuse' };
+          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...reusable], reason: 'explicit_recovered_or_historical_result_reuse' };
         }
         if (effectful) return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
       }
@@ -339,10 +350,10 @@ export function nextAction(task, host) {
           provisional.steps[stage.id].evidence_ids = reusable;
           const denied = permission(stage.skill, stage, task, host);
           if (denied) return { ...decision, action: 'permission_blocked', reason: denied };
-          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: reusable, reason: 'observed_effect_before_checkpoint_recovery' };
+          if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...reusable], reason: 'observed_effect_before_checkpoint_recovery' };
         }
         const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
-        if (!disposition?.source || disposition.disposition !== 'not_executed') {
+        if (!disposition?.source || disposition.disposition !== 'not_executed' || recovered.get(task).stageDispositions.get(stage.id)?.needsRetry) {
           return { ...decision, action: 'blocked', reason: 'recovered_skipped_effect_needs_disposition' };
         }
       }
@@ -376,7 +387,7 @@ export function nextAction(task, host) {
     const candidate = host.reuse?.[stage.id];
     if (candidate) {
       const provisional = copy(task); provisional.steps[stage.id].evidence_ids = candidate; provisional.steps[stage.id].status = 'reused';
-      if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: candidate, reason: 'valid_existing_result' };
+      if (stepEvidence(provisional, stage, host)) return { ...decision, action: 'reuse', evidence_ids: [...candidate], reason: 'valid_existing_result' };
     }
     if ((writes(stage, host) || step.effect_state === 'known' || host.requests[stage.id].capabilities.some(c => c !== 'read_files')) && ['completed', 'reused'].includes(step.status)) {
       return { ...decision, action: 'blocked', reason: 'stale_write_result_needs_reconciliation' };
@@ -390,14 +401,19 @@ export function nextAction(task, host) {
         return { ...decision, action: 'evidence_insufficient', reason: 'command_verification_purpose_unknown' };
       }
       if (request.verification === true) {
+        const currentFailures = unresolvedFailures(task, host, evidence);
         return { ...decision, action: 'evidence_insufficient', reason: 'verification_deferred',
           verification_status: 'verification_deferred', source: host.verificationDeferral.source,
-          pending: host.verificationDeferral.pending ?? [], release_authorized: false };
+          pending: host.verificationDeferral.pending ?? [],
+          unresolved_failures: currentFailures.map(item => ({ evidence_id: item.id, ...evidenceValidity(item, host) })),
+          release_authorized: false };
       }
     }
     if (recovery && stage.type === 'skill') {
       const disposition = host.recoveredExecutionChecks?.get(recoveredExecutionBinding(task, stage.id, host));
+      const needsRetry = recovered.get(task).stageDispositions.get(stage.id)?.needsRetry;
       if (!disposition?.source || !['not_executed', 'safe_retry'].includes(disposition.disposition)
+          || (needsRetry && disposition.disposition !== 'safe_retry')
           || (disposition.disposition === 'safe_retry' && !host.reconciled?.has(reconciliationBinding(task, stage.id, host)))) {
         return { ...decision, action: 'blocked', reason: 'recovered_execution_needs_explicit_disposition' };
       }
@@ -466,11 +482,14 @@ export function advance(task, host) {
       const stage = definition(task, host.registry, host.inventory).stages.find(s => s.id === action.stage);
       step.condition_binding = digest(host.conditions[stage.condition]);
     }
-    if (action.action === 'reuse') step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'known' : 'none';
-    if (action.evidence_ids) step.evidence_ids = action.evidence_ids;
+    if (action.action === 'reuse') {
+      step.effect_state = host.requests[action.stage].capabilities.some(c => c !== 'read_files') ? 'known' : 'none';
+      invalidateRecoveryDisposition(task, action.stage, step.effect_state === 'known');
+    }
+    if (action.evidence_ids) step.evidence_ids = [...action.evidence_ids];
     event(task, action.stage, step.status, action.reason);
   }
-  task.next_actions = [action];
+  task.next_actions = [copy(action)];
   return action;
 }
 
@@ -519,6 +538,8 @@ export function reopen(task, stageId, host, { reason, source, safeToRetry = fals
   }
   for (const id of affected) {
     const previous = task.steps[id].request_binding;
+    const step = task.steps[id];
+    invalidateRecoveryDisposition(task, id, step.effect_state === 'known');
     task.steps[id].status = 'pending'; task.steps[id].effect_state = 'reconciled';
     delete task.steps[id].request_binding;
     event(task, id, 'pending', `${reason} (${source})`);
@@ -548,6 +569,6 @@ export function restoreTask(serialized, registry, inventory) {
   assert(new Set(task.evidence.map(e => e.id)).size === task.evidence.length, 'Duplicate evidence IDs');
   // No grants, trustedEvidence, capabilities, conditions or runtime commands restored.
   task.next_actions = [];
-  recovered.set(task, { checkpoint: digest(task), import_id: randomUUID() });
+  recovered.set(task, { checkpoint: digest(task), import_id: randomUUID(), stageDispositions: new Map() });
   return task;
 }

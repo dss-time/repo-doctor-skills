@@ -2,7 +2,7 @@
 
 [简体中文](LOCAL_CODEX_BETA.zh-CN.md)
 
-This local preview uses the generated Codex engineering plugin with 27 Skills. The npm candidate retains all 34 public Skills. The local marketplace ID is `repo-doctor-beta-marketplace`, the display name is **Repo Doctor Beta**, and the installed selector is `repo-doctor@repo-doctor-beta-marketplace` at plugin version `0.13.1-beta.1`. The stable marketplace stays in your normal profile.
+This local preview uses the generated Codex engineering plugin with 27 Skills. The npm candidate retains all 34 public Skills. The local marketplace ID is `repo-doctor-beta-marketplace`, the display name is **Repo Doctor Beta**, and the installed selector is `repo-doctor@repo-doctor-beta-marketplace` at plugin version `0.14.0`. The stable marketplace stays in your normal profile.
 
 Run the commands in a subshell from this checkout to isolate the Codex profile and the user-level Skill directory. The disposable project starts without project-level duplicate Skills.
 
@@ -20,7 +20,7 @@ Run the commands in a subshell from this checkout to isolate the Codex profile a
 The prepared profile already has the Beta plugin installed. For a fresh isolated profile, use the same command block with its own empty `HOME` and `CODEX_HOME`, then run these in the block.
 
 ```bash
-"$bin" plugin marketplace add "$root/market"
+"$bin" plugin marketplace add "$root/market-v0.12.0"
 "$bin" plugin add repo-doctor@repo-doctor-beta-marketplace
 "$bin" plugin list
 ```
