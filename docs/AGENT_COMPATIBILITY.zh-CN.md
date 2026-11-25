@@ -33,7 +33,7 @@
 
 使用 `npx skills@latest check` 与 `npx skills@latest update` 检查和更新，个人范围附加 `-g`。新增选项时重新运行 `add`。Repo Doctor npm 安装器通过重跑同一命令替换所选副本，替换前先核对本地改动。单项、推荐、全量及原生插件选项见[使用手册](USER_MANUAL.zh-CN.md)。
 
-隔离试用**源码**候选时，在独立克隆检出提交 `ff4fdc1bc9eada01c49199c4f16c11cf87a0ec07`。进入临时目标项目，将克隆中的 `skills` 绝对路径作为 `npx skills@1.9.0 add` 的来源，再选择 Agent。验证独立构建的 **npm Beta** 时，先用[候选记录](../tests/reports/change-guard-0.12.0-release-validation-2026-11-25.json)比对本地 tarball 的 SHA-256。执行 `npx --yes --package /absolute/path/repo-doctor-skills-0.12.0-beta.1.tgz -- repo-doctor-skills --version`，应输出 `0.12.0-beta.1`。将 `--version` 换成 `install --target-dir /absolute/path/to/disposable-skills` 即可在隔离目录安装。Beta 尚未发布。
+隔离试用时，在独立克隆检出[正式候选验证分支](https://github.com/dss-time/repo-doctor-skills/tree/codex/0.12.0-stable-validation)上验收记录所指的提交。进入临时目标项目，将该检出的 `skills` 绝对路径作为 `npx skills@1.9.0 add` 的来源。验证已核对指纹的本地 npm tarball 时，运行 `npx --yes --package /absolute/path/repo-doctor-skills-0.12.0.tgz -- repo-doctor-skills --version`，应输出 `0.12.0`。将 `--version` 换成 `install --target-dir /absolute/path/to/disposable-skills` 可安装到隔离目录。
 
 ### 宿主官方文档
 

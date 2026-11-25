@@ -35,4 +35,4 @@ The installed CLI's marketplace upgrade command rejects this market because its 
 "$bin" plugin list
 ```
 
-The verification checked the installed version and compared the installed Skill files with the generated source. A passing local install grants no public release approval. [Beta release status](RELEASE_NOTES_0.12.0-beta.1.md)
+The verification checked the installed version and compared the installed Skill files with the generated source. A passing local install grants no public release approval. [Stable release candidate](RELEASE_NOTES_0.12.0.md)

@@ -186,7 +186,7 @@ function writes(stage, host) {
 
 export function reconciliationBinding(task, stageId, host) {
   return digest({ worktree: realpathSync(host.root), intent: taskBinding(task), stage: stageId,
-    step: task.steps[stageId], request: host.requests?.[stageId] });
+    step: task.steps[stageId], request: host.requests?.[stageId], recovery: recovered.get(task)?.import_id });
 }
 
 export function recoveryBinding(task, host) {
@@ -264,6 +264,7 @@ function failureResolutionMatches(failed, replacement, validity) {
 function reconciledFailureEvidence(task, host, recoveryCheck) {
   if (!Array.isArray(recoveryCheck.failureEvidence)) return null;
   const byId = new Map(task.evidence.map(item => [item.id, item]));
+  const unconfirmed = new Set(recovered.get(task).outOfIntentFailures);
   for (const failed of recoveryCheck.failureEvidence) {
     if (typeof failed?.id !== 'string' || !failed.id || failed.kind !== 'test' || failed.result !== 'fail') return null;
     const signature = digest(failed);
@@ -271,8 +272,9 @@ function reconciledFailureEvidence(task, host, recoveryCheck) {
     const existing = byId.get(failed.id);
     if (existing && digest(existing) !== signature) return null;
     byId.set(failed.id, failed);
+    unconfirmed.delete(signature);
   }
-  return [...byId.values()];
+  return [...byId.values()].filter(item => !unconfirmed.size || !unconfirmed.has(digest(item)));
 }
 
 function unresolvedFailures(task, host, evidence) {
@@ -325,6 +327,7 @@ export function nextAction(task, host) {
     const unknownStop = stopAssessments.find(([, value]) => value === undefined);
     if (unknownStop) return { ...decision, action: 'evidence_insufficient', reason: `stop_condition_unknown:${unknownStop[0]}` };
     if (applies === undefined) return { ...decision, action: 'evidence_insufficient', reason: `condition_unknown:${stage.condition}` };
+    if (step.status === 'validation_failed') return { ...decision, action: 'validation_failed', reason: step.reason || 'explicit_retry_required' };
     // Completed effects stay protected even when applicability changes. A new receipt
     // is not a reconciliation of the previous attempt's potentially different effects.
     const wasCompleted = ['completed', 'reused'].includes(step.status);
@@ -388,8 +391,6 @@ export function nextAction(task, host) {
     if (['completed', 'reused'].includes(step.status) && stepEvidence(task, stage, host)) {
       completed.add(stage.id); continue;
     }
-    const failure = step.status === 'validation_failed';
-    if (failure) return { ...decision, action: 'validation_failed', reason: step.reason || 'explicit_retry_required' };
     // Risk checks are additive obligations referencing existing Skills, not new workflows.
     if (potentiallyEffectful(stage, host)) {
       const gap = (host.risks ?? []).flatMap(r => host.registry.coordination?.risk_requirements?.[r]?.before_write ?? [{ claim: `unclassified-risk:${r}` }])
@@ -455,9 +456,10 @@ export function nextAction(task, host) {
   if (failure) return { action: evidenceValidity(failure, host).status === 'unknown' ? 'evidence_insufficient' : 'validation_failed', reason: 'unresolved_current_test_failure', evidence_id: failure.id };
   const missing = obligations.filter(r => !requirement(task, r, host));
   if (host.verificationDeferral?.active === true) {
+    if (!host.verificationDeferral.source) return { action: 'evidence_insufficient', reason: 'verification_deferral_source_missing' };
     return { action: 'evidence_insufficient', reason: 'verification_deferred',
       verification_status: 'verification_deferred',
-      source: host.verificationDeferral.source ?? null,
+      source: host.verificationDeferral.source,
       pending: host.verificationDeferral.pending ?? [], missing,
       unresolved: [...task.unresolved], release_authorized: false };
   }
@@ -475,7 +477,10 @@ export function advance(task, host) {
   const check = recovery && host.recoveryChecks?.get(recovery);
   if (check?.source && check.reconciled === true) {
     const evidence = reconciledFailureEvidence(task, host, check);
-    if (evidence && evidence.length > task.evidence.length) task.evidence.push(...copy(evidence.slice(task.evidence.length)));
+    if (evidence) {
+      const existing = new Set(task.evidence.map(item => item.id));
+      task.evidence.push(...copy(evidence.filter(item => !existing.has(item.id))));
+    }
   }
   const action = nextAction(task, host);
   if (['skip', 'approve', 'reuse', 'execute'].includes(action.action)) {
@@ -584,6 +589,10 @@ export function restoreTask(serialized, registry, inventory) {
   assert(new Set(task.evidence.map(e => e.id)).size === task.evidence.length, 'Duplicate evidence IDs');
   // No grants, trustedEvidence, capabilities, conditions or runtime commands restored.
   task.next_actions = [];
-  recovered.set(task, { checkpoint: digest(task), import_id: randomUUID(), stageDispositions: new Map() });
+  const intent = taskBinding(task);
+  const outOfIntentFailures = task.evidence
+    .filter(item => item.kind === 'test' && item.result === 'fail' && item.task_binding !== intent)
+    .map(digest);
+  recovered.set(task, { checkpoint: digest(task), import_id: randomUUID(), stageDispositions: new Map(), outOfIntentFailures });
   return task;
 }

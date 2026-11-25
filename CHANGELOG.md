@@ -26,7 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
-- Reconcile attested failures observed after a checkpoint before continuing work or delivering. Preserve the barrier until a valid rerun or demonstrated input change.
+- Reconcile attested failures observed after a checkpoint before continuing work or delivering. Preserve the barrier until a valid rerun or demonstrated input change. Bind retries to the exact import and keep a failed optional stage blocked until explicitly reopened.
 
 - Preserve unresolved test failures when an external identity is first observed. Require an attested rerun or a proven change to clear the blocker. Keep unknown failures visible during deferral and bind retry failure callbacks to the current execution.
 

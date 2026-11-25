@@ -737,6 +737,43 @@ test('Recovery authority and in-flight callbacks stay within the observed worktr
   assert.equal(step.status, 'running');
 });
 
+test('Retry reconciliation for an interrupted write cannot reopen another import', t => {
+  const f = setup(t);
+  assert.equal(advance(f.task, f.host).action, 'execute');
+  const saved = encodeTask(f.task);
+  const first = restoreTask(saved, registry, inventory);
+  const second = restoreTask(saved, registry, inventory);
+  const retry = { reason: 'inspected interrupted write', source: 'fixture host', safeToRetry: true };
+  f.host.reconciled = new Set([reconciliationBinding(first, 'task', f.host)]);
+  assert.throws(() => reopen(second, 'task', f.host, retry), /reconciled/);
+  assert.equal(second.steps.task.status, 'interrupted');
+  reopen(first, 'task', f.host, retry);
+  assert.equal(first.steps.task.status, 'pending');
+});
+
+test('Recovery only imports out-of-intent failures confirmed in the current task history', t => {
+  const f = setup(t);
+  const failure = f.evidence('attested-failure', [], { kind: 'test', result: 'fail', command: 'fixture check', cwd: '.', exit_code: 1 });
+  const checkpoint = JSON.parse(encodeTask(f.task));
+  checkpoint.id = 'other-task';
+  const restored = restoreTask(JSON.stringify(checkpoint), registry, inventory);
+  const prepare = (task, failureEvidence) => {
+    f.host.recoveryChecks.set(recoveryBinding(task, f.host), { source: 'inspected task history', reconciled: true, failureEvidence });
+    f.host.recoveredExecutionChecks = new Map([[recoveredExecutionBinding(task, 'task', f.host),
+      { source: 'inspected write history', disposition: 'not_executed' }]]);
+  };
+  f.host.grants = f.host.grants.map(grant => ({ ...grant, task_id: checkpoint.id }));
+  prepare(restored, []);
+  assert.equal(nextAction(restored, f.host).action, 'execute');
+  f.host.grants = f.host.grants.map(grant => ({ ...grant, task_id: f.task.id }));
+  checkpoint.id = f.task.id;
+  checkpoint.goal = 'Updated intent for the same task';
+  const updated = restoreTask(JSON.stringify(checkpoint), registry, inventory);
+  prepare(updated, [failure]);
+  assert.equal(advance(updated, f.host).action, 'validation_failed');
+  assert.equal(nextAction(updated, f.host).evidence_id, failure.id);
+});
+
 test('An authorized verification operation requires a matching successful command receipt', t => {
   const f = setup(t, { skill_id: 'safe-test-implementation' });
   const request = f.host.requests.task;
@@ -926,6 +963,31 @@ test('A live optional stage can reuse an authorized historical result instead of
   f.host.reuse[action.stage] = [historical.id];
   assert.equal(advance(f.task, f.host).action, 'reuse');
   assert.equal(f.task.steps[action.stage].status, 'reused');
+});
+
+test('A failed optional read stage and its dependents stay blocked until explicitly reopened', t => {
+  const f = setup(t, { workflow_id: 'feature-delivery' });
+  f.pump('clarification');
+  const action = advance(f.task, f.host);
+  assert.equal(action.stage, 'clarification');
+  assert.equal(action.action, 'execute');
+  finishStep(f.task, action.stage, [], f.host, 'clarification did not complete');
+  f.setCondition('material_decisions_open', false);
+  assert.equal(advance(f.task, f.host).action, 'validation_failed');
+  assert.equal(nextAction(f.task, f.host).stage, 'clarification');
+  reopen(f.task, action.stage, f.host, { reason: 'scope independently confirmed', source: 'fixture host' });
+  assert.equal(advance(f.task, f.host).action, 'skip');
+  assert.equal(nextAction(f.task, f.host).stage, 'specification');
+});
+
+test('Delivery only recognizes a sourced verification deferral', t => {
+  const f = setup(t);
+  f.complete(advance(f.task, f.host), { claims: ['stage:task', 'acceptance:behavior'] });
+  assert.equal(nextAction(f.task, f.host).action, 'complete');
+  f.host.verificationDeferral = { active: true, pending: ['final check'] };
+  assert.equal(nextAction(f.task, f.host).reason, 'verification_deferral_source_missing');
+  f.host.verificationDeferral.source = 'fixture user instruction';
+  assert.equal(nextAction(f.task, f.host).reason, 'verification_deferred');
 });
 
 test('Recovery cannot erase an effect by skipping a formerly pending optional stage', t => {

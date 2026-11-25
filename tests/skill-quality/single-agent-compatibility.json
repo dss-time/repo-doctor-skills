@@ -417,7 +417,7 @@
     "reason": "Shared worktree comparison lifecycle, early cues in four existing writing Skills, and their deterministic runtime modules. Prior hashes are retained.",
     "trees": {
       "packs/engineering/repo-doctor/references": {
-        "sha256": "8011ee0276f7fbbae65b1b3cabe887834576f1ebf707c708be28a02013e2f071",
+        "sha256": "839d2819e6273eed55543c9e62fd818762d41d5e118211250b7eb0595f68407d",
         "file_count": 14
       },
       "packs/engineering/repo-doctor/skills/documentation-sync": {
@@ -437,107 +437,107 @@
         "file_count": 11
       },
       "skills/api-contract-review": {
-        "sha256": "dd81fa7ef875ac1618259734e6bc60a409ead855bb1ea44f237f69fc6d836ebc",
+        "sha256": "ed92f6c50224d845acc72bcf33c83ca238ebad7df4deec045539016530cd91a7",
         "file_count": 14
       },
       "skills/architecture-decision-record": {
-        "sha256": "71ef5fcd27c519d014c7b36480ae4338a610da2b2b6558c69e51ccf4d2ff2a77",
+        "sha256": "bbaed46e2e4b3d0c37a17c3a71f9c9c23267d527d08354b4a25fa43715039eb7",
         "file_count": 15
       },
       "skills/architecture-deepening-analysis": {
-        "sha256": "9bdfc7d249bc912d95d06825a3aeede036726e90fbc775a685fe8f18e2b59bed",
+        "sha256": "58580c4f56f66e41c1ef397c5dedf62f24746a0ef3478ab883241114385bce8f",
         "file_count": 16
       },
       "skills/bug-root-cause-analysis": {
-        "sha256": "afd270c6a43052acfb1b48a1f02c4037b0bde8b940fe411222f47e91b99f64c2",
+        "sha256": "1d2268ac277f4398fcf567304baf961decf3e5470014dad7dfc7ce2a467f7dbe",
         "file_count": 14
       },
       "skills/change-impact-analysis": {
-        "sha256": "5658e5b0ab99d962cabbbe0aabee4cd583400944e29adec52b18ea004847a75d",
+        "sha256": "51d4a1893d69a43c47ee0a875d4fb1ac0ab06ba5eab10cf44d92511084145d51",
         "file_count": 14
       },
       "skills/ci-failure-diagnosis": {
-        "sha256": "477035370961a09959e6f051e491840dc0637ce773c44f578517a424550d1b95",
+        "sha256": "4ac33d48801e3c0bf0ebe6351d3a47ba2de7e6b7396ead16ca5ff56964b1b020",
         "file_count": 14
       },
       "skills/configuration-audit": {
-        "sha256": "255377ec87d9a00321a0da8d4f0166b5c699535e69062132fa2491b207c8a5a2",
+        "sha256": "97c14dd4d9f83acd3710c3dc0a1b991b51c366a23db32e2a0e039c8bd1f46f06",
         "file_count": 14
       },
       "skills/database-migration-review": {
-        "sha256": "5b865bc449ba3995de2abcf5b96d3f332458e21e3cbe7f16d4a1995342bd7806",
+        "sha256": "9f2bb73441f364038e47577c24c8f7fa04a4cf3fa02a67cea99e00a86ee1260a",
         "file_count": 14
       },
       "skills/decision-prototype": {
-        "sha256": "26b4d2da635bb1c1d27f016b34f234cf033b17561a4ec747f82b9973d6d6753c",
+        "sha256": "31c559fc03233df48cf4c70fc336e4eb541aeeaf1e13c051f0ba03b2a9b0a72c",
         "file_count": 16
       },
       "skills/documentation-sync": {
-        "sha256": "d919ce45da054f9c294f6a613e04f17d07787760e9a684410e6609dc1c03c228",
+        "sha256": "e193eeab30f414f21c642ef038e7c4a7799d2705c98dd2d2f2cddeeed5f25c97",
         "file_count": 22
       },
       "skills/feature-implementation": {
-        "sha256": "eca6886b01e9e608529ebdae3bd58d0e15987e8e9b000209842169d300473a1f",
+        "sha256": "bd6cca84ed21ad7445b5b97cc5ba4bd2db01554ea19668859162ed87817e5446",
         "file_count": 24
       },
       "skills/release-readiness-check": {
-        "sha256": "1dfdd514733467b05abe91d0fc1b73919eb81b8887c95ad98f6fdfec5c1d3c53",
+        "sha256": "ae281e34b6757df33e48462b4c40ad2203c7910a05971df8d90332d00af2d3b5",
         "file_count": 14
       },
       "skills/requirements-clarification": {
-        "sha256": "d658548413f874bd626fcf3e843c65adc3fa568c6235d3ade572ba9ca8320a50",
+        "sha256": "e2fe8dd3c1f5af6ff12c629186498cb6ec9f2cf98bdfda8650a8b34c06a0a0bb",
         "file_count": 14
       },
       "skills/safe-change-plan": {
-        "sha256": "a9fc1386f9a261a185f83e94394106ed5d494057cc285fc179694864a6b38e56",
+        "sha256": "3f8bf6ab98d85975494bce2d8b2bab8ada01cbc02230e3a04f2a01d404e0b34d",
         "file_count": 14
       },
       "skills/safe-code-review": {
-        "sha256": "d5f7db1ccbf2ff4174179e8fb035420c3f25311dccee2bbdd546c3e127652e9c",
+        "sha256": "ec6fe73083a0f80a0c8849e47ff45959833e9625c2a5276da3c314b7ed27a4cf",
         "file_count": 14
       },
       "skills/safe-fix-implementation": {
-        "sha256": "0679c2ceb48b4628aea2972ece746f2d9d491c53ca9aa27b65575119014e6e41",
+        "sha256": "930fb78a402bafae552f8b58bd0dfa71e9bc4d3e8de5926cb31e01899c43b97a",
         "file_count": 22
       },
       "skills/safe-test-implementation": {
-        "sha256": "630d7c476c2bde62d3bcc37cabf116d443b2f5afb124a670d2e813e27ca88414",
+        "sha256": "da8dc6db39468abcfc97f57bad3a72a77c123708bb2c637feb1671381af14ea4",
         "file_count": 24
       },
       "skills/security-focused-review": {
-        "sha256": "c52a1e1d2bee9ff9736384db2826e1c1d0d965e0306748eda75628746c52dcd3",
+        "sha256": "dbf7f3fb08f0d815db99614c442088fadcbad772e7dd9a58c8d581e15ffddf97",
         "file_count": 14
       },
       "skills/session-handoff": {
-        "sha256": "71e7e03936fd85262eceda143aa00e4d11981242ce403833e4f5babb4ee5968b",
+        "sha256": "0a329810c8090d5f859a70a716a815d591cd59c1043613b4c957a2d8559b968e",
         "file_count": 14
       },
       "skills/test-gap-analysis": {
-        "sha256": "12bf278c360e9650f9b27b4ece44c7155c837615d20d18f05f9f3feb3dc6e734",
+        "sha256": "6b87a6175fdf493102a6bffd4be6634fb9d583cfb76ae66ddc5c31749a99b08c",
         "file_count": 14
       },
       "skills/dead-code-verification": {
-        "sha256": "ef7b37524669f914b5b1369e2b3bc1a21b7ea457387317b75858dcf89c6a921d",
+        "sha256": "e4afd47eda0e393a1f78142eac589d53f46385701f058cca56a666e24ae83b7c",
         "file_count": 12
       },
       "skills/dependency-upgrade-analysis": {
-        "sha256": "3013d65e8286292b054f58ec7ede5e1d974fcd82c2895ddbe47c011bb33cda9b",
+        "sha256": "940577c031758b70bd122ad0e8c96eb7a8ae66298eab50209425597d1cb2e000",
         "file_count": 12
       },
       "skills/performance-regression-analysis": {
-        "sha256": "e10d78f6e4b8c5bec72bd62035d895ff0f845c8e07c1ab7c2cc1b651f0de2812",
+        "sha256": "00d125a3684f243a6b2586c85997581b092ca8a0d8bb3d1ddb2e769a405891da",
         "file_count": 12
       },
       "skills/project-health-check": {
-        "sha256": "5269e322afca4f92996d66f0acb3c5041d58fc0a19c2c324ddd902da40e445d3",
+        "sha256": "40b2358e91ce935c3776a4d53f566cc2ddd71bf51d0c3dc18e494eeed4c19b4f",
         "file_count": 12
       },
       "skills/repo-doctor-router": {
-        "sha256": "c8528437553aeeec435d72b5de87ade6412c843db858597b28c292d62f34823c",
+        "sha256": "a965840c473ddeb7e291c15e392618e445557511d2b1c8b75fe7fc4a50622065",
         "file_count": 10
       },
       "skills/repo-onboarding": {
-        "sha256": "752d268a9026c4001b506fa1d8d79687f46893217042f958c71b77ba3a1861cb",
+        "sha256": "ac40da4542b42af37afbcfe1d7f3aeb3ebb353fe03745cd70902e3b5804e2c62",
         "file_count": 12
       }
     }
