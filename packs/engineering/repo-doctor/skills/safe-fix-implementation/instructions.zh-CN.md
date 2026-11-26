@@ -1,6 +1,8 @@
 # 最小安全修复
 
-**写入前：**检查目标并复用已有 Git 上下文。目标与用户编辑重叠，或任务改变公共契约时，如果 Shell 与项目本地诊断状态均获准，必须先建立或复用基线。使用本 Skill 中入口的实际路径运行 `node "<本 Skill 的绝对目录>/../../references/change-guard-entry.mjs" begin --root "<工作树>" --id <任务ID> --scope <授权路径> --json`。最后一次写入后，用同一入口运行 `check --root "<工作树>" --id <任务ID> --json`。其他实质风险、复用、报告处理及人工降级见[用户工作区安全](../../references/user-workspace-safety.zh-CN.md)第 4 节。简单低风险及只读任务保持定向检查，测试及构建前执行命令预检。
+**写入前：**检查目标并复用已有 Git 上下文。目标与用户编辑重叠、任务改变公共契约，或用户既限定可修改的文件又要求保留工作树中已有的修改时，首次写入前使用 Change Guard。第三种情况同样适用于已有修改在其他文件里。
+
+Shell 与项目本地状态写入均获准时，先建立有效的 Change Guard 基线或复用仍适用的基线。使用本 Skill 中入口的实际路径运行 `node "<本 Skill 的绝对目录>/../../references/change-guard-entry.mjs" begin --root "<工作树>" --id <任务ID> --scope <授权路径> --json`。最后一次写入后，用同一入口和基线 ID 运行 `check --root "<工作树>" --id <任务ID> --json`。Git 状态和 diff 用于预检。如果运行时、权限或有效基线不可用，改用人工核对并说明 Change Guard 覆盖未知。其他实质风险、复用、报告处理及人工降级见[用户工作区安全](../../references/user-workspace-safety.zh-CN.md)第 4 节。简单低风险及只读任务保持定向检查，测试及构建前执行命令预检。
 
 仅在已授权流程续接、证据复用或恢复时读取 `../../references/workflow-coordination.zh-CN.md`，保持本 Skill 自身范围和权限。
 

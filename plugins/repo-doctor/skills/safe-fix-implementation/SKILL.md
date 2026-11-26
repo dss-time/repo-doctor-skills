@@ -27,7 +27,9 @@ Validate according to actual risk; security, production, migrations, releases an
 
 # Safe Fix Implementation
 
-**Before editing:** Inspect the target and reuse its existing Git context. When the target overlaps a user edit or the work changes a public contract, establish or reuse a baseline before the first write if shell and project-local diagnostic state are permitted. Run `node "<this Skill's absolute directory>/references/change-guard-entry.mjs" begin --root "<worktree>" --id <task-id> --scope <authorized-path> --json` using the bundled path relative to this Skill. After the final write, run the same entry with `check --root "<worktree>" --id <task-id> --json`. Use §4 of [workspace safety](references/user-workspace-safety.en.md) for other material risks, reuse, report handling, and manual fallback. Simple low-risk and read-only work stays focused. Apply its command preflight before tests or builds.
+**Before editing:** Inspect the target and reuse its existing Git context. Use Change Guard before the first write if the target overlaps a user edit, the work changes a public contract, or the user both limits the files you may change and asks you to preserve existing edits that are present in the worktree. This last case applies even when those edits are in a different file.
+
+With permitted shell and project-local state writes, establish a valid Change Guard baseline or reuse an applicable one. Run `node "<this Skill's absolute directory>/references/change-guard-entry.mjs" begin --root "<worktree>" --id <task-id> --scope <authorized-path> --json` using the bundled path relative to this Skill. After the final write, run the same entry with `check --root "<worktree>" --id <task-id> --json` using the same baseline ID. Git status and diff support preflight. If the runtime, permission or a valid baseline is unavailable, use the manual fallback and report Change Guard coverage as unknown. See §4 of [workspace safety](references/user-workspace-safety.en.md) for other material risks, reuse, report handling, and fallback. Simple low-risk and read-only work stays focused. Apply its command preflight before tests or builds.
 
 For authorized workflow continuation, evidence reuse or recovery, read `references/workflow-coordination.en.md`; preserve this Skill's own scope and permissions.
 
@@ -93,7 +95,9 @@ When relevant, briefly state preserved authorization/business behavior, existing
 
 # 最小安全修复
 
-**写入前：**检查目标并复用已有 Git 上下文。目标与用户编辑重叠，或任务改变公共契约时，如果 Shell 与项目本地诊断状态均获准，必须先建立或复用基线。使用本 Skill 中入口的实际路径运行 `node "<本 Skill 的绝对目录>/references/change-guard-entry.mjs" begin --root "<工作树>" --id <任务ID> --scope <授权路径> --json`。最后一次写入后，用同一入口运行 `check --root "<工作树>" --id <任务ID> --json`。其他实质风险、复用、报告处理及人工降级见[用户工作区安全](references/user-workspace-safety.zh-CN.md)第 4 节。简单低风险及只读任务保持定向检查，测试及构建前执行命令预检。
+**写入前：**检查目标并复用已有 Git 上下文。目标与用户编辑重叠、任务改变公共契约，或用户既限定可修改的文件又要求保留工作树中已有的修改时，首次写入前使用 Change Guard。第三种情况同样适用于已有修改在其他文件里。
+
+Shell 与项目本地状态写入均获准时，先建立有效的 Change Guard 基线或复用仍适用的基线。使用本 Skill 中入口的实际路径运行 `node "<本 Skill 的绝对目录>/references/change-guard-entry.mjs" begin --root "<工作树>" --id <任务ID> --scope <授权路径> --json`。最后一次写入后，用同一入口和基线 ID 运行 `check --root "<工作树>" --id <任务ID> --json`。Git 状态和 diff 用于预检。如果运行时、权限或有效基线不可用，改用人工核对并说明 Change Guard 覆盖未知。其他实质风险、复用、报告处理及人工降级见[用户工作区安全](references/user-workspace-safety.zh-CN.md)第 4 节。简单低风险及只读任务保持定向检查，测试及构建前执行命令预检。
 
 仅在已授权流程续接、证据复用或恢复时读取 `references/workflow-coordination.zh-CN.md`，保持本 Skill 自身范围和权限。
 

@@ -429,7 +429,7 @@
         "file_count": 9
       },
       "packs/engineering/repo-doctor/skills/safe-fix-implementation": {
-        "sha256": "26de1943915630a8ffd3abb20e81f2807f47c423e9b56484564d1fc8ccf5a128",
+        "sha256": "b537688449989a4ba9f8e9a54c6c615099aa7702fae901e5ddd2f003708ef549",
         "file_count": 11
       },
       "packs/engineering/repo-doctor/skills/safe-test-implementation": {
@@ -497,7 +497,7 @@
         "file_count": 14
       },
       "skills/safe-fix-implementation": {
-        "sha256": "7a8c8a802eacd4139ef9d35ea537c3366af7561a000a0db36caf92b64097ac17",
+        "sha256": "f63ad33f2db2092d18afd98c2882baf23a2696cf69ba4661f9d3fcdf2d51e7f0",
         "file_count": 22
       },
       "skills/safe-test-implementation": {
