@@ -1,6 +1,6 @@
 {
   "name": "repo-doctor-skills",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Safe, scoped, and verifiable code changes for AI coding agents.",
   "type": "module",
   "license": "MIT",
@@ -45,6 +45,8 @@
     "scripts/workspace-cli.mjs",
     "scripts/change-guard.mjs",
     "scripts/change-guard-cli.mjs",
+    "scripts/verification-receipt.mjs",
+    "scripts/skill-lint.mjs",
     "scripts/state-cli-options.mjs",
     "scripts/project-state.mjs",
     "scripts/installation-state.mjs",
@@ -105,7 +107,7 @@
     "test:coordination": "node --test scripts/test-workflow-coordination.mjs scripts/test-coordination-trial-events.mjs scripts/test-coordination-release.mjs && node scripts/audit-workflow-coordination.mjs",
     "eval:security": "node scripts/live-security-eval.mjs",
     "test:multi-agent": "node scripts/test-multi-agent-workflow.mjs",
-    "test:state": "node --test scripts/test-project-state.mjs scripts/test-installation-state.mjs scripts/test-workspace-cli.mjs scripts/test-change-guard.mjs"
+    "test:state": "node --test scripts/test-project-state.mjs scripts/test-installation-state.mjs scripts/test-workspace-cli.mjs scripts/test-change-guard.mjs scripts/test-receipt.mjs scripts/test-skill-lint.mjs"
   },
   "engines": {
     "node": ">=18"

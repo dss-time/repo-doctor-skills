@@ -16,7 +16,7 @@
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-安装后打开新会话，像往常一样描述需求、改动范围和要保留的行为。可选用 `$repo-doctor-router` 获取 Skill 推荐。公开稳定版 **0.11.1** 提供工程工作流。下文的工作区基线和自动变更报告属于尚未发布的 **0.12.0 候选**。
+安装后打开新会话，像往常一样描述需求、改动范围和要保留的行为。可选用 `$repo-doctor-router` 获取 Skill 推荐。公开稳定版 **0.12.0** 已包含 Change Guard。下方的证明包和 Skill 体检使用当前源码。
 
 ## 最小示例
 
@@ -28,6 +28,52 @@ npx skills@latest add dss-time/repo-doctor-skills
 | “只改这个按钮的文案。” | 用定向检查确认改动即可。真实 Codex 的低风险样本未创建额外基线。 |
 
 更多示例覆盖样式越界、公共请求方法、批量审核与续接任务。[自然语言使用案例](docs/guides/repo-doctor-scenarios.zh-CN.md)
+
+## 30 秒快速体验
+
+从当前源码目录运行。首次使用先执行 `npm ci`。两个示例都在临时目录里操作。
+
+**生成 PR 证明包。** 记录基线、写入示例变更，再把输出的 Markdown 粘贴到 PR 描述。
+
+```bash
+demo=$(mktemp -d)
+git -C "$demo" init -q
+node bin/repo-doctor-skills.mjs change begin --root "$demo" --id receipt-demo --scope demo.txt
+printf 'Example change\n' > "$demo/demo.txt"
+node bin/repo-doctor-skills.mjs receipt export --root "$demo" --id receipt-demo
+```
+
+**离线体检 Skill。** 可以把示例目录换成任意包含 `SKILL.md` 的目录。
+
+```bash
+demo=$(mktemp -d)
+mkdir "$demo/demo-skill"
+printf '%s\n' '---' 'name: demo-skill' 'description: Summarize meeting notes.' '---' 'List the decisions.' > "$demo/demo-skill/SKILL.md"
+node bin/repo-doctor-skills.mjs skills lint "$demo" --json
+```
+
+### 导出变更验证证明包
+
+可以这样说：“修复订单列表不刷新的问题，保留我未提交的修改，跑相关测试，最后给我一份可以贴到 PR 的验证摘要。”
+
+使用当前源码中的 CLI，传入修改前建立的 Change Guard 基线 ID。同 ID 的任务检查点可选。
+
+```bash
+node bin/repo-doctor-skills.mjs receipt export --id order-list-fix
+node bin/repo-doctor-skills.mjs receipt export --id order-list-fix --format json
+```
+
+将 Markdown 粘贴到 PR 描述即可查看声明范围、实际观察到的变化和已记录的验证。文件指纹匹配只说明已记录的依赖一致。导出不会运行测试，也无法确认原执行来源及其环境，缺失的覆盖会保留为未知。加上 `--out receipt.md` 可以在仓库内创建新文件，已有文件不会被覆盖。
+
+### 体检你自己的 Skills
+
+使用当前源码中的 CLI，传入目录或单个 `SKILL.md`。省略路径时扫描当前目录，跳过扫描中发现的符号链接、版本控制元数据和 `node_modules`。
+
+```bash
+node bin/repo-doctor-skills.mjs skills lint ./my-skills --json
+```
+
+工具离线读取 YAML frontmatter 和 Markdown，无需 Repo Doctor 专用清单。JSON 诊断包含文件路径、严重级别、规则 ID 和修复建议。退出码 `0` 表示无错误（可有警告），`1` 表示发现错误，`2` 表示命令失败。体积估算、潜在路由重叠和权限边界提示需要人工复核。
 
 ## 工作机制与边界
 

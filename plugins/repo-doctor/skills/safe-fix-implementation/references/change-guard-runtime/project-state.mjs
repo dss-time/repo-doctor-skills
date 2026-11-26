@@ -365,16 +365,57 @@ export async function listProjectTasks(root) {
   return { tasks };
 }
 
-export async function resumeProjectTask(root, { id } = {}) {
-  validateId(id);
+async function taskSnapshot(root, id) {
   const runtime = await workspaceRuntime();
   const project = loadConfig(root);
   const record = loadRecord(root, id, project, runtime, { allowRegistryChanged: true });
-  const changed_paths = [...new Set([
-    ...drift(root, project.sources, runtime),
-    ...drift(root, record.dependencies, runtime),
-  ])];
+  const current = new Map();
+  for (const { path: relative } of [...project.sources, ...record.dependencies]) {
+    if (!current.has(relative)) current.set(relative, fingerprint(root, relative, runtime));
+  }
+  const changed_paths = [...new Set([...project.sources, ...record.dependencies]
+    .filter(item => current.get(item.path) !== item.fingerprint).map(item => item.path))];
   const registry_changed = record.context.registry_binding !== runtime.digest(runtime.registry);
+  return { runtime, record, changed_paths, registry_changed, current };
+}
+
+// Inspect a checkpoint as data. Matching dependency fingerprints cannot attest
+// to execution or replace the original host's evidence and environment checks.
+export async function inspectProjectTask(root, { id } = {}) {
+  if (!exists(root, taskPath(id))) return null;
+  const { runtime, record, changed_paths, registry_changed, current } = await taskSnapshot(root, id);
+  const { context } = record;
+  const binding = runtime.digest(realpathSync(root));
+  const dependencyMatch = item => {
+    if (typeof item.project_binding === 'string' && HASH.test(item.project_binding) && item.project_binding !== binding) return 'mismatch';
+    if (item.project_binding !== binding || !plain(item.bindings) || !Array.isArray(item.dependencies)) return 'unknown';
+    const paths = [...new Set(item.dependencies)];
+    if (!paths.length || Object.keys(item.bindings).length !== paths.length || !paths.every(relative =>
+      current.has(relative) && Object.hasOwn(item.bindings, relative)
+      && typeof item.bindings[relative] === 'string'
+      && (HASH.test(item.bindings[relative]) || item.bindings[relative] === 'missing'))) return 'unknown';
+    if (paths.some(relative => current.get(relative) !== item.bindings[relative])) return 'mismatch';
+    return item.coverage_complete === true ? 'matched' : 'unknown';
+  };
+  return {
+    goal: context.goal,
+    revision: record.revision,
+    stale: registry_changed || changed_paths.length > 0,
+    dependency_coverage: record.dependency_coverage,
+    verification_deferred: context.next_actions.some(item => item?.verification_status === 'verification_deferred'
+      || item?.reason === 'verification_deferred'),
+    evidence: context.evidence.map(item => ({
+      id: item.id, kind: item.kind, result: item.result,
+      exit_code: item.exit_code, recorded_at: item.recorded_at,
+      verification_deferred: item.verification_status === 'verification_deferred' || item.status === 'verification_deferred',
+      dependency_match: dependencyMatch(item),
+    })),
+  };
+}
+
+export async function resumeProjectTask(root, { id } = {}) {
+  validateId(id);
+  const { runtime, record, changed_paths, registry_changed } = await taskSnapshot(root, id);
   // A changed registry cannot be restored by the core. Keep historical data on disk
   // and return no executable in-memory context until explicit migration/reselection.
   const context = registry_changed ? null

@@ -5,7 +5,6 @@ import { compareNames, sortedDirectoryEntries } from "./deterministic-files.mjs"
 import { discoverPackRoots } from "./sync-pack-plugin.mjs";
 import { parseYamlSubset, validateSchema } from "./validate-yaml-schemas.mjs";
 
-const scriptRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const activeStatuses = new Set(["draft", "beta", "stable"]);
 
 export function discoverSkillInventory(root) {

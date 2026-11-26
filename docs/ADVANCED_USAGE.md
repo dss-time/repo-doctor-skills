@@ -46,14 +46,14 @@ Use `--skill '*'` for all Skills, `--skill <slug>` for one Skill and `-g` for a 
 
 Add the stable source:
 
-Use the command below after the release is published. The current public version is v0.11.1.
+Use the command below after the release is published. The current public version is v0.12.0.
 
 ```bash
-codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
+codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.13.0
 codex plugin add repo-doctor@repo-doctor-marketplace
 ```
 
-This example pins the v0.11.1 stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
+Until v0.13.0 is published, use `--ref v0.12.0` to install the current stable release. Omit `--ref` to use the marketplace's current default branch. Start a new task after installation. This repository distributes three plugins:
 
 - **Repo Doctor** for repository engineering;
 - **Productivity Toolkit** for reports, research, spreadsheets, documents, meetings, and presentations;

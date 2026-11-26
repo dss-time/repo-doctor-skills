@@ -31,7 +31,7 @@ for (const filename of ["docs/WORKFLOW_COOKBOOK.md", "docs/WORKFLOW_COOKBOOK.zh-
     `${filename} must allow reuse of valid scoped authorization`);
 }
 
-assert.equal(model.projectVersion, "0.12.0", "expected prepared project version 0.12.0");
+assert.equal(model.projectVersion, "0.13.0", "expected prepared project version 0.13.0");
 assert.equal(model.counts.packs, 3, "expected three active Packs");
 assert.equal(model.counts.skills, 34, "expected 34 active Skills");
 assert.equal(model.counts.pluginSkills, 34, "expected 34 plugin/ChatGPT-distributed Skills");

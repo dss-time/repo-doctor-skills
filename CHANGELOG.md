@@ -8,6 +8,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-11-26
+
+This entry describes the unpublished candidate.
+
+### Added
+
+- Export Verification Receipts as Markdown or JSON using local Change Guard and optional Task State evidence.
+- Lint standalone `SKILL.md` files offline with JSON output for CI.
+
+### Changed
+
+- Group terminal lint findings by priority and file, with a compact summary of boundary warnings.
+
+### Fixed
+
+- Preserve observed change indicators when disabled Git filters are the only coverage limitation reported.
+- Remove an unused workflow validator constant.
+
+### Security
+
+- Receipt export omits source bodies, environment values, and credential-like metadata, and refuses to replace existing files.
+
+### Documentation
+
+- Add bilingual quick demos for Receipt export and Skill lint.
+
 ## [0.12.0] - 2026-11-25
 
 ### Added
@@ -717,7 +743,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 > Historical note: the GitHub Release used tag `v0.0.1`, while the release name/body and repository release metadata identified the content as 0.1.0. This version-label mismatch is a known historical error; the existing tag remains unchanged. See [Versioning and Lifecycle Policy](docs/VERSIONING.md).
 
-[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.11.1...HEAD
+[Unreleased]: https://github.com/dss-time/repo-doctor-skills/compare/v0.12.0...HEAD
+[0.13.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.12.0...main
 [0.9.0]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.2...v0.9.0
 [0.9.0-beta.2]: https://github.com/dss-time/repo-doctor-skills/compare/v0.9.0-beta.1...v0.9.0-beta.2
 [0.9.0-beta.1]: https://github.com/dss-time/repo-doctor-skills/compare/v0.8.1...v0.9.0-beta.1

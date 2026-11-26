@@ -249,13 +249,12 @@ assert.deepEqual(
   ["draft", "beta", "stable", "deprecated"],
   "Pack Schema must use the lifecycle status vocabulary",
 );
-assert.equal(releaseContract.projectVersion, "0.12.0");
+assert.equal(releaseContract.projectVersion, "0.13.0");
 assert.equal(releaseContract.releaseChannel, "stable");
 assert.equal(releaseContract.liveModelStatus, "UNKNOWN");
-assert.equal(releaseContract.liveModelWaiver.version, "0.12.0");
-assert.equal(releaseContract.liveModelWaiver.scope, "live-model-and-coordination-status-only");
+assert.equal(releaseContract.liveModelWaiver, null, "The one-time 0.12.0 waiver must not carry over");
 assert.equal(releaseContract.expectedLiveModelCases, 289);
-assert.equal(releaseContract.liveModelEvidenceVersion, "0.12.0");
+assert.equal(releaseContract.liveModelEvidenceVersion, "0.13.0");
 
 const promotionContract = { ...releaseContract, projectVersion: "0.9.0", liveModelEvidenceVersion: "0.9.0-beta.2", promotionRecord: "tests/reports/release-promotion-0.9.0.json", liveModelReport: "tests/reports/live-codex-skill-validation-0.9.0-beta.2.json", coordinationReport: "tests/reports/coordination-release-0.9.0-beta.2.json" };
 const promotionRoot = mkdtempSync(path.join(tmpdir(), "release-promotion-"));
@@ -563,6 +562,7 @@ try {
 for (const waiver of [
   { ...historicalWaiver, authorized: false },
   { ...historicalWaiver, version: "0.7.2" },
+  { authorized: true, version: "0.12.0", scope: "live-model-and-coordination-status-only", record: "docs/RELEASE_WAIVER_0.12.0.md" },
   { ...historicalWaiver, record: "docs/missing-waiver.md" },
   { ...historicalWaiver, scope: "all-release-gates" },
 ]) {

@@ -18,6 +18,7 @@ export const workspaceUsage = [
   "  repo-doctor-skills change begin --id ID [--scope PATH ...] [--root PATH] [--json]",
   "  repo-doctor-skills change check --id ID [--root PATH] [--json]",
   "  repo-doctor-skills change status --id ID [--root PATH] [--json]",
+  "  repo-doctor-skills receipt export --id ID [--root PATH] [--format json|markdown | --json] [--out FILE]",
   "  repo-doctor-skills installations check [--target-dir PATH ...]",
 ].join("\n");
 
@@ -27,6 +28,21 @@ export async function runWorkspaceCli(args, { stdout = process.stdout, stderr = 
     if (group === "change") {
       const { runChangeGuardCli } = await import("./change-guard-cli.mjs");
       return await runChangeGuardCli(args.slice(1), { stdout, stderr, cwd });
+    }
+    if (group === "receipt") {
+      if (action !== "export") throw new Error("Unknown Receipt operation; see --help");
+      const options = parseOptions(rest, { values: ["--root", "--id", "--format", "--out"] });
+      const format = options["--format"] ?? (options["--json"] ? "json" : "markdown");
+      if (!["json", "markdown"].includes(format) || (options["--json"] && format !== "json")) {
+        throw new Error("Receipt format must be json or markdown; --json requires json");
+      }
+      const id = required(options, "--id");
+      const { buildVerificationReceipt, renderVerificationReceipt, writeVerificationReceipt } = await import("./verification-receipt.mjs");
+      const root = path.resolve(cwd, options["--root"] ?? ".");
+      const output = renderVerificationReceipt(await buildVerificationReceipt(root, id), format);
+      if (options["--out"]) writeVerificationReceipt(root, options["--out"], output);
+      else stdout.write(output);
+      return 0;
     }
     let result;
     if (group === "project" && ["init", "check", "refresh"].includes(action)) {
@@ -84,7 +100,10 @@ export async function runWorkspaceCli(args, { stdout = process.stdout, stderr = 
     stdout.write(JSON.stringify(result, null, 2) + "\n");
     return 0;
   } catch (error) {
-    stderr.write(`Repo Doctor state operation failed: ${error.message}\n`);
+    const message = args[0] === "receipt" && error.code
+      ? (error.code === "EEXIST" ? "Receipt output file already exists" : "Unable to access the receipt root or output file")
+      : error.message;
+    stderr.write(`Repo Doctor state operation failed: ${message}\n`);
     return 1;
   }
 }

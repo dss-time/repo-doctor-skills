@@ -16,7 +16,7 @@ Run this in your project and select your coding agent.
 npx skills@latest add dss-time/repo-doctor-skills
 ```
 
-Start a new session and describe the change, scope and behavior to preserve in your own words. Use `$repo-doctor-router` if you want a Skill recommendation. The public **0.11.1** release provides engineering workflows. The baseline and automatic change reports below are part of the **unreleased 0.12.0 candidate**.
+Start a new session and describe the change, scope and behavior to preserve in your own words. Use `$repo-doctor-router` if you want a Skill recommendation. The public **0.12.0** release includes Change Guard. The Receipt and Skills lint demos below use this checkout.
 
 ## Minimal example
 
@@ -28,6 +28,52 @@ Start a new session and describe the change, scope and behavior to preserve in y
 | “Change the copy on this button.” | A focused check can be enough. The observed low-risk Codex example stayed light without a baseline. |
 
 More examples cover style changes, shared request helpers, bulk approval and resuming a task. [Natural-language examples](docs/guides/repo-doctor-scenarios.md)
+
+## 30-second Quick Demo
+
+Run from this checkout in a shell after `npm ci`. Both examples use disposable folders.
+
+**Create a PR receipt.** Capture a baseline, make a sample edit, and paste the Markdown output into a PR description.
+
+```bash
+demo=$(mktemp -d)
+git -C "$demo" init -q
+node bin/repo-doctor-skills.mjs change begin --root "$demo" --id receipt-demo --scope demo.txt
+printf 'Example change\n' > "$demo/demo.txt"
+node bin/repo-doctor-skills.mjs receipt export --root "$demo" --id receipt-demo
+```
+
+**Lint a Skill offline.** Replace the sample directory with any directory containing `SKILL.md` files.
+
+```bash
+demo=$(mktemp -d)
+mkdir "$demo/demo-skill"
+printf '%s\n' '---' 'name: demo-skill' 'description: Summarize meeting notes.' '---' 'List the decisions.' > "$demo/demo-skill/SKILL.md"
+node bin/repo-doctor-skills.mjs skills lint "$demo" --json
+```
+
+### Export a Verification Receipt
+
+Try asking: “Fix the stale order list, preserve my uncommitted edits, run the focused tests, and give me a verification summary for the PR.”
+
+With the CLI from this checkout, export using the ID of the Change Guard baseline captured before edits. A Task State checkpoint with the same ID is optional.
+
+```bash
+node bin/repo-doctor-skills.mjs receipt export --id order-list-fix
+node bin/repo-doctor-skills.mjs receipt export --id order-list-fix --format json
+```
+
+Paste the Markdown into the PR description. It shows the declared scope, observed changes and recorded verification. A matching dependency fingerprint covers only the recorded inputs. The export does not run tests or reattest the original execution or environment. Missing coverage stays unknown. Add `--out receipt.md` to create a new file inside the repository without replacing an existing file.
+
+### Lint your own Skills
+
+Run the linter from this checkout against a directory or a single `SKILL.md`. With no paths it scans the current directory. It skips discovered symlinks, version control metadata and `node_modules`.
+
+```bash
+node bin/repo-doctor-skills.mjs skills lint ./my-skills --json
+```
+
+The offline check reads YAML frontmatter and Markdown. It requires no Repo Doctor manifests. JSON diagnostics include the path, severity, rule ID and a fix suggestion. Exit codes are `0` for clean results or warnings only, `1` for errors, and `2` for command failures. Budget estimates, potential routing overlap and missing permission boundaries are prompts for review.
 
 ## How it works and where it stops
 

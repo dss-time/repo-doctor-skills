@@ -1,6 +1,6 @@
 # Repo Doctor 用户手册
 
-> 当前源码：34 个 Skill / Repo Doctor 27 个。GitHub v0.11.1 包含统一多平台安装说明；npm 0.11.1 支持推荐的 7 个及全部 34 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
+> 当前源码：34 个 Skill / Repo Doctor 27 个。GitHub v0.12.0 包含统一多平台安装说明；npm 0.11.1 支持推荐的 7 个及全部 34 个 Skill。[样例](guides/delivery-examples.zh-CN.md)。
 
 这份手册先给新用户一条最短可用路径。平台打包与维护者细节统一放在[高级用法](ADVANCED_USAGE.zh-CN.md)。
 
@@ -146,10 +146,10 @@ Fast 不代表跳过安全，Audit 也不会用于每一个小问题。只有任
 本项目不宣传或保证自动更新能力。
 
 1. 阅读发布说明，选择你信任的准确 release tag。
-2. 刷新或替换已配置的 marketplace source，使它指向该 tag。仅在正式发布后，使用以下命令选择 `v0.12.0`；公开稳定版目前为 `v0.11.1`。
+2. 刷新或替换已配置的 marketplace source，使它指向该 tag。仅在正式发布后，使用以下命令选择 `v0.13.0`；公开稳定版目前为 `v0.12.0`。
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.13.0
    ```
 
 3. 使用当前宿主提供的控件重新安装或刷新 **Repo Doctor**。

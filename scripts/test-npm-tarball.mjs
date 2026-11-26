@@ -61,7 +61,7 @@ try {
   const packReport = parsePackReport(packed.stdout);
   assert.equal(packReport.length, 1);
   assert.equal(packReport[0].name, "repo-doctor-skills");
-  assert.equal(packReport[0].version, "0.12.0");
+  assert.equal(packReport[0].version, "0.13.0");
   const tarball = path.join(tempRoot, packReport[0].filename);
   assert.ok(existsSync(tarball));
 
@@ -70,6 +70,10 @@ try {
     "package/bin/repo-doctor-skills.mjs",
     "package/scripts/install.mjs",
     "package/scripts/change-guard.mjs",
+    "package/scripts/verification-receipt.mjs",
+    "package/scripts/skill-lint.mjs",
+    "package/package-assets/skill-lint-yaml/index.js",
+    "package/package-assets/skill-lint-yaml/LICENSE",
     "package/package.json",
     "package/README.md",
     "package/LICENSE",
@@ -95,11 +99,21 @@ try {
 
   const version = runNpx(tarball, ["--version"]);
   assert.equal(version.status, 0, version.stderr || version.stdout);
-  assert.equal(version.stdout.trim(), "0.12.0");
+  assert.equal(version.stdout.trim(), "0.13.0");
 
   const help = runNpx(tarball, ["--help"]);
   assert.equal(help.status, 0, help.stderr || help.stdout);
   assert.match(help.stdout, /repo-doctor-skills install/);
+  assert.match(help.stdout, /repo-doctor-skills receipt export/);
+  assert.match(help.stdout, /repo-doctor-skills skills lint/);
+
+  const externalSkill = path.join(tempRoot, "external-skill");
+  mkdirSync(externalSkill);
+  writeFileSync(path.join(externalSkill, "SKILL.md"),
+    "---\nname: external-skill\ndescription: >-\n  Summarize supplied meeting notes\n  into decisions and questions.\n---\nReturn a concise summary.\n");
+  const lint = runNpx(tarball, ["skills", "lint", externalSkill, "--json"]);
+  assert.equal(lint.status, 0, lint.stderr || lint.stdout);
+  assert.deepEqual(JSON.parse(lint.stdout).summary, { files: 1, errors: 0, warnings: 0 });
 
   const projectTarget = path.join(tempRoot, "project-state");
   mkdirSync(projectTarget);
@@ -122,6 +136,11 @@ try {
   const drift = runState(["change", "check", "--id", "packed-edit", "--root", projectTarget, "--json"]);
   assert.equal(drift.status, "violation");
   assert.ok(drift.findings.some(item => item.code === "outside_declared_scope" && item.path === "outside.txt"));
+  const receipt = runState(["receipt", "export", "--id", "packed-edit", "--root", projectTarget, "--json"]);
+  assert.equal(receipt.kind, "verification_receipt");
+  assert.equal(receipt.observed_changes.status, "violation");
+  assert.ok(receipt.observed_changes.changes.some(item => item.path === "outside.txt" && item.levels.includes("violation")));
+  assert.equal(receipt.verification_evidence.status, "not_recorded");
 
   const recommendedTarget = path.join(tempRoot, "recommended");
   const recommended = runNpx(tarball, ["install", "--target-dir", recommendedTarget]);

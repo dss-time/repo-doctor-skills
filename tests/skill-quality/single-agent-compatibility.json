@@ -414,7 +414,7 @@
     }
   },
   "change_guard_integration": {
-    "reason": "Shared worktree comparison lifecycle, early cues in four existing writing Skills, and their deterministic runtime modules. Prior hashes are retained.",
+    "reason": "Shared worktree comparison lifecycle, early cues in four existing writing Skills, and their deterministic runtime modules, including the read-only Verification Receipt inputs. Historical hashes are retained.",
     "trees": {
       "packs/engineering/repo-doctor/references": {
         "sha256": "839d2819e6273eed55543c9e62fd818762d41d5e118211250b7eb0595f68407d",
@@ -473,11 +473,11 @@
         "file_count": 16
       },
       "skills/documentation-sync": {
-        "sha256": "e193eeab30f414f21c642ef038e7c4a7799d2705c98dd2d2f2cddeeed5f25c97",
+        "sha256": "872e0a2bbde4d117a86e352275989ee31d2041939ecd79fc8e4c9ae757a69519",
         "file_count": 22
       },
       "skills/feature-implementation": {
-        "sha256": "bd6cca84ed21ad7445b5b97cc5ba4bd2db01554ea19668859162ed87817e5446",
+        "sha256": "4459fa8c516f0d53258575fa4832d30915f22da46b74f648fc2b567b737d3458",
         "file_count": 24
       },
       "skills/release-readiness-check": {
@@ -497,11 +497,11 @@
         "file_count": 14
       },
       "skills/safe-fix-implementation": {
-        "sha256": "930fb78a402bafae552f8b58bd0dfa71e9bc4d3e8de5926cb31e01899c43b97a",
+        "sha256": "7a8c8a802eacd4139ef9d35ea537c3366af7561a000a0db36caf92b64097ac17",
         "file_count": 22
       },
       "skills/safe-test-implementation": {
-        "sha256": "da8dc6db39468abcfc97f57bad3a72a77c123708bb2c637feb1671381af14ea4",
+        "sha256": "7a1aeb7bd85e942ea2be9a9faa8efcfd99cdfae5f7ffbd95c8f8e86db0def417",
         "file_count": 24
       },
       "skills/security-focused-review": {

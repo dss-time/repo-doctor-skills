@@ -14,6 +14,7 @@ if (args.length === 0 || args.includes("--help")) {
     "",
     "Usage:",
     "  repo-doctor-skills install [options]",
+    "  repo-doctor-skills skills lint [PATH ...] [--json]",
     workspaceUsage,
     "  repo-doctor-skills --help",
     "  repo-doctor-skills --version",
@@ -29,6 +30,8 @@ if (args.length === 0 || args.includes("--help")) {
     "Reinstalling replaces selected same-name Skills, including local edits. Identical content is skipped.",
     "Change Guard reports only. --scope accepts slash-separated repository-relative files or directories.",
     "Change Guard findings and unknown coverage exit 0; command or state errors exit 1. Use --json for a compact report.",
+    "Receipt export defaults to Markdown on stdout. --out creates a new repository-relative file.",
+    "Skills lint defaults to the current directory. Exit codes: 0 clean or warnings only, 1 findings with errors, 2 command failure.",
     "",
   ].join("\n"));
   process.exitCode = 0;
@@ -37,7 +40,10 @@ if (args.length === 0 || args.includes("--help")) {
   process.exitCode = 0;
 } else if (args[0] === "install") {
   process.exitCode = await runInstallerCli(args.slice(1));
-} else if (["project", "task", "change", "installations"].includes(args[0])) {
+} else if (args[0] === "skills") {
+  const { runSkillLintCli } = await import("../scripts/skill-lint.mjs");
+  process.exitCode = runSkillLintCli(args.slice(1));
+} else if (["project", "task", "change", "receipt", "installations"].includes(args[0])) {
   process.exitCode = await runWorkspaceCli(args);
 } else {
   process.stderr.write(`Unknown command ${JSON.stringify(args[0])}. Run repo-doctor-skills --help.\n`);

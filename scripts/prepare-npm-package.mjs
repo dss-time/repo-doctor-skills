@@ -1,4 +1,5 @@
-import { mkdirSync, rmSync, readFileSync, writeFileSync, copyFileSync } from "node:fs";
+import { mkdirSync, rmSync, readFileSync, writeFileSync, copyFileSync, cpSync } from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { discoverCanonicalSkillDirs, writeInstallableCodexSkill } from "./build-skills.mjs";
@@ -24,5 +25,20 @@ writeFileSync(path.join(runtimeRoot, "registry.json"), JSON.stringify(parseYamlS
 writeFileSync(path.join(runtimeRoot, "inventory.json"), JSON.stringify(skillDirs.map(directory => [
   path.basename(directory), parseYamlSubset(readFileSync(path.join(directory, "skill.yaml"), "utf8")),
 ])));
+
+// Ship the locked parser's Node runtime so packed CLI installs and lint runs
+// work offline. Include its license without shipping a node_modules tree.
+const require = createRequire(import.meta.url);
+const yamlManifest = require.resolve("yaml/package.json");
+const yamlRoot = path.dirname(yamlManifest);
+const yamlOutput = path.join(outputRoot, "skill-lint-yaml");
+cpSync(path.join(yamlRoot, "dist"), yamlOutput, {
+  recursive: true,
+  filter: source => !source.endsWith(".d.ts"),
+});
+copyFileSync(path.join(yamlRoot, "LICENSE"), path.join(yamlOutput, "LICENSE"));
+writeFileSync(path.join(yamlOutput, "package.json"), JSON.stringify({
+  name: "yaml", version: require(yamlManifest).version, type: "commonjs",
+}) + "\n");
 
 console.log(`Prepared npm runtime assets for ${skillDirs.length} Skills.`);

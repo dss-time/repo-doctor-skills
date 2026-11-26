@@ -38,7 +38,7 @@ function statusPath(relative) {
   return relative;
 }
 
-function categories(relative) {
+export function changeGuardPathLabels(relative) {
   const name = path.posix.basename(relative).toLowerCase();
   const labels = [];
   if (/^\.env(?:\.|$)|^(?:\.npmrc|\.pypirc|\.netrc|\.git-credentials|credentials(?:\..*)?|secrets?(?:\..*)?|id_(?:rsa|ed25519))$|\.(?:pem|key|p12|pfx)$/.test(name)
@@ -219,7 +219,7 @@ function snapshot(root, scope, previousUntracked) {
     if (fields?.length !== length || fields.some(field => !field)) throw new Error('unsupported_git_status');
     const relative = statusPath(item.slice(fields.join(' ').length + 1));
     const original = type === '2' ? statusPath(items[++index]) : null;
-    const labels = [...new Set([...categories(relative), ...(original ? categories(original) : [])])];
+    const labels = [...new Set([...changeGuardPathLabels(relative), ...(original ? changeGuardPathLabels(original) : [])])];
     const sensitive = labels.includes('sensitive_configuration');
     const entry = {
       path: relative, ...(original ? { original_path: original } : {}),
@@ -386,8 +386,12 @@ function compare(before, after, scope, root) {
   return { findings, changes, status: reportStatus(findings) };
 }
 
-export function runChangeGuard(root, action, { id, scope = [] }) {
+export function validateChangeGuardId(id) {
   if (typeof id !== 'string' || id.length > 64 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) throw new Error('Invalid baseline ID: use lowercase letters, digits and hyphens (maximum 64)');
+}
+
+export function runChangeGuard(root, action, { id, scope = [] }) {
+  validateChangeGuardId(id);
   if (!['begin', 'check', 'status'].includes(action)) throw new Error('Unknown Change Guard operation');
   validateGuardPaths(scope);
   safeMetadata({ id, scope });
@@ -398,19 +402,20 @@ export function runChangeGuard(root, action, { id, scope = [] }) {
   const baseline = load(root, filename, id);
   if (action === 'begin' && baseline) throw new Error('Baseline ID already exists; choose a new ID to preserve the original baseline');
   if (action !== 'begin' && !baseline) return { ...metadata, status: 'missing_baseline', findings: [finding('unknown', 'baseline_missing')] };
+  const capturedPolicy = baseline ? { scope: baseline.scope, protected_paths: baseline.snapshot.policy.protected_paths } : {};
   if (action === 'status') return {
     ...metadata, status: 'baseline_available', created_at: baseline.created_at, head: baseline.snapshot.head,
-    branch: baseline.snapshot.branch, scope: baseline.scope, preexisting_paths: baseline.snapshot.entries.length,
+    branch: baseline.snapshot.branch, ...capturedPolicy, preexisting_paths: baseline.snapshot.entries.length,
     unverified_paths: baseline.snapshot.entries.filter(entry => entry.worktree.state === 'unknown').length,
     findings: scopeFindings(baseline.snapshot),
     limitations: baseline.snapshot.limitations,
   };
   const observed = observe(root, baseline?.scope ?? scope, baseline?.snapshot);
-  if (!observed.snapshot) return { ...metadata, status: 'unknown', findings: [finding('unknown', observed.reason)] };
+  if (!observed.snapshot) return { ...metadata, ...capturedPolicy, status: 'unknown', findings: [finding('unknown', observed.reason)] };
   const current = observed.snapshot;
   if (action === 'check') return {
     ...metadata, ...compare(baseline.snapshot, current, baseline.scope, root),
-    scope: baseline.scope, limitations: [...new Set([...baseline.snapshot.limitations, ...current.limitations])],
+    ...capturedPolicy, limitations: [...new Set([...baseline.snapshot.limitations, ...current.limitations])],
   };
   if (!current.policy) return { ...metadata, status: 'unknown', findings: [finding('unknown', 'project_policy_unavailable')] };
   if (git(root, ['ls-files', '-z', '--', '.repo-doctor']).output) throw new Error('Change Guard requires untracked local state');

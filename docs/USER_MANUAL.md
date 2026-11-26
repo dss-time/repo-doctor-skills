@@ -1,6 +1,6 @@
 # Repo Doctor User Manual
 
-> Current source: 34 Skills / Repo Doctor 27. GitHub release v0.11.1 includes unified multi-platform installation guidance; npm 0.11.1 supports Recommended 7 and Full 34. [Examples](guides/delivery-examples.md).
+> Current source: 34 Skills / Repo Doctor 27. GitHub release v0.12.0 includes unified multi-platform installation guidance; npm 0.11.1 supports Recommended 7 and Full 34. [Examples](guides/delivery-examples.md).
 
 This manual starts with the shortest supported path for a new Repo Doctor user. Platform packaging and maintainer details are collected in [Advanced Usage](ADVANCED_USAGE.md).
 
@@ -146,10 +146,10 @@ These versions describe different layers and do not have to match. A project rel
 There is no automatic-update capability promised by this project.
 
 1. Read the release notes and choose the exact release tag you trust.
-2. Refresh or replace the configured marketplace source so it points to that tag. After the stable release is published, use this command to select `v0.12.0`. The published stable version is currently `v0.11.1`.
+2. Refresh or replace the configured marketplace source so it points to that tag. After the stable release is published, use this command to select `v0.13.0`. The published stable version is currently `v0.12.0`.
 
    ```bash
-   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.12.0
+   codex plugin marketplace add dss-time/repo-doctor-skills --ref v0.13.0
    ```
 
 3. Reinstall or refresh **Repo Doctor** using the controls offered by your host.
